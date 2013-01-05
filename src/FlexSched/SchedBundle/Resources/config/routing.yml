@@ -1,0 +1,165 @@
+login:
+    pattern:  /login/
+    defaults: { _controller: FlexSchedBundle:Security:login }
+
+login_check:
+    pattern:  /login_check
+
+logout:
+    pattern:  /logout
+
+dashboard:
+    pattern:  /dashboard/
+    defaults: { _controller: FlexSchedBundle:Dashboard:index }
+
+user_new:
+    pattern:  /user/new
+    defaults: { _controller: FlexSchedBundle:User:create }
+
+user_view:
+    pattern:  /user/{id}/view
+    defaults: { _controller: FlexSchedBundle:User:view }
+    requirements:
+        id: \d+
+
+user_edit:
+    pattern:  /user/{id}/edit
+    defaults: { _controller: FlexSchedBundle:User:update }
+    requirements:
+        id: \d+
+
+user_delete:
+    pattern:  /user/{id}/delete
+    defaults: { _controller: FlexSchedBundle:User:delete }
+    requirements:
+        id: \d+
+
+user_schedules:
+    pattern:  /user/schedules/
+    defaults: { _controller: FlexSchedBundle:Schedule:index }
+
+user_schedule_new:
+    pattern:  /user/schedule/new
+    defaults: { _controller: FlexSchedBundle:Schedule:create }
+
+user_schedule_edit:
+    pattern:  /user/schedule/{id}/edit
+    defaults: { _controller: FlexSchedBundle:Schedule:update }
+    requirements:
+        id: \d+
+
+user_schedule_view:
+    pattern:  /user/schedule/{id}/view
+    defaults: { _controller: FlexSchedBundle:Schedule:view }
+    requirements:
+        id: \d+
+
+user_employees:
+    pattern:  /user/employees/
+    defaults: { _controller: FlexSchedBundle:User:employees }
+
+user_supervisors:
+    pattern:  /user/supervisors/
+    defaults: { _controller: FlexSchedBundle:User:supervisors }
+
+user_colleagues:
+    pattern:  /user/colleagues/
+    defaults: { _controller: FlexSchedBundle:User:colleagues }
+
+user_positions:
+    pattern:  /user/positions/
+    defaults: { _controller: FlexSchedBundle:User:positions }
+
+users:
+    pattern:  /users/
+    defaults: { _controller: FlexSchedBundle:User:index }
+
+user:
+    pattern:  /profile/
+    defaults: { _controller: FlexSchedBundle:User:view, id: null }
+
+areas:
+    pattern:  /areas/
+    defaults: { _controller: FlexSchedBundle:Area:index }
+
+area_new:
+    pattern:  /area/new
+    defaults: { _controller: FlexSchedBundle:Area:create }
+
+area_view:
+    pattern:  /area/{id}/view
+    defaults: { _controller: FlexSchedBundle:Area:view }
+    requirements:
+        id: \d+
+
+area_edit:
+    pattern:  /area/{id}/edit
+    defaults: { _controller: FlexSchedBundle:Area:update }
+    requirements:
+        id: \d+
+
+area_delete:
+    pattern:  /area/{id}/delete
+    defaults: { _controller: FlexSchedBundle:Area:delete }
+    requirements:
+        id: \d+
+
+position_new:
+    pattern:  /area/{area_id}/position/new
+    defaults: { _controller: FlexSchedBundle:Position:create }
+
+position_view:
+    pattern:  /area/position/{id}/view
+    defaults: { _controller: FlexSchedBundle:Position:view }
+    requirements:
+        id: \d+
+
+position_edit:
+    pattern:  /area/position/{id}/edit
+    defaults: { _controller: FlexSchedBundle:Position:update }
+    requirements:
+        id: \d+
+
+position_delete:
+    pattern:  /area/position/{id}/delete
+    defaults: { _controller: FlexSchedBundle:Position:delete }
+    requirements:
+        id: \d+
+
+clock_in:
+    pattern:  /api/clock/in
+    defaults: { _controller: FlexSchedBundle:Clock:clockIn }
+    requirements:
+        _method:  POST
+
+clock_out:
+    pattern:  /api/clock/out
+    defaults: { _controller: FlexSchedBundle:Clock:clockOut }
+    requirements:
+        _method:  POST
+
+schedule_period:
+    pattern:  /schedule/periods/
+    defaults: { _controller: FlexSchedBundle:Schedule:index }
+
+schedule_period_new:
+    pattern:  /schedule/period/new
+    defaults: { _controller: FlexSchedBundle:Schedule:create }
+
+schedule_period_edit:
+    pattern:  /schedule/period/{id}/edit
+    defaults: { _controller: FlexSchedBundle:Schedule:edit }
+
+schedule_period_view:
+    pattern:  /schedule/period/{id}/view
+    defaults: { _controller: FlexSchedBundle:Schedule:view }
+
+reports:
+    pattern:  /reports/
+    defaults:  { _controller: FlexSchedBundle:Report:index }
+
+default:
+    pattern: /
+    defaults: { _controller: FlexSchedBundle:Default:index }
+
+

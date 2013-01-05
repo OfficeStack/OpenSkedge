@@ -1,0 +1,50 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>{{ userstitle }}</h3>
+    {% if not displayonly|default(false) %}
+    <a class="btn btn-primary" href="{{ path('user_new') }}">Add User</a>
+    {% endif %}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Work Phone</th>
+                <th>Home Phone</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.name }}</td>
+                <td><a href="{{ path('user_view', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.group.name }}</td>
+                <td>{{ entity.workphone }}</td>
+                <td>{{ entity.homephone }}</td>
+                <td>{{ entity.location }}</td>
+                <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('user_view', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> View</a></li>
+                            <li><a href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ path('user_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

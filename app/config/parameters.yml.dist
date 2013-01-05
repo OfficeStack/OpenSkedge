@@ -1,0 +1,14 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: flexskedge
+    database_user: YOUR_USER
+    database_password: YOUR_PASSWORD
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: YOU_NEED_SOME_GOBBLEDIEGOOK_HERE
+    database_path: null

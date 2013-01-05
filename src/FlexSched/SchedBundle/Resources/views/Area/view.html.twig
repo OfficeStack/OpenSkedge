@@ -1,0 +1,70 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block title %}FlexSkedge - Area - {{ entity.name }}{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<style type="text/css">
+h3,
+form,
+#form {
+    display: inline;
+}
+h3 {
+    margin-right: 10px;
+}
+.btn-group-header {
+    top: -5px;
+}
+</style>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>{{ entity.name }}</h3>
+    <form action="{{ path('area_delete', { 'id': entity.id }) }}" method="post">
+    <div class="btn-group-header btn-group">
+        <a class="btn" href="{{ path('area_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
+        {{ form_widget(delete_form) }}
+        <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+    </div>
+    </form>
+    <p>{{ entity.description }}</p>
+    <hr>
+    <a class="btn btn-primary" href="{{ path('position_new', { 'area_id': entity.id}) }}">Add Position</a>
+    {% if not positions is defined or positions is empty %}
+    <div class="alert">
+        <strong>Sorry!</strong> No positions were found for this area.
+    </div>
+    {% else %}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for position in positions %}
+            <tr>
+                <td><a href="{{ path('position_view', { 'id': position.id }) }}">{{ position.name }}</a></td>
+                <td>{{ position.description }}</td>
+                <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('position_view', { 'id': position.id }) }}"><i class="icon-eye-open"></i> View</a></li>
+                            <li><a href="{{ path('position_edit', { 'id': position.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ path('position_view', { 'id': position.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

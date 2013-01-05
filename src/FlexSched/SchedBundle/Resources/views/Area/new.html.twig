@@ -1,0 +1,13 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block modulecontent %}
+<div class="span6">
+    <h3>Create a New Area</h3>
+    <form action="{{ path('area_new') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a class="btn" href="{{ path('areas') }}">Back to Area List</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

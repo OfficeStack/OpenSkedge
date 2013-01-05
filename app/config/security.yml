@@ -1,0 +1,84 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    encoders:
+        FlexSched\SchedBundle\Entity\User: sha512
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    role_hierarchy:
+        ROLE_ADMIN:       [ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        main:
+            entity: { class: FlexSched\SchedBundle\Entity\User, property: username }
+        in_memory:
+            memory:
+                users:
+                    testemp:
+                        password: testemp
+                        roles: [ 'ROLE_USER' ]
+                    testsup:
+                        password: testsup
+                        roles: [ 'ROLE_ADMIN' ]
+                    testadmin:
+                        password: testadmin
+                        roles: [ 'ROLE_SUPER_ADMIN']
+
+    firewalls:
+        main:
+            pattern: /.*
+            provider: main
+            form_login:
+                # the user is redirected here when he/she needs to login
+                login_path:                     /login/
+
+                # if true, forward the user to the login form instead of redirecting
+                use_forward:                    false
+
+                # submit the login form here
+                check_path:                     /login_check
+
+                # by default, the login form *must* be a POST, not a GET
+                post_only:                      true
+
+                # login success redirecting options (read further below)
+                always_use_default_target_path: false
+                default_target_path:            /dashboard/
+                target_path_parameter:          _target_path
+                use_referer:                    true
+
+                # login failure redirecting options (read further below)
+                failure_path:                   null
+                failure_forward:                false
+
+                # field names for the username and password fields
+                username_parameter:             _username
+                password_parameter:             _password
+
+                # csrf token options
+                csrf_parameter:                 _csrf_token
+                intention:                      authenticate
+            logout:
+                path: /logout
+                target: /
+            security: true
+            anonymous: true
+
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+    access_control:
+        _wdt:
+            path: ^/_wdt
+            roles: 'IS_AUTHENTICATED_ANONYMOUSLY'
+        login:
+            path: ^/login
+            roles: IS_AUTHENTICATED_ANONYMOUSLY
+            #requires_channel: https
+        main:
+            path: ^/
+            roles: [ ROLE_USER, IS_AUTHENTICATED_FULLY ]

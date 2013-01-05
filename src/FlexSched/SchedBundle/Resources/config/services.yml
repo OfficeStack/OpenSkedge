@@ -1,0 +1,16 @@
+parameters:
+#    flex_sched.example.class: FlexSched\SchedBundle\Example
+
+services:
+#    flex_sched.example:
+#        class: %flex_sched.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    request:
+        class: Symfony\Component\HttpFoundation\Request
+
+    flex_sched.twig.extension:
+        class: FlexSched\SchedBundle\Twig\Extension\PageExtension
+        arguments:  [@request]
+        tags:
+            - { name: 'twig.extension' }
+

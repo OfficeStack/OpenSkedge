@@ -1,0 +1,90 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<style type="text/css">
+h3,
+form,
+#form {
+    display: inline;
+}
+h3 {
+    margin-right: 10px;
+}
+.btn-group {
+    top: -6px;
+}
+</style>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>{{ entity.name }}</h3>
+    <form action="{{ path('user_delete', { 'id': entity.id }) }}" method="post">
+    <div class="btn-group">
+        <a class="btn" href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
+        {% if app.user.id != entity.id and delete_form is defined %}
+        {{ form_widget(delete_form) }}
+        <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+        {% endif %}
+    </div>
+    </form>
+
+    <table class="table table-condensed">
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{ entity.username }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>Work Phone</th>
+                <td>{{ entity.workphone }}</td>
+            </tr>
+            <tr>
+                <th>Home Phone</th>
+                <td>{{ entity.homephone }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ entity.location }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+            <tr>
+                <th>Minimum Hours</th>
+                <td>{{ entity.min }}</td>
+            </tr>
+            <tr>
+                <th>Maximum Hours</th>
+                <td>{{ entity.max }}</td>
+            </tr>
+            <tr>
+                <th>Requested Hours</th>
+                <td>{{ entity.hours }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ entity.notes }}</td>
+            </tr>
+            {% if is_granted('ROLE_ADMIN') %}
+            <tr>
+                <th>Supervisor Notes</th>
+                <td>{{ entity.supnotes }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Color</th>
+                <td>{{ entity.color }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.isactive == 1 %}yes{% else %}no{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

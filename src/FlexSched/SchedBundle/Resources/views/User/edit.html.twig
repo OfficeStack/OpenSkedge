@@ -1,0 +1,37 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<style type="text/css">
+h3,
+form,
+#form {
+    display: inline;
+}
+h3 {
+    margin-right: 10px;
+}
+.btn-group {
+    top: -4px;
+}
+</style>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>{{ entity.name }}</h3>
+    <div class="btn-group">
+        {% if app.user.id != entity.id and delete_form is defined %}
+        <form action="{{ path('user_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+        </form>
+        {% endif %}
+    </div>
+    <hr>
+    <form action="{{ path('user_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }}
+        <p>
+            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Edit</button>
+        </p>
+    </form>
+</div>
+{% endblock %}

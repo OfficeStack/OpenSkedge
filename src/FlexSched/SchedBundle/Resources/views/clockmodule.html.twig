@@ -1,0 +1,15 @@
+<div class="span4 well well-large">
+  <div id="clock">
+    <span class="lead">{{ "now"|date("F m, Y") }}</span>
+    <h1 id="clockTime"></h1>
+  </div>
+  {% if app.user.clock.status == 1 %}
+  <form action="{{ path('clock_out') }}" method="post">
+    <button class="btn btn-primary btn-large btn-block" type="submit">Clock Out</button>
+  </form>
+  {% else %}
+  <form action="{{ path('clock_in') }}" method="post">
+    <button class="btn btn-primary btn-large btn-block" type="submit">Clock In</button>
+  </form>
+  {% endif %}
+</div>
