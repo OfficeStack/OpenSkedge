@@ -1,0 +1,25 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.js') }}"></script>
+<script type="text/javascript">
+$('.datepicker').datepicker({
+    format: 'mm-dd-yyyy',
+    autoclose: true
+});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<div class="span6">
+    <h3>Create a New Schedule Period</h3>
+    <form action="{{ path('schedule_period_new') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create</button><a class="btn" href="{{ path('schedule_period') }}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>Schedule Periods</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('schedule_period_view', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.startTime|date('M-d-Y') }}</td>
+                <td>{{ entity.endTime|date('M-d-Y') }}</td>
+                <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('schedule_period_view', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> View</a></li>
+                            <li><a href="{{ path('schedule_period_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ path('schedule_period_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('schedule_period_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
