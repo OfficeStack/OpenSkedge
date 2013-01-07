@@ -37,21 +37,27 @@ user_delete:
 
 user_schedules:
     pattern:  /user/schedules/
-    defaults: { _controller: FlexSchedBundle:Schedule:index }
+    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:index }
+
+user_schedule_pre_new:
+    pattern:  /user/schedule/new
+    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:precreate }
 
 user_schedule_new:
-    pattern:  /user/schedule/new
-    defaults: { _controller: FlexSchedBundle:Schedule:create }
+    pattern:  /user/schedule/period/{id}/new
+    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:create }
+    requirements:
+        id: \d+
 
 user_schedule_edit:
     pattern:  /user/schedule/{id}/edit
-    defaults: { _controller: FlexSchedBundle:Schedule:update }
+    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:update }
     requirements:
         id: \d+
 
 user_schedule_view:
     pattern:  /user/schedule/{id}/view
-    defaults: { _controller: FlexSchedBundle:Schedule:view }
+    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:view }
     requirements:
         id: \d+
 
@@ -115,7 +121,6 @@ position_view:
     defaults: { _controller: FlexSchedBundle:Position:view }
     requirements:
         id: \d+
-        _method:  POST
 
 position_edit:
     pattern:  /area/position/{id}/edit
@@ -142,21 +147,28 @@ clock_out:
     requirements:
         _method:  POST
 
-schedule_period:
-    pattern:  /schedule/periods/
-    defaults: { _controller: FlexSchedBundle:Schedule:index }
+schedules:
+    pattern:  /schedules/
+    defaults: { _controller: FlexSchedBundle:SchedulePeriod:index }
 
 schedule_period_new:
     pattern:  /schedule/period/new
-    defaults: { _controller: FlexSchedBundle:Schedule:create }
+    defaults: { _controller: FlexSchedBundle:SchedulePeriod:create }
 
 schedule_period_edit:
     pattern:  /schedule/period/{id}/edit
-    defaults: { _controller: FlexSchedBundle:Schedule:edit }
+    defaults: { _controller: FlexSchedBundle:SchedulePeriod:edit }
+
+schedule_period_delete:
+    pattern:  /schedule/period/{id}/delete
+    defaults: { _controller: FlexSchedBundle:SchedulePeriod:delete }
+    requirements:
+        id: \d+
+        _method:  POST
 
 schedule_period_view:
     pattern:  /schedule/period/{id}/view
-    defaults: { _controller: FlexSchedBundle:Schedule:view }
+    defaults: { _controller: FlexSchedBundle:SchedulePeriod:view }
 
 reports:
     pattern:  /reports/
