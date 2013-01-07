@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block javascripts %}
+{% if get_controller_name()|capitalize == "Dashboard" %}
 <script type="text/javascript" src="{{ asset('js/tickingclock.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
   setDate('{{ "now"|date("F m, Y H:i:s") }}')
 });
 </script>
+{% endif %}
 {% endblock %}
 
 {% block content %}
