@@ -5,7 +5,7 @@
     <form action="{{ path('user_new') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Create</button><button class="btn">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create</button><a class="btn" href="{{ path('users') }}">Cancel</a>
         </div>
     </form>
 </div>
