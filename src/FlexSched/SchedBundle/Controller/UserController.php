@@ -213,6 +213,38 @@ class UserController extends Controller
     }
 
     /**
+     * Lists all supervisors for the User.
+     */
+    public function supervisorsAction()
+    {
+        $user = $this->getUser();
+
+        $entities = $user->getSupervisors();
+
+        return $this->render('FlexSchedBundle:User:index.html.twig', array(
+            'displayonly' => true,
+            'userstitle' => 'My Supervisors',
+            'entities' => $entities,
+        ));
+    }
+
+    /**
+     * Lists all employees for the User.
+     */
+    public function employeesAction()
+    {
+        $user = $this->getUser();
+
+        $entities = $user->getEmployees();
+
+        return $this->render('FlexSchedBundle:User:index.html.twig', array(
+            'displayonly' => true,
+            'userstitle' => 'My Employees',
+            'entities' => $entities,
+        ));
+    }
+
+    /**
      * Ensure that any removed items collections actually get removed
      *
      * @param \Symfony\Component\Form\Form $form
