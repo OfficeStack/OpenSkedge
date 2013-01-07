@@ -1,0 +1,32 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/schedule-table.css') }}" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/scheduleEdit.js') }}"></script>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>Schedule for {{ schedule_period.startTime|date('M-d-Y') }} to {{ schedule_period.endTime|date('M-d-Y') }}</h3>
+    <form action="{{ path('user_schedule_edit', { 'id': entity.id }) }}" method="post" name="scheduleform">
+        <table class="schedule-table">
+            <tr>
+                <td class="p0"><input type="radio" name="priority" value="0"> Unavailable</td>
+                <td class="p1"><input type="radio" name="priority" value="1"> Low Preference</td>
+                <td class="p2"><input type="radio" name="priority" value="2"> Medium Preference</td>
+                <td class="p3"><input type="radio" name="priority" value="3" checked> High Preference</td>
+            </tr>
+        </table>
+        <input type="hidden" id="day0" size="108" name="day[]" value="{{ entity.sun }}">
+        <input type="hidden" id="day1" size="108" name="day[]" value="{{ entity.mon }}">
+        <input type="hidden" id="day2" size="108" name="day[]" value="{{ entity.tue }}">
+        <input type="hidden" id="day3" size="108" name="day[]" value="{{ entity.wed }}">
+        <input type="hidden" id="day4" size="108" name="day[]" value="{{ entity.thu }}">
+        <input type="hidden" id="day5" size="108" name="day[]" value="{{ entity.fri }}">
+        <input type="hidden" id="day6" size="108" name="day[]" value="{{ entity.sat }}">
+        {% include 'FlexSchedBundle:Schedule:userschedule.html.twig' %}
+        <button class="btn btn-primary" type="submit" name="save">Save Schedule</button>
+    </form>
+</div>
+{% endblock %}

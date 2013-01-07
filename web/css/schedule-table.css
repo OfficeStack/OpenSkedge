@@ -1,0 +1,49 @@
+.schedule-table {
+    border: solid gray 1px;
+    border-spacing: 0;
+    empty-cells: show;
+    border-collapse: collapse;
+}
+.schedule-header-row {
+    background-color: #f5f5f5;
+}
+.schedulecell {
+    border: solid gray 1px;
+    empty-cells: show;
+    font-size: 9px;
+    width: 65px;
+    height: 20px;
+    padding: 2px;
+}
+.timecell {
+    border: solid gray 1px;
+    empty-cells: show;
+    font-size: 9px;
+    width: 65px;
+    height: 20px;
+    background-color: #f5f5f5;
+    font-size: 11px;
+    padding: 0px;
+}
+.daycell {
+    border: solid gray 1px;
+    empty-cells: show;
+    font-size: 9px;
+    width: 65px;
+    height: 20px;
+    background-color: #f5f5f5;
+    font-size: 11px;
+    padding: 0px;
+}
+.p0 {
+    background-color: #BBbbBB;
+}
+.p1 {
+    background-color: #AAaaFF;
+}
+.p2 {
+    background-color: #CCccFF;
+}
+.p3 {
+    background-color: #EEeeFF;
+}

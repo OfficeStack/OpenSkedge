@@ -1,0 +1,40 @@
+{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% block title %}FlexSkedge - My Schedules{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>My Schedules</h3>
+    <a class="btn btn-primary" href="{{ path('user_schedule_pre_new') }}">Add Schedule</a>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('user_schedule_view', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.schedulePeriod.startTime|date('M-d-Y') }}</td>
+                <td>{{ entity.schedulePeriod.endTime|date('M-d-Y') }}</td>
+                <td>
+                {% if entity.user.id == app.user.id %}
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('user_schedule_view', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> View</a></li>
+                            <li><a href="{{ path('user_schedule_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ path('user_schedule_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
