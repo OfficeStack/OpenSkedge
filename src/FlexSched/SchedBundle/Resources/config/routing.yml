@@ -33,6 +33,7 @@ user_delete:
     defaults: { _controller: FlexSchedBundle:User:delete }
     requirements:
         id: \d+
+        _method:  POST
 
 user_schedules:
     pattern:  /user/schedules/
@@ -103,6 +104,7 @@ area_delete:
     defaults: { _controller: FlexSchedBundle:Area:delete }
     requirements:
         id: \d+
+        _method:  POST
 
 position_new:
     pattern:  /area/{area_id}/position/new
@@ -113,6 +115,7 @@ position_view:
     defaults: { _controller: FlexSchedBundle:Position:view }
     requirements:
         id: \d+
+        _method:  POST
 
 position_edit:
     pattern:  /area/position/{id}/edit
@@ -125,6 +128,7 @@ position_delete:
     defaults: { _controller: FlexSchedBundle:Position:delete }
     requirements:
         id: \d+
+        _method:  POST
 
 clock_in:
     pattern:  /api/clock/in
