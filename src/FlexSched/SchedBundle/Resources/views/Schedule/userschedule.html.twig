@@ -1,0 +1,55 @@
+<table class="table-condensed schedule-table">
+    <thead>
+        <tr class="schedule-header-row">
+            <th class="daycell">Hours</th>
+            <th class="daycell">Sunday</th>
+            <th class="daycell">Monday</th>
+            <th class="daycell">Tuesday</th>
+            <th class="daycell">Wednesday</th>
+            <th class="daycell">Thursday</th>
+            <th class="daycell">Friday</th>
+            <th class="daycell">Saturday</th>
+        </tr>
+    </thead>
+{% if resolution == "15 mins" %}
+{% set sectiondiv = 1 %}
+{% set sectionlen = 95 %}
+{% set next_section = "+15 minutes" %}
+{% elseif resolution == "30 mins" %}
+{% set sectiondiv = 2 %}
+{% set sectionlen = 47 %}
+{% set next_section = "+30 minutes" %}
+{% else %}
+{% set sectiondiv = 4 %}
+{% set sectionlen = 23 %}
+{% set next_section = "+1 hour" %}
+{% endif %}
+{% for i in 0..sectionlen %}
+    <tbody>
+        <tr>
+            <td class="timecell">{{ htime|date("g:i a") }}</td>
+        {% for j in 0..6 %}
+        <td id="cell-{{ i }}-{{ j }}" {% if week[j][i * sectiondiv] == '1' %}class="schedulecell p1"{% elseif week[j][i * sectiondiv] == '2' %}class="schedulecell p2"{% elseif week[j][i * sectiondiv] == '3' %}class="schedulecell p3"{% else %}class="schedulecell p0"{% endif %}{% if edit_form|default(false) or create|default(false) %}onmouseover="hilitecell(this);"  onmouseout="unhilitecell(this);" onclick="setcell(this,{{ i }}, {{ j }});"{% endif %}>
+        {% if create|default(false) and schedules is defined %}
+            {% for schedule in schedules %}
+                {% if schedule[j][i * sectiondiv] == '1' %}{{ positions[loop.index0].name }}{% endif %}
+            {% endfor %}
+        {% endif %}
+        </td>
+        {% endfor %}{% set htime = htime|date_modify(next_section) %}
+    </tr>
+{% endfor %}
+{% if edit_form|default(false) or create|default(false) %}
+<tr class="schedule-header-row">
+    <td></td>
+    <td><a href="#" onclick="return fillDay(0);">Fill</a></td>
+    <td><a href="#" onclick="return fillDay(1);">Fill</a></td>
+    <td><a href="#" onclick="return fillDay(2);">Fill</a></td>
+    <td><a href="#" onclick="return fillDay(3);">Fill</a></td>
+    <td><a href="#" onclick="return fillDay(4);">Fill</a></td>
+    <td><a href="#" onclick="return fillDay(5);">Fill</a></td>
+    <td><a href="#" onclick="return fillDay(6);">Fill</a></td>
+</tr>
+{% endif %}
+</tbody>
+</table>
