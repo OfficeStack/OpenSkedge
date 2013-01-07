@@ -30,7 +30,7 @@ class Group implements RoleInterface
     protected $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="groups")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="group")
      */
     protected $users;
 

@@ -98,7 +98,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $isActive;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Group", cascade={"persist", "remove"}, inversedBy="users")
      * @ORM\JoinColumn(name="gid", referencedColumnName="id")
      */
     private $group;
@@ -120,7 +120,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $availabilitySchedules;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="supervisors")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="employees")
      **/
     private $supervisors;
 
