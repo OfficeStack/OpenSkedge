@@ -248,6 +248,47 @@ class UserController extends Controller
         ));
     }
 
+    public function colleaguesAction()
+    {
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $time = time();
+
+        $schedulePeriods = $qb->select('sp')
+                              ->from('FlexSchedBundle:SchedulePeriod', 'sp')
+                              ->where('sp.startTime < CURRENT_TIMESTAMP()')
+                              ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
+                              ->getQuery()
+                              ->getResult();
+        $schedules = array();
+
+        foreach($schedulePeriods as $schedulePeriod) {
+            $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
+        }
+
+        $entities = array();
+
+        for ($i=0; $i<count($schedules); $i++) {
+            foreach($schedules[$i] as $schedule)
+            {
+                if ($schedule->getUser()->getId() != $user->getId())
+                    $entities[] = $schedule->getUser();
+            }
+        }
+
+        $entities = array_unique($entities);
+
+        return $this->render('FlexSchedBundle:User:index.html.twig', array(
+            'displayonly' => true,
+            'userstitle' => 'My Colleagues',
+            'entities' => $entities,
+        ));
+    }
+
     /**
      * Ensure that any removed items collections actually get removed
      *

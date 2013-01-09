@@ -4,6 +4,7 @@ namespace FlexSched\SchedBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
@@ -144,6 +145,11 @@ class User implements AdvancedUserInterface, \Serializable
         $this->schedules = new ArrayCollection();
         $this->supervisors = new ArrayCollection();
         $this->employees = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name."[".$this->username."]";
     }
 
     /**
