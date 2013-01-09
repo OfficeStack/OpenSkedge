@@ -172,6 +172,44 @@ class PositionController extends Controller
         return $this->redirect($this->generateUrl('position'));
     }
 
+    public function positionsAction()
+    {
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $time = time();
+
+        $schedulePeriods = $qb->select('sp')
+                              ->from('FlexSchedBundle:SchedulePeriod', 'sp')
+                              ->where('sp.startTime < CURRENT_TIMESTAMP()')
+                              ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
+                              ->getQuery()
+                              ->getResult();
+        $schedules = array();
+
+        foreach($schedulePeriods as $schedulePeriod) {
+            $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
+        }
+
+        $entities = array();
+
+        for ($i=0; $i<count($schedules); $i++) {
+            foreach($schedules[$i] as $schedule)
+            {
+                $entities[] = $schedule->getPosition();
+            }
+        }
+
+        $entities = array_unique($entities);
+
+        return $this->render('FlexSchedBundle:Position:index.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))

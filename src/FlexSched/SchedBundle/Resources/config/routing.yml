@@ -75,7 +75,7 @@ user_colleagues:
 
 user_positions:
     pattern:  /user/positions/
-    defaults: { _controller: FlexSchedBundle:User:positions }
+    defaults: { _controller: FlexSchedBundle:Position:positions }
 
 users:
     pattern:  /users/
