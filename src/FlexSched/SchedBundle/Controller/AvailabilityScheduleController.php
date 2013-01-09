@@ -109,9 +109,12 @@ class AvailabilityScheduleController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
-        $entity  = new AvailabilitySchedule();
+        $user = $this->getUser();
+
+        $entity = new AvailabilitySchedule();
 
         $entity->setSchedulePeriod($schedulePeriod);
+        $entity->setUser($user);
 
         $week = array(str_split($entity->getSun()), str_split($entity->getMon()), str_split($entity->getTue()), str_split($entity->getWed()), str_split($entity->getThu()), str_split($entity->getFri()), str_split($entity->getSat()));
 
