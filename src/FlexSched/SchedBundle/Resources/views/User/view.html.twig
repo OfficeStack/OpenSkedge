@@ -18,6 +18,7 @@ h3 {
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ entity.name }}</h3>
+    {% if is_granted('ROLE_ADMIN') %}
     <form action="{{ path('user_delete', { 'id': entity.id }) }}" method="post">
     <div class="btn-group">
         <a class="btn" href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
@@ -27,6 +28,11 @@ h3 {
         {% endif %}
     </div>
     </form>
+    {% elseif app.user.id == entity.id %}
+    <div class="btn-group">
+        <a class="btn" href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
+    </div>
+    {% endif %}
 
     <table class="table table-condensed">
         <tbody>
