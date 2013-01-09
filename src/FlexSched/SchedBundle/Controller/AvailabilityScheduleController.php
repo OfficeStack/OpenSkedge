@@ -132,7 +132,7 @@ class AvailabilityScheduleController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_schedule_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('user_schedule_view', array('id' => $entity->getId())));
         }
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:new.html.twig', array(
