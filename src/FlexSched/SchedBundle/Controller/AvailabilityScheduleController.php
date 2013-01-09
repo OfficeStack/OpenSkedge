@@ -137,11 +137,11 @@ class AvailabilityScheduleController extends Controller
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:new.html.twig', array(
             'schedule_period' => $schedulePeriod,
-            'week'      => $week,
-            'htime'     => mktime(0,0,0,1,1),
-            'resolution' => "15 mins",
-            'entity' => $entity,
-            'create' => true,
+            'week'       => $week,
+            'htime'      => mktime(0,0,0,1,1),
+            'resolution' => "1 hour",
+            'entity'     => $entity,
+            'create'     => true,
         ));
     }
 
@@ -195,9 +195,9 @@ class AvailabilityScheduleController extends Controller
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:edit.html.twig', array(
             'schedule_period' => $entity->getSchedulePeriod(),
-            'week'      => $week,
-            'htime'     => mktime(0,0,0,1,1),
-            'resolution' => '15 mins',
+            'week'        => $week,
+            'htime'       => mktime(0,0,0,1,1),
+            'resolution'  => '1 hour',
             'entity'      => $entity,
             'edit_form'   => true,
             'schedules'   => $schedules,
