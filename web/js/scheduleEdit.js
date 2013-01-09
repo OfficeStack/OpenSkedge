@@ -44,8 +44,8 @@ function setcell(cell, i, j) {
         curval = hour.value.charAt(i);
         cell.style.backgroundColor = colors[document.scheduleform.priority[colorIndex].value];
         oldcolor = cell.style.backgroundColor;
-        // TODO: 4 is 4 / $section_in_hour. Make this easily configurable.
-        for(k = 0; k < 4; k++) hour.value = hour.value.substring(0,(i+k)) + newval + hour.value.substring(i+k+1);
+        // TODO: sectiondiv should be declared before linking this script.
+        for(k = 0; k < sectiondiv; k++) hour.value = hour.value.substring(0,(i+k)) + newval + hour.value.substring(i+k+1);
         /*//-- if the old value was unavailable and the new value is above 0 then subtract from the hours list
         if ((curval == 0)&&(newval>0)) {
             document.scheduleform.maxleft.value = parseFloat(document.scheduleform.maxleft.value) - 1/<?php print $sections_in_hour; ?>;
