@@ -44,10 +44,21 @@ class DashboardController extends Controller
             $avail = null;
         }
 
+        $schedules = $em->createQueryBuilder('s')
+                        ->select('s')
+                        ->from('FlexSchedBundle:Schedule', 's')
+                        ->where('s.schedulePeriod = :sp')
+                        ->andWhere('s.user = :user')
+                        ->setParameters(array('sp' => $schedulePeriod, 'user' => $user))
+                        ->getQuery()
+                        ->setMaxResults(5)
+                        ->getResult();
+
         return $this->render('FlexSchedBundle:Dashboard:index.html.twig', array(
             'htime'     => mktime(0,0,0,1,1),
             'resolution' => "1 hour",
             'avail'       => $avail,
+            'schedules'  => $schedules,
         ));
     }
 }

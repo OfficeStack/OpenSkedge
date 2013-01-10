@@ -51,15 +51,17 @@ class AvailabilityScheduleController extends Controller
         }
 
         $schedulePeriod = $entity->getSchedulePeriod();
+        $user = $this->getUser();
 
-        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
-
-        $positions = array();
-
-        foreach($schedules as $schedule)
-        {
-            $positions[] = $schedule->getPosition();
-        }
+        $schedules = $em->createQueryBuilder('s')
+                        ->select('s')
+                        ->from('FlexSchedBundle:Schedule', 's')
+                        ->where('s.schedulePeriod = :sp')
+                        ->andWhere('s.user = :user')
+                        ->setParameters(array('sp' => $schedulePeriod, 'user' => $user))
+                        ->getQuery()
+                        ->setMaxResults(5)
+                        ->getResult();
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -68,7 +70,6 @@ class AvailabilityScheduleController extends Controller
             'resolution' => "1 hour",
             'avail'       => $entity,
             'schedules'   => $schedules,
-            'positions'   => $positions,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -151,15 +152,17 @@ class AvailabilityScheduleController extends Controller
         }
 
         $schedulePeriod = $entity->getSchedulePeriod();
+        $user = $this->getUser();
 
-        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
-
-        $positions = array();
-
-        foreach($schedules as $schedule)
-        {
-            $positions[] = $s->getPosition();
-        }
+        $schedules = $em->createQueryBuilder('s')
+                        ->select('s')
+                        ->from('FlexSchedBundle:Schedule', 's')
+                        ->where('s.schedulePeriod = :sp')
+                        ->andWhere('s.user = :user')
+                        ->setParameters(array('sp' => $schedulePeriod, 'user' => $user))
+                        ->getQuery()
+                        ->setMaxResults(5)
+                        ->getResult();
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -185,9 +188,8 @@ class AvailabilityScheduleController extends Controller
             'htime'       => mktime(0,0,0,1,1),
             'resolution'  => '1 hour',
             'avail'      => $entity,
-            'edit_form'   => true,
+            'edit'   => true,
             'schedules'   => $schedules,
-            'positions'   => $positions,
             'delete_form' => $deleteForm->createView(),
         ));
     }

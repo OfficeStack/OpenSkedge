@@ -17,13 +17,13 @@
     <thead>
         <tr>
             <th></th>
-            <th>Sunday</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
         </tr>
     </thead>
     <tbody>
@@ -31,17 +31,17 @@
         <tr>
             <td>{{ htime|date("g:i a") }}</td>
         {% for j in 0..6 %}
-        <td id="cell-{{ i * sectiondiv }}-{{ j }}" {% if avail.week[j][i * sectiondiv] == '1' %}class="p1"{% elseif avail.week[j][i * sectiondiv] == '2' %}class="p2"{% elseif avail.week[j][i * sectiondiv] == '3' %}class="p3"{% else %}class="p0"{% endif %}{% if edit_form|default(false) or create|default(false) %} onmouseover="hilitecell(this);" onmouseout="unhilitecell(this);" onclick="setcell(this,{{ i * sectiondiv }}, {{ j }});"{% endif %}>
-        {% if create|default(false) and schedules is defined %}
+        <td id="cell-{{ i * sectiondiv }}-{{ j }}" {% if avail.week[j][i * sectiondiv] == '1' %}class="p1"{% elseif avail.week[j][i * sectiondiv] == '2' %}class="p2"{% elseif avail.week[j][i * sectiondiv] == '3' %}class="p3"{% else %}class="p0"{% endif %}{% if edit|default(false) or create|default(false) %} onmouseover="hilitecell(this);" onmouseout="unhilitecell(this);" onclick="setcell(this,{{ i * sectiondiv }}, {{ j }});"{% endif %}>
+        {% if not create|default(false) %}
             {% for schedule in schedules %}
-                {% if schedule.week[j][i * sectiondiv] == '1' %}{{ positions[loop.index0].name }}{% endif %}
+                {% if schedule.week[j][i * sectiondiv] == '1' %}<small>{{ schedule.position.area.name }} - {{ schedule.position.name }}</small>{% endif %}
             {% endfor %}
         {% endif %}
         </td>
         {% endfor %}{% set htime = htime|date_modify(next_section) %}
     </tr>
 {% endfor %}
-{% if edit_form|default(false) or create|default(false) %}
+{% if edit|default(false) or create|default(false) %}
 <tr>
     <td></td>
     <td><a href="#" onclick="return fillDay(0);">Fill</a></td>
