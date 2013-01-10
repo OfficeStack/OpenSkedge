@@ -256,8 +256,6 @@ class UserController extends Controller
 
         $qb = $em->createQueryBuilder();
 
-        $time = time();
-
         $schedulePeriods = $qb->select('sp')
                               ->from('FlexSchedBundle:SchedulePeriod', 'sp')
                               ->where('sp.startTime < CURRENT_TIMESTAMP()')
