@@ -1,6 +1,6 @@
 <div class="span4 well well-large">
   <div id="clock">
-    <span class="lead">{{ "now"|date("F m, Y") }}</span>
+    <span class="lead">{{ date()|date("F j, Y") }}</span>
     <h1 id="clockTime"></h1>
   </div>
   {% if app.user.clock.status == 1 %}

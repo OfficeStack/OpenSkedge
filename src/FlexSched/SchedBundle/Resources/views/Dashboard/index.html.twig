@@ -63,7 +63,8 @@ $(document).ready(function () {
         <div class="span9">
         {% block modulecontent %}
             <div class="row-fluid">
-              {% include 'FlexSchedBundle::clockmodule.html.twig' %}
+              {% include 'FlexSchedBundle:Dashboard:clockmodule.html.twig' %}
+              {% include 'FlexSchedBundle:Dashboard:schedulemodule.html.twig' %}
             </div>
         {% endblock %}
         </div><!--/span-->

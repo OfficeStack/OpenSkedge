@@ -1,0 +1,11 @@
+<div class="span8 well well-large">
+    {% if avail is defined and not avail is null %}
+    <h3>Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
+    {% include 'FlexSchedBundle:Schedule:userschedule.html.twig' %}
+    {% else %}
+    <div class="alert alert-block alert-info">
+        <h4>Sorry!</h4>
+        No schedule found for you in a current scheduling period.
+    </div>
+    {% endif %}
+</div>
