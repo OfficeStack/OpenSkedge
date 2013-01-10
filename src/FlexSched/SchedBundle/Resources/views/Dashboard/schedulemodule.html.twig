@@ -1,6 +1,6 @@
-<div class="span8 well well-large">
+<div class="span8 well">
     {% if avail is defined and not avail is null %}
-    <h3>Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
+    <span class="lead">Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</span>
     {% include 'FlexSchedBundle:Schedule:userschedule.html.twig' %}
     {% else %}
     <div class="alert alert-block alert-info">
