@@ -9,7 +9,7 @@
 <script type="text/javascript" src="{{ asset('js/tickingclock.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-  setDate('{{ "now"|date("F m, Y H:i:s") }}')
+  setDate('{{ "now"|date("F j, Y H:i:s") }}')
 });
 </script>
 {% endif %}
