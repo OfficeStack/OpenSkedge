@@ -132,13 +132,16 @@ class PositionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new PositionType(), $entity);
-        $editForm->bind($request);
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
+        if ($request->getMethod() == 'POST') {
+            $editForm->bind($request);
 
-            return $this->redirect($this->generateUrl('position_edit', array('id' => $id)));
+            if ($editForm->isValid()) {
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('area_view', array('id' => $entity->getArea()->getId())));
+            }
         }
 
         return $this->render('FlexSchedBundle:Position:edit.html.twig', array(
