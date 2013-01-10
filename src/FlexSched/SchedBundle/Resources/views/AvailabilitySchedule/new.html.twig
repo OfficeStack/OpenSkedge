@@ -8,8 +8,8 @@
 {% endblock %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>New Availability Schedule for {{ schedule_period.startTime|date('M-d-Y') }} to {{ schedule_period.endTime|date('M-d-Y') }}</h3>
-    <form action="{{ path('user_schedule_new', { 'id': schedule_period.id }) }}" method="post" name="scheduleform">
+    <h3>New Availability Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
+    <form action="{{ path('user_schedule_new', { 'id': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
         <table class="schedule-table">
             <tr>
                 <td class="p0"><input type="radio" name="priority" value="0"> Unavailable</td>
@@ -18,13 +18,13 @@
                 <td class="p3"><input type="radio" name="priority" value="3" checked> High Preference</td>
             </tr>
         </table>
-        <input type="hidden" id="day0" size="108" name="day[]" value="{{ entity.sun }}">
-        <input type="hidden" id="day1" size="108" name="day[]" value="{{ entity.mon }}">
-        <input type="hidden" id="day2" size="108" name="day[]" value="{{ entity.tue }}">
-        <input type="hidden" id="day3" size="108" name="day[]" value="{{ entity.wed }}">
-        <input type="hidden" id="day4" size="108" name="day[]" value="{{ entity.thu }}">
-        <input type="hidden" id="day5" size="108" name="day[]" value="{{ entity.fri }}">
-        <input type="hidden" id="day6" size="108" name="day[]" value="{{ entity.sat }}">
+        <input type="hidden" id="day0" size="108" name="day[]" value="{{ avail.sun }}">
+        <input type="hidden" id="day1" size="108" name="day[]" value="{{ avail.mon }}">
+        <input type="hidden" id="day2" size="108" name="day[]" value="{{ avail.tue }}">
+        <input type="hidden" id="day3" size="108" name="day[]" value="{{ avail.wed }}">
+        <input type="hidden" id="day4" size="108" name="day[]" value="{{ avail.thu }}">
+        <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
+        <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
             {% include 'FlexSchedBundle:Schedule:userschedule.html.twig' %}
         <button class="btn btn-primary" type="submit" name="save">Create Schedule</button>
     </form>

@@ -31,10 +31,10 @@
         <tr>
             <td>{{ htime|date("g:i a") }}</td>
         {% for j in 0..6 %}
-        <td id="cell-{{ i * sectiondiv }}-{{ j }}" {% if week[j][i * sectiondiv] == '1' %}class="p1"{% elseif week[j][i * sectiondiv] == '2' %}class="p2"{% elseif week[j][i * sectiondiv] == '3' %}class="p3"{% else %}class="p0"{% endif %}{% if edit_form|default(false) or create|default(false) %} onmouseover="hilitecell(this);" onmouseout="unhilitecell(this);" onclick="setcell(this,{{ i * sectiondiv }}, {{ j }});"{% endif %}>
+        <td id="cell-{{ i * sectiondiv }}-{{ j }}" {% if avail.week[j][i * sectiondiv] == '1' %}class="p1"{% elseif avail.week[j][i * sectiondiv] == '2' %}class="p2"{% elseif avail.week[j][i * sectiondiv] == '3' %}class="p3"{% else %}class="p0"{% endif %}{% if edit_form|default(false) or create|default(false) %} onmouseover="hilitecell(this);" onmouseout="unhilitecell(this);" onclick="setcell(this,{{ i * sectiondiv }}, {{ j }});"{% endif %}>
         {% if create|default(false) and schedules is defined %}
             {% for schedule in schedules %}
-                {% if schedule[j][i * sectiondiv] == '1' %}{{ positions[loop.index0].name }}{% endif %}
+                {% if schedule.week[j][i * sectiondiv] == '1' %}{{ positions[loop.index0].name }}{% endif %}
             {% endfor %}
         {% endif %}
         </td>

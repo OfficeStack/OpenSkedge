@@ -52,26 +52,21 @@ class AvailabilityScheduleController extends Controller
 
         $schedulePeriod = $entity->getSchedulePeriod();
 
-        $scheduled = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
+        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
 
-        $schedules = array();
         $positions = array();
 
-        foreach($scheduled as $s)
+        foreach($schedules as $schedule)
         {
-            $positions[] = $s->getPosition();
-            $schedules[] = array(str_split($s->getSun()), str_split($s->getMon()), str_split($s->getTue()), str_split($s->getWed()), str_split($s->getThu()), str_split($s->getFri()), str_split($s->getSat()));
+            $positions[] = $schedule->getPosition();
         }
-
-        $week = array(str_split($entity->getSun()), str_split($entity->getMon()), str_split($entity->getTue()), str_split($entity->getWed()), str_split($entity->getThu()), str_split($entity->getFri()), str_split($entity->getSat()));
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:view.html.twig', array(
-            'schedule_period' => $entity->getSchedulePeriod(),
-            'week'      => $week,
             'htime'     => mktime(0,0,0,1,1),
             'resolution' => "1 hour",
+            'avail'       => $entity,
             'schedules'   => $schedules,
             'positions'   => $positions,
             'delete_form' => $deleteForm->createView(),
@@ -116,8 +111,6 @@ class AvailabilityScheduleController extends Controller
         $entity->setSchedulePeriod($schedulePeriod);
         $entity->setUser($user);
 
-        $week = array(str_split($entity->getSun()), str_split($entity->getMon()), str_split($entity->getTue()), str_split($entity->getWed()), str_split($entity->getThu()), str_split($entity->getFri()), str_split($entity->getSat()));
-
         if ($request->getMethod() == 'POST') {
             $data = $request->request->get('day');
             $entity->setSun($data[0]);
@@ -136,11 +129,9 @@ class AvailabilityScheduleController extends Controller
         }
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:new.html.twig', array(
-            'schedule_period' => $schedulePeriod,
-            'week'       => $week,
+            'avail'      => $entity,
             'htime'      => mktime(0,0,0,1,1),
             'resolution' => "1 hour",
-            'entity'     => $entity,
             'create'     => true,
         ));
     }
@@ -161,18 +152,14 @@ class AvailabilityScheduleController extends Controller
 
         $schedulePeriod = $entity->getSchedulePeriod();
 
-        $scheduled = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
+        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
 
-        $schedules = array();
         $positions = array();
 
-        foreach($scheduled as $s)
+        foreach($schedules as $schedule)
         {
             $positions[] = $s->getPosition();
-            $schedules[] = array(str_split($s->getSun()), str_split($s->getMon()), str_split($s->getTue()), str_split($s->getWed()), str_split($s->getThu()), str_split($s->getFri()), str_split($s->getSat()));
         }
-
-        $week = array(str_split($entity->getSun()), str_split($entity->getMon()), str_split($entity->getTue()), str_split($entity->getWed()), str_split($entity->getThu()), str_split($entity->getFri()), str_split($entity->getSat()));
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -194,11 +181,10 @@ class AvailabilityScheduleController extends Controller
         }
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:edit.html.twig', array(
-            'schedule_period' => $entity->getSchedulePeriod(),
             'week'        => $week,
             'htime'       => mktime(0,0,0,1,1),
             'resolution'  => '1 hour',
-            'entity'      => $entity,
+            'avail'      => $entity,
             'edit_form'   => true,
             'schedules'   => $schedules,
             'positions'   => $positions,
