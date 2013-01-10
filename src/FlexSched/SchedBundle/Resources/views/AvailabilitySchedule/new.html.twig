@@ -1,10 +1,10 @@
 {% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
-{% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/schedule-table.css') }}" type="text/css" />
-{% endblock %}
+{% if resolution == "15 mins" %}{% set sectiondiv = 1 %}{% elseif resolution == "30 mins" %}{% set sectiondiv = 2 %}{% else %}{% set sectiondiv = 4 %}{% endif %}
 {% block javascripts %}
-<script src="{{ asset('js/scheduleEdit.js') }}"></script>
+<script type="text/javascript">
+    var sectiondiv={{ sectiondiv }};
+</script>
+<script type="text/javascript" src="{{ asset('js/scheduleEdit.js') }}"></script>
 {% endblock %}
 {% block modulecontent %}
 <div class="span12">

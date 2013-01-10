@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}FlexSkedge - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/schedule-table.css') }}" rel="stylesheet" type="text/css" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
