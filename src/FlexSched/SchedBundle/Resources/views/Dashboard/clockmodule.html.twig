@@ -3,13 +3,21 @@
     <span class="lead">{{ date()|date("F j, Y") }}</span>
     <h1 id="clockTime"></h1>
   </div>
+{% spaceless %}
   {% if app.user.clock.status == 1 %}
-  <form action="{{ path('clock_out') }}" method="post">
-    <button class="btn btn-primary btn-large btn-block" type="submit">Clock Out</button>
-  </form>
+    {% set action = 'out' %}
+    {% set actionpath = 'clock_out' %}
   {% else %}
-  <form action="{{ path('clock_in') }}" method="post">
-    <button class="btn btn-primary btn-large btn-block" type="submit">Clock In</button>
-  </form>
+    {% set action = 'in' %}
+    {% set actionpath = 'clock_in' %}
   {% endif %}
+  {% if app.request.server.get("REMOTE_ADDR") != '127.0.0.1' %}{% set outside = true %}
+  <div class="alert">
+    <strong>Sorry!</strong> You cannot clock in. It appears you're not accessing FlexSkedge from work.
+  </div>
+  {% endif %}
+{% endspaceless %}
+  <form action="{{ path(actionpath) }}" method="post">
+    <button class="btn btn-primary btn-large btn-block" type="submit" {% if outside|default(false) %}disabled{% endif %}>Clock {{ action|capitalize }}</button>
+  </form>
 </div>

@@ -19,6 +19,10 @@ class ClockController extends Controller
             throw new AccessDeniedException();
         }
 
+        if(!in_array($request->getClientIp(), array('127.0.0.1', '::1'))) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->getUser();
@@ -39,6 +43,10 @@ class ClockController extends Controller
     public function clockOutAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
+        if(!in_array($request->getClientIp(), array('127.0.0.1', '::1'))) {
             throw new AccessDeniedException();
         }
 
