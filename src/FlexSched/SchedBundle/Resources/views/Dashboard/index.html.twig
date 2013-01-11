@@ -21,7 +21,7 @@ $(document).ready(function () {
 {% endblock %}
 
 {% block content %}
-<div class="navbar navbar-inverse navbar-static-top">
+<header class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-inner">
         <div class="container-fluid">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -40,41 +40,41 @@ $(document).ready(function () {
             </div><!--/.nav-collapse -->
         </div>
     </div>
-</div>
+</header>
 
 <div class="container-fluid">
-      <div class="row-fluid page-content-container">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">My Actions</li>
-              <li><a href="{{ path('dashboard') }}">Dashboard</a></li>
-              <li><a href="{{ path('user_schedules') }}">Schedules</a></li>
-              <li><a href="{{ path('user') }}">Profile</a></li>
-              <li><a href="{{ path('user_supervisors') }}">Supervisors</a></li>
-              <li><a href="{{ path('user_colleagues') }}">Colleagues</a></li>
-              <li><a href="{{ path('user_positions') }}">Positions</a></li>
-              {% if is_granted('ROLE_ADMIN') %}
-              <li class="nav-header">Supervisor Actions</li>
-              <li><a href="{{ path('users') }}">Users</a></li>
-              <li><a href="{{ path('areas') }}">Areas &amp; Positions</a></li>
-              <li><a href="{{ path('reports') }}">Reports</a></li>
-              {% endif %}
-              {{ include('::links.html.twig', ignore_missing = true) }}
-              <li class="nav-header">FlexSkedge</li>
-              <li><a href="{{ path('logout') }}">Logout</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-        {% block modulecontent %}
-            <div class="row-fluid">
-              {% include 'FlexSchedBundle:Dashboard:schedulemodule.html.twig' %}
-              {% include 'FlexSchedBundle:Dashboard:clockmodule.html.twig' %}
-            </div>
-        {% endblock %}
-        </div><!--/span-->
-      </div><!--/row-->
-      <hr>
-    </div><!--/.fluid-container-->
+  <div class="row-fluid page-content-container">
+    <section class="span3">
+      <nav class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">My Actions</li>
+          <li><a href="{{ path('dashboard') }}">Dashboard</a></li>
+          <li><a href="{{ path('user_schedules') }}">Schedules</a></li>
+          <li><a href="{{ path('user') }}">Profile</a></li>
+          <li><a href="{{ path('user_supervisors') }}">Supervisors</a></li>
+          <li><a href="{{ path('user_colleagues') }}">Colleagues</a></li>
+          <li><a href="{{ path('user_positions') }}">Positions</a></li>
+          {% if is_granted('ROLE_ADMIN') %}
+          <li class="nav-header">Supervisor Actions</li>
+          <li><a href="{{ path('users') }}">Users</a></li>
+          <li><a href="{{ path('areas') }}">Areas &amp; Positions</a></li>
+          <li><a href="{{ path('reports') }}">Reports</a></li>
+          {% endif %}
+          {{ include('::links.html.twig', ignore_missing = true) }}
+          <li class="nav-header">FlexSkedge</li>
+          <li><a href="{{ path('logout') }}">Logout</a></li>
+        </ul>
+      </nav><!--/.well -->
+    </section><!--/span3-->
+    <section class="moduleconent span9">
+    {% block modulecontent %}
+        <div class="row-fluid">
+          {% include 'FlexSchedBundle:Dashboard:schedulemodule.html.twig' %}
+          {% include 'FlexSchedBundle:Dashboard:clockmodule.html.twig' %}
+        </div>
+    {% endblock %}
+    </section><!--/span9-->
+  </div><!--/row-->
+  <hr>
+</div><!--/.fluid-container-->
 {% endblock %}

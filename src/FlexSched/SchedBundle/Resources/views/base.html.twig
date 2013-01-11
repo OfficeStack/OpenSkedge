@@ -20,10 +20,10 @@
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         {% block javascripts %}{% endblock %}
-        <div id="footer">
+        <footer>
             <div class="container">
-                <p class="muted credit">Copyright &copy; 2012{% if "now"|date("Y") != "2012" %}-{{ "now"|date("Y") }}{% endif %} Max Fierke &middot; Licensed under the GNU GPL version 2 or later</p>
+                <p class="muted credit">FlexSkedge version 1.0 &middot; Copyright &copy; 2012{% if "now"|date("Y") != "2012" %}-{{ "now"|date("Y") }}{% endif %} Max Fierke &middot; Licensed under the GNU GPL version 2 or later</p>
             </div>
-        </div>
+        </footer>
     </body>
 </html>
