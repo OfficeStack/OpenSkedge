@@ -121,7 +121,7 @@ class AvailabilityScheduleController extends Controller
             $entity->setThu($data[4]);
             $entity->setFri($data[5]);
             $entity->setSat($data[6]);
-            $entity->setLastUpdated(time());
+            $entity->setLastUpdated();
 
             $em->persist($entity);
             $em->flush();
