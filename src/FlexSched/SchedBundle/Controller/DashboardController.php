@@ -20,6 +20,8 @@ class DashboardController extends Controller
         /* TODO: Allow multiple availability schedules to be passed if there are multiple schedule periods active.
          *
          */
+        $user =  $this->getUser();
+
         try {
             $schedulePeriod = $qb->select('sp')
                                   ->from('FlexSchedBundle:SchedulePeriod', 'sp')
@@ -29,30 +31,13 @@ class DashboardController extends Controller
                                   ->getQuery()
                                   ->setMaxResults(1)
                                   ->getSingleResult();
-            $user = $this->getUser();
-            $avail = $qb->select('a')
-                        ->from('FlexSchedBundle:AvailabilitySchedule', 'a')
-                        ->where('a.schedulePeriod = :schedulePeriod')
-                        ->andWhere('a.user = :user')
-                        ->setParameter('schedulePeriod', $schedulePeriod)
-                        ->setParameter(':user', $user)
-                        ->getQuery()
-                        ->setMaxResults(1)
-                        ->getSingleResult();
+            $avail = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->findOneBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
         } catch (\Doctrine\ORM\NoResultException $e){
             // It's cool, homie.
             $avail = null;
         }
 
-        $schedules = $em->createQueryBuilder('s')
-                        ->select('s')
-                        ->from('FlexSchedBundle:Schedule', 's')
-                        ->where('s.schedulePeriod = :sp')
-                        ->andWhere('s.user = :user')
-                        ->setParameters(array('sp' => $schedulePeriod, 'user' => $user))
-                        ->getQuery()
-                        ->setMaxResults(5)
-                        ->getResult();
+        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
 
         return $this->render('FlexSchedBundle:Dashboard:index.html.twig', array(
             'htime'     => mktime(0,0,0,1,1),

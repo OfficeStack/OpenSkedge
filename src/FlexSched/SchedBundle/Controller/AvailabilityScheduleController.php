@@ -53,15 +53,7 @@ class AvailabilityScheduleController extends Controller
         $schedulePeriod = $entity->getSchedulePeriod();
         $user = $this->getUser();
 
-        $schedules = $em->createQueryBuilder('s')
-                        ->select('s')
-                        ->from('FlexSchedBundle:Schedule', 's')
-                        ->where('s.schedulePeriod = :sp')
-                        ->andWhere('s.user = :user')
-                        ->setParameters(array('sp' => $schedulePeriod, 'user' => $user))
-                        ->getQuery()
-                        ->setMaxResults(5)
-                        ->getResult();
+        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -154,15 +146,7 @@ class AvailabilityScheduleController extends Controller
         $schedulePeriod = $entity->getSchedulePeriod();
         $user = $this->getUser();
 
-        $schedules = $em->createQueryBuilder('s')
-                        ->select('s')
-                        ->from('FlexSchedBundle:Schedule', 's')
-                        ->where('s.schedulePeriod = :sp')
-                        ->andWhere('s.user = :user')
-                        ->setParameters(array('sp' => $schedulePeriod, 'user' => $user))
-                        ->getQuery()
-                        ->setMaxResults(5)
-                        ->getResult();
+        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
 
         $deleteForm = $this->createDeleteForm($id);
 
