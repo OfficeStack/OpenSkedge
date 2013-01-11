@@ -224,14 +224,14 @@ class User implements AdvancedUserInterface, \Serializable
         return array($this->group);
     }
 
-        /**
+    /**
      * Get id
      *
      * @return integer
      */
     public function getId()
     {
-        return $this->id;
+        return (int)$this->id;
     }
 
     /**
