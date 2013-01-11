@@ -142,6 +142,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->isActive = true;
         $this->color = "#".dechex(rand(0,15)).dechex(rand(0,15)).dechex(rand(0,15)).dechex(rand(0,15)).dechex(rand(0,15)).dechex(rand(0,15));
         $this->salt = hash('sha256', uniqid(null, true));
+        $this->availabilitySchedules = new ArrayCollection();
         $this->schedules = new ArrayCollection();
         $this->supervisors = new ArrayCollection();
         $this->employees = new ArrayCollection();
