@@ -138,13 +138,17 @@ class AvailabilityScheduleController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->find($id);
+        $user = $this->getUser();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
         }
 
+        if ($user != $entity->getUser()) {
+            throw new AccessDeniedException();
+        }
+
         $schedulePeriod = $entity->getSchedulePeriod();
-        $user = $this->getUser();
 
         $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
 
@@ -168,7 +172,6 @@ class AvailabilityScheduleController extends Controller
         }
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:edit.html.twig', array(
-            'week'        => $week,
             'htime'       => mktime(0,0,0,1,1),
             'resolution'  => '1 hour',
             'avail'      => $entity,
@@ -193,6 +196,10 @@ class AvailabilityScheduleController extends Controller
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
+            }
+
+            if ($this->getUser() != $entity->getUser()) {
+                throw new AccessDeniedException();
             }
 
             $em->remove($entity);
