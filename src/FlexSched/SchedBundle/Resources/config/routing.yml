@@ -17,7 +17,7 @@ user_new:
     defaults: { _controller: FlexSchedBundle:User:create }
 
 user_view:
-    pattern:  /user/{id}/view
+    pattern:  /user/{id}/
     defaults: { _controller: FlexSchedBundle:User:view }
     requirements:
         id: \d+
@@ -56,7 +56,7 @@ user_schedule_edit:
         id: \d+
 
 user_schedule_view:
-    pattern:  /user/schedule/{id}/view
+    pattern:  /user/schedule/{id}/
     defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:view }
     requirements:
         id: \d+
@@ -94,7 +94,7 @@ area_new:
     defaults: { _controller: FlexSchedBundle:Area:create }
 
 area_view:
-    pattern:  /area/{id}/view
+    pattern:  /area/{id}/
     defaults: { _controller: FlexSchedBundle:Area:view }
     requirements:
         id: \d+
@@ -117,7 +117,7 @@ position_new:
     defaults: { _controller: FlexSchedBundle:Position:create }
 
 position_view:
-    pattern:  /area/position/{id}/view
+    pattern:  /area/position/{id}/
     defaults: { _controller: FlexSchedBundle:Position:view }
     requirements:
         id: \d+
@@ -167,7 +167,7 @@ schedule_period_delete:
         _method:  POST
 
 schedule_period_view:
-    pattern:  /schedule/period/{id}/view
+    pattern:  /schedule/period/{id}/
     defaults: { _controller: FlexSchedBundle:SchedulePeriod:view }
 
 reports:
