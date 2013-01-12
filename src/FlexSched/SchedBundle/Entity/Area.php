@@ -25,7 +25,7 @@ class Area
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=300)
+     * @ORM\Column(type="string", length=300, nullable=true)
      */
     private $description;
 
