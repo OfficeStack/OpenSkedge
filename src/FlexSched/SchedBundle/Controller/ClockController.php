@@ -63,8 +63,8 @@ class ClockController extends Controller
         // If the date of last_clock is the previous day, we need to update two timerecords.
         if(date('w', $last_clock) == date('w', $cur_time)-1) {
             $prev_day_end = mktime(23, 59, 59, date('n', $last_clock), date('j', $last_clock), date('Y', $last_clock));
-            $getDay = "set".date('D', $last_clock);
-            $yesterday_timerecord = self::updateTimeRecord($clock->$getDay(), $last_clock, $prev_day_end);
+            $getDay = "get".date('D', $last_clock);
+            $yesterday_timerecord = static::updateTimeRecord($clock->$getDay(), $last_clock, $prev_day_end);
             $setDay = "set".date('D', $last_clock);
             $clock->$setDay($yesterday_timerecord);
             // The the final timerecord will be a continuation of midnight today until the current time.
