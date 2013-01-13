@@ -14,7 +14,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('position_view', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-                <td>{{ entity.area.name }}</td>
+                <td><a href="{{ path('area_view', { 'id': entity.area.id }) }}">{{ entity.area.name }}</td>
                 <td>{{ entity.description }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('position_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
