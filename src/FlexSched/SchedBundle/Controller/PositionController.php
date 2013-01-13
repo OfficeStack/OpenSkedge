@@ -207,7 +207,10 @@ class PositionController extends Controller
         $schedules = array();
 
         foreach($schedulePeriods as $schedulePeriod) {
-            $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
+            $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array(
+                'schedulePeriod' => $schedulePeriod->getId(),
+                'user' => $user->getId(),
+            ));
         }
 
         $entities = array();
