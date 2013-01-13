@@ -14,7 +14,7 @@ dashboard:
 
 user_new:
     pattern:  /user/new
-    defaults: { _controller: FlexSchedBundle:User:create }
+    defaults: { _controller: FlexSchedBundle:User:new }
 
 user_view:
     pattern:  /user/{id}/
@@ -24,7 +24,7 @@ user_view:
 
 user_edit:
     pattern:  /user/{id}/edit
-    defaults: { _controller: FlexSchedBundle:User:update }
+    defaults: { _controller: FlexSchedBundle:User:edit }
     requirements:
         id: \d+
 
@@ -45,13 +45,13 @@ user_schedule_pre_new:
 
 user_schedule_new:
     pattern:  /user/schedule/period/{id}/new
-    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:create }
+    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:new }
     requirements:
         id: \d+
 
 user_schedule_edit:
     pattern:  /user/schedule/{id}/edit
-    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:update }
+    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:edit }
     requirements:
         id: \d+
 
@@ -92,7 +92,7 @@ areas:
 
 area_new:
     pattern:  /area/new
-    defaults: { _controller: FlexSchedBundle:Area:create }
+    defaults: { _controller: FlexSchedBundle:Area:new }
 
 area_view:
     pattern:  /area/{id}/
@@ -102,7 +102,7 @@ area_view:
 
 area_edit:
     pattern:  /area/{id}/edit
-    defaults: { _controller: FlexSchedBundle:Area:update }
+    defaults: { _controller: FlexSchedBundle:Area:edit }
     requirements:
         id: \d+
 
@@ -115,7 +115,7 @@ area_delete:
 
 position_new:
     pattern:  /area/{area_id}/position/new
-    defaults: { _controller: FlexSchedBundle:Position:create }
+    defaults: { _controller: FlexSchedBundle:Position:new }
 
 position_view:
     pattern:  /area/position/{id}/
@@ -125,7 +125,7 @@ position_view:
 
 position_edit:
     pattern:  /area/position/{id}/edit
-    defaults: { _controller: FlexSchedBundle:Position:update }
+    defaults: { _controller: FlexSchedBundle:Position:edit }
     requirements:
         id: \d+
 
@@ -154,7 +154,7 @@ schedules:
 
 schedule_period_new:
     pattern:  /schedule/period/new
-    defaults: { _controller: FlexSchedBundle:SchedulePeriod:create }
+    defaults: { _controller: FlexSchedBundle:SchedulePeriod:new }
 
 schedule_period_edit:
     pattern:  /schedule/period/{id}/edit

@@ -64,7 +64,7 @@ class UserController extends Controller
      * Creates a new User entity.
      *
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
@@ -101,7 +101,7 @@ class UserController extends Controller
      * Edits an existing User entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $id != $this->getUser->getId()) {
             throw new AccessDeniedException();

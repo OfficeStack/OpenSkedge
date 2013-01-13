@@ -55,7 +55,7 @@ class PositionController extends Controller
      * Creates a new Position entity.
      *
      */
-    public function createAction(Request $request, $area_id)
+    public function newAction(Request $request, $area_id)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
@@ -86,7 +86,7 @@ class PositionController extends Controller
      * Edits an existing Position entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();

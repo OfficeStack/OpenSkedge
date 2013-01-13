@@ -58,7 +58,7 @@ class AreaController extends Controller
      * Creates a new Area entity.
      *
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
@@ -88,7 +88,7 @@ class AreaController extends Controller
      * Edits an existing Area entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();

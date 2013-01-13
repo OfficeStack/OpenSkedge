@@ -88,7 +88,7 @@ class AvailabilityScheduleController extends Controller
      * Creates a new AvailabilitySchedule entity.
      *
      */
-    public function createAction(Request $request, $id)
+    public function newAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -134,7 +134,7 @@ class AvailabilityScheduleController extends Controller
      * Edits an existing AvailabilitySchedule entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 

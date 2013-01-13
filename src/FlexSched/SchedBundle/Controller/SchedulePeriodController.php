@@ -55,7 +55,7 @@ class SchedulePeriodController extends Controller
      * Creates a new SchedulePeriod entity.
      *
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         $entity  = new SchedulePeriod();
         $form = $this->createForm(new SchedulePeriodType(), $entity);
@@ -82,7 +82,7 @@ class SchedulePeriodController extends Controller
      * Edits an existing SchedulePeriod entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
