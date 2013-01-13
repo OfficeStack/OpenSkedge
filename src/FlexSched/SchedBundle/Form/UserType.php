@@ -34,6 +34,20 @@ class UserType extends AbstractType
                         'class' => 'FlexSchedBundle:Group',
                         'property' => 'name',
                         'multiple' => false))
+                ->add('supervisors', 'entity', array(
+                        'label' => 'Supervisors',
+                        'class' => 'FlexSchedBundle:User',
+                        'property' => 'name',
+                        'multiple' => true,
+                        'query_builder' => function(\Doctrine\ORM\EntityRepository $er) {
+                            $qb = $er->createQueryBuilder('u');
+                            $qb->select('u, g')
+                               ->leftJoin('u.group', 'g')
+                               ->where($qb->expr()->in('g.name', array('Supervisor', 'Admin')))
+                               ->orderBy('u.name', 'DESC');
+                            return $qb;
+                        }
+                      ))
                 ;
     }
 
