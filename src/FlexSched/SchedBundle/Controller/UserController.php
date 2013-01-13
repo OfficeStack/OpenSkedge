@@ -103,7 +103,7 @@ class UserController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $id != $this->getUser->getId()) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $id != $this->getUser()->getId()) {
             throw new AccessDeniedException();
         }
 
