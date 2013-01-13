@@ -1,5 +1,5 @@
 {% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
-{% block title %}FlexSkedge - Availability Schedule for {{ avail.schedulePeriod }}{% endblock %}
+{% block title %}{{ appname }} - Availability Schedule for {{ avail.schedulePeriod }}{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>

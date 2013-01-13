@@ -64,7 +64,7 @@ $(document).ready(function () {
           <li><a href="{{ path('reports') }}">Reports</a></li>
           {% endif %}
           {{ include('::links.html.twig', ignore_missing = true) }}
-          <li class="nav-header">FlexSkedge</li>
+          <li class="nav-header">{{ appname }}</li>
           <li><a href="{{ path('logout') }}">Logout</a></li>
         </ul>
       </nav><!--/.well -->
