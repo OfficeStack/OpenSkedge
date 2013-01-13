@@ -7,7 +7,6 @@
     <table class="table table-condensed">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Actions</th>
@@ -16,22 +15,13 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('user_schedule_view', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.schedulePeriod.startTime|date('M-d-Y') }}</td>
                 <td>{{ entity.schedulePeriod.endTime|date('M-d-Y') }}</td>
                 <td>
-                {% if entity.user.id == app.user.id %}
-                    <div class="btn-group">
-                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
-                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('user_schedule_view', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> View</a></li>
-                            <li><a href="{{ path('user_schedule_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
-                        </ul>
-                    </div>
-                {% else %}
-                    <a class="btn btn-primary" href="{{ path('user_schedule_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
-                {% endif %}
+                    <a class="btn btn-primary" href="{{ path('user_schedule_view', { 'uid': entity.user.id, 'spid': entity.schedulePeriod.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                    {% if entity.user.id == app.user.id %}
+                    <a class="btn btn-primary" href="{{ path('user_schedule_edit', { 'id': entity.id }) }}"><i class="icon-pencil icon-white"></i> Edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

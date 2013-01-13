@@ -56,10 +56,11 @@ user_schedule_edit:
         id: \d+
 
 user_schedule_view:
-    pattern:  /user/schedule/{id}/
+    pattern:  /user/{uid}/schedule/period/{spid}/
     defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:view }
     requirements:
-        id: \d+
+        uid: \d+
+        spid: \d+
 
 user_employees:
     pattern:  /user/employees/

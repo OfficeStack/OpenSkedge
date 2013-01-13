@@ -33,29 +33,30 @@ class AvailabilityScheduleController extends Controller
      * Finds and displays a AvailabilitySchedule entity.
      *
      */
-    public function viewAction($id)
+    public function viewAction($uid, $spid)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->find($id);
-
-        /*
-         * TODO: Do not show times before or after certain points
-         * htime by default should be set to mktime(0, 0, 0, 1, 1);
-         * sectiondiv should be passed as the resolution (1 => 15min, 2 => 30min, 4 => 1hr)
-         * sectionlen should be passed as (96/sectiondiv)
-         * next_section should determine the next step up based on resolution "+15 minutes", "+30 minutes", "+1 hour"*/
+        $entity = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->findOneBy(array(
+            'user' => $uid,
+            'schedulePeriod' => $spid
+        ));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
         }
 
-        $schedulePeriod = $entity->getSchedulePeriod();
-        $user = $this->getUser();
+        /*
+         * TODO: Do not show times before or after certain points
+         * htime by default should be set to mktime(0, 0, 0, 1, 1);
+        */
 
-        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
+        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array(
+            'user' => $uid,
+            'schedulePeriod' => $spid
+        ));
 
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return $this->render('FlexSchedBundle:AvailabilitySchedule:view.html.twig', array(
             'htime'     => mktime(0,0,0,1,1),
