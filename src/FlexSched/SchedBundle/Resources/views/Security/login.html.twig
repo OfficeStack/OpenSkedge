@@ -19,7 +19,7 @@
         {% endif %}
 
         <form class="form-signin" action="{{ path('login_check') }}" method="post">
-            <h2 class="form-signin-heading">Sign Into {{ appname }}</h2>
+            <h2 class="form-signin-heading">{{ appname }} <small>version {{ version }}</small></h2>
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" class="input-block-level" placeholder="Username or Email" />
 
