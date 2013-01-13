@@ -1,25 +1,45 @@
-{% extends 'FlexSchedBundle::base.html.twig' %}
-{% block stylesheets %}
-<link href="{{ asset('css/login.css') }}" rel="stylesheet" type="text/css" />
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="robots" content="noindex,nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ appname }} - Login</title>
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/login.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    <div class="container">
+        {% if error %}
+            <div class="alert alert-error">
+                <strong>Error:</strong> {{ error.message }}
+            </div>
+        {% endif %}
 
-{% block content %}
-<div class="container">
-    {% if error %}
-        <div class="alert alert-error">
-            <strong>Error:</strong> {{ error.message }}
-        </div>
-    {% endif %}
+        <form class="form-signin" action="{{ path('login_check') }}" method="post">
+            <h2 class="form-signin-heading">Sign Into {{ appname }}</h2>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" class="input-block-level" placeholder="Username or Email" />
 
-    <form class="form-signin" action="{{ path('login_check') }}" method="post">
-        <h2 class="form-signin-heading">Sign Into FlexSkedge</h2>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" class="input-block-level" placeholder="Username or Email" />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" class="input-block-level" placeholder="Password" />
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" class="input-block-level" placeholder="Password" />
-
-        <button class="btn btn-large btn-primary" type="submit" name="login">Sign Into FlexSkedge</button>
-    </form>
-</div>
-{% endblock %}
+            <button class="btn btn-large btn-primary" type="submit" name="login">Sign Into {{ appname }}</button>
+        </form>
+    </div>
+        <footer>
+            <div class="container">
+                <p class="muted credit">Powered by OpenSkedge version 1.0</p>
+                <p class="muted credit">Copyright &copy; 2012{% if "now"|date("Y") != "2012" %}-{{ "now"|date("Y") }}{% endif %} Max Fierke &middot; Licensed under the GNU GPL version 2 or later</p>
+            </div>
+        </footer>
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    </body>
+</html>
