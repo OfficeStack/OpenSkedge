@@ -28,7 +28,28 @@ h3 {
     </div>
     <hr>
     <form action="{{ path('user_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        {{ form_widget(edit_form) }}
+        {{ form_errors(edit_form) }}
+
+        {{ form_row(edit_form.username) }}
+        {{ form_row(edit_form.password) }}
+        {{ form_row(edit_form.name) }}
+        {{ form_row(edit_form.workphone) }}
+        {{ form_row(edit_form.homephone) }}
+        {{ form_row(edit_form.location) }}
+        {{ form_row(edit_form.email) }}
+        {{ form_row(edit_form.min) }}
+        {{ form_row(edit_form.max) }}
+        {{ form_row(edit_form.hours) }}
+        {{ form_row(edit_form.notes) }}
+        {{ form_row(edit_form.color) }}
+        {% if is_granted('ROLE_ADMIN') %}
+        {{ form_row(edit_form.supnotes) }}
+        {{ form_row(edit_form.isActive) }}
+        {{ form_row(edit_form.group) }}
+        {{ form_row(edit_form.supervisors) }}
+        {% endif %}
+
+        {{ form_rest(edit_form) }}
         <p>
             <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Edit</button>
         </p>
