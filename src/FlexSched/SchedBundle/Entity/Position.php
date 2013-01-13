@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FlexSched\SchedBundle\Entity\Position
  *
- * @ORM\Table(name="fs_position")
+ * @ORM\Table(name="os_position")
  * @ORM\Entity()
  */
 class Position

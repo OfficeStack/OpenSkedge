@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FlexSched\SchedBundle\Entity\Area
  *
- * @ORM\Table(name="fs_area")
+ * @ORM\Table(name="os_area")
  * @ORM\Entity()
  */
 class Area

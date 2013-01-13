@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FlexSched\SchedBundle\Entity\AvailabilitySchedule
  *
- * @ORM\Table(name="fs_availability")
+ * @ORM\Table(name="os_availability")
  * @ORM\Entity()
  */
 class AvailabilitySchedule

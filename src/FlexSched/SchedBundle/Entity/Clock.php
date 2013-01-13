@@ -5,7 +5,7 @@ namespace FlexSched\SchedBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="fs_clock")
+ * @ORM\Table(name="os_clock")
  * @ORM\Entity()
  */
 class Clock

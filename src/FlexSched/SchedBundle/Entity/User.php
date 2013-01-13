@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 /**
  * FlexSched\SchedBundle\Entity\User
  *
- * @ORM\Table(name="fs_user")
+ * @ORM\Table(name="os_user")
  * @ORM\Entity(repositoryClass="FlexSched\SchedBundle\Entity\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable
