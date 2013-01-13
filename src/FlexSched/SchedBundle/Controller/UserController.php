@@ -269,13 +269,37 @@ class UserController extends Controller
                               ->getResult();
         $schedules = array();
 
+        $userPositions = array();
+
         foreach($schedulePeriods as $schedulePeriod) {
-            $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBySchedulePeriod($schedulePeriod);
+            try {
+                $userPositions[] = $em->createQueryBuilder()
+                                    ->select('p', 's')
+                                    ->from('FlexSchedBundle:Schedule', 's')
+                                    ->innerJoin('s.position', 'p', 'WITH', '(s.user = :uid AND s.schedulePeriod = :spid)')
+                                    ->setParameters(array('uid' => $user->getId(), 'spid' => $schedulePeriod->getId()))
+                                    ->getQuery()
+                                    ->setMaxResults(1)
+                                    ->getSingleResult()
+                                    ->getPosition()
+                                    ->getId();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                // It's aight.
+            }
+        }
+
+        foreach($schedulePeriods as $schedulePeriod) {
+            foreach($userPositions as $upid) {
+                $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array(
+                    'schedulePeriod' => $schedulePeriod,
+                    'position'       => $upid
+                ));
+            }
         }
 
         $entities = array();
 
-        for ($i=0; $i<count($schedules); $i++) {
+        for ($i = 0; $i < count($schedules); $i++) {
             foreach($schedules[$i] as $schedule)
             {
                 if ($schedule->getUser()->getId() != $user->getId())
