@@ -32,6 +32,9 @@ body {
   margin-bottom: 15px;
   padding: 7px 9px;
 }
+.form-signin button {
+  width: 100%;
+}
 p {
   text-align: center;
 }
