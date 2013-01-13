@@ -4,6 +4,7 @@ namespace FlexSched\SchedBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use FlexSched\SchedBundle\Entity\Area;
 use FlexSched\SchedBundle\Form\AreaType;
@@ -74,6 +75,10 @@ class AreaController extends Controller
      */
     public function createAction(Request $request)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
         $entity  = new Area();
         $form = $this->createForm(new AreaType(), $entity);
 
@@ -100,6 +105,10 @@ class AreaController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlexSchedBundle:Area')->find($id);
@@ -124,6 +133,10 @@ class AreaController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlexSchedBundle:Area')->find($id);
@@ -158,6 +171,10 @@ class AreaController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 

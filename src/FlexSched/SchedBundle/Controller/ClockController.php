@@ -3,6 +3,7 @@ namespace FlexSched\SchedBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use FlexSched\SchedBundle\Entity\User;
 use FlexSched\SchedBundle\Entity\Clock;

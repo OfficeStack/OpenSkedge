@@ -4,6 +4,7 @@ namespace FlexSched\SchedBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use FlexSched\SchedBundle\Entity\User;
 use FlexSched\SchedBundle\Entity\Clock;
@@ -23,6 +24,10 @@ class UserController extends Controller
      */
     public function indexAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('FlexSchedBundle:User')->findAll();

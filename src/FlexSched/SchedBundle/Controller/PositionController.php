@@ -4,6 +4,7 @@ namespace FlexSched\SchedBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use FlexSched\SchedBundle\Entity\Position;
 use FlexSched\SchedBundle\Form\PositionType;
@@ -71,6 +72,10 @@ class PositionController extends Controller
      */
     public function createAction(Request $request, $area_id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $entity  = new Position();
         $form = $this->createForm(new PositionType(), $entity);
 
@@ -122,6 +127,10 @@ class PositionController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlexSchedBundle:Position')->find($id);
@@ -157,6 +166,10 @@ class PositionController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 

@@ -4,6 +4,7 @@ namespace FlexSched\SchedBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DashboardController extends Controller
 {
