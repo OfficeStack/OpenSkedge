@@ -35,6 +35,16 @@ class Position
      */
     private $area;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Schedule", mappedBy="position", cascade={"remove"})
+     */
+    private $schedules;
+
+    public function __construct()
+    {
+        $this->schedules = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->id." ".$this->name;
@@ -117,5 +127,38 @@ class Position
     public function getArea()
     {
         return $this->area;
+    }
+
+    /**
+     * Add schedules
+     *
+     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     * @return Position
+     */
+    public function addSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    {
+        $this->schedules[] = $schedules;
+
+        return $this;
+    }
+
+    /**
+     * Remove schedules
+     *
+     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     */
+    public function removeSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    {
+        $this->schedules->removeElement($schedules);
+    }
+
+    /**
+     * Get schedules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSchedules()
+    {
+        return $this->schedules;
     }
 }
