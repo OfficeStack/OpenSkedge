@@ -14,6 +14,16 @@ use OpenSkedge\AppBundle\Entity\Clock;
  */
 class ClockController extends Controller
 {
+    public function checklateAction(Request $request)
+    {
+        if($request->getMethod() == 'POST') {
+            $token = $this->container->getParameter('kernel.secret');
+            if($request->request->get('clockToken')===$token) {
+                // TODO: Check for users who have not clocked in and are 15 mins late or more.
+            }
+        }
+    }
+
     public function clockInAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
@@ -28,6 +38,10 @@ class ClockController extends Controller
 
         $user = $this->getUser();
         $clock = $user->getClock();
+        if(strtotime("last sunday", $clock->getLastClock()) != strtotime("last sunday", time())) {
+            static::backupClock(date('m-d-y', strtotime("last sunday", $clock->getLastClock())), $clock);
+            static::clearClock($clock);
+        }
         $clock->setStatus(true);
         $clock->setLastClock(time());
 
@@ -86,6 +100,16 @@ class ClockController extends Controller
         $return = json_encode($return);
         return new Response($return, 200, array('Content-Type'=>'application/json'));*/
         return $this->redirect($this->generateUrl('dashboard'));
+    }
+
+    private static function backupClock($week, $clock)
+    {
+        // TODO: Make this configurable.
+    }
+
+    private static function clearClock($clock)
+    {
+
     }
 
     private static function updateTimeRecord($cur_timerecord, $start, $end)
