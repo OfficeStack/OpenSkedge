@@ -61,21 +61,6 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to create a new User entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new User();
-        $form   = $this->createForm(new UserType(), $entity);
-
-        return $this->render('FlexSchedBundle:User:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
      * Creates a new User entity.
      *
      */
@@ -109,30 +94,6 @@ class UserController extends Controller
         return $this->render('FlexSchedBundle:User:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing User entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('FlexSchedBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $editForm = $this->createForm(new UserType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('FlexSchedBundle:User:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 

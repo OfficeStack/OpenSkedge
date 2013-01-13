@@ -52,21 +52,6 @@ class SchedulePeriodController extends Controller
     }
 
     /**
-     * Displays a form to create a new SchedulePeriod entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new SchedulePeriod();
-        $form   = $this->createForm(new SchedulePeriodType(), $entity);
-
-        return $this->render('FlexSchedBundle:SchedulePeriod:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
      * Creates a new SchedulePeriod entity.
      *
      */
@@ -90,30 +75,6 @@ class SchedulePeriodController extends Controller
         return $this->render('FlexSchedBundle:SchedulePeriod:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing SchedulePeriod entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('FlexSchedBundle:SchedulePeriod')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
-        }
-
-        $editForm = $this->createForm(new SchedulePeriodType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('FlexSchedBundle:SchedulePeriod:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 

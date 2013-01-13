@@ -55,21 +55,6 @@ class AreaController extends Controller
     }
 
     /**
-     * Displays a form to create a new Area entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Area();
-        $form   = $this->createForm(new AreaType(), $entity);
-
-        return $this->render('FlexSchedBundle:Area:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
      * Creates a new Area entity.
      *
      */
@@ -96,34 +81,6 @@ class AreaController extends Controller
         return $this->render('FlexSchedBundle:Area:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Area entity.
-     *
-     */
-    public function editAction($id)
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('FlexSchedBundle:Area')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Area entity.');
-        }
-
-        $editForm = $this->createForm(new AreaType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('FlexSchedBundle:Area:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 

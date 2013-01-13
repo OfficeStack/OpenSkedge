@@ -52,21 +52,6 @@ class PositionController extends Controller
     }
 
     /**
-     * Displays a form to create a new Position entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Position();
-        $form   = $this->createForm(new PositionType(), $entity);
-
-        return $this->render('FlexSchedBundle:Position:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
      * Creates a new Position entity.
      *
      */
@@ -94,30 +79,6 @@ class PositionController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'area_id' => $area_id
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Position entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('FlexSchedBundle:Position')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Position entity.');
-        }
-
-        $editForm = $this->createForm(new PositionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('FlexSchedBundle:Position:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
