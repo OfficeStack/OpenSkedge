@@ -124,10 +124,10 @@ class UserController extends Controller
             $editForm->bind($request);
             if ($editForm->isValid()) {
                 $this->cleanupCollections($editForm);
-                $plainPassword = $editForm->get('password');
+                $plainPassword = $editForm->getViewData()->getPassword();
                 if (!empty($plainPassword))  {
                     $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
-                    $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+                    $password = $encoder->encodePassword($plainPassword, $entity->getSalt());
                     $entity->setPassword($password);
                 } else {
                     $entity->setPassword($originalPassword);
