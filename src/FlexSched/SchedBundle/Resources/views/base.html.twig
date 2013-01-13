@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="robots" content="noindex,nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}FlexSkedge - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
+        <title>{% block title %}{{ appname }} - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/schedule-table.css') }}" rel="stylesheet" type="text/css" />
@@ -22,7 +22,7 @@
         {% block javascripts %}{% endblock %}
         <footer>
             <div class="container">
-                <p class="muted credit">FlexSkedge version 1.0 &middot; Copyright &copy; 2012{% if "now"|date("Y") != "2012" %}-{{ "now"|date("Y") }}{% endif %} Max Fierke &middot; Licensed under the GNU GPL version 2 or later</p>
+                <p class="muted credit">Powered by OpenSkedge version {{ version }} &middot; Copyright &copy; 2012{% if "now"|date("Y") != "2012" %}-{{ "now"|date("Y") }}{% endif %} Max Fierke &middot; Licensed under the GNU GPL version 2 or later</p>
             </div>
         </footer>
     </body>
