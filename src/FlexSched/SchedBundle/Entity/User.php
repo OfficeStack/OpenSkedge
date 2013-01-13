@@ -121,16 +121,17 @@ class User implements AdvancedUserInterface, \Serializable
     private $availabilitySchedules;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="employees")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="employees")
+     * @ORM\JoinTable(name="os_user_sup",
+     *      joinColumns={@ORM\JoinColumn(name="emp_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="sup_id", referencedColumnName="id")}
+     *      )
      **/
     private $supervisors;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="supervisors")
-     * @ORM\JoinTable(name="fs_user_sup",
-     *      joinColumns={@ORM\JoinColumn(name="sup_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="emp_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="supervisors")
+     *
      **/
     private $employees;
 
