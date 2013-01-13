@@ -1,11 +1,11 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/SchedulePeriod.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/SchedulePeriod.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * FlexSched\SchedBundle\Entity\SchedulePeriod
+ * OpenSkedge\AppBundle\Entity\SchedulePeriod
  *
  * @ORM\Table(name="os_schedule_period")
  * @ORM\Entity()
@@ -106,10 +106,10 @@ class SchedulePeriod
     /**
      * Add schedules
      *
-     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     * @param \OpenSkedge\AppBundle\Entity\Schedule $schedules
      * @return SchedulePeriod
      */
-    public function addSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    public function addSchedule(\OpenSkedge\AppBundle\Entity\Schedule $schedules)
     {
         $this->schedules[] = $schedules;
 
@@ -119,9 +119,9 @@ class SchedulePeriod
     /**
      * Remove schedules
      *
-     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     * @param \OpenSkedge\AppBundle\Entity\Schedule $schedules
      */
-    public function removeSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    public function removeSchedule(\OpenSkedge\AppBundle\Entity\Schedule $schedules)
     {
         $this->schedules->removeElement($schedules);
     }

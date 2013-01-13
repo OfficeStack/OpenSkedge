@@ -1,6 +1,6 @@
 <?php
 
-namespace FlexSched\SchedBundle\Form;
+namespace OpenSkedge\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,12 +19,12 @@ class AreaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FlexSched\SchedBundle\Entity\Area'
+            'data_class' => 'OpenSkedge\AppBundle\Entity\Area'
         ));
     }
 
     public function getName()
     {
-        return 'flexsched_schedbundle_areatype';
+        return 'area';
     }
 }

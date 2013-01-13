@@ -1,12 +1,12 @@
 <?php
 
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use FlexSched\SchedBundle\Entity\SchedulePeriod;
-use FlexSched\SchedBundle\Form\SchedulePeriodType;
+use OpenSkedge\AppBundle\Entity\SchedulePeriod;
+use OpenSkedge\AppBundle\Form\SchedulePeriodType;
 
 /**
  * SchedulePeriod controller.
@@ -22,9 +22,9 @@ class SchedulePeriodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FlexSchedBundle:SchedulePeriod')->findAll();
+        $entities = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findAll();
 
-        return $this->render('FlexSchedBundle:SchedulePeriod:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:SchedulePeriod:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -37,7 +37,7 @@ class SchedulePeriodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:SchedulePeriod')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
@@ -45,7 +45,7 @@ class SchedulePeriodController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FlexSchedBundle:SchedulePeriod:view.html.twig', array(
+        return $this->render('OpenSkedgeBundle:SchedulePeriod:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -72,7 +72,7 @@ class SchedulePeriodController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:SchedulePeriod:new.html.twig', array(
+        return $this->render('OpenSkedgeBundle:SchedulePeriod:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -86,7 +86,7 @@ class SchedulePeriodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:SchedulePeriod')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
@@ -103,7 +103,7 @@ class SchedulePeriodController extends Controller
             return $this->redirect($this->generateUrl('schedule_period_edit', array('id' => $id)));
         }
 
-        return $this->render('FlexSchedBundle:SchedulePeriod:edit.html.twig', array(
+        return $this->render('OpenSkedgeBundle:SchedulePeriod:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -121,7 +121,7 @@ class SchedulePeriodController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FlexSchedBundle:SchedulePeriod')->find($id);
+            $entity = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');

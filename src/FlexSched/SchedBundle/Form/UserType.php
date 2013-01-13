@@ -1,11 +1,11 @@
 <?php
 
-namespace FlexSched\SchedBundle\Form;
+namespace OpenSkedge\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use FlexSched\SchedBundle\Entity\UserRepository;
+use OpenSkedge\AppBundle\Entity\UserRepository;
 
 class UserType extends AbstractType
 {
@@ -31,12 +31,12 @@ class UserType extends AbstractType
                 ->add('isActive', 'checkbox', array('label' => 'Active', 'required' => false))
                 ->add('group', 'entity', array(
                         'label' => 'User Role',
-                        'class' => 'FlexSchedBundle:Group',
+                        'class' => 'OpenSkedgeBundle:Group',
                         'property' => 'name',
                         'multiple' => false))
                 ->add('supervisors', 'entity', array(
                         'label' => 'Supervisors',
-                        'class' => 'FlexSchedBundle:User',
+                        'class' => 'OpenSkedgeBundle:User',
                         'property' => 'name',
                         'multiple' => true,
                         'query_builder' => function(\Doctrine\ORM\EntityRepository $er) {
@@ -54,7 +54,7 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FlexSched\SchedBundle\Entity\User'
+            'data_class' => 'OpenSkedge\AppBundle\Entity\User'
         ));
     }
 

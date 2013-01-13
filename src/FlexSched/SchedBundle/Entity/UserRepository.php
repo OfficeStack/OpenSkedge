@@ -1,6 +1,6 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/UserRepository.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/UserRepository.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -28,7 +28,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             // if there is no record matching the criteria.
             $user = $q->getSingleResult();
         } catch (NoResultException $e) {
-            throw new UsernameNotFoundException(sprintf('Unable to find an active admin FlexSchedBundle:User object identified by "%s".', $username), null, 0, $e);
+            throw new UsernameNotFoundException(sprintf('Unable to find an active admin OpenSkedgeBundle:User object identified by "%s".', $username), null, 0, $e);
         }
 
         return $user;

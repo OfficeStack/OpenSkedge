@@ -1,5 +1,5 @@
-flex_sched:
-    resource: "@FlexSchedBundle/Resources/config/routing.yml"
+openskedge:
+    resource: "@OpenSkedgeBundle/Resources/config/routing.yml"
     prefix:   /
 
 # Internal routing configuration to handle ESI

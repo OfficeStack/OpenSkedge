@@ -1,6 +1,6 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/Clock.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/Clock.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,6 +1,6 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/User.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/User.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,10 +9,10 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
- * FlexSched\SchedBundle\Entity\User
+ * OpenSkedge\AppBundle\Entity\User
  *
  * @ORM\Table(name="os_user")
- * @ORM\Entity(repositoryClass="FlexSched\SchedBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="OpenSkedge\AppBundle\Entity\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -574,10 +574,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set clock
      *
-     * @param \FlexSched\SchedBundle\Entity\Clock $clock
+     * @param \OpenSkedge\AppBundle\Entity\Clock $clock
      * @return User
      */
-    public function setClock(\FlexSched\SchedBundle\Entity\Clock $clock = null)
+    public function setClock(\OpenSkedge\AppBundle\Entity\Clock $clock = null)
     {
         $this->clock = $clock;
 
@@ -587,7 +587,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get clock
      *
-     * @return \FlexSched\SchedBundle\Entity\Clock
+     * @return \OpenSkedge\AppBundle\Entity\Clock
      */
     public function getClock()
     {
@@ -597,10 +597,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add schedules
      *
-     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     * @param \OpenSkedge\AppBundle\Entity\Schedule $schedules
      * @return User
      */
-    public function addSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    public function addSchedule(\OpenSkedge\AppBundle\Entity\Schedule $schedules)
     {
         $this->schedules[] = $schedules;
 
@@ -610,9 +610,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove schedules
      *
-     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     * @param \OpenSkedge\AppBundle\Entity\Schedule $schedules
      */
-    public function removeSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    public function removeSchedule(\OpenSkedge\AppBundle\Entity\Schedule $schedules)
     {
         $this->schedules->removeElement($schedules);
     }
@@ -656,10 +656,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add supervisors
      *
-     * @param \FlexSched\SchedBundle\Entity\User $supervisors
+     * @param \OpenSkedge\AppBundle\Entity\User $supervisors
      * @return User
      */
-    public function addSupervisor(\FlexSched\SchedBundle\Entity\User $supervisors)
+    public function addSupervisor(\OpenSkedge\AppBundle\Entity\User $supervisors)
     {
         $this->supervisors[] = $supervisors;
 
@@ -669,9 +669,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove supervisors
      *
-     * @param \FlexSched\SchedBundle\Entity\User $supervisors
+     * @param \OpenSkedge\AppBundle\Entity\User $supervisors
      */
-    public function removeSupervisor(\FlexSched\SchedBundle\Entity\User $supervisors)
+    public function removeSupervisor(\OpenSkedge\AppBundle\Entity\User $supervisors)
     {
         $this->supervisors->removeElement($supervisors);
     }
@@ -689,10 +689,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add employees
      *
-     * @param \FlexSched\SchedBundle\Entity\User $employees
+     * @param \OpenSkedge\AppBundle\Entity\User $employees
      * @return User
      */
-    public function addEmployee(\FlexSched\SchedBundle\Entity\User $employees)
+    public function addEmployee(\OpenSkedge\AppBundle\Entity\User $employees)
     {
         $this->employees[] = $employees;
 
@@ -702,9 +702,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove employees
      *
-     * @param \FlexSched\SchedBundle\Entity\User $employees
+     * @param \OpenSkedge\AppBundle\Entity\User $employees
      */
-    public function removeEmployee(\FlexSched\SchedBundle\Entity\User $employees)
+    public function removeEmployee(\OpenSkedge\AppBundle\Entity\User $employees)
     {
         $this->employees->removeElement($employees);
     }
@@ -722,10 +722,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set group
      *
-     * @param \FlexSched\SchedBundle\Entity\Group $group
+     * @param \OpenSkedge\AppBundle\Entity\Group $group
      * @return User
      */
-    public function setGroup(\FlexSched\SchedBundle\Entity\Group $group = null)
+    public function setGroup(\OpenSkedge\AppBundle\Entity\Group $group = null)
     {
         $this->group = $group;
 
@@ -735,7 +735,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get group
      *
-     * @return \FlexSched\SchedBundle\Entity\Group
+     * @return \OpenSkedge\AppBundle\Entity\Group
      */
     public function getGroup()
     {
@@ -745,10 +745,10 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add availabilitySchedules
      *
-     * @param \FlexSched\SchedBundle\Entity\AvailabilitySchedule $availabilitySchedules
+     * @param \OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules
      * @return User
      */
-    public function addAvailabilitySchedule(\FlexSched\SchedBundle\Entity\AvailabilitySchedule $availabilitySchedules)
+    public function addAvailabilitySchedule(\OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules)
     {
         $this->availabilitySchedules[] = $availabilitySchedules;
 
@@ -758,9 +758,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove availabilitySchedules
      *
-     * @param \FlexSched\SchedBundle\Entity\AvailabilitySchedule $availabilitySchedules
+     * @param \OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules
      */
-    public function removeAvailabilitySchedule(\FlexSched\SchedBundle\Entity\AvailabilitySchedule $availabilitySchedules)
+    public function removeAvailabilitySchedule(\OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules)
     {
         $this->availabilitySchedules->removeElement($availabilitySchedules);
     }

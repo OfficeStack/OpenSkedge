@@ -1,13 +1,13 @@
 <?php
 
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use FlexSched\SchedBundle\Entity\Position;
-use FlexSched\SchedBundle\Form\PositionType;
+use OpenSkedge\AppBundle\Entity\Position;
+use OpenSkedge\AppBundle\Form\PositionType;
 
 /**
  * Position controller.
@@ -23,9 +23,9 @@ class PositionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FlexSchedBundle:Position')->findAll();
+        $entities = $em->getRepository('OpenSkedgeBundle:Position')->findAll();
 
-        return $this->render('FlexSchedBundle:Position:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Position:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -38,7 +38,7 @@ class PositionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:Position')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:Position')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Position entity.');
@@ -46,7 +46,7 @@ class PositionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FlexSchedBundle:Position:view.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Position:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
     }
@@ -75,7 +75,7 @@ class PositionController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:Position:new.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Position:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'area_id' => $area_id
@@ -94,7 +94,7 @@ class PositionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:Position')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:Position')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Position entity.');
@@ -114,7 +114,7 @@ class PositionController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:Position:edit.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Position:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -136,7 +136,7 @@ class PositionController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FlexSchedBundle:Position')->find($id);
+            $entity = $em->getRepository('OpenSkedgeBundle:Position')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Position entity.');
@@ -160,7 +160,7 @@ class PositionController extends Controller
         $time = time();
 
         $schedulePeriods = $qb->select('sp')
-                              ->from('FlexSchedBundle:SchedulePeriod', 'sp')
+                              ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
                               ->where('sp.startTime < CURRENT_TIMESTAMP()')
                               ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
                               ->getQuery()
@@ -168,7 +168,7 @@ class PositionController extends Controller
         $schedules = array();
 
         foreach($schedulePeriods as $schedulePeriod) {
-            $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array(
+            $schedules[] = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
                 'schedulePeriod' => $schedulePeriod->getId(),
                 'user' => $user->getId(),
             ));
@@ -185,7 +185,7 @@ class PositionController extends Controller
 
         $entities = array_unique($entities);
 
-        return $this->render('FlexSchedBundle:Position:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Position:index.html.twig', array(
             'entities' => $entities,
         ));
     }

@@ -1,7 +1,7 @@
 <div class="span8 well">
     {% if avail is defined and not avail is null %}
     <span class="lead">Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</span>
-    {% include 'FlexSchedBundle:Schedule:userschedule.html.twig' %}
+    {% include 'OpenSkedgeBundle:Schedule:userschedule.html.twig' %}
     {% else %}
     <div class="alert alert-block alert-info">
         <h4>Sorry!</h4>

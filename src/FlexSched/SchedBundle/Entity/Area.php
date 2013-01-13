@@ -1,11 +1,11 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/Area.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/Area.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * FlexSched\SchedBundle\Entity\Area
+ * OpenSkedge\AppBundle\Entity\Area
  *
  * @ORM\Table(name="os_area")
  * @ORM\Entity()

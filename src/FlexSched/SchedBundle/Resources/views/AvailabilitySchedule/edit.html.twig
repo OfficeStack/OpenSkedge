@@ -1,4 +1,4 @@
-{% extends 'FlexSchedBundle:Dashboard:index.html.twig' %}
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% if resolution == "15 mins" %}{% set sectiondiv = 1 %}{% elseif resolution == "30 mins" %}{% set sectiondiv = 2 %}{% else %}{% set sectiondiv = 4 %}{% endif %}
 {% block javascripts %}
 <script type="text/javascript">
@@ -25,7 +25,7 @@
         <input type="hidden" id="day4" size="108" name="day[]" value="{{ avail.thu }}">
         <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
         <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
-        {% include 'FlexSchedBundle:Schedule:userschedule.html.twig' %}
+        {% include 'OpenSkedgeBundle:Schedule:userschedule.html.twig' %}
         <button class="btn btn-primary" type="submit" name="save">Save Schedule</button>
     </form>
 </div>

@@ -1,12 +1,12 @@
 <?php
 
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use FlexSched\SchedBundle\Entity\AvailabilitySchedule;
-use FlexSched\SchedBundle\Form\AvailabilityScheduleType;
+use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
+use OpenSkedge\AppBundle\Form\AvailabilityScheduleType;
 
 /**
  * AvailabilitySchedule controller.
@@ -22,9 +22,9 @@ class AvailabilityScheduleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
-        $entities = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->findByUser($user);
+        $entities = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findByUser($user);
 
-        return $this->render('FlexSchedBundle:AvailabilitySchedule:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:AvailabilitySchedule:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -37,7 +37,7 @@ class AvailabilityScheduleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->findOneBy(array(
+        $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array(
             'user' => $uid,
             'schedulePeriod' => $spid
         ));
@@ -51,14 +51,14 @@ class AvailabilityScheduleController extends Controller
          * htime by default should be set to mktime(0, 0, 0, 1, 1);
         */
 
-        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array(
+        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
             'user' => $uid,
             'schedulePeriod' => $spid
         ));
 
         $deleteForm = $this->createDeleteForm($entity->getId());
 
-        return $this->render('FlexSchedBundle:AvailabilitySchedule:view.html.twig', array(
+        return $this->render('OpenSkedgeBundle:AvailabilitySchedule:view.html.twig', array(
             'htime'     => mktime(0,0,0,1,1),
             'resolution' => "1 hour",
             'avail'       => $entity,
@@ -79,7 +79,7 @@ class AvailabilityScheduleController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:AvailabilitySchedule:precreate.html.twig', array(
+        return $this->render('OpenSkedgeBundle:AvailabilitySchedule:precreate.html.twig', array(
             'form'   => $form->createView(),
         ));
     }
@@ -92,7 +92,7 @@ class AvailabilityScheduleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $schedulePeriod = $em->getRepository('FlexSchedBundle:SchedulePeriod')->find($id);
+        $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
 
         if (!$schedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
@@ -122,7 +122,7 @@ class AvailabilityScheduleController extends Controller
             return $this->redirect($this->generateUrl('user_schedule_view', array('id' => $entity->getId())));
         }
 
-        return $this->render('FlexSchedBundle:AvailabilitySchedule:new.html.twig', array(
+        return $this->render('OpenSkedgeBundle:AvailabilitySchedule:new.html.twig', array(
             'avail'      => $entity,
             'htime'      => mktime(0,0,0,1,1),
             'resolution' => "1 hour",
@@ -138,7 +138,7 @@ class AvailabilityScheduleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->find($id);
         $user = $this->getUser();
 
         if (!$entity) {
@@ -151,7 +151,7 @@ class AvailabilityScheduleController extends Controller
 
         $schedulePeriod = $entity->getSchedulePeriod();
 
-        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
+        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -172,7 +172,7 @@ class AvailabilityScheduleController extends Controller
             return $this->redirect($this->generateUrl('user_schedule_edit', array('id' => $id)));
         }
 
-        return $this->render('FlexSchedBundle:AvailabilitySchedule:edit.html.twig', array(
+        return $this->render('OpenSkedgeBundle:AvailabilitySchedule:edit.html.twig', array(
             'htime'       => mktime(0,0,0,1,1),
             'resolution'  => '1 hour',
             'avail'      => $entity,
@@ -193,7 +193,7 @@ class AvailabilityScheduleController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->find($id);
+            $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');

@@ -1,6 +1,6 @@
 <?php
 
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -25,22 +25,22 @@ class DashboardController extends Controller
 
         try {
             $schedulePeriod = $qb->select('sp')
-                                  ->from('FlexSchedBundle:SchedulePeriod', 'sp')
+                                  ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
                                   ->where('sp.startTime < CURRENT_TIMESTAMP()')
                                   ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
                                   ->orderBy('sp.endTime', 'DESC')
                                   ->getQuery()
                                   ->setMaxResults(1)
                                   ->getSingleResult();
-            $avail = $em->getRepository('FlexSchedBundle:AvailabilitySchedule')->findOneBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
+            $avail = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
         } catch (\Doctrine\ORM\NoResultException $e){
             // It's cool, homie.
             $avail = null;
         }
 
-        $schedules = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
+        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
 
-        return $this->render('FlexSchedBundle:Dashboard:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Dashboard:index.html.twig', array(
             'htime'     => mktime(0,0,0,1,1),
             'resolution' => "1 hour",
             'avail'       => $avail,

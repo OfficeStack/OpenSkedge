@@ -1,6 +1,6 @@
 login:
     pattern:  /login/
-    defaults: { _controller: FlexSchedBundle:Security:login }
+    defaults: { _controller: OpenSkedgeBundle:Security:login }
 
 login_check:
     pattern:  /login_check
@@ -10,173 +10,195 @@ logout:
 
 dashboard:
     pattern:  /dashboard/
-    defaults: { _controller: FlexSchedBundle:Dashboard:index }
+    defaults: { _controller: OpenSkedgeBundle:Dashboard:index }
 
 user_new:
     pattern:  /user/new
-    defaults: { _controller: FlexSchedBundle:User:new }
+    defaults: { _controller: OpenSkedgeBundle:User:new }
 
 user_view:
     pattern:  /user/{id}/
-    defaults: { _controller: FlexSchedBundle:User:view }
+    defaults: { _controller: OpenSkedgeBundle:User:view }
     requirements:
         id: \d+
 
 user_edit:
     pattern:  /user/{id}/edit
-    defaults: { _controller: FlexSchedBundle:User:edit }
+    defaults: { _controller: OpenSkedgeBundle:User:edit }
     requirements:
         id: \d+
 
 user_delete:
     pattern:  /user/{id}/delete
-    defaults: { _controller: FlexSchedBundle:User:delete }
+    defaults: { _controller: OpenSkedgeBundle:User:delete }
     requirements:
         id: \d+
         _method:  POST
 
 user_schedules:
     pattern:  /user/schedules/
-    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:index }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:index }
 
 user_schedule_pre_new:
     pattern:  /user/schedule/new
-    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:precreate }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:precreate }
 
 user_schedule_new:
     pattern:  /user/schedule/period/{id}/new
-    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:new }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:new }
     requirements:
         id: \d+
 
 user_schedule_edit:
     pattern:  /user/schedule/{id}/edit
-    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:edit }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:edit }
     requirements:
         id: \d+
 
 user_schedule_view:
     pattern:  /user/{uid}/schedule/period/{spid}/
-    defaults: { _controller: FlexSchedBundle:AvailabilitySchedule:view }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:view }
     requirements:
         uid: \d+
         spid: \d+
 
 user_employees:
     pattern:  /user/employees/
-    defaults: { _controller: FlexSchedBundle:User:employees }
+    defaults: { _controller: OpenSkedgeBundle:User:employees }
 
 user_supervisors:
     pattern:  /user/supervisors/
-    defaults: { _controller: FlexSchedBundle:User:supervisors }
+    defaults: { _controller: OpenSkedgeBundle:User:supervisors }
 
 user_colleagues:
     pattern:  /user/colleagues/
-    defaults: { _controller: FlexSchedBundle:User:colleagues }
+    defaults: { _controller: OpenSkedgeBundle:User:colleagues }
 
 user_positions:
     pattern:  /user/positions/
-    defaults: { _controller: FlexSchedBundle:Position:positions }
+    defaults: { _controller: OpenSkedgeBundle:Position:positions }
 
 users:
     pattern:  /users/
-    defaults: { _controller: FlexSchedBundle:User:index }
+    defaults: { _controller: OpenSkedgeBundle:User:index }
 
 user:
     pattern:  /profile/
-    defaults: { _controller: FlexSchedBundle:User:view, id: null }
+    defaults: { _controller: OpenSkedgeBundle:User:view, id: null }
 
 areas:
     pattern:  /areas/
-    defaults: { _controller: FlexSchedBundle:Area:index }
+    defaults: { _controller: OpenSkedgeBundle:Area:index }
 
 area_new:
     pattern:  /area/new
-    defaults: { _controller: FlexSchedBundle:Area:new }
+    defaults: { _controller: OpenSkedgeBundle:Area:new }
 
 area_view:
     pattern:  /area/{id}/
-    defaults: { _controller: FlexSchedBundle:Area:view }
+    defaults: { _controller: OpenSkedgeBundle:Area:view }
     requirements:
         id: \d+
 
 area_edit:
     pattern:  /area/{id}/edit
-    defaults: { _controller: FlexSchedBundle:Area:edit }
+    defaults: { _controller: OpenSkedgeBundle:Area:edit }
     requirements:
         id: \d+
 
 area_delete:
     pattern:  /area/{id}/delete
-    defaults: { _controller: FlexSchedBundle:Area:delete }
+    defaults: { _controller: OpenSkedgeBundle:Area:delete }
     requirements:
         id: \d+
         _method:  POST
 
 position_new:
     pattern:  /area/{area_id}/position/new
-    defaults: { _controller: FlexSchedBundle:Position:new }
+    defaults: { _controller: OpenSkedgeBundle:Position:new }
 
 position_view:
     pattern:  /area/position/{id}/
-    defaults: { _controller: FlexSchedBundle:Position:view }
+    defaults: { _controller: OpenSkedgeBundle:Position:view }
     requirements:
         id: \d+
 
 position_edit:
     pattern:  /area/position/{id}/edit
-    defaults: { _controller: FlexSchedBundle:Position:edit }
+    defaults: { _controller: OpenSkedgeBundle:Position:edit }
     requirements:
         id: \d+
 
 position_delete:
     pattern:  /area/position/{id}/delete
-    defaults: { _controller: FlexSchedBundle:Position:delete }
+    defaults: { _controller: OpenSkedgeBundle:Position:delete }
     requirements:
         id: \d+
         _method:  POST
 
+position_schedule_edit:
+    pattern:  /area/position/{pid}/period/{spid}/schedule/edit
+    defaults: { _controller: OpenSkedgeBundle:Schedule:edit }
+    requirements:
+        pid: \d+
+        spid: \d+
+
+position_schedule_view:
+    pattern:  /area/position/{pid}/period/{spid}/schedule/
+    defaults: { _controller: OpenSkedgeBundle:Schedule:view }
+    requirements:
+        pid: \d+
+        spid: \d+
+
+position_schedule_delete:
+    pattern:  /area/position/{pid}/period/{spid}/schedule/delete
+    defaults: { _controller: OpenSkedgeBundle:Schedule:delete }
+    requirements:
+        pid: \d+
+        spid: \d+
+        _method:  POST
+
 clock_in:
     pattern:  /api/clock/in
-    defaults: { _controller: FlexSchedBundle:Clock:clockIn }
+    defaults: { _controller: OpenSkedgeBundle:Clock:clockIn }
     requirements:
         _method:  POST
 
 clock_out:
     pattern:  /api/clock/out
-    defaults: { _controller: FlexSchedBundle:Clock:clockOut }
+    defaults: { _controller: OpenSkedgeBundle:Clock:clockOut }
     requirements:
         _method:  POST
 
 schedules:
     pattern:  /schedules/
-    defaults: { _controller: FlexSchedBundle:SchedulePeriod:index }
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:index }
 
 schedule_period_new:
     pattern:  /schedule/period/new
-    defaults: { _controller: FlexSchedBundle:SchedulePeriod:new }
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:new }
 
 schedule_period_edit:
     pattern:  /schedule/period/{id}/edit
-    defaults: { _controller: FlexSchedBundle:SchedulePeriod:edit }
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:edit }
 
 schedule_period_delete:
     pattern:  /schedule/period/{id}/delete
-    defaults: { _controller: FlexSchedBundle:SchedulePeriod:delete }
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:delete }
     requirements:
         id: \d+
         _method:  POST
 
 schedule_period_view:
     pattern:  /schedule/period/{id}/
-    defaults: { _controller: FlexSchedBundle:SchedulePeriod:view }
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:view }
 
 reports:
     pattern:  /reports/
-    defaults:  { _controller: FlexSchedBundle:Report:index }
+    defaults:  { _controller: OpenSkedgeBundle:Report:index }
 
 default:
     pattern: /
-    defaults: { _controller: FlexSchedBundle:Default:index }
+    defaults: { _controller: OpenSkedgeBundle:Default:index }
 
 

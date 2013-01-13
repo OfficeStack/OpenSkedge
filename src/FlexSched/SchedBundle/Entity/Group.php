@@ -1,6 +1,6 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/Group.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/Group.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -80,10 +80,10 @@ class Group implements RoleInterface
     /**
      * Add users
      *
-     * @param \FlexSched\SchedBundle\Entity\User $users
+     * @param \OpenSkedge\AppBundle\Entity\User $users
      * @return Group
      */
-    public function addUser(\FlexSched\SchedBundle\Entity\User $users)
+    public function addUser(\OpenSkedge\AppBundle\Entity\User $users)
     {
         $this->users[] = $users;
 
@@ -93,9 +93,9 @@ class Group implements RoleInterface
     /**
      * Remove users
      *
-     * @param \FlexSched\SchedBundle\Entity\User $users
+     * @param \OpenSkedge\AppBundle\Entity\User $users
      */
-    public function removeUser(\FlexSched\SchedBundle\Entity\User $users)
+    public function removeUser(\OpenSkedge\AppBundle\Entity\User $users)
     {
         $this->users->removeElement($users);
     }

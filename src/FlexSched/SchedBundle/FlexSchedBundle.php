@@ -1,9 +1,9 @@
 <?php
 
-namespace FlexSched\SchedBundle;
+namespace OpenSkedge\AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class FlexSchedBundle extends Bundle
+class OpenSkedgeBundle extends Bundle
 {
 }

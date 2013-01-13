@@ -1,13 +1,13 @@
 <?php
 
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use FlexSched\SchedBundle\Entity\Area;
-use FlexSched\SchedBundle\Form\AreaType;
+use OpenSkedge\AppBundle\Entity\Area;
+use OpenSkedge\AppBundle\Form\AreaType;
 
 /**
  * Area controller.
@@ -23,9 +23,9 @@ class AreaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FlexSchedBundle:Area')->findAll();
+        $entities = $em->getRepository('OpenSkedgeBundle:Area')->findAll();
 
-        return $this->render('FlexSchedBundle:Area:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Area:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -38,8 +38,8 @@ class AreaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:Area')->find($id);
-        $positions = $em->getRepository('FlexSchedBundle:Position')->findBy(array('area' => $id), array("name" => 'DESC'));
+        $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
+        $positions = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array('area' => $id), array("name" => 'DESC'));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Area entity.');
@@ -47,7 +47,7 @@ class AreaController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FlexSchedBundle:Area:view.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Area:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'positions'    => $positions
@@ -78,7 +78,7 @@ class AreaController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:Area:new.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Area:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -96,7 +96,7 @@ class AreaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:Area')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Area entity.');
@@ -115,7 +115,7 @@ class AreaController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:Area:edit.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Area:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -137,7 +137,7 @@ class AreaController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FlexSchedBundle:Area')->find($id);
+            $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Area entity.');

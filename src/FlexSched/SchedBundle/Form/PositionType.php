@@ -1,6 +1,6 @@
 <?php
 
-namespace FlexSched\SchedBundle\Form;
+namespace OpenSkedge\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +14,7 @@ class PositionType extends AbstractType
             ->add('name', 'text')
             ->add('description', 'textarea', array('required' => false))
             ->add('area', 'entity', array(
-                    'class' => 'FlexSchedBundle:Area',
+                    'class' => 'OpenSkedgeBundle:Area',
                     'property' => 'name',
                     'multiple' => false))
         ;
@@ -23,12 +23,12 @@ class PositionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FlexSched\SchedBundle\Entity\Position'
+            'data_class' => 'OpenSkedge\AppBundle\Entity\Position'
         ));
     }
 
     public function getName()
     {
-        return 'flexsched_schedbundle_positiontype';
+        return 'position';
     }
 }

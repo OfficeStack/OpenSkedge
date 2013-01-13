@@ -1,11 +1,11 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/Position.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/Position.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * FlexSched\SchedBundle\Entity\Position
+ * OpenSkedge\AppBundle\Entity\Position
  *
  * @ORM\Table(name="os_position")
  * @ORM\Entity()
@@ -109,10 +109,10 @@ class Position
     /**
      * Set area
      *
-     * @param \FlexSched\SchedBundle\Entity\Area $area
+     * @param \OpenSkedge\AppBundle\Entity\Area $area
      * @return Position
      */
-    public function setArea(\FlexSched\SchedBundle\Entity\Area $area = null)
+    public function setArea(\OpenSkedge\AppBundle\Entity\Area $area = null)
     {
         $this->area = $area;
 
@@ -122,7 +122,7 @@ class Position
     /**
      * Get area
      *
-     * @return \FlexSched\SchedBundle\Entity\Area
+     * @return \OpenSkedge\AppBundle\Entity\Area
      */
     public function getArea()
     {
@@ -132,10 +132,10 @@ class Position
     /**
      * Add schedules
      *
-     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     * @param \OpenSkedge\AppBundle\Entity\Schedule $schedules
      * @return Position
      */
-    public function addSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    public function addSchedule(\OpenSkedge\AppBundle\Entity\Schedule $schedules)
     {
         $this->schedules[] = $schedules;
 
@@ -145,9 +145,9 @@ class Position
     /**
      * Remove schedules
      *
-     * @param \FlexSched\SchedBundle\Entity\Schedule $schedules
+     * @param \OpenSkedge\AppBundle\Entity\Schedule $schedules
      */
-    public function removeSchedule(\FlexSched\SchedBundle\Entity\Schedule $schedules)
+    public function removeSchedule(\OpenSkedge\AppBundle\Entity\Schedule $schedules)
     {
         $this->schedules->removeElement($schedules);
     }

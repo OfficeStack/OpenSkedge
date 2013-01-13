@@ -1,14 +1,14 @@
 <?php
 
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use FlexSched\SchedBundle\Entity\User;
-use FlexSched\SchedBundle\Entity\Clock;
-use FlexSched\SchedBundle\Form\UserType;
+use OpenSkedge\AppBundle\Entity\User;
+use OpenSkedge\AppBundle\Entity\Clock;
+use OpenSkedge\AppBundle\Form\UserType;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\Form;
 
@@ -30,9 +30,9 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FlexSchedBundle:User')->findAll();
+        $entities = $em->getRepository('OpenSkedgeBundle:User')->findAll();
 
-        return $this->render('FlexSchedBundle:User:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'userstitle' => 'Users',
             'entities' => $entities,
         ));
@@ -47,14 +47,14 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         if (is_null($id))
             $id = $this->getUser()->getId();
-        $entity = $em->getRepository('FlexSchedBundle:User')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        return $this->render('FlexSchedBundle:User:view.html.twig', array(
+        return $this->render('OpenSkedgeBundle:User:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -91,7 +91,7 @@ class UserController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:User:new.html.twig', array(
+        return $this->render('OpenSkedgeBundle:User:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -109,7 +109,7 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlexSchedBundle:User')->find($id);
+        $entity = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -139,7 +139,7 @@ class UserController extends Controller
             }
         }
 
-        return $this->render('FlexSchedBundle:User:edit.html.twig', array(
+        return $this->render('OpenSkedgeBundle:User:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -161,7 +161,7 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FlexSchedBundle:User')->find($id);
+            $entity = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find User entity.');
@@ -191,7 +191,7 @@ class UserController extends Controller
 
         $entities = $user->getSupervisors();
 
-        return $this->render('FlexSchedBundle:User:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
             'userstitle' => 'My Supervisors',
             'entities' => $entities,
@@ -207,7 +207,7 @@ class UserController extends Controller
 
         $entities = $user->getEmployees();
 
-        return $this->render('FlexSchedBundle:User:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
             'userstitle' => 'My Employees',
             'entities' => $entities,
@@ -223,7 +223,7 @@ class UserController extends Controller
         $qb = $em->createQueryBuilder();
 
         $schedulePeriods = $qb->select('sp')
-                              ->from('FlexSchedBundle:SchedulePeriod', 'sp')
+                              ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
                               ->where('sp.startTime < CURRENT_TIMESTAMP()')
                               ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
                               ->getQuery()
@@ -236,7 +236,7 @@ class UserController extends Controller
             try {
                 $userPositions[] = $em->createQueryBuilder()
                                     ->select('p', 's')
-                                    ->from('FlexSchedBundle:Schedule', 's')
+                                    ->from('OpenSkedgeBundle:Schedule', 's')
                                     ->innerJoin('s.position', 'p', 'WITH', '(s.user = :uid AND s.schedulePeriod = :spid)')
                                     ->setParameters(array('uid' => $user->getId(), 'spid' => $schedulePeriod->getId()))
                                     ->getQuery()
@@ -251,7 +251,7 @@ class UserController extends Controller
 
         foreach($schedulePeriods as $schedulePeriod) {
             foreach($userPositions as $upid) {
-                $schedules[] = $em->getRepository('FlexSchedBundle:Schedule')->findBy(array(
+                $schedules[] = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
                     'schedulePeriod' => $schedulePeriod,
                     'position'       => $upid
                 ));
@@ -270,7 +270,7 @@ class UserController extends Controller
 
         $entities = array_unique($entities);
 
-        return $this->render('FlexSchedBundle:User:index.html.twig', array(
+        return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
             'userstitle' => 'My Colleagues',
             'entities' => $entities,

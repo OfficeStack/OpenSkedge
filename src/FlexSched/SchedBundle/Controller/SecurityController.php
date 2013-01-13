@@ -1,5 +1,5 @@
 <?php
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -14,6 +14,6 @@ class SecurityController extends Controller
             $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render('FlexSchedBundle:Security:login.html.twig', array('error' => $error));
+        return $this->render('OpenSkedgeBundle:Security:login.html.twig', array('error' => $error));
     }
 }

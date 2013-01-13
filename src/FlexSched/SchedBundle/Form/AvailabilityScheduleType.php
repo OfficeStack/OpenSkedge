@@ -1,6 +1,6 @@
 <?php
 
-namespace FlexSched\SchedBundle\Form;
+namespace OpenSkedge\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,7 +13,7 @@ class AvailabilityScheduleType extends AbstractType
         $builder
             ->add('schedulePeriod', 'entity', array(
                   'label' => 'Schedule Period',
-                  'class' => 'FlexSchedBundle:SchedulePeriod',
+                  'class' => 'OpenSkedgeBundle:SchedulePeriod',
                   'empty_value' => 'Choose a Schedule Period')
             )
         ;
@@ -22,12 +22,12 @@ class AvailabilityScheduleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FlexSched\SchedBundle\Entity\AvailabilitySchedule'
+            'data_class' => 'OpenSkedge\AppBundle\Entity\AvailabilitySchedule'
         ));
     }
 
     public function getName()
     {
-        return 'flexsched_schedbundle_availabilityscheduletype';
+        return 'schedulePeriod';
     }
 }

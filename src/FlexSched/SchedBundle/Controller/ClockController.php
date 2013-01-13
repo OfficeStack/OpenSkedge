@@ -1,12 +1,12 @@
 <?php
-namespace FlexSched\SchedBundle\Controller;
+namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use FlexSched\SchedBundle\Entity\User;
-use FlexSched\SchedBundle\Entity\Clock;
+use OpenSkedge\AppBundle\Entity\User;
+use OpenSkedge\AppBundle\Entity\Clock;
 
 /**
  * Clock controller.

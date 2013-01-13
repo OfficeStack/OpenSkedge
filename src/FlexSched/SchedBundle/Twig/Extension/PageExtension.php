@@ -1,7 +1,7 @@
 <?php
-// src/FlexSched/SchedBundle/Twig/Extension/PageExtension.php
+// src/OpenSkedge/AppBundle/Twig/Extension/PageExtension.php
 
-namespace FlexSched\SchedBundle\Twig\Extension;
+namespace OpenSkedge\AppBundle\Twig\Extension;
 
 use Symfony\Component\HttpFoundation\Request;
 

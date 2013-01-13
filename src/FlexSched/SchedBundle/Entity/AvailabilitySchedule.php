@@ -1,11 +1,11 @@
 <?php
-// src/FlexSched/SchedBundle/Entity/AvailabilitySchedule.php
-namespace FlexSched\SchedBundle\Entity;
+// src/OpenSkedge/AppBundle/Entity/AvailabilitySchedule.php
+namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * FlexSched\SchedBundle\Entity\AvailabilitySchedule
+ * OpenSkedge\AppBundle\Entity\AvailabilitySchedule
  *
  * @ORM\Table(name="os_availability")
  * @ORM\Entity()
@@ -313,10 +313,10 @@ class AvailabilitySchedule
     /**
      * Set user
      *
-     * @param \FlexSched\SchedBundle\Entity\User $user
+     * @param \OpenSkedge\AppBundle\Entity\User $user
      * @return Schedule
      */
-    public function setUser(\FlexSched\SchedBundle\Entity\User $user = null)
+    public function setUser(\OpenSkedge\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -326,7 +326,7 @@ class AvailabilitySchedule
     /**
      * Get user
      *
-     * @return \FlexSched\SchedBundle\Entity\User
+     * @return \OpenSkedge\AppBundle\Entity\User
      */
     public function getUser()
     {
@@ -336,10 +336,10 @@ class AvailabilitySchedule
     /**
      * Set schedulePeriod
      *
-     * @param \FlexSched\SchedBundle\Entity\SchedulePeriod $schedulePeriod
+     * @param \OpenSkedge\AppBundle\Entity\SchedulePeriod $schedulePeriod
      * @return Schedule
      */
-    public function setSchedulePeriod(\FlexSched\SchedBundle\Entity\SchedulePeriod $schedulePeriod = null)
+    public function setSchedulePeriod(\OpenSkedge\AppBundle\Entity\SchedulePeriod $schedulePeriod = null)
     {
         $this->schedulePeriod = $schedulePeriod;
 
@@ -349,7 +349,7 @@ class AvailabilitySchedule
     /**
      * Get schedulePeriod
      *
-     * @return \FlexSched\SchedBundle\Entity\SchedulePeriod
+     * @return \OpenSkedge\AppBundle\Entity\SchedulePeriod
      */
     public function getSchedulePeriod()
     {

@@ -1,4 +1,4 @@
-{% extends 'FlexSchedBundle::base.html.twig' %}
+{% extends 'OpenSkedgeBundle::base.html.twig' %}
 
 {% block stylesheets %}
 <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet" type="text/css" />
@@ -72,8 +72,8 @@ $(document).ready(function () {
     <section class="moduleconent span9">
     {% block modulecontent %}
         <div class="row-fluid">
-          {% include 'FlexSchedBundle:Dashboard:schedulemodule.html.twig' %}
-          {% include 'FlexSchedBundle:Dashboard:clockmodule.html.twig' %}
+          {% include 'OpenSkedgeBundle:Dashboard:schedulemodule.html.twig' %}
+          {% include 'OpenSkedgeBundle:Dashboard:clockmodule.html.twig' %}
         </div>
     {% endblock %}
     </section><!--/span9-->

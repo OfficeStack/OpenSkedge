@@ -4,7 +4,7 @@ jms_security_extra:
 
 security:
     encoders:
-        FlexSched\SchedBundle\Entity\User: sha512
+        OpenSkedge\AppBundle\Entity\User: sha512
         Symfony\Component\Security\Core\User\User: plaintext
 
     role_hierarchy:
@@ -13,7 +13,7 @@ security:
 
     providers:
         main:
-            entity: { class: FlexSched\SchedBundle\Entity\User, property: username }
+            entity: { class: OpenSkedge\AppBundle\Entity\User, property: username }
         in_memory:
             memory:
                 users:
