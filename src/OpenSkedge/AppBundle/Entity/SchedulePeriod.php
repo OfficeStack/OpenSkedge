@@ -3,12 +3,14 @@
 namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * OpenSkedge\AppBundle\Entity\SchedulePeriod
  *
  * @ORM\Table(name="os_schedule_period")
  * @ORM\Entity()
+ * @UniqueEntity(fields={"startTime", "endTime"})
  */
 class SchedulePeriod
 {
