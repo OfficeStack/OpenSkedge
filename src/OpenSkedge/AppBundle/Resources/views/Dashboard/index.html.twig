@@ -42,9 +42,9 @@ $(document).ready(function () {
     </div>
 </header>
 
-<div class="container-fluid">
-  <div class="row-fluid page-content-container">
-    <section class="span3">
+<div id="container" class="container-fluid">
+  <div id="page-content-container" class="row-fluid page-content-container">
+    <section id="sidebar" class="span3">
       <nav class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">My Actions</li>
@@ -70,7 +70,7 @@ $(document).ready(function () {
         </ul>
       </nav><!--/.well -->
     </section><!--/span3-->
-    <section class="moduleconent span9">
+    <section id="modulecontent" class="span9">
     {% block modulecontent %}
         <div class="row-fluid">
           {% include 'OpenSkedgeBundle:Dashboard:schedulemodule.html.twig' %}
