@@ -30,7 +30,7 @@
                 <td>{{ entity.homephone }}</td>
                 <td>{{ entity.location }}</td>
                 <td>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_ADMIN') or entity.id == app.user.id %}
                     <div class="btn-group">
                         <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
                         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
