@@ -4,7 +4,7 @@
 <div class="span12">
     <h3>{{ title }}</h3>
     {% if user.id == app.user.id %}
-    <a class="btn btn-primary" href="{{ path('user_schedule_pre_new') }}">Add Schedule</a>
+    <a class="btn btn-primary" href="{{ path('user_schedule_pre_new') }}"><i class="icon-plus-sign icon-white"></i> Add Schedule</a>
     {% endif %}
     {% if entities is empty %}
     <div class="alert">

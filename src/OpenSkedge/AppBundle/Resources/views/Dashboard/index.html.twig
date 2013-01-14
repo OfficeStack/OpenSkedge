@@ -48,25 +48,25 @@ $(document).ready(function () {
       <nav class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">My Actions</li>
-          <li><a href="{{ path('dashboard') }}">Dashboard</a></li>
-          <li><a href="{{ path('my_schedules') }}">Schedules</a></li>
-          <li><a href="{{ path('user') }}">Profile</a></li>
+          <li><a href="{{ path('dashboard') }}"><i class="icon-home"></i> Dashboard</a></li>
+          <li><a href="{{ path('my_schedules') }}"><i class="icon-calendar"></i> Schedules</a></li>
+          <li><a href="{{ path('user') }}"><i class="icon-user"></i> Profile</a></li>
           {% if is_granted('ROLE_ADMIN') %}
-          <li><a href="{{ path('user_employees') }}">Employees</a></li>
+          <li><a href="{{ path('user_employees') }}"><i class="icon-hand-left"></i> Employees</a></li>
           {% endif %}
-          <li><a href="{{ path('user_supervisors') }}">Supervisors</a></li>
-          <li><a href="{{ path('user_colleagues') }}">Colleagues</a></li>
-          <li><a href="{{ path('user_positions') }}">Positions</a></li>
+          <li><a href="{{ path('user_supervisors') }}"><i class="icon-eye-open"></i> Supervisors</a></li>
+          <li><a href="{{ path('user_colleagues') }}"><i class="icon-thumbs-up"></i> Colleagues</a></li>
+          <li><a href="{{ path('user_positions') }}"><i class="icon-th-list"></i> Positions</a></li>
           {% if is_granted('ROLE_ADMIN') %}
           <li class="nav-header">Supervisor Actions</li>
-          <li><a href="{{ path('areas') }}">Areas &amp; Positions</a></li>
+          <li><a href="{{ path('areas') }}"><i class="icon-th-large"></i> Areas &amp; Positions</a></li>
           {#<li><a href="{{ path('reports') }}">Reports</a></li>#}
-          <li><a href="{{ path('schedule_periods') }}">Schedule</a></li>
-          <li><a href="{{ path('users') }}">Users</a></li>
+          <li><a href="{{ path('schedule_periods') }}"><i class="icon-calendar"></i> Schedule</a></li>
+          <li><a href="{{ path('users') }}"><i class="icon-user"></i> Users</a></li>
           {% endif %}
           {{ include('::links.html.twig', ignore_missing = true) }}
           <li class="nav-header">{{ appname }}</li>
-          <li><a href="{{ path('logout') }}">Logout</a></li>
+          <li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>
         </ul>
       </nav><!--/.well -->
     </section><!--/span3-->
