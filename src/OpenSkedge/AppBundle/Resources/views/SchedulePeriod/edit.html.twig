@@ -1,22 +1,40 @@
-<h1>SchedulePeriod edit</h1>
-
-<form action="{{ path('schedule_period_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('schedule_period') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('schedule_period_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.js') }}"></script>
+<script type="text/javascript">
+$('#schedulePeriodStart').datepicker({
+    format: 'MM-dd-yyyy',
+    autoclose: true
+});
+$('#schedulePeriodEnd').datepicker({
+    format: 'MM-dd-yyyy',
+    autoclose: true
+});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<div class="span6">
+    <h3>Editing a Schedule Period</h3>
+    <form action="{{ path('schedule_period_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_errors(edit_form) }}
+        {{ form_label(edit_form.startTime) }}
+        <div class="input-append date" id="schedulePeriodStart" data-date="{{ entity.startTime|date('M-d-y') }}" data-date-format="MM-dd-yyyy">
+            {{ form_widget(edit_form.startTime) }}
+            <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+        {{ form_label(edit_form.endTime) }}
+        <div class="input-append date" id="schedulePeriodEnd" data-date="{{ entity.endTime|date('M-d-y') }}" data-date-format="MM-dd-yyyy">
+            {{ form_widget(edit_form.endTime) }}
+            <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+        {{ form_rest(edit_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Edit</button> <a class="btn" href="{{ path('schedule_period_view', { 'id': entity.id }) }}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
