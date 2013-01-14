@@ -6,8 +6,12 @@
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.js') }}"></script>
 <script type="text/javascript">
-$('.datepicker').datepicker({
-    format: 'mm-dd-yyyy',
+$('#schedulePeriodStart').datepicker({
+    format: 'MM-dd-yyyy',
+    autoclose: true
+});
+$('#schedulePeriodEnd').datepicker({
+    format: 'MM-dd-yyyy',
     autoclose: true
 });
 </script>
@@ -16,9 +20,20 @@ $('.datepicker').datepicker({
 <div class="span6">
     <h3>Create a New Schedule Period</h3>
     <form action="{{ path('schedule_period_new') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+        {{ form_label(form.startTime) }}
+        <div class="input-append date" id="schedulePeriodStart" data-date="{{ 'now'|date('M-d-Y') }}" data-date-format="MM-dd-yyyy">
+            {{ form_widget(form.startTime) }}
+            <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+        {{ form_label(form.endTime) }}
+        <div class="input-append date" id="schedulePeriodEnd" data-date="{{ 'now'|date('M-d-Y') }}" data-date-format="MM-dd-yyyy">
+            {{ form_widget(form.endTime) }}
+            <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+        {{ form_rest(form) }}
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Create</button><a class="btn" href="{{ path('schedule_period') }}">Cancel</a>
+            <button type="submit" class="btn btn-primary">Create</button> <a class="btn" href="{{ path('schedule_periods') }}">Cancel</a>
         </div>
     </form>
 </div>
