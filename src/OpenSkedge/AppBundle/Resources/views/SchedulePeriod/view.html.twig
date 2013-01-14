@@ -1,41 +1,57 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<style type="text/css">
+h3,
+form,
+#form {
+    display: inline;
+}
+h3 {
+    margin-right: 10px;
+}
+.btn-group {
+    top: -4px;
+}
+</style>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>Schedules for {{ entity }}</h3>
-
-<table class="table table-condensed">
-    <tbody>
-        <tr>
-            <th>ID</th>
-            <td>{{ schedule.id }}</td>
-        </tr>
-        <tr>
-            <th>Position</th>
-            <td>{{ schedule.position }}</td>
-        </tr>
-        <tr>
-            <th>End Date</th>
-            <td>{{ entity.endTime|date('M-d-Y') }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('schedules') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('schedule_period_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('schedule_period_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    <h3>{{ entity }}</h3>
+    <form action="{{ path('schedule_period_delete', { 'id': entity.id }) }}" method="post">
+    <div class="btn-group-header btn-group">
+        <a class="btn" href="{{ path('schedule_period_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
+        {{ form_widget(delete_form) }}
+        <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+    </div>
+    </form>
+    <h4>Available Users</h4>
+    <hr>
+    {% if not avails is defined or avails is empty %}
+    <div class="alert">
+        <strong>Sorry!</strong> No available users were found for this schedule period.
+    </div>
+    {% else %}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for avail in avails %}
+            <tr>
+                <td>{{ avail.user.name }}</td>
+                <td><a href="{{ path('user_view', { 'id': avail.user.id }) }}">{{ avail.user.username }}</a></td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View Schedule</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
 {% endblock %}

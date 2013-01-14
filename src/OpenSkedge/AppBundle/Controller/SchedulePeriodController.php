@@ -45,10 +45,15 @@ class SchedulePeriodController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
+        $avails = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findBy(array(
+            'schedulePeriod' => $id
+        ));
+
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('OpenSkedgeBundle:SchedulePeriod:view.html.twig', array(
             'entity'      => $entity,
+            'avails'      => $avails,
             'delete_form' => $deleteForm->createView(),
         ));
     }
