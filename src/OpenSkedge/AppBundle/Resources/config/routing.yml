@@ -150,21 +150,21 @@ position_delete:
         _method:  POST
 
 position_schedule_edit:
-    pattern:  /area/position/{pid}/period/{spid}/schedule/edit
+    pattern:  /schedule/period/{spid}/position/{pid}/edit
     defaults: { _controller: OpenSkedgeBundle:Schedule:edit }
     requirements:
         pid: \d+
         spid: \d+
 
 position_schedule_view:
-    pattern:  /area/position/{pid}/period/{spid}/schedule/
+    pattern:  /schedule/period/{spid}/position/{pid}/
     defaults: { _controller: OpenSkedgeBundle:Schedule:view }
     requirements:
         pid: \d+
         spid: \d+
 
 position_schedule_delete:
-    pattern:  /area/position/{pid}/period/{spid}/schedule/delete
+    pattern:  /schedule/period/{spid}/position/{pid}/delete
     defaults: { _controller: OpenSkedgeBundle:Schedule:delete }
     requirements:
         pid: \d+
