@@ -10,21 +10,20 @@ class SchedulePeriodType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $today = new \DateTime('now');
         $builder
             ->add('startTime', 'date', array(
                   'widget' => 'single_text',
                   'label' => 'Start Date',
                   'format' => 'MM-dd-yyyy',
-                  'empty_value' => 'mm-dd-yyyy',
-                  'attr' => array('class'=>'datepicker'))
-                 )
+                  'empty_value' => $today->format('M-d-y'),
+                 ))
             ->add('endTime', 'date', array(
                   'widget' => 'single_text',
                   'label' => 'End Date',
                   'format' => 'MM-dd-yyyy',
                   'empty_value' => 'mm-dd-yyyy',
-                  'attr' => array('class'=>'datepicker'))
-                 )
+                 ))
         ;
     }
 
