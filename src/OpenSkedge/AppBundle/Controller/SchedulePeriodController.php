@@ -133,7 +133,7 @@ class SchedulePeriodController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('schedule_period'));
+        return $this->redirect($this->generateUrl('schedule_periods'));
     }
 
     private function createDeleteForm($id)
