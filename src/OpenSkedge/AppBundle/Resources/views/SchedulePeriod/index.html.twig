@@ -2,10 +2,11 @@
 {% block modulecontent %}
 <div class="span12">
     <h3>Schedule Periods</h3>
+    <a class="btn btn-primary" href="{{ path('schedule_period_new') }}">Add Schedule Period</a>
     <table class="table table-condensed">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Actions</th>
@@ -35,13 +36,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('schedule_period_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
 </div>
 {% endblock %}
