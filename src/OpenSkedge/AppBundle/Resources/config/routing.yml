@@ -75,20 +75,36 @@ user_schedule_view:
         uid: \d+
         spid: \d+
 
-user_employees:
+my_employees:
     pattern:  /user/employees/
+    defaults: { _controller: OpenSkedgeBundle:User:employees, id: ~ }
+
+my_supervisors:
+    pattern:  /user/supervisors/
+    defaults: { _controller: OpenSkedgeBundle:User:supervisors, id: ~ }
+
+my_colleagues:
+    pattern:  /user/colleagues/
+    defaults: { _controller: OpenSkedgeBundle:User:colleagues, id: ~ }
+
+my_positions:
+    pattern:  /user/positions/
+    defaults: { _controller: OpenSkedgeBundle:Position:positions, id: ~ }
+
+user_employees:
+    pattern:  /user/{id}/employees/
     defaults: { _controller: OpenSkedgeBundle:User:employees }
 
 user_supervisors:
-    pattern:  /user/supervisors/
+    pattern:  /user/{id}/supervisors/
     defaults: { _controller: OpenSkedgeBundle:User:supervisors }
 
 user_colleagues:
-    pattern:  /user/colleagues/
+    pattern:  /user/{id}/colleagues/
     defaults: { _controller: OpenSkedgeBundle:User:colleagues }
 
 user_positions:
-    pattern:  /user/positions/
+    pattern:  /user/{id}/positions/
     defaults: { _controller: OpenSkedgeBundle:Position:positions }
 
 users:
