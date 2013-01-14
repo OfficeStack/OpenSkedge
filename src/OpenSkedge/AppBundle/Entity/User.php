@@ -126,12 +126,13 @@ class User implements AdvancedUserInterface, \Serializable
      *      joinColumns={@ORM\JoinColumn(name="emp_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sup_id", referencedColumnName="id")}
      *      )
+     * @ORM\OrderBy({"name" = "ASC"})
      **/
     private $supervisors;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="supervisors")
-     *
+     * @ORM\OrderBy({"name" = "ASC"})
      **/
     private $employees;
 
