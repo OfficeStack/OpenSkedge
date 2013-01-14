@@ -19,3 +19,11 @@
 .p3 {
     background-color: #EEeeFF;
 }
+.avail-user {
+    border-radius: 2px;
+    padding: 2px;
+    padding-left: 4px;
+}
+.avail-user a {
+    color: #000;
+}

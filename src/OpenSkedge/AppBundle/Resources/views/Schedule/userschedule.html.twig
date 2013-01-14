@@ -31,15 +31,16 @@
         <tr>
             <td>{{ htime|date("g:i a") }}</td>
         {% for j in 0..6 %}
+    {% spaceless %}
         <td id="cell-{{ i * sectiondiv }}-{{ j }}" {% if avail.week[j][i * sectiondiv] == '1' %}class="p1"{% elseif avail.week[j][i * sectiondiv] == '2' %}class="p2"{% elseif avail.week[j][i * sectiondiv] == '3' %}class="p3"{% else %}class="p0"{% endif %}{% if edit|default(false) or create|default(false) %} onmouseover="hilitecell(this);" onmouseout="unhilitecell(this);" onclick="setcell(this,{{ i * sectiondiv }}, {{ j }});"{% endif %}>
         {% if not create|default(false) %}
             {% for schedule in schedules %}
                 {% if schedule.week[j][i * sectiondiv] == '1' %}<small>{{ schedule.position.area.name }} - {{ schedule.position.name }}</small>{% endif %}
             {% endfor %}
         {% endif %}
-        </td>
+        {% endspaceless %}</td>
         {% endfor %}{% set htime = htime|date_modify(next_section) %}
-    </tr>
+</tr>
 {% endfor %}
 {% if edit|default(false) or create|default(false) %}
 <tr>

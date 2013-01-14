@@ -1,0 +1,181 @@
+<?php
+
+namespace OpenSkedge\AppBundle\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use OpenSkedge\AppBundle\Entity\Schedule;
+use OpenSkedge\AppBundle\Form\ScheduleType;
+
+/**
+ * Schedule controller.
+ *
+ */
+class ScheduleController extends Controller
+{
+    /**
+     * Lists all Schedule entities.
+     *
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('OpenSkedgeBundle:Schedule')->findAll();
+
+        return $this->render('OpenSkedgeBundle:Schedule:index.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    /**
+     * Finds and displays a Schedule entity.
+     *
+     */
+    public function viewAction($pid, $spid)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $position = $em->getRepository('OpenSkedgeBundle:Position')->find($pid);
+
+        if (!$position) {
+            throw $this->createNotFoundException('Unable to find Position entity.');
+        }
+
+        $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
+
+        if(!$schedulePeriod) {
+            throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
+        }
+
+        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
+            'schedulePeriod' => $spid,
+            'position'       => $pid
+        ));
+
+        return $this->render('OpenSkedgeBundle:Schedule:view.html.twig', array(
+            'htime'         => mktime(0,0,0,1,1),
+            'resolution'    => "1 hour",
+            'schedulePeriod'=> $schedulePeriod,
+            'position'      => $position,
+            'schedules'     => $schedules,
+        ));
+    }
+
+    /**
+     * Edits an existing Schedule entity.
+     *
+     */
+    public function editAction(Request $request, $pid, $spid)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $position = $em->getRepository('OpenSkedgeBundle:Position')->find($pid);
+
+        if (!$position) {
+            throw $this->createNotFoundException('Unable to find Position entity.');
+        }
+
+        $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
+
+        if(!$schedulePeriod) {
+            throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
+        }
+
+        $availSchedules = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findBy(array(
+            'schedulePeriod' => $spid
+        ));
+
+        $deleteForm = $this->createDeleteForm($pid, $spid);
+
+        if ($request->getMethod() == 'POST') {
+            $sectiondiv = $request->request->get('sectiondiv');
+            for($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
+                for($day = 0; $day < 7; $day++) {
+                    $hourtxt = "hour-".$timesect."-".$day;
+                    $hour = $request->request->get($hourtxt);
+                    if(!empty($hour)) {
+                        foreach($hour as $uid) {
+                            $schedule = $em->getRepository('OpenSkedgeBundle:Schedule')->findOneBy(array('schedulePeriod' => $spid, 'position' => $pid, 'user' => $uid));
+                            if(!$schedule) {
+                                $schedule = new Schedule();
+                                $tuser = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
+                                if(!$tuser)
+                                    throw $this->createNotFoundException('Unable to find User entity');
+                                $schedule->setUser($tuser);
+                                $schedule->setSchedulePeriod($schedulePeriod);
+                                $schedule->setPosition($position);
+                            }
+                            for($sectpart=0; $sectpart < $sectiondiv; $sectpart++) {
+                                $schedule->setDayOffset($day, $timesect+$sectpart, 1);
+                            }
+                            $em->persist($schedule);
+                            $em->flush();
+                        }
+                    }
+                }
+            }
+
+            return $this->redirect($this->generateUrl('position_schedule_view', array(
+                'pid' => $pid,
+                'spid' => $spid
+            )));
+        }
+
+        return $this->render('OpenSkedgeBundle:Schedule:edit.html.twig', array(
+            'htime'         => mktime(0,0,0,1,1),
+            'resolution'    => "1 hour",
+            'schedulePeriod'=> $schedulePeriod,
+            'position'      => $position,
+            'availSchedules'     => $availSchedules,
+            'edit'          => true,
+            'deleteForm'    => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a Schedule entity.
+     *
+     */
+    public function deleteAction(Request $request, $pid, $spid)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        $form = $this->createDeleteForm();
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
+                'schedulePeriod' => $spid,
+                'position' => $pid
+            ));
+
+            if (!$schedules) {
+                throw $this->createNotFoundException('Unable to find Schedule entity.');
+            }
+            foreach($schedules as $schedule)
+            {
+                $em->remove($schedules);
+            }
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('schedule'));
+    }
+
+    private function createDeleteForm()
+    {
+        return $this->createFormBuilder()
+            ->getForm()
+        ;
+    }
+}

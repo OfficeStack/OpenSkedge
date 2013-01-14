@@ -1,0 +1,70 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ appname }} - {{ position.area.name }}\{{ position.name }} schedule for {{ schedulePeriod }}{% endblock %}
+{% if resolution == "15 mins" %}
+{% set sectiondiv = 1 %}
+{% set sectionlen = 95 %}
+{% set next_section = "+15 minutes" %}
+{% elseif resolution == "30 mins" %}
+{% set sectiondiv = 2 %}
+{% set sectionlen = 47 %}
+{% set next_section = "+30 minutes" %}
+{% else %}
+{% set sectiondiv = 4 %}
+{% set sectionlen = 23 %}
+{% set next_section = "+1 hour" %}
+{% endif %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>Editing {{ position.area.name }}\{{ position.name }} schedule for {{ schedulePeriod }}</h3>
+    <form action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="post" name="scheduleform">
+        <input type="hidden" name="sectiondiv" value="{{ sectiondiv }}">
+        <table class="table table-condensed table-bordered schedule-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody>{% for i in 0..sectionlen %}
+                <tr>
+                    <td>{{ htime|date("g:i a") }}</td>
+                {% for j in 0..6 %}
+    {% spaceless %}
+                    <td>
+        {% for avail in availSchedules %}
+            {% if avail.user.schedules is not empty %}
+            {% for schedule in avail.user.schedules %}
+                {% if schedule.schedulePeriod.id == schedulePeriod.id  and schedule.position.id == position.id %}
+                {% if avail.week[j][i * sectiondiv] != '0' %}
+                    {% if schedule.week[j][i * sectiondiv] == '0' or (schedule.week[j][i * sectiondiv] == '1' and schedule.position.id == position.id) %}
+                    <div class="avail-user" style="background-color: {{ avail.user.color }}">
+                        <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.user.id }}"{% if schedule.week[j][i * sectiondiv] == '1' and schedule.position.id == position.id %} checked{% endif %} {% if not edit|default(false) and not create|default(false) %} disabled onclick="return false"{% endif %} /><a href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.week[j][i * sectiondiv] }} - {{ avail.user.name }}</a>
+                    </div>
+                    {% endif %}
+                {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% else %}
+                {% if avail.week[j][i * sectiondiv] != '0' %}
+                    <div class="avail-user" style="background-color: {{ avail.user.color }}">
+                        <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.user.id }}"{% if not edit|default(false) and not create|default(false) %} disabled onclick="return false"{% endif %} /><a href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.week[j][i * sectiondiv] }} - {{ avail.user.name }}</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+                </td>{% endspaceless %}
+                {% endfor %}{% set htime = htime|date_modify(next_section) %}
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+        <button class="btn btn-primary" type="submit">Save Schedule</button>
+    </form>
+</div>
+{% endblock %}
