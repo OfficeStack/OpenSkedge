@@ -1,9 +1,15 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block title %}{{ appname }} - My Schedules{% endblock %}
+{% block title %}{{ appname }} - {{ title }}{% endblock %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>My Schedules</h3>
+    <h3>{{ title }}</h3>
+    {% if user.id == app.user.id %}
     <a class="btn btn-primary" href="{{ path('user_schedule_pre_new') }}">Add Schedule</a>
+    {% endif %}
+    {% if entities is empty %}
+    <div class="alert">
+        <strong>Sorry!</strong> {% if user.id == app.user.id %}You have no schedules.{% else %}{{ user.name }} has not made any schedules.{% endif %}
+    {% else %}
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -20,12 +26,13 @@
                 <td>
                     <a class="btn btn-primary" href="{{ path('user_schedule_view', { 'uid': entity.user.id, 'spid': entity.schedulePeriod.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
                     {% if entity.user.id == app.user.id %}
-                    <a class="btn btn-primary" href="{{ path('user_schedule_edit', { 'id': entity.id }) }}"><i class="icon-pencil icon-white"></i> Edit</a>
+                    <a class="btn btn-primary" href="{{ path('user_schedule_edit', { 'uid': entity.user.id, 'spid': entity.schedulePeriod.id }) }}"><i class="icon-pencil icon-white"></i> Edit</a>
                     {% endif %}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 </div>
 {% endblock %}
