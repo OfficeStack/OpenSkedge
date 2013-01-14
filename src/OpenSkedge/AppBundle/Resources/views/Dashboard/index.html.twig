@@ -49,7 +49,7 @@ $(document).ready(function () {
         <ul class="nav nav-list">
           <li class="nav-header">My Actions</li>
           <li><a href="{{ path('dashboard') }}">Dashboard</a></li>
-          <li><a href="{{ path('user_schedules') }}">Schedules</a></li>
+          <li><a href="{{ path('my_schedules') }}">Schedules</a></li>
           <li><a href="{{ path('user') }}">Profile</a></li>
           {% if is_granted('ROLE_ADMIN') %}
           <li><a href="{{ path('user_employees') }}">Employees</a></li>
@@ -59,9 +59,10 @@ $(document).ready(function () {
           <li><a href="{{ path('user_positions') }}">Positions</a></li>
           {% if is_granted('ROLE_ADMIN') %}
           <li class="nav-header">Supervisor Actions</li>
-          <li><a href="{{ path('users') }}">Users</a></li>
           <li><a href="{{ path('areas') }}">Areas &amp; Positions</a></li>
-          <li><a href="{{ path('reports') }}">Reports</a></li>
+          {#<li><a href="{{ path('reports') }}">Reports</a></li>#}
+          <li><a href="{{ path('schedule_periods') }}">Schedule</a></li>
+          <li><a href="{{ path('users') }}">Users</a></li>
           {% endif %}
           {{ include('::links.html.twig', ignore_missing = true) }}
           <li class="nav-header">{{ appname }}</li>
