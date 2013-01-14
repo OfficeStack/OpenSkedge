@@ -6,14 +6,8 @@
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.js') }}"></script>
 <script type="text/javascript">
-$('#schedulePeriodStart').datepicker({
-    format: 'MM-dd-yyyy',
-    autoclose: true
-});
-$('#schedulePeriodEnd').datepicker({
-    format: 'MM-dd-yyyy',
-    autoclose: true
-});
+$('#schedulePeriodStart').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
+$('#schedulePeriodEnd').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
 </script>
 {% endblock %}
 {% block modulecontent %}
@@ -22,12 +16,12 @@ $('#schedulePeriodEnd').datepicker({
     <form action="{{ path('schedule_period_new') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
         {{ form_label(form.startTime) }}
-        <div class="input-append date" id="schedulePeriodStart" data-date="{{ 'now'|date('M-d-Y') }}" data-date-format="MM-dd-yyyy">
+        <div class="input-append date" id="schedulePeriodStart">
             {{ form_widget(form.startTime) }}
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
         {{ form_label(form.endTime) }}
-        <div class="input-append date" id="schedulePeriodEnd" data-date="{{ 'now'|date('M-d-Y') }}" data-date-format="MM-dd-yyyy">
+        <div class="input-append date" id="schedulePeriodEnd">
             {{ form_widget(form.endTime) }}
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
