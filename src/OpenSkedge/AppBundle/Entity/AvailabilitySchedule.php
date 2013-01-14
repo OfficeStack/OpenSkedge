@@ -290,12 +290,11 @@ class AvailabilitySchedule
     /**
      * Set lastupdated
      *
-     * @param integer $lastupdated
      * @return Schedule
      */
-    public function setLastUpdated($lastupdated)
+    public function setLastUpdated()
     {
-        $this->lastUpdated = $lastupdated;
+        $this->lastUpdated = time();
 
         return $this;
     }
