@@ -183,8 +183,8 @@ clock_out:
     requirements:
         _method:  POST
 
-schedules:
-    pattern:  /schedules/
+schedule_periods:
+    pattern:  /schedule/periods/
     defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:index }
 
 schedule_period_new:
