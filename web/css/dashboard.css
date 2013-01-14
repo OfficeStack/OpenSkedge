@@ -7,6 +7,9 @@
 .sidebar-nav a {
     color: #059;
 }
+.nav>li>a:hover {
+    background-color: #ddd;
+}
 #clock {
     text-align: center;
 }
