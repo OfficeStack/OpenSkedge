@@ -9,8 +9,8 @@
 {% block modulecontent %}
 <div class="span12">
     <h3>Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
-    <form action="{{ path('user_schedule_edit', { 'id': avail.id }) }}" method="post" name="scheduleform">
-        <table class="schedule-table">
+    <form action="{{ path('user_schedule_edit', { 'spid': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
+        <table class="table table-condensed table-bordered schedule-table">
             <tr>
                 <td class="p0"><input type="radio" name="priority" value="0"> Unavailable</td>
                 <td class="p1"><input type="radio" name="priority" value="1"> Low Preference</td>
@@ -26,7 +26,7 @@
         <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
         <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
         {% include 'OpenSkedgeBundle:Schedule:userschedule.html.twig' %}
-        <button class="btn btn-primary" type="submit" name="save">Save Schedule</button>
+        <button class="btn btn-primary" type="submit" name="save">Save Schedule</button> <a class="btn" href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}">Back</a>
     </form>
 </div>
 {% endblock %}
