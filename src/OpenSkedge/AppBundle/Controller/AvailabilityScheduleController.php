@@ -18,13 +18,26 @@ class AvailabilityScheduleController extends Controller
      * Lists all AvailabilitySchedule entities.
      *
      */
-    public function indexAction()
+    public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+        if(is_null($id)) {
+            $user = $this->getUser();
+            $title = 'My Schedules';
+        } else {
+            $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Unable to find User');
+            }
+            $title = $user->getName()."'s Schedules";
+        }
+
         $entities = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findByUser($user);
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:index.html.twig', array(
+            'title'    => $title,
+            'user'     => $user,
             'entities' => $entities,
         ));
     }
@@ -56,7 +69,7 @@ class AvailabilityScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
-        $deleteForm = $this->createDeleteForm($entity->getId());
+        $deleteForm = $this->createDeleteForm($uid, $spid);
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:view.html.twig', array(
             'htime'     => mktime(0,0,0,1,1),
@@ -88,17 +101,32 @@ class AvailabilityScheduleController extends Controller
      * Creates a new AvailabilitySchedule entity.
      *
      */
-    public function newAction(Request $request, $id)
+    public function newAction(Request $request, $spid)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
+        $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
 
         if (!$schedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
         $user = $this->getUser();
+
+        $existing = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findBy(array(
+            'user' => $user->getId(),
+            'schedulePeriod' => $spid
+        ));
+
+        if(!empty($existing)) {
+            return $this->render('OpenSkedgeBundle::error.html.twig', array(
+                'action' => 'New Availability Schedule',
+                'error' => array(
+                    'title' => 'Availability Schedule Already Exists',
+                    'msg' => 'You already have an availability schedule for the schedule period you selected.'
+                    )
+            ));
+        }
 
         $entity = new AvailabilitySchedule();
 
@@ -134,12 +162,16 @@ class AvailabilityScheduleController extends Controller
      * Edits an existing AvailabilitySchedule entity.
      *
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $spid)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->find($id);
         $user = $this->getUser();
+
+        $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array(
+            'user' => $user->getId(),
+            'schedulePeriod' => $spid
+        ));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
@@ -149,11 +181,9 @@ class AvailabilityScheduleController extends Controller
             throw new AccessDeniedException();
         }
 
-        $schedulePeriod = $entity->getSchedulePeriod();
+        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $spid, 'user' => $user->getId()));
 
-        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($user->getId(), $spid);
 
         if ($request->getMethod() == 'POST') {
             $data = $request->request->get('day');
@@ -164,12 +194,15 @@ class AvailabilityScheduleController extends Controller
             $entity->setThu($data[4]);
             $entity->setFri($data[5]);
             $entity->setSat($data[6]);
-            $entity->setLastUpdated(time());
+            $entity->setLastUpdated();
 
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_schedule_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('user_schedule_edit', array(
+                'user'=> $user->getId(),
+                'spid' => $id
+            )));
         }
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:edit.html.twig', array(
@@ -186,14 +219,14 @@ class AvailabilityScheduleController extends Controller
      * Deletes a AvailabilitySchedule entity.
      *
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $uid, $spid)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($uid, $spid);
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->find($id);
+            $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy();
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
@@ -210,10 +243,11 @@ class AvailabilityScheduleController extends Controller
         return $this->redirect($this->generateUrl('user_availability'));
     }
 
-    private function createDeleteForm($id)
+    private function createDeleteForm($uid, $spid)
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
+        return $this->createFormBuilder(array('uid' => $uid, 'spid' => $spid))
+            ->add('uid', 'hidden')
+            ->add('spid', 'hidden')
             ->getForm()
         ;
     }
