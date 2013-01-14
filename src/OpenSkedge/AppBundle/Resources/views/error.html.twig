@@ -1,0 +1,11 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ appname }} - Error - {{ error.title }}{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>{{ action }}</h3>
+    <hr>
+    <div class="alert alert-error">
+        <strong>Error!</strong> {{ error.msg }}
+    </div>
+</div>
+{% endblock %}
