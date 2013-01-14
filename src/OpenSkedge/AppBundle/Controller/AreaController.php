@@ -23,7 +23,9 @@ class AreaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OpenSkedgeBundle:Area')->findAll();
+        $entities = $em->getRepository('OpenSkedgeBundle:Area')->findBy(array(), array(
+            'name' => 'ASC'
+        ));
 
         return $this->render('OpenSkedgeBundle:Area:index.html.twig', array(
             'entities' => $entities,
@@ -39,7 +41,7 @@ class AreaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
-        $positions = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array('area' => $id), array("name" => 'DESC'));
+        $positions = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array('area' => $id), array("name" => 'ASC'));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Area entity.');
