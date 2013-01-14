@@ -31,6 +31,7 @@ class Group implements RoleInterface
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="group")
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $users;
 
