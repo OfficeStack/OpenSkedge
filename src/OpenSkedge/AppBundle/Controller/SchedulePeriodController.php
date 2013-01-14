@@ -101,13 +101,15 @@ class SchedulePeriodController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new SchedulePeriodType(), $entity);
-        $editForm->bind($request);
+        if ($request->getMethod() == 'POST') {
+            $editForm->bind($request);
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
+            if ($editForm->isValid()) {
+                $em->persist($entity);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('schedule_period_edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('schedule_period_view', array('id' => $id)));
+            }
         }
 
         return $this->render('OpenSkedgeBundle:SchedulePeriod:edit.html.twig', array(
