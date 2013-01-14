@@ -89,4 +89,44 @@ class Area
     {
         return $this->description;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->positions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add positions
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Position $positions
+     * @return Area
+     */
+    public function addPosition(\OpenSkedge\AppBundle\Entity\Position $positions)
+    {
+        $this->positions[] = $positions;
+
+        return $this;
+    }
+
+    /**
+     * Remove positions
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Position $positions
+     */
+    public function removePosition(\OpenSkedge\AppBundle\Entity\Position $positions)
+    {
+        $this->positions->removeElement($positions);
+    }
+
+    /**
+     * Get positions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
 }
