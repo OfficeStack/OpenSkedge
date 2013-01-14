@@ -87,8 +87,8 @@ class AvailabilityScheduleController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) {
-                $id = $form->getData()->getSchedulePeriod()->getId();
-                return $this->redirect($this->generateUrl('user_schedule_new', array('id' => $id)));
+                $spid = $form->getData()->getSchedulePeriod()->getId();
+                return $this->redirect($this->generateUrl('user_schedule_new', array('spid' => $spid)));
             }
         }
 
@@ -147,7 +147,10 @@ class AvailabilityScheduleController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_schedule_view', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('user_schedule_view', array(
+                'uid'  => $user->getId(),
+                'spid' => $spid
+            )));
         }
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:new.html.twig', array(

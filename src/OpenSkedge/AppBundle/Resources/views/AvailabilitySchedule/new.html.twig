@@ -9,7 +9,7 @@
 {% block modulecontent %}
 <div class="span12">
     <h3>New Availability Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
-    <form action="{{ path('user_schedule_new', { 'id': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
+    <form action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
         <table class="schedule-table">
             <tr>
                 <td class="p0"><input type="radio" name="priority" value="0"> Unavailable</td>
