@@ -22,7 +22,9 @@ class SchedulePeriodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findAll();
+        $entities = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findBy(array(), array(
+            'endTime' => 'DESC'
+        ));
 
         return $this->render('OpenSkedgeBundle:SchedulePeriod:index.html.twig', array(
             'entities' => $entities,
