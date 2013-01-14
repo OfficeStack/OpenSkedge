@@ -8,7 +8,7 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/schedule-table.css') }}" rel="stylesheet" type="text/css" />
-        {% block stylesheets %}{% endblock %}
+        {% spaceless %}{% block stylesheets %}{% endblock %}{% endspaceless %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
@@ -19,7 +19,7 @@
         <![endif]-->
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        {% block javascripts %}{% endblock %}
+        {% spaceless %}{% block javascripts %}{% endblock %}{% endspaceless %}
         <footer>
             <div class="container">
                 <p class="muted credit">Powered by <a href="http://www.openskedge.org">OpenSkedge</a> version {{ version }} &middot; Copyright &copy; 2012-{{ "now"|date("Y") }} OpenSkedge contributors &middot; Licensed under the GNU GPL version 2 or later</p>
