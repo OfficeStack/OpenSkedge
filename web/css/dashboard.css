@@ -4,6 +4,9 @@
 .sidebar-nav {
     padding: 9px 0;
 }
+.sidebar-nav a {
+    color: #059;
+}
 #clock {
     text-align: center;
 }
