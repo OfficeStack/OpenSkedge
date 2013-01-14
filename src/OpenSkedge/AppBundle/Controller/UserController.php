@@ -185,15 +185,28 @@ class UserController extends Controller
     /**
      * Lists all supervisors for the User.
      */
-    public function supervisorsAction()
+    public function supervisorsAction($id)
     {
-        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        if(is_null($id)) {
+            $user = $this->getUser();
+            $userstitle = 'My Supervisors';
+        } else {
+            $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Unable to find User.');
+            }
+
+            $userstitle = $user->getName()."'s Supervisors";
+        }
 
         $entities = $user->getSupervisors();
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
-            'userstitle' => 'My Supervisors',
+            'userstitle' => $userstitle,
             'entities' => $entities,
         ));
     }
@@ -201,24 +214,48 @@ class UserController extends Controller
     /**
      * Lists all employees for the User.
      */
-    public function employeesAction()
+    public function employeesAction($id)
     {
-        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        if(is_null($id)) {
+            $user = $this->getUser();
+            $userstitle = 'My Employees';
+        } else {
+            $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Unable to find User.');
+            }
+
+            $userstitle = $user->getName()."'s Employees";
+        }
 
         $entities = $user->getEmployees();
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
-            'userstitle' => 'My Employees',
+            'userstitle' => $userstitle,
             'entities' => $entities,
         ));
     }
 
-    public function colleaguesAction()
+    public function colleaguesAction($id)
     {
-        $user = $this->getUser();
-
         $em = $this->getDoctrine()->getManager();
+
+        if(is_null($id)) {
+            $user = $this->getUser();
+            $userstitle = 'My Colleagues';
+        } else {
+            $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Unable to find User.');
+            }
+
+            $userstitle = $user->getName()."'s Colleagues";
+        }
 
         $qb = $em->createQueryBuilder();
 
@@ -272,7 +309,7 @@ class UserController extends Controller
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
-            'userstitle' => 'My Colleagues',
+            'userstitle' => $userstitle,
             'entities' => $entities,
         ));
     }
