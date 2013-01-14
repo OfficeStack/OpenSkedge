@@ -35,25 +35,38 @@ user_delete:
         id: \d+
         _method:  POST
 
-user_schedules:
+my_schedules:
     pattern:  /user/schedules/
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:index, id: ~ }
+
+user_schedules:
+    pattern:  /user/{id}/schedules/
     defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:index }
+    requirements:
+        id: \d+
 
 user_schedule_pre_new:
     pattern:  /user/schedule/new
     defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:precreate }
 
 user_schedule_new:
-    pattern:  /user/schedule/period/{id}/new
+    pattern:  /user/schedule/period/{spid}/new
     defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:new }
     requirements:
-        id: \d+
+        spid: \d+
 
 user_schedule_edit:
-    pattern:  /user/schedule/{id}/edit
+    pattern:  /user/schedule/period/{spid}/edit
     defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:edit }
     requirements:
-        id: \d+
+        spid: \d+
+
+user_schedule_delete:
+    pattern:  /user/{uid}/schedule/period/{spid}/delete
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule: delete }
+    requirements:
+        uid: \d+
+        spid: \d+
 
 user_schedule_view:
     pattern:  /user/{uid}/schedule/period/{spid}/
