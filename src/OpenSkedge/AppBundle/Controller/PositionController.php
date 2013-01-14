@@ -149,11 +149,22 @@ class PositionController extends Controller
         return $this->redirect($this->generateUrl('position'));
     }
 
-    public function positionsAction()
+    public function positionsAction($id)
     {
-        $user = $this->getUser();
-
         $em = $this->getDoctrine()->getManager();
+
+        if(is_null($id)) {
+            $user = $this->getUser();
+            $userstitle = 'My Positions';
+        } else {
+            $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Unable to find User.');
+            }
+
+            $userstitle = $user->getName()."'s Positions";
+        }
 
         $qb = $em->createQueryBuilder();
 
@@ -186,6 +197,7 @@ class PositionController extends Controller
         $entities = array_unique($entities);
 
         return $this->render('OpenSkedgeBundle:Position:index.html.twig', array(
+            'userstitle' => $userstitle,
             'entities' => $entities,
         ));
     }

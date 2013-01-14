@@ -1,8 +1,14 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block title %}{{ appname }} - My Positions{% endblock %}
+{% block title %}{{ appname }} - {{ userstitle }}{% endblock %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>My Positions</h3>
+    <h3>{{ userstitle }}</h3>
+    {% if entities is empty %}
+    <hr>
+    <div class="alert">
+        <strong>Sorry!</strong> No positions were found.
+    </div>
+    {% else %}
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -24,6 +30,7 @@
         {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 </div>
 {% endblock %}
 
