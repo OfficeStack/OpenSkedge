@@ -6,7 +6,6 @@
     <table class="table table-condensed">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Actions</th>
@@ -15,7 +14,6 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('schedule_period_view', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.startTime|date('M-d-Y') }}</td>
                 <td>{{ entity.endTime|date('M-d-Y') }}</td>
                 <td>
