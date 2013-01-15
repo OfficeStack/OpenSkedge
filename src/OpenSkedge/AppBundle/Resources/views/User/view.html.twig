@@ -32,12 +32,13 @@ h3 {
         {% endif %}
     </div>
     </form>
-    {% elseif app.user.id == entity.id %}
-    <div class="btn-group">
-        <a class="btn" href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
-    </div>
     {% endif %}
-
+    <div class="btn-group">
+        <a class="btn btn-info" href="{{ path('user_schedules', { 'id': entity.id }) }}">Schedules</a>
+        <a class="btn btn-info" href="{{ path('user_positions', { 'id': entity.id }) }}">Positions</a>
+        <a class="btn btn-info" href="{{ path('user_supervisors', { 'id': entity.id }) }}">Supervisors</a>
+        <a class="btn btn-info" href="{{ path('user_employees', { 'id': entity.id }) }}">Employees</a>
+    </div>
     <table class="table table-condensed">
         <tbody>
             <tr>
