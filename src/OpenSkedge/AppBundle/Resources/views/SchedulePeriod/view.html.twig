@@ -25,6 +25,9 @@ h3 {
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
     </div>
     </form>
+    <br>
+    <a class="btn btn-primary" href="{{ path('position_schedule_select', { 'spid': entity.id }) }}"><i class="icon-calendar icon-white"></i> Schedule a Position</a>
+    <br>
     <h4>Available Users</h4>
     <hr>
     {% if not avails is defined or avails is empty %}
