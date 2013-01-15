@@ -56,7 +56,7 @@ class Position
 
     public function __toString()
     {
-        return $this->id." ".$this->name;
+        return $this->getArea()->getName()." - ".$this->getName();
     }
 
     /**
