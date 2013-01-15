@@ -3,12 +3,15 @@
 namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OpenSkedge\AppBundle\Entity\AvailabilitySchedule
  *
  * @ORM\Table(name="os_availability")
  * @ORM\Entity()
+ * @UniqueEntity(fields={"user", "schedulePeriod"})
  */
 class AvailabilitySchedule
 {
@@ -33,41 +36,49 @@ class AvailabilitySchedule
 
     /**
      * @ORM\Column(type="string", length=96)
+     * @Assert\Length(min="96", max="96")
      */
     private $sun;
 
     /**
      * @ORM\Column(type="string", length=96)
+     * @Assert\Length(min="96", max="96")
      */
     private $mon;
 
     /**
      * @ORM\Column(type="string", length=96)
+     * @Assert\Length(min="96", max="96")
      */
     private $tue;
 
     /**
      * @ORM\Column(type="string", length=96)
+     * @Assert\Length(min="96", max="96")
      */
     private $wed;
 
     /**
      * @ORM\Column(type="string", length=96)
+     * @Assert\Length(min="96", max="96")
      */
     private $thu;
 
     /**
      * @ORM\Column(type="string", length=96)
+     * @Assert\Length(min="96", max="96")
      */
     private $fri;
 
     /**
      * @ORM\Column(type="string", length=96)
+     * @Assert\Length(min="96", max="96")
      */
     private $sat;
 
     /**
      * @ORM\Column(type="string", length=140, nullable=true)
+     * @Assert\Length(max="140")
      */
     private $notes;
 

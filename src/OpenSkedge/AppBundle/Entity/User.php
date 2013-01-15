@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OpenSkedge\AppBundle\Entity\User
@@ -25,31 +26,45 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=30, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="4", max="30",
+     *                minMessage="Username must be {{ limit }} or more characters.",
+     *                maxMessage="Username cannot be more than {{ limit }} characters."
+     * )
+     * @Assert\Type(type="string", message="Username must be text.")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank()
      */
     private $salt;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Assert\NotBlank()
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="64",
+     *                minMessage="Name must be {{ limit }} or more characters.",
+     *                maxMessage="Name cannot be more than {{ limit }} characters."
+     * )
+     * @Assert\Type(type="string", message="Name must be text.")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $workphone;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $homephone;
 
@@ -59,7 +74,9 @@ class User implements AdvancedUserInterface, \Serializable
     private $location;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -95,6 +112,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
+     * @Assert\NotNull()
      */
     private $isActive;
 

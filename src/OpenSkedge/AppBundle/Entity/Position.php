@@ -3,6 +3,7 @@
 namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OpenSkedge\AppBundle\Entity\Position
@@ -21,11 +22,19 @@ class Position
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank(message="A Position's name cannot be left blank.")
+     * @Assert\Length(min = "2", max = "50",
+     *      minMessage = "A Position's name must be at least {{ limit }} characters length",
+     *      maxMessage = "A Position's name cannot be longer than than {{ limit }} characters length"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=300)
+     * @Assert\Length(max = "50",
+     *      maxMessage = "An Area's description cannot be longer than than {{ limit }} characters length"
+     * )
      */
     private $description;
 

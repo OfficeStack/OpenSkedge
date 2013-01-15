@@ -4,6 +4,7 @@ namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OpenSkedge\AppBundle\Entity\SchedulePeriod
@@ -28,11 +29,13 @@ class SchedulePeriod
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime(message="Invalid Start Date")
      */
     private $startTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime(message="Invalid End Date")
      */
     private $endTime;
 
