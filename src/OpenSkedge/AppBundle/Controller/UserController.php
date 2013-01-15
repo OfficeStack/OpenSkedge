@@ -119,6 +119,15 @@ class UserController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new UserType(), $entity);
+        if($id == $this->getUser()->getId()) {
+            $editForm->remove('min');
+            $editForm->remove('max');
+            $editForm->remove('color');
+            $editForm->remove('supnotes');
+            $editForm->remove('isActive');
+            $editForm->remove('group');
+            $editForm->remove('supervisors');
+        }
 
         if ($request->getMethod() == 'POST') {
             $editForm->bind($request);

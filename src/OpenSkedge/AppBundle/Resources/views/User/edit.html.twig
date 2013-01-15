@@ -37,12 +37,14 @@ h3 {
         {{ form_row(edit_form.homephone) }}
         {{ form_row(edit_form.location) }}
         {{ form_row(edit_form.email) }}
+        {% if entity.id != app.user.id %}
         {{ form_row(edit_form.min) }}
         {{ form_row(edit_form.max) }}
+        {% endif %}
         {{ form_row(edit_form.hours) }}
         {{ form_row(edit_form.notes) }}
+        {% if entity.id != app.user.id and is_granted('ROLE_ADMIN') %}
         {{ form_row(edit_form.color) }}
-        {% if is_granted('ROLE_ADMIN') %}
         {{ form_row(edit_form.supnotes) }}
         {{ form_row(edit_form.isActive) }}
         {{ form_row(edit_form.group) }}
