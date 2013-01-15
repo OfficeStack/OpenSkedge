@@ -35,6 +35,7 @@ class UserType extends AbstractType
                         'property' => 'name',
                         'multiple' => false))
                 ->add('supervisors', 'entity', array(
+                        'required' => false,
                         'label' => 'Supervisors',
                         'class' => 'OpenSkedgeBundle:User',
                         'property' => 'name',
