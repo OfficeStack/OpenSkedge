@@ -1,5 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block title %}{{ appname }} - {{ position.area.name }}\{{ position.name }} schedule for {{ schedulePeriod }}{% endblock %}
+{% block title %}{{ appname }} - {{ position.area.name }} - {{ position.name }} - Schedule for {{ schedulePeriod }}{% endblock %}
 {% if resolution == "15 mins" %}
 {% set sectiondiv = 1 %}
 {% set sectionlen = 95 %}
@@ -15,7 +15,7 @@
 {% endif %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>{{ position.area.name }}\{{ position.name }} schedule for {{ schedulePeriod }}</h3>
+    <h3>{{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
     <table class="table table-condensed table-bordered schedule-table">
         <thead>
             <tr>
