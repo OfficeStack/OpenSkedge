@@ -15,7 +15,7 @@
 {% endif %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>Editing {{ position.area.name }}\{{ position.name }} schedule for {{ schedulePeriod }}</h3>
+    <h3>Editing {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
     <form action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="post" name="scheduleform">
         <input type="hidden" name="sectiondiv" value="{{ sectiondiv }}">
         <table class="table table-condensed table-bordered schedule-table">
@@ -37,23 +37,13 @@
                 {% for j in 0..6 %}
     {% spaceless %}
                     <td>
-        {% for avail in availSchedules if avail.week[j][i * sectiondiv] != '0' and avail.schedulePeriod.id == schedulePeriod.id %}
-                {% for schedule in avail.user.schedules if schedule.schedulePeriod.id == schedulePeriod.id %}
-                    {% if schedule.position.id == position.id %}
-                    <div class="avail-user" style="background-color: {{ avail.user.color }}">
-                        <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.user.id }}"{% if schedule.week[j][i * sectiondiv] == '1' %} checked{% endif %} /><a href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.week[j][i * sectiondiv] }} - {{ avail.user.name }}</a>
-                    </div>
-                    {% elseif schedule.position.id != position.id and schedule.week[j][i * sectiondiv] == '0' %}
-                    <div class="avail-user" style="background-color: {{ avail.user.color }}">
-                        <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.user.id }}" /><a href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.week[j][i * sectiondiv] }} - {{ avail.user.name }}</a>
-                    </div>
-                    {% endif %}
-                {% else %}
-                    <div class="avail-user" style="background-color: {{ avail.user.color }}">
-                        <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.user.id }}" /><a href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.week[j][i * sectiondiv] }} - {{ avail.user.name }}</a>
-                    </div>
-                {% endfor %}
-        {% endfor %}
+                    {% for avail in availData %}
+                        {% if avail.gen.week[j][i * sectiondiv] != '1' %}
+                        <div class="avail-user" style="background-color: {{ avail.gen.user.color }}">
+                        <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.gen.user.id }}"{% if avail.gen.week[j][i * sectiondiv] == '2' %} checked{% endif %} /><a href="{{ path('user_schedule_view', { 'uid': avail.gen.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.schedule.week[j][i * sectiondiv] }} - {{ avail.gen.user.name }}</a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
                 </td>{% endspaceless %}
                 {% endfor %}{% set htime = htime|date_modify(next_section) %}
             </tr>

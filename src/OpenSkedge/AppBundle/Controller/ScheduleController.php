@@ -92,6 +92,45 @@ class ScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
+        $availData = array();
+        foreach($availSchedules as $avail)
+        {
+            /* We're using this entity as a temporary container
+             * which generates a schedule based on the user's
+             * availability schedule and any scheduled positions they may have.
+             * 0 = Pending (treated as available if present in Twig template)
+             * 1 = Unavailable (They're schedule for something else or marked unavailable)
+             * 2 = Scheduled for current position
+             * 3 = Available
+             */
+            $genAS = new Schedule();
+            $genAS->setUser($avail->getUser());
+            foreach($avail->getUser()->getSchedules() as $schedule) {
+                $isPosition = ($schedule->getPosition()->getId() == $position->getId());
+                $isSchedulePeriod = ($schedule->getSchedulePeriod()->getId() == $schedulePeriod->getId());
+                for($timesect = 0; $timesect < 96; $timesect++) {
+                    for ($day = 0; $day < 7; $day++) {
+                        // Check the availability schedule to see if the user is available at all.
+                        if($avail->getDayOffset($day, $timesect) != '0' && $isSchedulePeriod) {
+                            if($isPosition && $schedule->getDayOffset($day, $timesect) == '1') {
+                                $genAS->setDayOffset($day, $timesect, 2);
+                            } else if(!$isPosition && $schedule->getDayOffset($day, $timesect) == '1' && $genAS->getDayOffset($day, $timesect) != '2') {
+                                $genAS->setDayOffset($day, $timesect, 1);
+                            } else if ($schedule->getDayOffset($day, $timesect) == '0' && $genAS->getDayOffset($day, $timesect) == 0) {
+                                $genAS->setDayOffset($day, $timesect, 3);
+                            }
+                        } else {
+                            if($avail->getDayOffset($day, $timesect) == '0') {
+                                $genAS->setDayOffset($day, $timesect, 1);
+                            }
+                        }
+                    }
+                }
+            }
+            // Pass the user's availability schedule too, as we'll need to reference that for priorties.
+            $availData[] = array('gen' => $genAS, 'schedule' => $avail);
+        }
+
         $deleteForm = $this->createDeleteForm($pid, $spid);
 
         if ($request->getMethod() == 'POST') {
@@ -133,7 +172,7 @@ class ScheduleController extends Controller
             'resolution'    => "1 hour",
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,
-            'availSchedules'     => $availSchedules,
+            'availData'     => $availData,
             'edit'          => true,
             'deleteForm'    => $deleteForm->createView(),
         ));
