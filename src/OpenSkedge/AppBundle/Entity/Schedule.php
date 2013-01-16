@@ -110,7 +110,7 @@ class Schedule
         return array(str_split($this->getSun()), str_split($this->getMon()), str_split($this->getTue()), str_split($this->getWed()), str_split($this->getThu()), str_split($this->getFri()), str_split($this->getSat()));
     }
 
-    private function getDay($dayint)
+    public function getDay($dayint)
     {
         switch((int)$dayint) {
             case 0:
@@ -141,7 +141,7 @@ class Schedule
         return $this->$getDay();
     }
 
-    private function setDay($dayint, $val)
+    public function setDay($dayint, $val)
     {
         switch((int)$dayint) {
             case 0:
