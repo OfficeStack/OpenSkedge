@@ -23,22 +23,25 @@ class DashboardController extends Controller
          */
         $user =  $this->getUser();
 
-        try {
-            $schedulePeriod = $qb->select('sp')
-                                  ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
-                                  ->where('sp.startTime < CURRENT_TIMESTAMP()')
-                                  ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
-                                  ->orderBy('sp.endTime', 'DESC')
-                                  ->getQuery()
-                                  ->setMaxResults(1)
-                                  ->getSingleResult();
-            $avail = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
-        } catch (\Doctrine\ORM\NoResultException $e){
-            // It's cool, homie.
-            $avail = null;
+        if(empty($schedulePeriod)) {
+            try {
+                $schedulePeriod = $qb->select('sp')
+                                      ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
+                                      ->where('sp.startTime < CURRENT_TIMESTAMP()')
+                                      ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
+                                      ->orderBy('sp.endTime', 'DESC')
+                                      ->getQuery()
+                                      ->setMaxResults(1)
+                                      ->getSingleResult();
+                $avail = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
+                $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
+            } catch (\Doctrine\ORM\NoResultException $e){
+                // It's cool, homie.
+                $avail = null;
+                $schedulePeriod = null;
+                $schedules = array();
+            }
         }
-
-        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $schedulePeriod->getId(), 'user' => $user->getId()));
 
         return $this->render('OpenSkedgeBundle:Dashboard:index.html.twig', array(
             'htime'     => mktime(0,0,0,1,1),
