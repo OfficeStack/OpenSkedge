@@ -12,16 +12,16 @@
     <table class="table table-condensed">
         <thead>
             <tr>
-                <th>Position</th>
                 <th>Area</th>
+                <th>Position</th>
                 <th>Description</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('position_view', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td><a href="{{ path('area_view', { 'id': entity.area.id }) }}">{{ entity.area.name }}</td>
+                <td><a href="{{ path('position_view', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>{{ entity.description }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('position_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
