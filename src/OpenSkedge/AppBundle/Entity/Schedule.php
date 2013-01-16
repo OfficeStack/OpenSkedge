@@ -181,6 +181,13 @@ class Schedule
         return $this->setDay($dayint, $rec);
     }
 
+    public function getDayOffset($dayint, $offset)
+    {
+        $recStr = $this->getDay($dayint);
+        $recArr = str_split($recStr);
+        return $recArr[$offset];
+    }
+
     /**
      * Get id
      *
