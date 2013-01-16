@@ -1,6 +1,6 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "name": "openskedge/openskedge",
+    "description": "A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.",
     "autoload": {
         "psr-0": { "": "src/" }
     },
