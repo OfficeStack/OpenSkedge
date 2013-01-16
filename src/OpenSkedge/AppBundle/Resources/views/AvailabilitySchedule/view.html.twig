@@ -1,5 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block title %}{{ appname }} - Availability Schedule for {{ avail.schedulePeriod }}{% endblock %}
+{% block title %}{{ appname }} - {{ avail.user.name }} - Schedule for {{ avail.schedulePeriod }}{% endblock %}
 {% block stylesheets %}
 {{ parent() }}
 <style type="text/css">
@@ -18,7 +18,7 @@ h3 {
 {% endblock %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
+    <h3>{{ avail.user.name }}'s schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
     {% if avail.user.id == app.user.id %}
     <form action="{{ path('user_schedule_delete', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}" method="post">
     <div class="btn-group-header btn-group">
