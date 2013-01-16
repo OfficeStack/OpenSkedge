@@ -17,18 +17,15 @@
                 <td>{{ entity.startTime|date('M-d-Y') }}</td>
                 <td>{{ entity.endTime|date('M-d-Y') }}</td>
                 <td>
-                {% if is_granted('ROLE_ADMIN') %}
                     <div class="btn-group">
-                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary" href="{{ path('schedule_period_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('schedule_period_view', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> View</a></li>
                             <li><a href="{{ path('schedule_period_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
                         </ul>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <a class="btn btn-primary" href="{{ path('schedule_period_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
-                {% endif %}
                 </td>
             </tr>
         {% endfor %}

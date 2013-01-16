@@ -48,18 +48,15 @@ h3 {
                 <td><a href="{{ path('position_view', { 'id': position.id }) }}">{{ position.name }}</a></td>
                 <td>{{ position.description }}</td>
                 <td>
-                {% if is_granted('ROLE_ADMIN') %}
                     <div class="btn-group">
-                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary" href="{{ path('position_view', { 'id': position.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('position_view', { 'id': position.id }) }}"><i class="icon-eye-open"></i> View</a></li>
                             <li><a href="{{ path('position_edit', { 'id': position.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
                         </ul>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <a class="btn btn-primary" href="{{ path('position_view', { 'id': position.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
-                {% endif %}
                 </td>
             </tr>
         {% endfor %}

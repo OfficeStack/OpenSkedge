@@ -5,6 +5,7 @@
     <h3>{{ title }}</h3>
     {% if user.id == app.user.id %}
     <a class="btn btn-primary" href="{{ path('user_schedule_pre_new') }}"><i class="icon-plus-sign icon-white"></i> Add Schedule</a>
+    <br><br>
     {% endif %}
     {% if entities is empty %}
     <div class="alert">
@@ -24,10 +25,15 @@
                 <td>{{ entity.schedulePeriod.startTime|date('M-d-Y') }}</td>
                 <td>{{ entity.schedulePeriod.endTime|date('M-d-Y') }}</td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('user_schedule_view', { 'uid': entity.user.id, 'spid': entity.schedulePeriod.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
-                    {% if entity.user.id == app.user.id %}
-                    <a class="btn btn-primary" href="{{ path('user_schedule_edit', { 'uid': entity.user.id, 'spid': entity.schedulePeriod.id }) }}"><i class="icon-pencil icon-white"></i> Edit</a>
-                    {% endif %}
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{{ path('user_schedule_view', { 'uid': entity.user.id, 'spid': entity.schedulePeriod.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                        {% if entity.user.id == app.user.id %}
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('user_schedule_edit', { 'uid': entity.user.id, 'spid': entity.schedulePeriod.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
+                        </ul>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
         {% endfor %}

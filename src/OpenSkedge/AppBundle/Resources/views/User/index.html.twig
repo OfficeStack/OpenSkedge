@@ -5,8 +5,8 @@
     <h3>{{ userstitle }}</h3>
     {% if not displayonly|default(false) %}
     <a class="btn btn-primary" href="{{ path('user_new') }}"><i class="icon-plus-sign icon-white"></i> Add User</a>
-    {% endif %}
     <hr>
+    {% endif %}
     {% if entities is empty %}
     <div class="alert">
         <strong>Sorry!</strong> No users that match the specified criteria were found.
@@ -36,18 +36,15 @@
                 <td>{{ entity.homephone }}</td>
                 <td>{{ entity.location }}</td>
                 <td>
-                {% if is_granted('ROLE_ADMIN') or entity.id == app.user.id %}
                     <div class="btn-group">
-                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary" href="{{ path('user_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                        {% if is_granted('ROLE_ADMIN') or entity.id == app.user.id %}
                         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('user_view', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> View</a></li>
                             <li><a href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
                         </ul>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <a class="btn btn-primary" href="{{ path('user_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
-                {% endif %}
                 </td>
             </tr>
         {% endfor %}

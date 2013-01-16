@@ -20,18 +20,15 @@
                 <td><a href="{{ path('area_view', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>{{ entity.description }}</td>
                 <td>
-                {% if is_granted('ROLE_ADMIN') %}
                     <div class="btn-group">
-                        <a class="btn btn-primary" href="#"><i class="icon-wrench icon-white"></i> Actions</a>
+                        <a class="btn btn-primary" href="{{ path('area_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('area_view', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> View</a></li>
                             <li><a href="{{ path('area_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a></li>
                         </ul>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <a class="btn btn-primary" href="{{ path('area_view', { 'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View</a>
-                {% endif %}
                 </td>
             </tr>
         {% endfor %}
