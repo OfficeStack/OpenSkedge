@@ -43,7 +43,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=128)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"user_creation"})
      */
     private $password;
 

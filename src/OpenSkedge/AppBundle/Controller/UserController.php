@@ -71,7 +71,9 @@ class UserController extends Controller
         }
 
         $entity  = new User();
-        $form = $this->createForm(new UserType(), $entity);
+        $form = $this->createForm(new UserType(), $entity, array(
+            'validation_groups' => array('Default', 'user_creation')
+        ));
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
