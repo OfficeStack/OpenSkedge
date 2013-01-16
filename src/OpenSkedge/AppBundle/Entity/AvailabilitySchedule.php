@@ -104,6 +104,84 @@ class AvailabilitySchedule
         return array(str_split($this->getSun()), str_split($this->getMon()), str_split($this->getTue()), str_split($this->getWed()), str_split($this->getThu()), str_split($this->getFri()), str_split($this->getSat()));
     }
 
+    private function getDay($dayint)
+    {
+        switch((int)$dayint) {
+            case 0:
+                $day = 'Sun';
+                break;
+            case 1:
+                $day = 'Mon';
+                break;
+            case 2:
+                $day = 'Tue';
+                break;
+            case 3:
+                $day = 'Wed';
+                break;
+            case 4:
+                $day = 'Thu';
+                break;
+            case 5:
+                $day = 'Fri';
+                break;
+            case 6:
+                $day = 'Sat';
+                break;
+            default:
+                return $this;
+        }
+        $getDay = 'get'.$day;
+        return $this->$getDay();
+    }
+
+    private function setDay($dayint, $val)
+    {
+        switch((int)$dayint) {
+            case 0:
+                $day = 'Sun';
+                break;
+            case 1:
+                $day = 'Mon';
+                break;
+            case 2:
+                $day = 'Tue';
+                break;
+            case 3:
+                $day = 'Wed';
+                break;
+            case 4:
+                $day = 'Thu';
+                break;
+            case 5:
+                $day = 'Fri';
+                break;
+            case 6:
+                $day = 'Sat';
+                break;
+            default:
+                return $this;
+        }
+        $setDay = 'set'.$day;
+        return $this->$setDay($val);
+    }
+
+    public function setDayOffset($dayint, $offset, $val)
+    {
+        $recStr = $this->getDay($dayint);
+        $recArr = str_split($recStr);
+        $recArr[$offset] = $val;
+        $rec = implode('', $recArr);
+        return $this->setDay($dayint, $rec);
+    }
+
+    public function getDayOffset($dayint, $offset)
+    {
+        $recStr = $this->getDay($dayint);
+        $recArr = str_split($recStr);
+        return $recArr[$offset];
+    }
+
     /**
      * Get id
      *
