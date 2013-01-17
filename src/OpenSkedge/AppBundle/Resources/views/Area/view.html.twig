@@ -19,6 +19,7 @@ h3 {
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ entity.name }}</h3>
+    {% if is_granted('ROLE_ADMIN') %}
     <form action="{{ path('area_delete', { 'id': entity.id }) }}" method="post">
     <div class="btn-group-header btn-group">
         <a class="btn" href="{{ path('area_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
@@ -26,9 +27,12 @@ h3 {
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
     </div>
     </form>
+    {% endif %}
     <p>{{ entity.description }}</p>
     <hr>
+    {% if is_granted('ROLE_ADMIN') %}
     <a class="btn btn-primary" href="{{ path('position_new', { 'area_id': entity.id}) }}">Add Position</a>
+    {% endif %}
     {% if not positions is defined or positions is empty %}
     <div class="alert">
         <strong>Sorry!</strong> No positions were found for this area.

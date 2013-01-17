@@ -19,6 +19,7 @@ h3 {
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ entity.name }}</h3>
+    {% if is_granted('ROLE_ADMIN') %}
     <form action="{{ path('position_delete', { 'id': entity.id }) }}" method="post">
     <div class="btn-group">
         <a class="btn" href="{{ path('position_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
@@ -26,6 +27,7 @@ h3 {
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
     </div>
     </form>
+    {% endif %}
     <p>{{ entity.description }}</p>
     <hr>
 </div>
