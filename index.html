@@ -4,41 +4,65 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>OpenSkedge by maxfierke</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/maxfierke/OpenSkedge">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/maxfierke/OpenSkedge/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/maxfierke/OpenSkedge/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
+      <header>
+        <h1>OpenSkedge</h1>
+        <p>A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.</p>
 
+        <p class="view"><a href="https://github.com/maxfierke/OpenSkedge">View the Project on GitHub <small>maxfierke/OpenSkedge</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/maxfierke/OpenSkedge/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/maxfierke/OpenSkedge/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/maxfierke/OpenSkedge">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
       <section>
-        <div id="title">
-          <h1>OpenSkedge</h1>
-          <p>A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/maxfierke">maxfierke</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
+        <h2>Installation</h2>
 
-        <h3>What is OpenSkedge?</h3>
+<ol>
+<li> Run <code>php app/check.php</code> and resolve any errors before doing ANYTHING else.</li>
+<li> Run <code>app/config/parameters.yml.dist app/config/parameters.yml</code>
+
+<ul>
+<li>
+<code>app.name</code> holds the application branding that is displayed to the user. You     can change it to anything. E.g. CSOM ITSS sets this to "Lab Scheduler".</li>
+<li>
+<code>admin_email</code> is the email address of the default admin account. This address should be set to whatever the email address of who ever the admin will be (probably you).</li>
+<li>
+<code>secret</code> is used for CSRF validation. Set this to some random characters. An ideal value would be a random sha256 hash.</li>
+</ul>
+</li>
+<li> Run <code>php composer.phar install</code>
+</li>
+<li> Run <code>php app/console doctrine:database:create</code>
+</li>
+<li> Run <code>php app/console doctrine:migrations:diff</code> to diff the current database.</li>
+<li> Run <code>php app/console doctrine:migrations:migrate</code> to update database schema to current schema with mapping and everything.</li>
+<li> Run <code>php app/console doctrine:fixtures:load</code> to bootstrap the application with some needed information (groups) and a default admin account with the username <code>admin</code> and the password <code>admin</code>.</li>
+<li> Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and <strong>change the password</strong>.</li>
+<li>Add employees, areas, positions, and schedule periods and get to scheduling!</li>
+</ol><h2>Upgrading</h2>
+
+<ol>
+<li> Run <code>git pull</code> to fetch the latest changes to OpenSkedge. If you've made changes to OpenSkedge, you'll either want to stash them or commit them and use <code>git pull --rebase</code>.</li>
+<li> Run <code>php composer.phar update</code>
+</li>
+<li> Run <code>php app/console doctrine:migrations:diff</code> to diff the current database schema with the schema defined by the latest version of OpenSkedge.</li>
+<li> Run by using <code>php app/console doctrine:migrations:migrate</code>. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at <a href="http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html">the Doctrine project's docs</a>.</li>
+</ol><h2>FAQ</h2>
+
+<h3>What is OpenSkedge?</h3>
 
 <p>OpenSkedge is a reinvention of <a href="http://empscheduler.sourceforge.net">Employee Scheduler</a>, a flexible employee scheduling application designed for companies and organizations (such as education institutions with student workers) which require fluid shift scheduling.</p>
 
@@ -58,9 +82,11 @@
 
 <p>Max isn't a JavaScript developer or a UI designer, so much of the JavaScript used in the interface of the application is nearly unmodified from the JavaScript included in Employee Scheduler. The database design is similar to Employee Scheduler but simpler and smarter (sorry!).</p>
 
-<h3>When will OpenSkedge be available?</h3>
+<h3>Who is Carlnater McStrangelove?</h3>
 
-<p>It'll be open to public development very soon. Max is still polishing things and rounding some sharp corners.</p>
+<p>The origin of Carlnater McStrangelove is not completely clear. He was present in some of the code for Lab Scheduler (Carlson School of Management's version of Employee Scheduler) and was the sender of all automated Lab Scheduler emails.</p>
+
+<h2>License and Copyright</h2>
 
 <h3>License</h3>
 
@@ -71,8 +97,8 @@ See src/OpenSkedge/SchedBundle/Resources/meta/LICENSE for more details.</p>
 
 <ul>
 <li>Copyright 2012-2013 Max Fierke (<a href="https://github.com/maxfierke" class="user-mention">@maxfierke</a>)</li>
-<li>Copyright 2012-2013 University of Minnesota - Carlson School of Manangement (they technically have the copyright for what I did at work)</li>
-<li>Copyright 2003 Brigham Young University (John Finlay, Schedule table JavaScript)</li>
+<li>Copyright 2012-2013 University of Minnesota - Carlson School of Manangement</li>
+<li>Copyright 2003 Brigham Young University (For the bits of Employee Scheduler present)</li>
 </ul><h3>Projects that OpenSkedge uses</h3>
 
 <ul>
@@ -84,23 +110,25 @@ See src/OpenSkedge/SchedBundle/Resources/meta/LICENSE for more details.</p>
 </li>
 <li>
 <a href="http://symfony.com/">Symfony 2.1.6</a> and dependencies specified in composer.json</li>
-</ul><h3>Thanks</h3>
-
-<p>Thanks to the following people for their involvement in the original Employee Scheduler, of which OpenSkedge was inspired.</p>
+</ul><h3>Thanks to the following Employee Scheduler developers</h3>
 
 <ul>
 <li>John Finlay (Developer of Employee Scheduler)</li>
-<li>Carl Allen (Developed Time Clock functionality for the UofMN with Joe Krall)</li>
-<li>Joe Krall (Developed Time Clock functionality for the UofMN with Carl Allen)</li>
-</ul><h3>Contact</h3>
+<li>Carl Allen (Developed time clock functionality for the UofMN with Joe Krall)</li>
+<li>Joe Krall (Developed time clock functionality for the UofMN with Carl Allen)</li>
+</ul><h2>Contact</h2>
 
 <p><strong>Max Fierke</strong><br>
-Site: <a href="http://www.maxfierke.com">http://www.maxfierke.com</a><br>
-Twitter: <a href="http://twitter.com/m4xm4n">@m4xm4n</a>  </p>
+Homepage: <a href="http://www.maxfierke.com">www.maxfierke.com</a><br>
+Twitter: <a href="http://twitter.com/m4xm4n">@m4xm4n</a><br>
+Github: <a href="https://github.com/maxfierke">@maxfierke</a></p>
       </section>
-
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/maxfierke">maxfierke</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
