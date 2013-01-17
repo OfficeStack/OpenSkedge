@@ -45,8 +45,8 @@ The origin of Carlnater McStrangelove is not completely clear. He was present in
 
 ## License and Copyright
 ### License
-OpenSkedge, technically a derivative work of Employee Scheduler, is available under the GNU General Public License version 2 or later. 
-See src/OpenSkedge/SchedBundle/Resources/meta/LICENSE for more details.
+OpenSkedge, technically a derivative work of Employee Scheduler, is available under the GNU General Public License version 2 or later.
+See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 
 ### Authors and Contributors
 * Copyright 2012-2013 Max Fierke (@maxfierke)
@@ -58,7 +58,7 @@ See src/OpenSkedge/SchedBundle/Resources/meta/LICENSE for more details.
 * [ScrollToFixed](https://github.com/bigspotteddog/ScrollToFixed/) by @bigspotteddog
 * [Symfony 2.1.6](http://symfony.com/) and dependencies specified in composer.json
 
-### Thanks to the following Employee Scheduler developers 
+### Thanks to the following Employee Scheduler developers
 * John Finlay (Developer of Employee Scheduler)
 * Carl Allen (Developed time clock functionality for the UofMN with Joe Krall)
 * Joe Krall (Developed time clock functionality for the UofMN with Carl Allen)
