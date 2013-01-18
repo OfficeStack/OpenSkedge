@@ -3,6 +3,7 @@
 
 Copyright &copy; 2012-2013 Max Fierke
 
+# Deployment on a Local, VPS, Cloud, or Dedicated host
 ## Installation
 
 0.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
@@ -23,6 +24,10 @@ Copyright &copy; 2012-2013 Max Fierke
 2.  Run `php composer.phar update`
 3.  Run `php app/console doctrine:migrations:diff` to diff the current database schema with the schema defined by the latest version of OpenSkedge.
 4.  Run by using `php app/console doctrine:migrations:migrate`. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at [the Doctrine project's docs](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html).
+
+# Deployment on Pagoda Box
+Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.
+See README.Pagoda.md for Pagoda Box specific installation instructions.
 
 ## FAQ
 ### What is OpenSkedge?
@@ -64,7 +69,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 * Joe Krall (Developed time clock functionality for the UofMN with Carl Allen)
 
 ## Contact
-**Max Fierke**  
-Homepage: [www.maxfierke.com](http://www.maxfierke.com)  
-Twitter: [@m4xm4n](http://twitter.com/m4xm4n)  
+**Max Fierke**
+Homepage: [www.maxfierke.com](http://www.maxfierke.com)
+Twitter: [@m4xm4n](http://twitter.com/m4xm4n)
 Github: [@maxfierke](https://github.com/maxfierke)

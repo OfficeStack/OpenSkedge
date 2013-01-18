@@ -1,0 +1,17 @@
+
+web1:
+    before_deploy:
+      - "php app/console --env=prod --no-debug cache:clear --no-warmup"
+      - "php app/console --env=prod --no-debug cache:warmup"
+      - "php app/console --env=prod --no-debug doctrine:schema:update --force -n"
+      - "php app/console --env=prod --no-debug doctrine:fixtures:load -n"
+
+db1:
+    name: openskedge
+    type: mysql
+
+global:
+    env:
+      - USE_INTL_ICU_DATA_VERSION: true
+      - SYMFONY__BRANDING__NAME: "OpenSkedge"
+      - SYMFONY__ADMIN__EMAIL: admin@mydomain.com

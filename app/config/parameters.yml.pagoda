@@ -1,0 +1,15 @@
+parameters:
+    app.name: %branding.name%
+    admin_email: %admin.email%
+    database_driver: pdo_mysql
+    database_host: %database.host%
+    database_port: %database.port%
+    database_name: %database.name%
+    database_user: %database.user%
+    database_password: %database.password%
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: ~
+    mailer_password: ~
+    locale: en
+    secret: ThisIsNotASecretAndNeedsToBeChanged

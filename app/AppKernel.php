@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new OpenSkedge\AppBundle\OpenSkedgeBundle(),
+            new Pff\PagodaBundle\PffPagodaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
