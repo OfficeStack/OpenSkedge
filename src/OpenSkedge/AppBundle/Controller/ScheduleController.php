@@ -50,6 +50,8 @@ class ScheduleController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
+        $deleteForm = $this->createDeleteForm($pid, $spid);
+
         $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
             'schedulePeriod' => $spid,
             'position'       => $pid
@@ -61,6 +63,7 @@ class ScheduleController extends Controller
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,
             'schedules'     => $schedules,
+            'delete_form'   => $deleteForm->createView(),
         ));
     }
 
@@ -203,12 +206,12 @@ class ScheduleController extends Controller
             }
             foreach($schedules as $schedule)
             {
-                $em->remove($schedules);
+                $em->remove($schedule);
             }
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('schedule'));
+        return $this->redirect($this->generateUrl('schedule_periods'));
     }
 
     private function createDeleteForm()
