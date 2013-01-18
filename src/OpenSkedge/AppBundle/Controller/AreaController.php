@@ -9,6 +9,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OpenSkedge\AppBundle\Entity\Area;
 use OpenSkedge\AppBundle\Form\AreaType;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\ArrayAdapter;
+
 /**
  * Area controller.
  *
@@ -23,12 +26,22 @@ class AreaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OpenSkedgeBundle:Area')->findBy(array(), array(
+        $areas = $em->getRepository('OpenSkedgeBundle:Area')->findBy(array(), array(
             'name' => 'ASC'
         ));
 
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($areas);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
+
         return $this->render('OpenSkedgeBundle:Area:index.html.twig', array(
-            'entities' => $entities,
+            'entities'  => $entities,
+            'paginator' => $paginator,
         ));
     }
 
@@ -41,19 +54,29 @@ class AreaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
-        $positions = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array('area' => $id), array("name" => 'ASC'));
+        $entities = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array('area' => $id), array("name" => 'ASC'));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Area entity.');
         }
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($entities);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $positions = $paginator->getCurrentPageResults();
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('OpenSkedgeBundle:Area:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            'positions'    => $positions
-            ));
+            'positions'   => $positions,
+            'paginator'   => $paginator,
+        ));
     }
 
     /**

@@ -25,11 +25,10 @@ h3 {
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
     </div>
     </form>
-    <br>
-    <a class="btn btn-primary" href="{{ path('position_schedule_select', { 'spid': entity.id }) }}"><i class="icon-calendar icon-white"></i> Schedule a Position</a>
-    <br>
-    <h4>Available Users</h4>
+    <br><br>
+    <a class="btn btn-primary" href="{{ path('position_schedule_select', { 'spid': entity.id }) }}"><i class="icon-calendar icon-white"></i> Edit Position Schedule</a>
     <hr>
+    <h4>Available Users</h4>
     {% if not avails is defined or avails is empty %}
     <div class="alert">
         <strong>Sorry!</strong> No available users were found for this schedule period.
@@ -55,6 +54,9 @@ h3 {
         {% endfor %}
         </tbody>
     </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+    </div>
     {% endif %}
 </div>
 {% endblock %}

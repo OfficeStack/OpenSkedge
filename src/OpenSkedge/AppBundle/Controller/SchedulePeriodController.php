@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OpenSkedge\AppBundle\Entity\SchedulePeriod;
 use OpenSkedge\AppBundle\Form\SchedulePeriodType;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\ArrayAdapter;
+
 /**
  * SchedulePeriod controller.
  *
@@ -22,12 +25,22 @@ class SchedulePeriodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findBy(array(), array(
+        $schedulePeriods = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findBy(array(), array(
             'endTime' => 'DESC'
         ));
 
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($schedulePeriods);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
+
         return $this->render('OpenSkedgeBundle:SchedulePeriod:index.html.twig', array(
-            'entities' => $entities,
+            'entities'  => $entities,
+            'paginator' => $paginator,
         ));
     }
 
@@ -45,15 +58,25 @@ class SchedulePeriodController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
-        $avails = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findBy(array(
+        $availSchedules = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findBy(array(
             'schedulePeriod' => $id
         ));
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($availSchedules);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $avails = $paginator->getCurrentPageResults();
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('OpenSkedgeBundle:SchedulePeriod:view.html.twig', array(
             'entity'      => $entity,
             'avails'      => $avails,
+            'paginator'   => $paginator,
             'delete_form' => $deleteForm->createView(),
         ));
     }

@@ -9,6 +9,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OpenSkedge\AppBundle\Entity\Position;
 use OpenSkedge\AppBundle\Form\PositionType;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\ArrayAdapter;
+
 /**
  * Position controller.
  *
@@ -23,10 +26,20 @@ class PositionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OpenSkedgeBundle:Position')->findAll();
+        $positions = $em->getRepository('OpenSkedgeBundle:Position')->findAll();
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($positions);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:Position:index.html.twig', array(
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 
@@ -185,20 +198,30 @@ class PositionController extends Controller
             ));
         }
 
-        $entities = array();
+        $positions = array();
 
         for ($i=0; $i<count($schedules); $i++) {
             foreach($schedules[$i] as $schedule)
             {
-                $entities[] = $schedule->getPosition();
+                $positions[] = $schedule->getPosition();
             }
         }
 
-        $entities = array_unique($entities);
+        $positions = array_unique($positions);
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($positions);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:Position:index.html.twig', array(
             'userstitle' => $userstitle,
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 

@@ -50,6 +50,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+    </div>
     {% endif %}
 </div>
 {% endblock %}

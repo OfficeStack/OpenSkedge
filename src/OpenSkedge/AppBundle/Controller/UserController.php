@@ -12,6 +12,10 @@ use OpenSkedge\AppBundle\Form\UserType;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\Form;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+
 /**
  * User controller.
  *
@@ -30,11 +34,21 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OpenSkedgeBundle:User')->findAll();
+        $users = $em->getRepository('OpenSkedgeBundle:User')->findBy(array(), array('name' => 'ASC'));
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($users);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'userstitle' => 'Users',
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 
@@ -213,12 +227,21 @@ class UserController extends Controller
             $userstitle = $user->getName()."'s Supervisors";
         }
 
-        $entities = $user->getSupervisors();
+        $supervisors = $user->getSupervisors();
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new DoctrineCollectionAdapter($supervisors);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
             'userstitle' => $userstitle,
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 
@@ -242,12 +265,21 @@ class UserController extends Controller
             $userstitle = $user->getName()."'s Employees";
         }
 
-        $entities = $user->getEmployees();
+        $employees = $user->getEmployees();
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new DoctrineCollectionAdapter($employees);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
             'userstitle' => $userstitle,
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 
@@ -316,12 +348,22 @@ class UserController extends Controller
             }
         }
 
-        $entities = array_unique($entities);
+        $colleagues = array_unique($entities);
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($colleagues);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
             'userstitle' => $userstitle,
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 

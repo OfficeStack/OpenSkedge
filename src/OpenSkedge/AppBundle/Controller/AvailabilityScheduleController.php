@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Form\AvailabilityScheduleType;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\ArrayAdapter;
+
 /**
  * AvailabilitySchedule controller.
  *
@@ -33,12 +36,22 @@ class AvailabilityScheduleController extends Controller
             $title = $user->getName()."'s Schedules";
         }
 
-        $entities = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findByUser($user);
+        $availSchedules = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findByUser($user);
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($availSchedules);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:index.html.twig', array(
-            'title'    => $title,
-            'user'     => $user,
-            'entities' => $entities,
+            'title'     => $title,
+            'user'      => $user,
+            'entities'  => $entities,
+            'paginator' => $paginator,
         ));
     }
 
