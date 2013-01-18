@@ -13,9 +13,34 @@
 {% set sectionlen = 23 %}
 {% set next_section = "+1 hour" %}
 {% endif %}
+{% block stylesheets %}
+{{ parent() }}
+<style type="text/css">
+h3,
+form,
+#form {
+    display: inline;
+}
+h3 {
+    margin-right: 10px;
+}
+.btn-group {
+    top: -4px;
+}
+</style>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
+    <form action="{{ path('position_schedule_delete', { 'spid': schedulePeriod.id, 'pid': position.id }) }}" method="post">
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="btn-group-header btn-group">
+        <a class="btn" href="{{ path('position_schedule_edit', { 'spid': schedulePeriod.id, 'pid': position.id }) }}"><i class="icon-pencil"></i> Edit</a>
+        {{ form_widget(delete_form) }}
+        <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+    </div>
+    {% endif %}
+    </form>
     <table class="table table-condensed table-bordered schedule-table">
         <thead>
             <tr>
