@@ -28,7 +28,9 @@
         </ul>
       </header>
       <section>
-        <h2>Installation</h2>
+        <h1>Deployment on a Local, VPS, Cloud, or Dedicated host</h1>
+
+<h2>Installation</h2>
 
 <ol>
 <li> Run <code>php app/check.php</code> and resolve any errors before doing ANYTHING else.</li>
@@ -60,7 +62,13 @@
 </li>
 <li> Run <code>php app/console doctrine:migrations:diff</code> to diff the current database schema with the schema defined by the latest version of OpenSkedge.</li>
 <li> Run by using <code>php app/console doctrine:migrations:migrate</code>. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at <a href="http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html">the Doctrine project's docs</a>.</li>
-</ol><h2>FAQ</h2>
+</ol><h1>Deployment on Pagoda Box</h1>
+
+<p>Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.<br>
+See README.Pagoda.md for Pagoda Box specific installation instructions.<br>
+I have also <a href="https://pagodabox.com/cafe/m4xm4n/openskedge">created a quickstart</a> that can be used as well.</p>
+
+<h2>FAQ</h2>
 
 <h3>What is OpenSkedge?</h3>
 
@@ -121,7 +129,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.</p>
 <p><strong>Max Fierke</strong><br>
 Homepage: <a href="http://www.maxfierke.com">www.maxfierke.com</a><br>
 Twitter: <a href="http://twitter.com/m4xm4n">@m4xm4n</a><br>
-Github: <a href="https://github.com/maxfierke">@maxfierke</a></p>
+Github: <a href="https://github.com/maxfierke">@maxfierke</a>  </p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/maxfierke">maxfierke</a></p>
