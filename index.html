@@ -62,6 +62,7 @@
 </li>
 <li> Run <code>php app/console doctrine:migrations:diff</code> to diff the current database schema with the schema defined by the latest version of OpenSkedge.</li>
 <li> Run by using <code>php app/console doctrine:migrations:migrate</code>. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at <a href="http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html">the Doctrine project's docs</a>.</li>
+<li> Run <code>php app/console --env=prod cache:clear</code> to clear the application's cache. <code>prod</code> should be replaced with <code>dev</code> if you're running in a development environment.</li>
 </ol><h1>Deployment on Pagoda Box</h1>
 
 <p>Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.<br>
