@@ -177,7 +177,7 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') || $id == $this->getUser->getId()) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') || $id == $this->getUser()->getId()) {
             throw new AccessDeniedException();
         }
 
@@ -196,7 +196,7 @@ class UserController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirect($this->generateUrl('users'));
     }
 
     private function createDeleteForm($id)

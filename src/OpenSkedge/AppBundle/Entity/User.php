@@ -117,7 +117,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $isActive;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group", cascade={"persist", "remove"}, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="users")
      * @ORM\JoinColumn(name="gid", referencedColumnName="id")
      */
     private $group;
