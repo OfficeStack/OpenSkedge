@@ -73,7 +73,7 @@ class ClockController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $cur_time = time();
+        $cur_time = new \DateTime("now");
 
         $user = $this->getUser();
         $clock = $user->getClock();
@@ -86,11 +86,11 @@ class ClockController extends Controller
          *
          * If the date of last_clock is the previous day, we need to update two timerecords.
          */
-        if(date('w', $last_clock) == date('w', $cur_time)-1) {
-            $prev_day_end = mktime(23, 59, 59, date('n', $last_clock), date('j', $last_clock), date('Y', $last_clock));
-            $getDay = "get".date('D', $last_clock);
-            $yesterday_timerecord = static::updateTimeRecord($clock->$getDay(), $last_clock, $prev_day_end);
-            $setDay = "set".date('D', $last_clock);
+        if($last_clock->format('w') == $cur_time->format('w')-1) {
+            $prev_day_end = mktime(23, 59, 59, $last_clock->format('n'), $last_clock->format('j'), $last_clock->format('Y'));
+            $getDay = "get".$last_clock->format('D');
+            $yesterday_timerecord = static::updateTimeRecord($clock->$getDay(), $last_clock->getTimestamp(), $prev_day_end);
+            $setDay = "set".$last_clock->format('D');
             $clock->$setDay($yesterday_timerecord);
             // The the final timerecord will be a continuation of midnight today until the current time.
             $start_time = mktime(0, 0, 0);
@@ -99,7 +99,7 @@ class ClockController extends Controller
         $getDay = "get".date('D');
         $setDay = "set".date('D');
         $cur_timerecord = $clock->$getDay();
-        $timerecord = self::updateTimeRecord($cur_timerecord, $start_time, $cur_time);
+        $timerecord = self::updateTimeRecord($cur_timerecord, $start_time->getTimestamp(), $cur_time->getTimestamp());
         $clock->$setDay($timerecord);
         $clock->setStatus(false);
 
