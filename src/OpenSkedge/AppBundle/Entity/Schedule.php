@@ -134,8 +134,6 @@ class Schedule
             case 6:
                 $day = 'Sat';
                 break;
-            default:
-                return $this;
         }
         $getDay = 'get'.$day;
         return $this->$getDay();
