@@ -5,7 +5,7 @@ namespace OpenSkedge\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="os_archived_clock")
+ * @ORM\Table(name="os_archived_clock", indexes={@ORM\Index(name="week", columns={"week"})})
  * @ORM\Entity()
  */
 class ArchivedClock
