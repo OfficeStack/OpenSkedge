@@ -7,21 +7,24 @@ Copyright &copy; 2012-2013 Max Fierke
 ## Installation
 
 0.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
-1.  Run `app/config/parameters.yml.dist app/config/parameters.yml`
-    * `app.name` holds the application branding that is displayed to the user. You     can change it to anything. E.g. CSOM ITSS sets this to "Lab Scheduler".
+1.  Run `cp app/config/parameters.yml.dist app/config/parameters.yml`
+    * `app_name` holds the application branding that is displayed to the user. You     can change it to anything. E.g. CSOM ITSS sets this to "Lab Scheduler".
     * `admin_email` is the email address of the default admin account. This address should be set to whatever the email address of who ever the admin will be (probably you).
+    * `week_start_day` is the day of the week which is considered the start of the week in your region
+    * `week_start_clock` is the day of the week which is considered the start of the week as far as time
+        clock functionality is concerned. This will likely be the same as above. Use the same format as your
+        paper time sheets.
     * `secret` is used for CSRF validation. Set this to some random characters. An ideal value would be a random sha256 hash.
 2.  Run `php composer.phar install`
 3.  Run `php app/console doctrine:database:create`
-5.  Run `php app/console doctrine:migrations:diff` to diff the current database.
-6.  Run `php app/console doctrine:migrations:migrate` to update database schema to current schema with mapping and everything.
-7.  Run `php app/console doctrine:fixtures:load` to bootstrap the application with some needed information (groups) and a default admin account with the username `admin` and the password `admin`.
-8.  Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and **change the password**.
-9. Add employees, areas, positions, and schedule periods and get to scheduling!
+4.  Run `php app/console doctrine:schema:update --force`
+5.  Run `php app/console doctrine:fixtures:load` to bootstrap the application with some needed information (groups) and a default admin account with the username `admin` and the password `admin`.
+6.  Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and **change the password**.
+7. Add employees, areas, positions, and schedule periods and get to scheduling!
 
 ## Upgrading
 1.  Run `git pull` to fetch the latest changes to OpenSkedge. If you've made changes to OpenSkedge, you'll either want to stash them or commit them and use `git pull --rebase`.
-2.  Run `php composer.phar update`
+2.  Run `php composer.phar install`
 3.  Run by using `php app/console doctrine:migrations:migrate`. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at [the Doctrine project's docs](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html).
 4.  Run `php app/console --env=prod cache:clear` to clear the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
 
