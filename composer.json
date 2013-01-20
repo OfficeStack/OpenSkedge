@@ -10,7 +10,7 @@
             "email": "max@maxfierke.com",
             "homepage": "http://www.maxfierke.com",
             "role": "Developer"
-        },
+        }
     ],
     "autoload": {
         "psr-0": { "": "src/" }
