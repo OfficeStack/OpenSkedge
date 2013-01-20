@@ -129,6 +129,12 @@ class User implements AdvancedUserInterface, \Serializable
     private $clock;
 
     /**
+     * @ORM\OneToMany(targetEntity="ArchivedClock", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(name="uid", referencedColumnName="id")
+     */
+    private $archivedClocks;
+
+    /**
      * @ORM\OneToMany(targetEntity="Schedule", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $schedules;
@@ -166,6 +172,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->schedules = new ArrayCollection();
         $this->supervisors = new ArrayCollection();
         $this->employees = new ArrayCollection();
+        $this->archivedClocks = new ArrayCollection();
     }
 
     public function __toString()
@@ -792,5 +799,38 @@ class User implements AdvancedUserInterface, \Serializable
     public function getAvailabilitySchedules()
     {
         return $this->availabilitySchedules;
+    }
+
+    /**
+     * Add archivedClocks
+     *
+     * @param \OpenSkedge\AppBundle\Entity\ArchivedClock $schedules
+     * @return User
+     */
+    public function addArchivedClock(\OpenSkedge\AppBundle\Entity\ArchivedClock $archivedClocks)
+    {
+        $this->archivedClocks[] = $archivedClocks;
+
+        return $this;
+    }
+
+    /**
+     * Remove archivedClocks
+     *
+     * @param \OpenSkedge\AppBundle\Entity\ArchivedClock $archivedClocks
+     */
+    public function removeArchivedClock(\OpenSkedge\AppBundle\Entity\ArchivedClock $archivedClocks)
+    {
+        $this->archivedClocks->removeElement($archivedClocks);
+    }
+
+    /**
+     * Get schedules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArchivedClocks()
+    {
+        return $this->archivedClocks;
     }
 }

@@ -5,8 +5,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use OpenSkedge\AppBundle\Entity\User;
+use OpenSkedge\AppBundle\Entity\ArchivedClock;
 use OpenSkedge\AppBundle\Entity\Clock;
+use OpenSkedge\AppBundle\Entity\User;
 
 /**
  * Clock controller.
@@ -38,12 +39,17 @@ class ClockController extends Controller
 
         $user = $this->getUser();
         $clock = $user->getClock();
-        if(strtotime("last sunday", $clock->getLastClock()) != strtotime("last sunday", time())) {
-            static::backupClock(date('m-d-y', strtotime("last sunday", $clock->getLastClock())), $clock);
-            static::clearClock($clock);
+
+        $now = new \DateTime("now");
+        $lastClockWeek = $this->getFirstDayOfWeek($clock->getLastClock());
+        $thisWeek = $this->getFirstDayOfWeek($now);
+        if($lastClockWeek < $thisWeek) {
+            $archivedClock = $this->backupClock($user, $clock);
+            $clock->resetClock();
+            $em->persist($archivedClock);
         }
         $clock->setStatus(true);
-        $clock->setLastClock(time());
+        $clock->setLastClock($now);
 
         $em->persist($clock);
         $em->flush();
@@ -75,7 +81,11 @@ class ClockController extends Controller
         $last_clock = $clock->getLastClock();
         $start_time = $last_clock;
 
-        // If the date of last_clock is the previous day, we need to update two timerecords.
+        /* TODO: If they're clocking in over two pay periods. (e.g. Sunday night to monday morning)
+         * we should update their archivedClock for that week.
+         *
+         * If the date of last_clock is the previous day, we need to update two timerecords.
+         */
         if(date('w', $last_clock) == date('w', $cur_time)-1) {
             $prev_day_end = mktime(23, 59, 59, date('n', $last_clock), date('j', $last_clock), date('Y', $last_clock));
             $getDay = "get".date('D', $last_clock);
@@ -102,19 +112,32 @@ class ClockController extends Controller
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
-    private static function backupClock($week, $clock)
+    private function backupClock($user, $clock)
     {
-        // TODO: Make this configurable.
+        $archivedClock = new ArchivedClock();
+        $archivedClock->setUser($user);
+        for($i = 0; $i < 7; $i++) {
+            $archivedClock->setDay($i, $clock->getDay($i));
+        }
+        $archivedClock->setWeek($this->getFirstDayOfWeek($clock->getLastClock()));
+        return $archivedClock;
     }
 
-    private static function clearClock($clock)
-    {
-
+    /**
+     * @param \DateTime $date A given date
+     * @return \DateTime
+     */
+    private function getFirstDayOfWeek(\DateTime $date) {
+        $day = $this->container->getParameter('week_start_day_clock');
+        $firstDay = idate('w', strtotime($day));
+        $offset = 7 - $firstDay;
+        $ret = clone $date;
+        $ret->modify(-(($date->format('w') + $offset) % 7) . 'days');
+        return $ret;
     }
 
-    private static function updateTimeRecord($cur_timerecord, $start, $end)
+    private static function updateTimeRecord($timerecord, $start, $end)
     {
-        $timerecord_array = str_split($cur_timerecord);
         // Get the UNIX timestamp for midnight.
         $daystart = mktime(0, 0, 0);
         // Time record index of the start time (inclusive)
@@ -123,9 +146,8 @@ class ClockController extends Controller
         $endInd = round((($end - $daystart) / 60) / 15);
         for($i=$startInd; $i < $endInd; $i++)
         {
-            $timerecord_array[$i] = '1';
+            $timerecord[$i] = '1';
         }
-        $timerecord = implode('', $timerecord_array);
         return $timerecord;
     }
 }
