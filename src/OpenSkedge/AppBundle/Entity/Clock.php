@@ -58,7 +58,7 @@ class Clock
     private $sat;
 
     /**
-     * @ORM\Column(name="last_clock", type="integer")
+     * @ORM\Column(name="last_clock", type="datetime")
      */
     private $lastClock;
 
@@ -272,7 +272,7 @@ class Clock
     /**
      * Set lastClock
      *
-     * @param integer $lastClock
+     * @param \DateTime $lastClock
      * @return Clock
      */
     public function setLastClock($lastClock)
@@ -285,7 +285,7 @@ class Clock
     /**
      * Get lastClock
      *
-     * @return integer
+     * @return \DateTime
      */
     public function getLastClock()
     {
@@ -302,7 +302,7 @@ class Clock
         for($i = 0; $i < 7; $i++) {
             $this->setDay($i, "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         }
-        $this->setLastClock(time());
+        $this->setLastClock(new \DateTime("now"));
 
         return $this;
     }
