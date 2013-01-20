@@ -1,5 +1,5 @@
 parameters:
-    app.name: %branding.name%
+    app_name: %branding.name%
     admin_email: %admin.email%
     database_driver: pdo_mysql
     database_host: %database.host%
