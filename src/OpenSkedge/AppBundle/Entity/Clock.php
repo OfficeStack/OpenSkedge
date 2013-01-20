@@ -291,4 +291,92 @@ class Clock
     {
         return $this->lastClock;
     }
+
+    /**
+     * Reset time clock
+     *
+     * @return Clock
+     */
+    public function resetClock()
+    {
+        for($i = 0; $i < 7; $i++) {
+            $this->setDay($i, "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        }
+        $this->setLastClock(time());
+
+        return $this;
+    }
+
+    /**
+     * Gets day value based on day number.
+     *
+     * @param int $dayint
+     * @return string
+     */
+    public function getDay($dayint)
+    {
+        switch((int)$dayint) {
+            case 0:
+                $day = 'Sun';
+                break;
+            case 1:
+                $day = 'Mon';
+                break;
+            case 2:
+                $day = 'Tue';
+                break;
+            case 3:
+                $day = 'Wed';
+                break;
+            case 4:
+                $day = 'Thu';
+                break;
+            case 5:
+                $day = 'Fri';
+                break;
+            case 6:
+                $day = 'Sat';
+                break;
+        }
+        $getDay = 'get'.$day;
+        return $this->$getDay();
+    }
+
+    /**
+     * Sets day value based on day number.
+     *
+     * @param int $dayint
+     * @param string $val
+     * @return Clock
+     */
+    public function setDay($dayint, $val)
+    {
+        switch((int)$dayint) {
+            case 0:
+                $day = 'Sun';
+                break;
+            case 1:
+                $day = 'Mon';
+                break;
+            case 2:
+                $day = 'Tue';
+                break;
+            case 3:
+                $day = 'Wed';
+                break;
+            case 4:
+                $day = 'Thu';
+                break;
+            case 5:
+                $day = 'Fri';
+                break;
+            case 6:
+                $day = 'Sat';
+                break;
+            default:
+                return $this;
+        }
+        $setDay = 'set'.$day;
+        return $this->$setDay($val);
+    }
 }
