@@ -32,7 +32,6 @@ web1:
     before_deploy:
       - "php app/console --env=prod --no-debug cache:clear --no-warmup"
       - "php app/console --env=prod --no-debug cache:warmup"
-      - "php app/console --env=prod --no-debug doctrine:migrations:diff -n"
       - "php app/console --env=prod --no-debug doctrine:migrations:migrate -n"
 
 db1:
