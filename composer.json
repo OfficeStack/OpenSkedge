@@ -2,6 +2,16 @@
     "name": "openskedge/openskedge",
     "description": "A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.",
     "license": "GPL-2.0+",
+    "keywords": ["employee", "scheduling"],
+    "homepage": "http://openskedge.org",
+    "authors": [
+        {
+            "name": "Max Fierke",
+            "email": "max@maxfierke.com",
+            "homepage": "http://www.maxfierke.com",
+            "role": "Developer"
+        },
+    ],
     "autoload": {
         "psr-0": { "": "src/" }
     },
