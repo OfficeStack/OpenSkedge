@@ -133,6 +133,13 @@ class AvailabilitySchedule
         return $this->$getDay();
     }
 
+    /**
+     * Sets day value based on day number.
+     *
+     * @param int $dayint
+     * @param string $val
+     * @return AvailabilitySchedule
+     */
     private function setDay($dayint, $val)
     {
         switch((int)$dayint) {

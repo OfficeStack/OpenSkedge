@@ -110,6 +110,12 @@ class Schedule
         return array(str_split($this->getSun()), str_split($this->getMon()), str_split($this->getTue()), str_split($this->getWed()), str_split($this->getThu()), str_split($this->getFri()), str_split($this->getSat()));
     }
 
+    /**
+     * Gets day value based on day number.
+     *
+     * @param int $dayint
+     * @return string
+     */
     public function getDay($dayint)
     {
         switch((int)$dayint) {
@@ -139,6 +145,13 @@ class Schedule
         return $this->$getDay();
     }
 
+    /**
+     * Sets day value based on day number.
+     *
+     * @param int $dayint
+     * @param string $val
+     * @return Schedule
+     */
     public function setDay($dayint, $val)
     {
         switch((int)$dayint) {
