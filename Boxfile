@@ -3,7 +3,6 @@ web1:
     shared_writable_dirs:
       - app/cache
       - app/logs
-      - app/DoctrineMigrations
 
     document_root: web
     default_gateway: app.php
