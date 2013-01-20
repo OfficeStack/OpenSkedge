@@ -22,13 +22,12 @@ Copyright &copy; 2012-2013 Max Fierke
 ## Upgrading
 1.  Run `git pull` to fetch the latest changes to OpenSkedge. If you've made changes to OpenSkedge, you'll either want to stash them or commit them and use `git pull --rebase`.
 2.  Run `php composer.phar update`
-3.  Run `php app/console doctrine:migrations:diff` to diff the current database schema with the schema defined by the latest version of OpenSkedge.
-4.  Run by using `php app/console doctrine:migrations:migrate`. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at [the Doctrine project's docs](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html).
-5.  Run `php app/console --env=prod cache:clear` to clear the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
+3.  Run by using `php app/console doctrine:migrations:migrate`. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at [the Doctrine project's docs](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html).
+4.  Run `php app/console --env=prod cache:clear` to clear the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
 
 # Deployment on Pagoda Box
-Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.  
-See README.Pagoda.md for Pagoda Box specific installation instructions.  
+Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.
+See README.Pagoda.md for Pagoda Box specific installation instructions.
 I have also [created a quickstart](https://pagodabox.com/cafe/m4xm4n/openskedge) that can be used as well.
 
 ## FAQ
