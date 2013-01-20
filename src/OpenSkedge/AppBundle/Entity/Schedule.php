@@ -185,18 +185,15 @@ class Schedule
 
     public function setDayOffset($dayint, $offset, $val)
     {
-        $recStr = $this->getDay($dayint);
-        $recArr = str_split($recStr);
-        $recArr[$offset] = $val;
-        $rec = implode('', $recArr);
+        $rec = $this->getDay($dayint);
+        $rec[$offset] = $val;
         return $this->setDay($dayint, $rec);
     }
 
     public function getDayOffset($dayint, $offset)
     {
-        $recStr = $this->getDay($dayint);
-        $recArr = str_split($recStr);
-        return $recArr[$offset];
+        $rec = $this->getDay($dayint);
+        return $rec[$offset];
     }
 
     /**
