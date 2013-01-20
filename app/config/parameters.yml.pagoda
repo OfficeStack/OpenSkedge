@@ -12,4 +12,8 @@ parameters:
     mailer_user: ~
     mailer_password: ~
     locale: en
+    # The first day of the week
+    week_start_day: Sunday
+    # The first day in a pay period (if different from above)
+    week_start_day_clock: Sunday
     secret: ThisIsNotASecretAndNeedsToBeChanged
