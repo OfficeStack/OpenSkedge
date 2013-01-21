@@ -43,7 +43,7 @@ class ClockController extends Controller
         $now = new \DateTime("now");
         $lastClockWeek = $this->getFirstDayOfWeek($clock->getLastClock());
         $thisWeek = $this->getFirstDayOfWeek($now);
-        if($lastClockWeek < $thisWeek) {
+        if($lastClockWeek->getTimestamp() < $thisWeek->getTimestamp()) {
             $archivedClock = $this->backupClock($user, $clock);
             $clock->resetClock();
             $em->persist($archivedClock);
@@ -133,6 +133,7 @@ class ClockController extends Controller
         $offset = 7 - $firstDay;
         $ret = clone $date;
         $ret->modify(-(($date->format('w') + $offset) % 7) . 'days');
+        $ret->modify('midnight');
         return $ret;
     }
 
