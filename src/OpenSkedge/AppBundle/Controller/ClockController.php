@@ -31,7 +31,7 @@ class ClockController extends Controller
             throw new AccessDeniedException();
         }
 
-        if(!in_array($request->getClientIp(), array('127.0.0.1', '::1'))) {
+        if(!in_array($request->getClientIp(), $this->container->getParameter('allowed_clock_ips'))) {
             throw new AccessDeniedException();
         }
 
@@ -67,7 +67,7 @@ class ClockController extends Controller
             throw new AccessDeniedException();
         }
 
-        if(!in_array($request->getClientIp(), array('127.0.0.1', '::1'))) {
+        if(!in_array($request->getClientIp(), $this->container->getParameter('allowed_clock_ips'))) {
             throw new AccessDeniedException();
         }
 

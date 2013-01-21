@@ -15,3 +15,5 @@ global:
       - USE_INTL_ICU_DATA_VERSION: true
       - SYMFONY__BRANDING__NAME: "OpenSkedge"
       - SYMFONY__ADMIN__EMAIL: admin@mydomain.com
+      - SYMFONY__WEEK__START__DAY: Sunday
+      - SYMFONY__WEEK__START__DAY__CLOCK: Sunday

@@ -2,13 +2,14 @@
 
 namespace OpenSkedge\AppBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DashboardController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
@@ -42,12 +43,18 @@ class DashboardController extends Controller
                 $schedules = array();
             }
         }
+        if(in_array($request->getClientIp(), $this->container->getParameter('allowed_clock_ips'))) {
+            $outside = false;
+        } else {
+            $outside = true;
+        }
 
         return $this->render('OpenSkedgeBundle:Dashboard:index.html.twig', array(
-            'htime'     => mktime(0,0,0,1,1),
+            'htime'      => mktime(0,0,0,1,1),
             'resolution' => "1 hour",
-            'avail'       => $avail,
+            'avail'      => $avail,
             'schedules'  => $schedules,
+            'outside'    => $outside,
         ));
     }
 }

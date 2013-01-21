@@ -24,6 +24,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         appname: %app_name%
+        allowed_clock_ips: %allowed_clock_ips%
 
 # Assetic Configuration
 assetic:

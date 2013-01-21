@@ -13,7 +13,8 @@ parameters:
     mailer_password: ~
     locale: en
     # The first day of the week
-    week_start_day: Sunday
+    week_start_day: %week.start.day%
     # The first day in a pay period (if different from above)
-    week_start_day_clock: Sunday
+    week_start_day_clock: %week.start.day.clock%
+    allowed_clock_ips: ['127.0.0.1', 'fe80::1', '::1']
     secret: ThisIsNotASecretAndNeedsToBeChanged

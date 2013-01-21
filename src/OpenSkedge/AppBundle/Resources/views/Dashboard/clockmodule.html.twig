@@ -11,13 +11,13 @@
     {% set action = 'in' %}
     {% set actionpath = 'clock_in' %}
   {% endif %}
-  {% if app.request.server.get("REMOTE_ADDR") != '127.0.0.1' %}{% set outside = true %}
+  {% if outside %}
   <div class="alert">
     <strong>Sorry!</strong> You cannot clock in. It appears you're not accessing {{ appname }} from work.
   </div>
   {% endif %}
 {% endspaceless %}
   <form action="{{ path(actionpath) }}" method="post">
-    <button class="btn btn-primary btn-large btn-block" type="submit" {% if outside|default(false) %}disabled{% endif %}>Clock {{ action|capitalize }}</button>
+    <button class="btn btn-primary btn-large btn-block" type="submit" {% if outside %}disabled{% endif %}>Clock {{ action|capitalize }}</button>
   </form>
 </div>
