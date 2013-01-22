@@ -84,6 +84,11 @@ class ArchivedClock
         return $this->id;
     }
 
+    public function getData()
+    {
+        return array(str_split($this->getSun()), str_split($this->getMon()), str_split($this->getTue()), str_split($this->getWed()), str_split($this->getThu()), str_split($this->getFri()), str_split($this->getSat()));
+    }
+
     /**
      * Gets day value based on day number.
      *

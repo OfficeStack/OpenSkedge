@@ -1,0 +1,41 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>Users Clocked In for Week of {{ week|date('M-d-Y') }}</h3>
+    <hr>
+    {% if not entities is defined or entities is empty %}
+    <div class="alert">
+        <strong>Sorry!</strong> No users clocked in for this week.
+    </div>
+    {% else %}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ac in entities %}
+            <tr>
+                <td>{{ ac.user.name }}</td>
+                <td><a href="{{ path('user_view', { 'id': ac.user.id }) }}">{{ ac.user.username }}</a></td>
+                <td>
+                    <form action="{{ path('report_hours_generate', { 'id': ac.user.id }) }}" method="post">
+                        <input type="hidden" name="year" value="{{ week|date('Y') }}" />
+                        <input type="hidden" name="day" value="{{ week|date('d') }}" />
+                        <input type="hidden" name="month" value="{{ week|date('m') }}" />
+                        <button class="btn btn-primary" type="submit"><i class="icon-eye-open icon-white"></i> Generate Report</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

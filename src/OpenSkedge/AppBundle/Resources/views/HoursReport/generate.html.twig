@@ -1,0 +1,48 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ appname }} - Clock Report - {{ user.name }} - {{ week|date('M-d-Y') }}{% endblock %}
+{% block stylesheets %}
+<style type="text/css">
+.s0 { background-color: #BBbbBB; }
+.s1 { background-color: #008000; }
+.s2 { background-color: #DC143C; }
+.s3 { background-color: #FFcc00; }
+</style>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>{{ user.name }}'s Clock Report for {{ week|date('M-d-Y') }}</h3>
+    <hr>
+    <table class="table table-condensed table-bordered schedule-table">
+        <tr>
+            <th class="s0">Not Scheduled and Not Worked</th>
+            <th class="s1">Scheduled and Worked</th>
+            <th class="s2">Scheduled and Not Worked</th>
+            <th class="s3">Worked and Not Scheduled</th>
+        </tr>
+    </table>
+    <table class="table table-condensed table-bordered schedule-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for i in 0..95 %}
+            <tr>
+                <td>{{ htime|date("g:i a") }}</td>
+    {% for j in 0..6 %}{% spaceless %}
+                <td class="{% if archivedClock.data[j][i] == '1' and scheduled.week[j][i] == '1' %}s1{% elseif archivedClock.data[j][i] == '1' and scheduled.week[j][i] == '0'%}s3{% elseif archivedClock.data[j][i] == '0' and scheduled.week[j][i] == '1' %}s2{% else %}s0{% endif %}"></td>{% endspaceless %}
+    {% endfor %}{% set htime = htime|date_modify("+15 mins") %}
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

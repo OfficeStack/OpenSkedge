@@ -60,7 +60,7 @@ $(document).ready(function () {
           {% if is_granted('ROLE_ADMIN') %}
           <li class="nav-header">Supervisor Actions</li>
           <li><a href="{{ path('areas') }}"><i class="icon-th-large"></i> Areas &amp; Positions</a></li>
-          {#<li><a href="{{ path('reports') }}">Reports</a></li>#}
+          <li><a href="{{ path('reports') }}"><i class="icon-file"></i> Reports</a></li>
           <li><a href="{{ path('schedule_periods') }}"><i class="icon-calendar"></i> Schedule</a></li>
           <li><a href="{{ path('users') }}"><i class="icon-user"></i> Users</a></li>
           {% endif %}

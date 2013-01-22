@@ -1,0 +1,27 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>Time Clock Reports</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Week of</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.week|date('M-d-Y') }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('report_hours_view', { 'year': entity.week|date('Y'), 'day': entity.week|date('d'), 'month': entity.week|date('m') }) }}"><i class="icon-eye-open icon-white"></i> View Users</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+    </div>
+</div>
+{% endblock %}
