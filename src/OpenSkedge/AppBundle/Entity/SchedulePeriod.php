@@ -23,6 +23,11 @@ class SchedulePeriod
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="AvailabilitySchedule", mappedBy="schedulePeriod", cascade={"remove"})
+     */
+    private $availabilitySchedules;
+
+    /**
      * @ORM\OneToMany(targetEntity="Schedule", mappedBy="schedulePeriod", cascade={"remove"})
      */
     private $schedules;
@@ -44,6 +49,7 @@ class SchedulePeriod
      */
     public function __construct()
     {
+        $this->availabilitySchedules = new \Doctrine\Common\Collections\ArrayCollection();
         $this->schedules = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -139,5 +145,38 @@ class SchedulePeriod
     public function getSchedules()
     {
         return $this->schedules;
+    }
+
+    /**
+     * Add availabilitySchedules
+     *
+     * @param \OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules
+     * @return SchedulePeriod
+     */
+    public function addAvailabilitySchedule(\OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules)
+    {
+        $this->availabilitySchedules[] = $availabilitySchedules;
+
+        return $this;
+    }
+
+    /**
+     * Remove availabilitySchedules
+     *
+     * @param \OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules
+     */
+    public function removeAvailabilitySchedule(\OpenSkedge\AppBundle\Entity\AvailabilitySchedule $availabilitySchedules)
+    {
+        $this->availabilitySchedules->removeElement($availabilitySchedules);
+    }
+
+    /**
+     * Get availabilitySchedules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAvailabilitySchedules()
+    {
+        return $this->availabilitySchedules;
     }
 }

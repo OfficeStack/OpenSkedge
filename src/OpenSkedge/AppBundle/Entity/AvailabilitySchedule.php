@@ -29,7 +29,7 @@ class AvailabilitySchedule
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SchedulePeriod")
+     * @ORM\ManyToOne(targetEntity="SchedulePeriod", inversedBy="availabilitySchedules")
      * @ORM\JoinColumn(name="spid", referencedColumnName="id")
      */
     private $schedulePeriod;
