@@ -172,7 +172,7 @@ class AreaController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('area'));
+        return $this->redirect($this->generateUrl('areas'));
     }
 
     private function createDeleteForm($id)
