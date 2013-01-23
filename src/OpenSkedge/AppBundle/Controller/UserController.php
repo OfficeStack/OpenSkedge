@@ -300,52 +300,13 @@ class UserController extends Controller
             $userstitle = $user->getName()."'s Colleagues";
         }
 
-        $qb = $em->createQueryBuilder();
-
-        $schedulePeriods = $qb->select('sp')
-                              ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
-                              ->where('sp.startTime < CURRENT_TIMESTAMP()')
-                              ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
-                              ->getQuery()
-                              ->getResult();
-        $schedules = array();
-
-        $userPositions = array();
-
-        foreach($schedulePeriods as $schedulePeriod) {
-            try {
-                $userPositions[] = $em->createQueryBuilder()
-                                    ->select('p', 's')
-                                    ->from('OpenSkedgeBundle:Schedule', 's')
-                                    ->innerJoin('s.position', 'p', 'WITH', '(s.user = :uid AND s.schedulePeriod = :spid)')
-                                    ->setParameters(array('uid' => $user->getId(), 'spid' => $schedulePeriod->getId()))
-                                    ->getQuery()
-                                    ->setMaxResults(1)
-                                    ->getSingleResult()
-                                    ->getPosition()
-                                    ->getId();
-            } catch (\Doctrine\ORM\NoResultException $e) {
-                // It's aight.
-            }
-        }
-
-        foreach($schedulePeriods as $schedulePeriod) {
-            foreach($userPositions as $upid) {
-                $schedules[] = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
-                    'schedulePeriod' => $schedulePeriod,
-                    'position'       => $upid
-                ));
-            }
-        }
-
+        $supervisors = $user->getSupervisors();
         $entities = array();
-
-        for ($i = 0; $i < count($schedules); $i++) {
-            foreach($schedules[$i] as $schedule)
-            {
-                if ($schedule->getUser()->getId() != $user->getId())
-                    $entities[] = $schedule->getUser();
-            }
+        foreach($supervisors as $s) {
+            $entities = array_merge($entities, $s->getEmployees()->filter(
+                function ($entity) use ($user) {
+                    return $entity->getId() != $user->getId();
+                })->toArray());
         }
 
         $colleagues = array_unique($entities);
