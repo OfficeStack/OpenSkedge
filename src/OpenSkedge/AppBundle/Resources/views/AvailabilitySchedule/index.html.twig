@@ -5,11 +5,11 @@
     <h3>{{ title }}</h3>
     {% if user.id == app.user.id %}
     <a class="btn btn-primary" href="{{ path('user_schedule_pre_new') }}"><i class="icon-plus-sign icon-white"></i> Add Schedule</a>
-    <br><br>
     {% endif %}
+    <hr>
     {% if entities is empty %}
     <div class="alert">
-        <strong>Sorry!</strong> {% if user.id == app.user.id %}You have no schedules.{% else %}{{ user.name }} has not made any schedules.{% endif %}
+        <strong>Sorry!</strong> {% if user.id == app.user.id %}It appears that you have not created any availability schedules yet. <a href="{{ path('user_schedule_pre_new') }}">Click here to create one</a>.{% else %}{{ user.name }} does not appear to have any schedules.{% endif %}
     {% else %}
     <table class="table table-condensed">
         <thead>

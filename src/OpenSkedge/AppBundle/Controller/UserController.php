@@ -217,6 +217,7 @@ class UserController extends Controller
         if(is_null($id)) {
             $user = $this->getUser();
             $userstitle = 'My Supervisors';
+            $emptymsg = "You don't have any supervisors. You're such a boss!";
         } else {
             $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
@@ -225,6 +226,7 @@ class UserController extends Controller
             }
 
             $userstitle = $user->getName()."'s Supervisors";
+            $emptymsg = $user->getName()." doesn't have any supervisors.";
         }
 
         $supervisors = $user->getSupervisors();
@@ -239,9 +241,10 @@ class UserController extends Controller
 
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'displayonly' => true,
-            'userstitle' => $userstitle,
-            'entities' => $entities,
-            'paginator' => $paginator,
+            'userstitle'  => $userstitle,
+            'entities'    => $entities,
+            'paginator'   => $paginator,
+            'emptymsg'    => $emptymsg,
         ));
     }
 
@@ -255,6 +258,7 @@ class UserController extends Controller
         if(is_null($id)) {
             $user = $this->getUser();
             $userstitle = 'My Employees';
+            $emptymsg = "You don't have any employees. Keep working! You'll get there one day!";
         } else {
             $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
@@ -263,6 +267,7 @@ class UserController extends Controller
             }
 
             $userstitle = $user->getName()."'s Employees";
+            $emptymsg = $user->getName()." doesn't have any employees.";
         }
 
         $employees = $user->getEmployees();
@@ -280,6 +285,7 @@ class UserController extends Controller
             'userstitle' => $userstitle,
             'entities' => $entities,
             'paginator' => $paginator,
+            'emptymsg'    => $emptymsg,
         ));
     }
 
@@ -290,6 +296,7 @@ class UserController extends Controller
         if(is_null($id)) {
             $user = $this->getUser();
             $userstitle = 'My Colleagues';
+            $emptymsg = "You don't have any colleagues.";
         } else {
             $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
@@ -298,6 +305,7 @@ class UserController extends Controller
             }
 
             $userstitle = $user->getName()."'s Colleagues";
+            $emptymsg = $user->getName()." doesn't appear to have any colleagues.";
         }
 
         $supervisors = $user->getSupervisors();
@@ -325,6 +333,7 @@ class UserController extends Controller
             'userstitle' => $userstitle,
             'entities' => $entities,
             'paginator' => $paginator,
+            'emptymsg'    => $emptymsg,
         ));
     }
 

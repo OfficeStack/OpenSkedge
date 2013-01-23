@@ -5,11 +5,11 @@
     <h3>{{ userstitle }}</h3>
     {% if not displayonly|default(false) %}
     <a class="btn btn-primary" href="{{ path('user_new') }}"><i class="icon-plus-sign icon-white"></i> Add User</a>
-    <hr>
     {% endif %}
+    <hr>
     {% if entities is empty %}
     <div class="alert">
-        <strong>Sorry!</strong> No users that match the specified criteria were found.
+        <strong>Sorry!</strong> {{ emptymsg }}
     </div>
     {% else %}
     <table class="table table-condensed">

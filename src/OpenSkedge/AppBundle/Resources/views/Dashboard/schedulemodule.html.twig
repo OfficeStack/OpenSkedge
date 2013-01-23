@@ -12,9 +12,15 @@
     </form>
     {% include 'OpenSkedgeBundle:Schedule:userschedule.html.twig' %}
     {% else %}
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Sorry!</strong>
+        No schedule(s) found for you in any current scheduling periods.
+    </div>
     <div class="alert alert-block alert-info">
-        <h4>Sorry!</h4>
-        No schedule found for you in a current scheduling period.
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Hey, {{ app.user.name }}!</strong>
+        <p>Did you create an <a href="{{ path('my_schedules') }}">availability schedule</a>? If you already did but you're still seeing this message, your supervisor(s) may not have scheduled you yet.</p>
     </div>
     {% endif %}
 </div>
