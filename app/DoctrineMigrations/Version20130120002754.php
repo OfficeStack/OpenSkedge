@@ -14,7 +14,7 @@ class Version20130120002754 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql", "Migration can only be executed safely on 'mysql'.");
 
-        $this->skipIf($this->sm->tablesExist(array('os_archived_clock')));
+        $this->skipIf($this->sm->tablesExist(array('os_archived_clock')), "os_archived_clock table already exists.");
 
         $this->addSql("CREATE TABLE os_archived_clock (id INT AUTO_INCREMENT NOT NULL, uid INT DEFAULT NULL, week DATETIME NOT NULL, sun VARCHAR(96) NOT NULL, mon VARCHAR(96) NOT NULL, tue VARCHAR(96) NOT NULL, wed VARCHAR(96) NOT NULL, thu VARCHAR(96) NOT NULL, fri VARCHAR(96) NOT NULL, sat VARCHAR(96) NOT NULL, INDEX IDX_E2AE7B56539B0606 (uid), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB");
         $this->addSql("ALTER TABLE os_archived_clock ADD CONSTRAINT FK_E2AE7B56539B0606 FOREIGN KEY (uid) REFERENCES os_user (id)");
