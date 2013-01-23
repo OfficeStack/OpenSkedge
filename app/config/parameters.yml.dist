@@ -16,5 +16,6 @@ parameters:
     week_start_day: Sunday
     # The first day in a pay period (if different from above)
     week_start_day_clock: Sunday
+    allowed_clock_ips: ['127.0.0.1', 'fe80::1', '::1']
     secret: YOU_NEED_SOME_GOBBLEDIEGOOK_HERE
     database_path: null
