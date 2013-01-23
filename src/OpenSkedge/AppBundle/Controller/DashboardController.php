@@ -32,8 +32,14 @@ class DashboardController extends Controller
                       ->setParameter('uid', $user->getId())
                       ->getResult();
 
-        $avails = $results[$selected]->getAvailabilitySchedules();
-        $avail = $avails[0];
+        if(count($results) > 0) {
+            $avails = $results[$selected]->getAvailabilitySchedules();
+            $schedules = $results[$selected]->getSchedules();
+            $avail = $avails[0];
+        } else {
+            $avail = null;
+            $schedules = null;
+        }
 
         if(in_array($request->getClientIp(), $this->container->getParameter('allowed_clock_ips'))) {
             $outside = false;
@@ -46,7 +52,7 @@ class DashboardController extends Controller
             'resolution'      => "1 hour",
             'avail'           => $avail,
             'schedulePeriods' => $results,
-            'schedules'       => $results[$selected]->getSchedules(),
+            'schedules'       => $schedules,
             'selected'        => $selected,
             'outside'         => $outside,
         ));
