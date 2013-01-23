@@ -1,6 +1,7 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ appname }} - Clock Report - {{ user.name }} - {{ week|date('M-d-Y') }}{% endblock %}
 {% block stylesheets %}
+{{ parent() }}
 <style type="text/css">
 .s0 { background-color: #BBbbBB; }
 .s1 { background-color: #008000; }
