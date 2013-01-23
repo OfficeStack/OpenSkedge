@@ -5,6 +5,8 @@ web1:
       - "php app/console --env=prod --no-debug cache:warmup"
       - "php app/console --env=prod --no-debug doctrine:schema:update --force -n"
       - "php app/console --env=prod --no-debug doctrine:fixtures:load -n"
+      - "php app/console doctrine:migrations:version 20130120002754 --add"
+      - "php app/console doctrine:migrations:version 20130120012237 --add"
 
 db1:
     name: openskedge
