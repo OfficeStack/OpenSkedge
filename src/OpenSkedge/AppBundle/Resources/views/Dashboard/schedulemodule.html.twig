@@ -1,6 +1,15 @@
 <div class="span8 well">
     {% if avail is defined and not avail is null %}
-    <span class="lead">Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</span>
+    <form class="form-inline inline" action="{{ path('dashboard') }}" method="post">
+        <div class="control-group">
+            <label class="control-label" for="schedulePeriod">Schedule for</label>
+            <select name="schedulePeriod" onChange="this.form.submit();">
+            {% for schedulePeriod in schedulePeriods %}
+            <option value="{{ loop.index0 }}" {% if loop.index0 == selected %}selected{% endif %}>{{ schedulePeriod }}</option>
+            {% endfor %}
+            </select>
+        </div>
+    </form>
     {% include 'OpenSkedgeBundle:Schedule:userschedule.html.twig' %}
     {% else %}
     <div class="alert alert-block alert-info">
