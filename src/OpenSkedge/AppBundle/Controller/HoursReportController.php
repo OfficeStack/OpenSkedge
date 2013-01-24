@@ -30,6 +30,7 @@ class HoursReportController extends Controller
         $archivedClockWeeks = $em->createQueryBuilder()
                     ->select('DISTINCT ac.week')
                     ->from('OpenSkedgeBundle:ArchivedClock', 'ac')
+                    ->orderBy('ac.week', 'DESC')
                     ->getQuery()
                     ->getResult();
 
