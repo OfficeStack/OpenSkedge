@@ -1,4 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ appname }} - Clock Reports - {{ week|date('M-d-Y') }}{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>Users Clocked In for Week of {{ week|date('M-d-Y') }}</h3>
