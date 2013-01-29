@@ -1,27 +1,11 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ appname }} - {{ entity.area.name }} - {{ entity.name }}{% endblock %}
-{% block stylesheets %}
-{{ parent() }}
-<style type="text/css">
-h3,
-form,
-#form {
-    display: inline;
-}
-h3 {
-    margin-right: 10px;
-}
-.btn-group {
-    top: -4px;
-}
-</style>
-{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ entity.name }}</h3>
     {% if is_granted('ROLE_ADMIN') %}
     <form action="{{ path('position_delete', { 'id': entity.id }) }}" method="post">
-    <div class="btn-group">
+    <div class="btn-group header-control">
         <a class="btn" href="{{ path('position_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
         {{ form_widget(delete_form) }}
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
@@ -30,5 +14,30 @@ h3 {
     {% endif %}
     <p>{{ entity.description }}</p>
     <hr>
+    <h4>Schedule This Position</h4>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Schedule Period</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for schedulePeriod in schedulePeriods %}
+            <tr>
+                <td>{{ schedulePeriod }}</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn" href="{{ path('position_schedule_edit', { 'spid': schedulePeriod.id, 'pid': entity.id }) }}"><i class="icon-pencil"></i> Edit Schedule</a>
+                        <a class="btn btn-primary" href="{{ path('position_schedule_view', { 'spid': schedulePeriod.id, 'pid': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View Schedule</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+    </div>
 </div>
 {% endblock %}

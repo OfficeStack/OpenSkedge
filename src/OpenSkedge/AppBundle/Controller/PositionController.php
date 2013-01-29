@@ -57,11 +57,27 @@ class PositionController extends Controller
             throw $this->createNotFoundException('Unable to find Position entity.');
         }
 
+        $allSchedulePeriods = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findBy(array(), array(
+            'endTime' => 'DESC'
+        ));
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($allSchedulePeriods);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(5);
+        $paginator->setCurrentPage($page);
+
+        $schedulePeriods = $paginator->getCurrentPageResults();
+
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('OpenSkedgeBundle:Position:view.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'           => $entity,
+            'delete_form'      => $deleteForm->createView(),
+            'schedulePeriods'  => $schedulePeriods,
+            'paginator'        => $paginator,
+        ));
     }
 
     /**
