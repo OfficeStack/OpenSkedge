@@ -1,0 +1,6 @@
+<label class="control-label" for="timeresolution">Time Resolution: </label>
+<select class="input-small" name="timeresolution" onChange="this.form.submit();">
+    <option value="15 mins" {% if resolution == "15 mins" %}selected{% endif %}>15 mins</option>
+    <option value="30 mins" {% if resolution == "30 mins" %}selected{% endif %}>30 mins</option>
+    <option value="1 hour" {% if resolution == "1 hour" %}selected{% endif %}>1 hour</option>
+</select>

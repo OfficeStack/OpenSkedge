@@ -8,9 +8,12 @@
             <option value="{{ loop.index0 }}" {% if loop.index0 == selected %}selected{% endif %}>{{ schedulePeriod }}</option>
             {% endfor %}
             </select>
+            <div id="timeresolution">
+            {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
+            </div>
         </div>
     </form>
-    {% include 'OpenSkedgeBundle:Schedule:userschedule.html.twig' %}
+    {% include 'OpenSkedgeBundle:ModularBlocks:userschedule.html.twig' %}
     {% else %}
     <div class="alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>

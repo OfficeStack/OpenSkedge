@@ -16,6 +16,10 @@
 {% block modulecontent %}
 <div class="span12">
     <h3>Editing {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
+    <form id="timeresolution" class="form-inline inline header-control" action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="get">
+        {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
+    </form>
+    <hr>
     <form action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="post" name="scheduleform">
         <input type="hidden" name="sectiondiv" value="{{ sectiondiv }}">
         <table class="table table-condensed table-bordered schedule-table">

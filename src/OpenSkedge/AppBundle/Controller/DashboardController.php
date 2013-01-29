@@ -23,6 +23,8 @@ class DashboardController extends Controller
 
         $selected = $request->request->get('schedulePeriod', 0);
 
+        $resolution = $request->request->get('timeresolution', '1 hour');
+
         $results = $em->createQuery('SELECT sp, s, a FROM OpenSkedgeBundle:SchedulePeriod sp
                                     LEFT JOIN sp.schedules s JOIN sp.availabilitySchedules a
                                     WHERE (sp.startTime <= CURRENT_TIMESTAMP()
@@ -49,7 +51,7 @@ class DashboardController extends Controller
 
         return $this->render('OpenSkedgeBundle:Dashboard:index.html.twig', array(
             'htime'           => mktime(0,0,0,1,1),
-            'resolution'      => "1 hour",
+            'resolution'      => $resolution,
             'avail'           => $avail,
             'schedulePeriods' => $results,
             'schedules'       => $schedules,

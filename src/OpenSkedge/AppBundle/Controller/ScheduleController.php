@@ -34,7 +34,7 @@ class ScheduleController extends Controller
      * Finds and displays a Schedule entity.
      *
      */
-    public function viewAction($pid, $spid)
+    public function viewAction(Request $request, $pid, $spid)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -50,6 +50,8 @@ class ScheduleController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
+        $resolution = $request->request->get('timeresolution', '1 hour');
+
         $deleteForm = $this->createDeleteForm($pid, $spid);
 
         $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
@@ -59,7 +61,7 @@ class ScheduleController extends Controller
 
         return $this->render('OpenSkedgeBundle:Schedule:view.html.twig', array(
             'htime'         => mktime(0,0,0,1,1),
-            'resolution'    => "1 hour",
+            'resolution'    => $resolution,
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,
             'schedules'     => $schedules,
@@ -136,6 +138,8 @@ class ScheduleController extends Controller
 
         $deleteForm = $this->createDeleteForm($pid, $spid);
 
+        $resolution = $request->query->get('timeresolution', '1 hour');
+
         if ($request->getMethod() == 'POST') {
             $sectiondiv = $request->request->get('sectiondiv');
             for($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
@@ -172,7 +176,7 @@ class ScheduleController extends Controller
 
         return $this->render('OpenSkedgeBundle:Schedule:edit.html.twig', array(
             'htime'         => mktime(0,0,0,1,1),
-            'resolution'    => "1 hour",
+            'resolution'    => $resolution,
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,
             'availData'     => $availData,

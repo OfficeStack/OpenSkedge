@@ -59,7 +59,7 @@ class AvailabilityScheduleController extends Controller
      * Finds and displays a AvailabilitySchedule entity.
      *
      */
-    public function viewAction($uid, $spid)
+    public function viewAction(Request $request, $uid, $spid)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -82,11 +82,13 @@ class AvailabilityScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
+        $resolution = $request->request->get('timeresolution', '1 hour');
+
         $deleteForm = $this->createDeleteForm($uid, $spid);
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:view.html.twig', array(
-            'htime'     => mktime(0,0,0,1,1),
-            'resolution' => "1 hour",
+            'htime'       => mktime(0,0,0,1,1),
+            'resolution'  => $resolution,
             'avail'       => $entity,
             'schedules'   => $schedules,
             'delete_form' => $deleteForm->createView(),
@@ -141,6 +143,8 @@ class AvailabilityScheduleController extends Controller
             ));
         }
 
+        $resolution = $request->query->get('timeresolution', '1 hour');
+
         $entity = new AvailabilitySchedule();
 
         $entity->setSchedulePeriod($schedulePeriod);
@@ -169,7 +173,7 @@ class AvailabilityScheduleController extends Controller
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:new.html.twig', array(
             'avail'      => $entity,
             'htime'      => mktime(0,0,0,1,1),
-            'resolution' => "1 hour",
+            'resolution' => $resolution,
             'create'     => true,
         ));
     }
@@ -197,6 +201,8 @@ class AvailabilityScheduleController extends Controller
             throw new AccessDeniedException();
         }
 
+        $resolution = $request->query->get('timeresolution', '1 hour');
+
         $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $spid, 'user' => $user->getId()));
 
         $deleteForm = $this->createDeleteForm($user->getId(), $spid);
@@ -223,9 +229,9 @@ class AvailabilityScheduleController extends Controller
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:edit.html.twig', array(
             'htime'       => mktime(0,0,0,1,1),
-            'resolution'  => '1 hour',
-            'avail'      => $entity,
-            'edit'   => true,
+            'resolution'  => $resolution,
+            'avail'       => $entity,
+            'edit'        => true,
             'schedules'   => $schedules,
             'delete_form' => $deleteForm->createView(),
         ));

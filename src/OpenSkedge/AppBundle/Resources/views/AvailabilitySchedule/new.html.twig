@@ -9,8 +9,12 @@
 {% block modulecontent %}
 <div class="span12">
     <h3>New Availability Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
+    <form id="timeresolution" class="form-inline inline header-control" action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="get">
+        {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
+    </form>
+    <hr>
     <form action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
-        <table class="schedule-table">
+        <table class="table table-condensed table-bordered schedule-table">
             <tr>
                 <td class="p0"><input type="radio" name="priority" value="0"> Unavailable</td>
                 <td class="p1"><input type="radio" name="priority" value="1"> Low Preference</td>
@@ -25,7 +29,7 @@
         <input type="hidden" id="day4" size="108" name="day[]" value="{{ avail.thu }}">
         <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
         <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
-            {% include 'OpenSkedgeBundle:Schedule:userschedule.html.twig' %}
+            {% include 'OpenSkedgeBundle:ModularBlocks:userschedule.html.twig' %}
         <button class="btn btn-primary" type="submit" name="save">Create Schedule</button>
     </form>
 </div>
