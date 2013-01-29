@@ -1,0 +1,18 @@
+form, #form { display: inline; }
+h3 {
+    display: inline;
+    margin-right: 10px;
+}
+.page-content-container { padding-top: 20px; }
+.sidebar-nav { padding: 9px 0; }
+.sidebar-nav a { color: #059; }
+.nav>li>a:hover { background-color: #ddd; }
+#timeresolution {
+    display: inline;
+    margin-left: 10px;
+}
+.header-control {
+    display: inline;
+    position: relative;
+    top: -4px;
+}

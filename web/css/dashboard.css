@@ -1,15 +1,3 @@
-.page-content-container {
-    padding-top: 20px;
-}
-.sidebar-nav {
-    padding: 9px 0;
-}
-.sidebar-nav a {
-    color: #059;
-}
-.nav>li>a:hover {
-    background-color: #ddd;
-}
 #clock {
     text-align: center;
 }
