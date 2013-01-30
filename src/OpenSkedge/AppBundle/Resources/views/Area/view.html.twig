@@ -1,23 +1,11 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ appname }} - Area - {{ entity.name }}{% endblock %}
-{% block stylesheets %}
-{{ parent() }}
-<style type="text/css">
-h3,
-form,
-#form {
-    display: inline;
-}
-h3 {
-    margin-right: 10px;
-}
-.btn-group-header {
-    top: -5px;
-}
-</style>
-{% endblock %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('areas') }}">Areas &amp; Positions</a> <span class="divider">/</span></li>
+        <li class="active">{{ entity.name }}</li>
+    </ul>
     <h3>{{ entity.name }}</h3>
     {% if is_granted('ROLE_ADMIN') %}
     <form action="{{ path('area_delete', { 'id': entity.id }) }}" method="post">
@@ -31,7 +19,7 @@ h3 {
     <p>{{ entity.description }}</p>
     <hr>
     {% if is_granted('ROLE_ADMIN') %}
-    <a class="btn btn-primary" href="{{ path('position_new', { 'area_id': entity.id}) }}">Add Position</a>
+    <a class="btn btn-primary" href="{{ path('position_new', { 'aid': entity.id }) }}">Add Position</a>
     {% endif %}
     {% if not positions is defined or positions is empty %}
     <div class="alert">

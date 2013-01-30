@@ -1,10 +1,15 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('schedule_periods') }}">Schedule Periods</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('schedule_period_view', { 'id': schedulePeriod.id }) }}">{{ schedulePeriod }}</a> <span class="divider">/</span></li>
+        <li class="active">Select a Position to Schedule</li>
+    </ul>
     <h3>Schedule a Position</h3>
-    <form action="{{ path('position_schedule_select', { 'spid': spid }) }}" method="post">
+    <form action="{{ path('position_schedule_select', { 'spid': schedulePeriod.id }) }}" method="post">
         {{ form_widget(form) }}
-        <button class="btn btn-primary" type="submit">Continue</button> <a href="{{ path('schedule_period_view', { 'id': spid }) }}" class="btn">Cancel</a>
+        <button class="btn btn-primary" type="submit">Continue</button> <a href="{{ path('schedule_period_view', { 'id': schedulePeriod.id }) }}" class="btn">Cancel</a>
     </form>
 </div>
 {% endblock %}

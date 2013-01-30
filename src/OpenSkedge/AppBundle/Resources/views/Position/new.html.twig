@@ -1,12 +1,17 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block modulecontent %}
-<div class="span6">
+<div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('areas') }}">Areas &amp; Positions</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('area_view', { 'id': area.id }) }}">{{ area.name }}</a> <span class="divider">/</span></li>
+        <li class="active">Create a New Position</li>
+    </ul>
     <h3>Create a New Position</h3>
-    <form action="{{ path('position_new', { 'area_id': area_id }) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('position_new', { 'aid': area.id }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Create</button>
-            <a class="btn" href="{{ path('area_view', { 'id': area_id }) }}">Back to Area</a>
+            <a class="btn" href="{{ path('area_view', { 'id': area.id }) }}">Back to Area</a>
         </div>
     </form>
 </div>

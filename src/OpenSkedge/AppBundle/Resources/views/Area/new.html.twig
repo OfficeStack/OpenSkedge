@@ -1,7 +1,10 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block modulecontent %}
 <div class="span6">
-    <h3>Create a New Area</h3>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('areas') }}">Areas &amp; Positions</a> <span class="divider">/</span></li>
+        <li class="active">Create a New Area</li>
+    </ul>
     <form action="{{ path('area_new') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <div class="form-actions">

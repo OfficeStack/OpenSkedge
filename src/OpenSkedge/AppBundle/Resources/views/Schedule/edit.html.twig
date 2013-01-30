@@ -15,6 +15,13 @@
 {% endif %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('areas') }}">Areas &amp; Positions</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('area_view', { 'id': position.area.id }) }}">{{ position.area.name }}</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('position_view', { 'id': position.id }) }}">{{ position.name }}</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('position_schedule_view', { 'pid': position.id, 'spid': schedulePeriod.id }) }}">Schedule for {{ schedulePeriod }}</a> <span class="divider">/</span></li>
+        <li class="active">Edit</li>
+    </ul>
     <h3>Editing {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
     <form id="timeresolution" class="form-inline inline header-control" action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="get">
         {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}

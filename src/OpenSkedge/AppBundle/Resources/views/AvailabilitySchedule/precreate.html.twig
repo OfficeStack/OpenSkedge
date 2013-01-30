@@ -1,6 +1,10 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('my_schedules') }}">My Schedules</a> <span class="divider">/</span></li>
+        <li class="active">Create a New Availability Schedule</li>
+    </ul>
     <h3>Create a New Availability Schedule</h3>
     <form action="{{ path('user_schedule_pre_new') }}" method="post">
         {{ form_widget(form) }}

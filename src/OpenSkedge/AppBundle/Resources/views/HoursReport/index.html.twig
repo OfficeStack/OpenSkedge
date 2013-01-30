@@ -2,7 +2,11 @@
 {% block title %}{{ appname }} - Clock Reports{% endblock %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>Time Clock Reports</h3>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('reports') }}">Reports</a> <span class="divider">/</span></li>
+        <li class="active">Clock Reports</li>
+    </ul>
+    <h3>Clock Reports</h3>
     <table class="table table-condensed">
         <thead>
             <tr>

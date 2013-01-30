@@ -2,6 +2,11 @@
 {% block title %}{{ appname }} - Clock Reports - {{ week|date('M-d-Y') }}{% endblock %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('reports') }}">Reports</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('report_hours') }}">Clock Reports</a> <span class="divider">/</span></li>
+        <li class="active">Week of {{ week|date('M-d-Y') }}</li>
+    </ul>
     <h3>Users Clocked In for Week of {{ week|date('M-d-Y') }}</h3>
     <hr>
     {% if not entities is defined or entities is empty %}

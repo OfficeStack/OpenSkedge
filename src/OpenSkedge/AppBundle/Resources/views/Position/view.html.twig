@@ -2,6 +2,11 @@
 {% block title %}{{ appname }} - {{ entity.area.name }} - {{ entity.name }}{% endblock %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('areas') }}">Areas &amp; Positions</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('area_view', { 'id': entity.area.id }) }}">{{ entity.area.name }}</a> <span class="divider">/</span></li>
+        <li class="active">{{ entity.name }}</li>
+    </ul>
     <h3>{{ entity.name }}</h3>
     {% if is_granted('ROLE_ADMIN') %}
     <form action="{{ path('position_delete', { 'id': entity.id }) }}" method="post">

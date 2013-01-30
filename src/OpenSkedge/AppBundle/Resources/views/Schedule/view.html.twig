@@ -15,6 +15,12 @@
 {% endif %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('areas') }}">Areas &amp; Positions</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('area_view', { 'id': position.area.id }) }}">{{ position.area.name }}</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('position_view', { 'id': position.id }) }}">{{ position.name }}</a> <span class="divider">/</span></li>
+        <li class="active">Schedule for {{ schedulePeriod }}</li>
+    </ul>
     <h3>{{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
     <form action="{{ path('position_schedule_delete', { 'spid': schedulePeriod.id, 'pid': position.id }) }}" method="post">
     {% if is_granted('ROLE_ADMIN') %}

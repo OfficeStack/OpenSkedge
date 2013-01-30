@@ -11,7 +11,12 @@ $('#schedulePeriodEnd').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
 </script>
 {% endblock %}
 {% block modulecontent %}
-<div class="span6">
+<div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('schedule_periods') }}">Schedule Periods</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('schedule_period_view', { 'id': entity.id }) }}">{{ entity }}</a> <span class="divider">/</span></li>
+        <li class="active">Edit</li>
+    </ul>
     <h3>Editing a Schedule Period</h3>
     <form action="{{ path('schedule_period_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         {{ form_errors(edit_form) }}
@@ -27,7 +32,8 @@ $('#schedulePeriodEnd').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
         </div>
         {{ form_rest(edit_form) }}
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Edit</button> <a class="btn" href="{{ path('schedule_period_view', { 'id': entity.id }) }}">Cancel</a>
+            <button type="submit" class="btn btn-primary">Edit</button>
+            <a class="btn" href="{{ path('schedule_period_view', { 'id': entity.id }) }}">Cancel</a>
         </div>
     </form>
 </div>

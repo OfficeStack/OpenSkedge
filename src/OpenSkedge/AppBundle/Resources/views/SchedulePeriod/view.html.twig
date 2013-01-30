@@ -1,25 +1,13 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block stylesheets %}
-{{ parent() }}
-<style type="text/css">
-h3,
-form,
-#form {
-    display: inline;
-}
-h3 {
-    margin-right: 10px;
-}
-.btn-group {
-    top: -4px;
-}
-</style>
-{% endblock %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('schedule_periods') }}">Schedule Periods</a> <span class="divider">/</span></li>
+        <li class="active">{{ entity }}</li>
+    </ul>
     <h3>{{ entity }}</h3>
     <form action="{{ path('schedule_period_delete', { 'id': entity.id }) }}" method="post">
-    <div class="btn-group-header btn-group">
+    <div class="btn-group header-control">
         <a class="btn" href="{{ path('schedule_period_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
         {{ form_widget(delete_form) }}
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>

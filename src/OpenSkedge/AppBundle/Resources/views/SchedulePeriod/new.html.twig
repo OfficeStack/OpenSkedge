@@ -11,7 +11,11 @@ $('#schedulePeriodEnd').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
 </script>
 {% endblock %}
 {% block modulecontent %}
-<div class="span6">
+<div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('schedule_periods') }}">Schedule Periods</a> <span class="divider">/</span></li>
+        <li class="active">Create a New Schedule Period</li>
+    </ul>
     <h3>Create a New Schedule Period</h3>
     <form action="{{ path('schedule_period_new') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
@@ -27,7 +31,8 @@ $('#schedulePeriodEnd').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
         </div>
         {{ form_rest(form) }}
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Create</button> <a class="btn" href="{{ path('schedule_periods') }}">Cancel</a>
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a class="btn" href="{{ path('schedule_periods') }}">Cancel</a>
         </div>
     </form>
 </div>

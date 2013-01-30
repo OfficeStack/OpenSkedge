@@ -1,24 +1,14 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block stylesheets %}
-{{ parent() }}
-<style type="text/css">
-h3,
-form,
-#form {
-    display: inline;
-}
-h3 {
-    margin-right: 10px;
-}
-.btn-group {
-    top: -4px;
-}
-</style>
-{% endblock %}
 {% block modulecontent %}
 <div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('areas') }}">Areas &amp; Positions</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('area_view', { 'id': entity.area.id }) }}">{{ entity.area.name }}</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('position_view', { 'id': entity.id }) }}">{{ entity.name }}</a> <span class="divider">/</span></li>
+        <li class="active">Edit</li>
+    </ul>
     <h3>{{ entity.name }}</h3>
-    <div class="btn-group">
+    <div class="btn-group header-control">
         <form action="{{ path('position_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
@@ -27,9 +17,9 @@ h3 {
     <hr>
     <form action="{{ path('position_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         {{ form_widget(edit_form) }}
-        <p>
+        <div class="form-actions">
             <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Edit</button>
-        </p>
+        </div>
     </form>
 </div>
 {% endblock %}

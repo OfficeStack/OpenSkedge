@@ -11,7 +11,13 @@
 {% endblock %}
 {% block modulecontent %}
 <div class="span12">
-    <h3>{{ user.name }}'s Clock Report for {{ week|date('M-d-Y') }}</h3>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('reports') }}">Reports</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('report_hours') }}">Clock Reports</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('report_hours_view', { 'year': week|date('Y'), 'month': week|date('m'), 'day': week|date('d') }) }}">Week of {{ week|date('M-d-Y') }}</a> <span class="divider">/</span></li>
+        <li class="active">{{ user.name }}</li>
+    </ul>
+    <h3>{{ user.name }}'s Clock Report for Week of {{ week|date('M-d-Y') }}</h3>
     <hr>
     <table class="table table-condensed table-bordered schedule-table">
         <tr>
