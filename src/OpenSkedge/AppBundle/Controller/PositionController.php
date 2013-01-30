@@ -84,10 +84,18 @@ class PositionController extends Controller
      * Creates a new Position entity.
      *
      */
-    public function newAction(Request $request, $area_id)
+    public function newAction(Request $request, $aid)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $area = $em->getRepository('OpenSkedgeBundle:Area')->find($aid);
+
+        if (!$area) {
+            throw $this->createNotFoundException('Unable to find Area entity.');
         }
 
         $entity  = new Position();
@@ -107,7 +115,7 @@ class PositionController extends Controller
         return $this->render('OpenSkedgeBundle:Position:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'area_id' => $area_id
+            'area'   => $area,
         ));
     }
 
@@ -254,6 +262,13 @@ class PositionController extends Controller
                   'empty_value' => 'Select a Position'))
             ->getForm();
 
+        $em = $this->getDoctrine()->getManager();
+
+        $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
+
+        if (!$schedulePeriod) {
+            throw $this->createNotFoundException('Unable to find SchedulePeriod');
+        }
 
         if ($request->getMethod() == 'POST') {
             $selectForm->bind($request);
@@ -268,8 +283,8 @@ class PositionController extends Controller
         }
 
         return $this->render('OpenSkedgeBundle:Position:select.html.twig', array(
-            'form' => $selectForm->createView(),
-            'spid' => $spid
+            'form'           => $selectForm->createView(),
+            'schedulePeriod' => $schedulePeriod,
         ));
 
     }

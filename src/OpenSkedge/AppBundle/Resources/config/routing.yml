@@ -143,8 +143,10 @@ area_delete:
         _method:  POST
 
 position_new:
-    pattern:  /area/{area_id}/position/new
+    pattern:  /area/{aid}/position/new
     defaults: { _controller: OpenSkedgeBundle:Position:new }
+    requirements:
+        aid: \d+
 
 position_view:
     pattern:  /area/position/{id}/
