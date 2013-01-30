@@ -241,6 +241,10 @@ report_hours:
 report_hours_view:
     pattern:  /report/hours/week/{year}/{month}/{day}/
     defaults: { _controller: OpenSkedgeBundle:HoursReport:view }
+    requirements:
+        year: \d+
+        month: \d+
+        day: \d+
 
 report_hours_generate:
     pattern:  /user/{id}/report/hours/generate
