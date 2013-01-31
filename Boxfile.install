@@ -19,3 +19,4 @@ global:
       - SYMFONY__ADMIN__EMAIL: admin@mydomain.com
       - SYMFONY__WEEK__START__DAY: Sunday
       - SYMFONY__WEEK__START__DAY__CLOCK: Sunday
+      - OPENSKEDGE_SECRET: ThisIsASecretChangeIt

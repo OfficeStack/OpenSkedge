@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new OpenSkedge\AppBundle\OpenSkedgeBundle(),
-            new Pff\PagodaBundle\PffPagodaBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
         );
 
