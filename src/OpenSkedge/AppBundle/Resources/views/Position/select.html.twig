@@ -9,7 +9,10 @@
     <h3>Schedule a Position</h3>
     <form action="{{ path('position_schedule_select', { 'spid': schedulePeriod.id }) }}" method="post">
         {{ form_widget(form) }}
-        <button class="btn btn-primary" type="submit">Continue</button> <a href="{{ path('schedule_period_view', { 'id': schedulePeriod.id }) }}" class="btn">Cancel</a>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Continue</button>
+            <a href="{{ path('schedule_period_view', { 'id': schedulePeriod.id }) }}" class="btn">Back to Schedule Period</a>
+        </div>
     </form>
 </div>
 {% endblock %}

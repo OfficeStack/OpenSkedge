@@ -16,9 +16,10 @@
     <hr>
     <form action="{{ path('area_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         {{ form_widget(edit_form) }}
-        <p>
-            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Edit</button>
-        </p>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Save Changes</button>
+            <a class="btn" href="{{ path('area_view', { 'id': entity.id }) }}">Back to Area</a>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -16,10 +16,10 @@
     <form action="{{ path('user_schedule_edit', { 'spid': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
         <table class="table table-condensed table-bordered schedule-table">
             <tr>
-                <td class="p0"><input type="radio" name="priority" value="0"> Unavailable</td>
-                <td class="p1"><input type="radio" name="priority" value="1"> Low Preference</td>
-                <td class="p2"><input type="radio" name="priority" value="2"> Medium Preference</td>
-                <td class="p3"><input type="radio" name="priority" value="3" checked> High Preference</td>
+                <td class="p0"><input type="radio" name="priority" value="0" id="p0"><label for="p0">Unavailable</label></td>
+                <td class="p1"><input type="radio" name="priority" value="1" id="p1"><label for="p1">Low Preference</label></td>
+                <td class="p2"><input type="radio" name="priority" value="2" id="p2"><label for="p2">Medium Preference</label></td>
+                <td class="p3"><input type="radio" name="priority" value="3" id="p3" checked><label for="p3">High Preference</label></td>
             </tr>
         </table>
         <input type="hidden" id="day0" size="108" name="day[]" value="{{ avail.sun }}">
@@ -30,7 +30,10 @@
         <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
         <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
         {% include 'OpenSkedgeBundle:ModularBlocks:userschedule.html.twig' %}
-        <button class="btn btn-primary" type="submit" name="save">Save Schedule</button> <a class="btn" href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}">Back</a>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit" name="save"><i class="icon-pencil icon-white"></i> Save Changes</button>
+            <a class="btn" href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}">Back to Schedules</a>
+        </div>
     </form>
 </div>
 {% endblock %}

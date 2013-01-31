@@ -1,11 +1,12 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block modulecontent %}
-<div class="span6">
+<div class="span12">
     <h3>Create a New User</h3>
     <form action="{{ path('user_new') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Create</button><a class="btn" href="{{ path('users') }}">Cancel</a>
+            <button type="submit" class="btn btn-primary">Create User</button>
+            <a class="btn" href="{{ path('users') }}">Back to Users</a>
         </div>
     </form>
 </div>

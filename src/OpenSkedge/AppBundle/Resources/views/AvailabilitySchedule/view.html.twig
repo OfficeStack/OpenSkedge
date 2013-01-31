@@ -5,7 +5,7 @@
     <h3>{{ avail.user.name }}'s schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
     {% if avail.user.id == app.user.id %}
     <form action="{{ path('user_schedule_delete', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}" method="post">
-    <div class="btn-group-header btn-group header-control">
+    <div class="btn-group header-control">
         <a class="btn" href="{{ path('user_schedule_edit', { 'spid': avail.schedulePeriod.id }) }}"><i class="icon-pencil"></i> Edit</a>
         {{ form_widget(delete_form) }}
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>

@@ -1,31 +1,15 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ appname }} - {{ entity.name }}{% endblock %}
-{% block stylesheets %}
-{{ parent() }}
-<style type="text/css">
-h3,
-form,
-#form {
-    display: inline;
-}
-h3 {
-    margin-right: 10px;
-}
-.btn-group {
-    top: -6px;
-}
-</style>
-{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ entity.name }}</h3>
     {% if app.user.id == entity.id %}
-    <div class="btn-group">
+    <div class="btn-group header-control">
         <a class="btn" href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
     </div>
     {% elseif is_granted('ROLE_ADMIN') %}
     <form action="{{ path('user_delete', { 'id': entity.id }) }}" method="post">
-    <div class="btn-group">
+    <div class="btn-group header-control">
         <a class="btn" href="{{ path('user_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
         {% if app.user.id != entity.id and delete_form is defined %}
         {{ form_widget(delete_form) }}
@@ -34,7 +18,7 @@ h3 {
     </div>
     </form>
     {% endif %}
-    <div class="btn-group">
+    <div class="btn-group header-control">
         <a class="btn btn-info" href="{{ path('user_schedules', { 'id': entity.id }) }}">Schedules</a>
         <a class="btn btn-info" href="{{ path('user_positions', { 'id': entity.id }) }}">Positions</a>
         <a class="btn btn-info" href="{{ path('user_supervisors', { 'id': entity.id }) }}">Supervisors</a>

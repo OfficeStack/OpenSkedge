@@ -1,5 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block title %}{{ appname }} - {{ position.area.name }}\{{ position.name }} schedule for {{ schedulePeriod }}{% endblock %}
+{% block title %}{{ appname }} - {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}{% endblock %}
 {% if resolution == "15 mins" %}
 {% set sectiondiv = 1 %}
 {% set sectionlen = 95 %}
@@ -61,7 +61,10 @@
         {% endfor %}
             </tbody>
         </table>
-        <button class="btn btn-primary" type="submit">Save Schedule</button>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Save Schedule</button>
+            <a class="btn" href="{{ path('position_schedule_view', { 'pid': position.id, 'spid': schedulePeriod.id }) }}">Back to Schedule</a>
+        </div>
     </form>
 </div>
 {% endblock %}

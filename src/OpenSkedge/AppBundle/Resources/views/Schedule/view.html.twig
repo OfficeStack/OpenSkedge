@@ -24,7 +24,7 @@
     <h3>{{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
     <form action="{{ path('position_schedule_delete', { 'spid': schedulePeriod.id, 'pid': position.id }) }}" method="post">
     {% if is_granted('ROLE_ADMIN') %}
-    <div class="btn-group-header btn-group header-control">
+    <div class="btn-group header-control">
         <a class="btn" href="{{ path('position_schedule_edit', { 'spid': schedulePeriod.id, 'pid': position.id }) }}"><i class="icon-pencil"></i> Edit</a>
         {{ form_widget(delete_form) }}
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>

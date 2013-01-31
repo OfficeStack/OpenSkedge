@@ -30,7 +30,10 @@
         <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
         <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
             {% include 'OpenSkedgeBundle:ModularBlocks:userschedule.html.twig' %}
-        <button class="btn btn-primary" type="submit" name="save">Create Schedule</button>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit" name="save">Post Availability Schedule</button>
+            <a class="btn" href="{{ path('my_schedules') }}">Back to Schedules</a>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -32,8 +32,8 @@ $('#schedulePeriodEnd').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
         </div>
         {{ form_rest(edit_form) }}
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Edit</button>
-            <a class="btn" href="{{ path('schedule_period_view', { 'id': entity.id }) }}">Cancel</a>
+            <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Save Changes</button>
+            <a class="btn" href="{{ path('schedule_period_view', { 'id': entity.id }) }}">Back to Schedule Period</a>
         </div>
     </form>
 </div>
