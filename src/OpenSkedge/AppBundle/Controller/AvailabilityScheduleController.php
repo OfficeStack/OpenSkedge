@@ -221,9 +221,9 @@ class AvailabilityScheduleController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_schedule_edit', array(
+            return $this->redirect($this->generateUrl('user_schedule_view', array(
                 'user'=> $user->getId(),
-                'spid' => $id
+                'spid' => $spid
             )));
         }
 
