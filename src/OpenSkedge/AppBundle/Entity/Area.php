@@ -32,7 +32,7 @@ class Area
 
     /**
      * @ORM\Column(type="string", length=300, nullable=true)
-     * @Assert\Length(max = "50",
+     * @Assert\Length(max = "140",
      *      maxMessage = "An Area's description cannot be longer than than {{ limit }} characters length"
      * )
      */
