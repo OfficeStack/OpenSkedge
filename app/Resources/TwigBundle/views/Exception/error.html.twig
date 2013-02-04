@@ -16,6 +16,9 @@
                 <p><strong>Oops! An Error Occurred</strong></p>
                 <p>The server returned a "{{ status_code }} {{ status_text }}".</p>
             </div>
+            {% if not app.request.headers.get('referer') is null %}
+            <p><a class="btn btn-block btn-primary" href="{{ app.request.headers.get('referer') }}"><i class="icon-arrow-left icon-white"></i> Return from whence you came</a></p>
+            {% endif %}
         </div>
         <footer>
             <div class="container">
