@@ -17,6 +17,7 @@
     },
     "require": {
         "php": ">=5.3.3",
+        "ext-memcache": "*",
         "symfony/symfony": "2.1.*",
         "doctrine/data-fixtures": "1.0.*@dev",
         "doctrine/doctrine-fixtures-bundle": "dev-master",

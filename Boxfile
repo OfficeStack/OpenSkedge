@@ -17,6 +17,7 @@ web1:
       - mysql
       - pdo_mysql
       - zip
+      - memcache
 
     php_short_open_tag: "0"
     php_magic_quotes_gpc: "0"
@@ -29,13 +30,16 @@ web1:
       - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --optimize-autoloader"
 
     before_deploy:
-      - "php app/console --env=prod --no-debug cache:clear --no-warmup"
-      - "php app/console --env=prod --no-debug cache:warmup"
-      - "php app/console --env=prod --no-debug doctrine:migrations:migrate -n"
+      - "php app/console --env=prod --no-debug doctrine:migrations:migrate -n -v"
+      - "php app/console --env=prod --no-debug cache:clear --no-warmup -v"
+      - "php app/console --env=prod --no-debug cache:warmup -v"
 
 db1:
     name: openskedge
     type: mysql
+
+cache1:
+    type: memcached
 
 global:
     env:

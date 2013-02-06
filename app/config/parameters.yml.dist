@@ -19,3 +19,10 @@ parameters:
     allowed_clock_ips: ['127.0.0.1', 'fe80::1', '::1']
     secret: YOU_NEED_SOME_GOBBLEDIEGOOK_HERE
     database_path: null
+    session_handler: ~
+    # If you want to use memcache for session storage
+    #   session_handler: session.handler.memcache
+    #   session_memcache_host: %memcache.host%
+    #   session_memcache_port: %memcache.port%
+    #   session_memcache_prefix: openskedge
+    #   session_memcache_expire: %memcache.expire%

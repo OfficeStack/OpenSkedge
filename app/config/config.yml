@@ -16,7 +16,8 @@ framework:
     default_locale:  "%locale%"
     trust_proxy_headers: false # Deprecated in 2.0; will be removed in 2.3 (used trusted_proxies instead)
     trusted_proxies: ~
-    session:         ~
+    session:
+        handler_id: %session_handler%
 
 # Twig Configuration
 twig:
@@ -60,3 +61,13 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+services:
+    session.memcache:
+        class: Memcache
+        calls:
+          - [ addServer, [ %session_memcache_host%, %session_memcache_port% ]]
+
+    session.handler.memcache:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler
+        arguments: [ @session.memcache, { prefix: %session_memcache_prefix%, expiretime: %session_memcache_expire% } ]

@@ -1,16 +1,10 @@
 
 web1:
     before_deploy:
-      - "php app/console --env=prod --no-debug cache:clear --no-warmup"
-      - "php app/console --env=prod --no-debug cache:warmup"
-      - "php app/console --env=prod --no-debug doctrine:schema:update --force -n"
-      - "php app/console --env=prod --no-debug doctrine:fixtures:load -n"
-      - "php app/console doctrine:migrations:version 20130120002754 --add"
-      - "php app/console doctrine:migrations:version 20130120012237 --add"
-
-db1:
-    name: openskedge
-    type: mysql
+      - "php app/console --env=prod --no-debug doctrine:schema:update --force -n -v"
+      - "php app/console --env=prod --no-debug doctrine:fixtures:load -n -v"
+      - "php app/console doctrine:migrations:version 20130120002754 --add -v"
+      - "php app/console doctrine:migrations:version 20130120012237 --add -v"
 
 global:
     env:
@@ -20,3 +14,5 @@ global:
       - SYMFONY__WEEK__START__DAY: Sunday
       - SYMFONY__WEEK__START__DAY__CLOCK: Sunday
       - OPENSKEDGE_SECRET: ThisIsASecretChangeIt
+      - SYMFONY__MEMCACHE__EXPIRE: 3600
+

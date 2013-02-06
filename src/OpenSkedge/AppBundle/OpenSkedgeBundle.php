@@ -26,5 +26,15 @@ class OpenSkedgeBundle extends Bundle
             $container->setParameter('database.user', $_SERVER["DB1_USER"]);
             $container->setParameter('database.password', $_SERVER["DB1_PASS"]);
         }
+
+        if (isset($_SERVER["CACHE1_HOST"])) {
+            $container->setParameter('memcache.host', $_SERVER["CACHE1_HOST"]);
+            $container->setParameter('memcache.port', $_SERVER["CACHE1_PORT"]);
+            if (isset($_SERVER["SYMFONY__MEMCACHE__EXPIRE"])) {
+                $container->setParameter('memcache.expire', $_SERVER["SYMFONY__MEMCACHE__EXPIRE"]);
+            } else {
+                $container->setParameter('memcache.expire', 3600);
+            }
+        }
     }
 }
