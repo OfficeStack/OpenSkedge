@@ -3,6 +3,12 @@
 
 Copyright &copy; 2012-2013 Max Fierke
 
+# Requirements
+1.  Nginx, Apache, or another web server on *nix/BSD. May work on Windows and Mac, 
+2.  PHP 5.3.10+ (haven't tested on 5.4 but it should work fine)
+3.  PDO-supported database. MySQL/MariaDB suggested.
+4.  (optional) Memcached and PHP memcache extension.
+
 # Deployment on a Local, VPS, Cloud, or Dedicated host
 ## Installation
 
@@ -73,7 +79,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 * Joe Krall (Developed time clock functionality for the UofMN with Carl Allen)
 
 ## Contact
-**Max Fierke**
-Homepage: [www.maxfierke.com](http://www.maxfierke.com)
-Twitter: [@m4xm4n](http://twitter.com/m4xm4n)
-Github: [@maxfierke](https://github.com/maxfierke)
+**Max Fierke**  
+Homepage: [www.maxfierke.com](http://www.maxfierke.com)  
+Twitter: [@m4xm4n](http://twitter.com/m4xm4n)  
+Github: [@maxfierke](https://github.com/maxfierke)  
