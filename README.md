@@ -3,13 +3,14 @@
 
 Copyright &copy; 2012-2013 Max Fierke
 
-# Requirements
-1.  Nginx, Apache, or another web server on *nix/BSD. May work on Windows and Mac, 
+# Deployment on a Local, VPS, Cloud, or Dedicated host
+## Requirements
+1.  Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
+    * Nginx users, see [this wiki article](https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux) for setup.
+    * Apache users, point your document root to web/. The .htaccess should take care of everything.
 2.  PHP 5.3.10+ (haven't tested on 5.4 but it should work fine)
 3.  PDO-supported database. MySQL/MariaDB suggested.
 4.  (optional) Memcached and PHP memcache extension.
-
-# Deployment on a Local, VPS, Cloud, or Dedicated host
 ## Installation
 
 0.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
