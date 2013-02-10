@@ -1,40 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>OpenSkedge by maxfierke</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="OpenSkedge : A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts." />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>OpenSkedge</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>OpenSkedge</h1>
-        <p>A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.</p>
 
-        <p class="view"><a href="https://github.com/maxfierke/OpenSkedge">View the Project on GitHub <small>maxfierke/OpenSkedge</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/maxfierke/OpenSkedge">View on GitHub</a>
 
+          <h1 id="project_title">OpenSkedge</h1>
+          <h2 id="project_tagline">A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.</h2>
 
-        <ul>
-          <li><a href="https://github.com/maxfierke/OpenSkedge/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/maxfierke/OpenSkedge/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/maxfierke/OpenSkedge">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/maxfierke/OpenSkedge/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/maxfierke/OpenSkedge/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>Deployment on a Local, VPS, Cloud, or Dedicated host</h1>
 
-<h2>Installation</h2>
+<h2>Requirements</h2>
 
 <ol>
-<li> Run <code>php app/check.php</code> and resolve any errors before doing ANYTHING else.</li>
-<li> Run <code>cp app/config/parameters.yml.dist app/config/parameters.yml</code>
+<li> Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
+
+<ul>
+<li>Nginx users, see <a href="https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux">this wiki article</a> for setup.</li>
+<li>Apache users, point your document root to web/. The .htaccess should take care of everything.</li>
+</ul>
+</li>
+<li> PHP 5.3.10+ (haven't tested on 5.4 but it should work fine)</li>
+<li> PDO-supported database. MySQL/MariaDB suggested.</li>
+<li>
+<p>(optional) Memcached and PHP memcache extension.</p>
+
+<h2>Installation</h2>
+</li>
+<li><p>Run <code>php app/check.php</code> and resolve any errors before doing ANYTHING else.</p></li>
+<li>
+<p>Run <code>cp app/config/parameters.yml.dist app/config/parameters.yml</code></p>
 
 <ul>
 <li>
@@ -51,15 +69,12 @@ paper time sheets.</li>
 <code>secret</code> is used for CSRF validation. Set this to some random characters. An ideal value would be a random sha256 hash.</li>
 </ul>
 </li>
-<li> Run <code>php composer.phar install</code>
-</li>
-<li> Run <code>php app/console doctrine:database:create</code>
-</li>
-<li> Run <code>php app/console doctrine:schema:update --force</code>
-</li>
-<li> Run <code>php app/console doctrine:fixtures:load</code> to bootstrap the application with some needed information (groups) and a default admin account with the username <code>admin</code> and the password <code>admin</code>.</li>
-<li> Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and <strong>change the password</strong>.</li>
-<li>Add employees, areas, positions, and schedule periods and get to scheduling!</li>
+<li><p>Run <code>php composer.phar install</code></p></li>
+<li><p>Run <code>php app/console doctrine:database:create</code></p></li>
+<li><p>Run <code>php app/console doctrine:schema:update --force</code></p></li>
+<li><p>Run <code>php app/console doctrine:fixtures:load</code> to bootstrap the application with some needed information (groups) and a default admin account with the username <code>admin</code> and the password <code>admin</code>.</p></li>
+<li><p>Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and <strong>change the password</strong>.</p></li>
+<li><p>Add employees, areas, positions, and schedule periods and get to scheduling!</p></li>
 </ol><h2>Upgrading</h2>
 
 <ol>
@@ -70,8 +85,8 @@ paper time sheets.</li>
 <li> Run <code>php app/console --env=prod cache:clear</code> to clear the application's cache. <code>prod</code> should be replaced with <code>dev</code> if you're running in a development environment.</li>
 </ol><h1>Deployment on Pagoda Box</h1>
 
-<p>Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.<br>
-See README.Pagoda.md for Pagoda Box specific installation instructions.<br>
+<p>Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.
+See README.Pagoda.md for Pagoda Box specific installation instructions.
 I have also <a href="https://pagodabox.com/cafe/m4xm4n/openskedge">created a quickstart</a> that can be used as well.</p>
 
 <h2>FAQ</h2>
@@ -137,12 +152,16 @@ Homepage: <a href="http://www.maxfierke.com">www.maxfierke.com</a><br>
 Twitter: <a href="http://twitter.com/m4xm4n">@m4xm4n</a><br>
 Github: <a href="https://github.com/maxfierke">@maxfierke</a>  </p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/maxfierke">maxfierke</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">OpenSkedge maintained by <a href="https://github.com/maxfierke">maxfierke</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -153,6 +172,7 @@ Github: <a href="https://github.com/maxfierke">@maxfierke</a>  </p>
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
