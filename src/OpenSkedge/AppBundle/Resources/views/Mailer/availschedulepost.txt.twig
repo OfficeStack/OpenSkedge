@@ -1,0 +1,17 @@
+{% block subject %}
+{% autoescape false %}
+[{{ appname }}] {{ user.name }} has posted their availability for {{ schedulePeriod }}
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+Hey {{ supervisor.name }},
+
+This is just a notification email to let you know that your employee, {{ user.name }}, has posted their availability for the {{ schedulePeriod }} scheduling period.
+
+{{ appname }} Management
+----
+This is an automated email sent by OpenSkedge. Do NOT respond to this email. You will not get a reply.
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

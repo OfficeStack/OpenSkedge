@@ -6,9 +6,11 @@ Due Pagoda Box's read-only nature, there are few environmental variables that ne
 
 *  SYMFONY__BRANDING__NAME should contain the desired name for the application branding. - <em>(Default: "OpenSkedge")</em>
 *  SYMFONY__ADMIN__EMAIL should contain the email address of the default administrative user - <em>(Default: "admin@yourdomain.com")</em>
+*  SYMFONY__SENDER__EMAIL should contain the email address of the no-reply email account from which automated emails should be sent. - <em>(Default: "no-reply@yourdomain.com")</em>
 *  SYMFONY__WEEK__START__DAY should contain the day of the week which is considered the start of the week in your region - <em>(Default: Sunday)</em>
 *  SYMFONY__WEEK__START__DAY__CLOCK should contain the day of the week which is considered the start of the week as far as time clock functionality is concerned. This will likely be the same as above. Use the same format as your paper time sheets. -  <em>(Default: Sunday)</em>
 *  OPENSKEDGE_SECRET is set to an insecure secret by default. This needs to be changed. OPENSKEDGE_SECRET is used for CSRF validation. Set this to some random characters. An ideal value would be a random sha256 hash. - <em>(Default: ThisIsASecretChangeIt)</em>
+*  SYMFONY__MEMCACHE__EXPIRE should contain the number of seconds a memcache session should last. - <em>(Default: 3600)</em>
 
 Any changes to the above will take effect the next time you deploy. You can also force a redeploy of the current commit by clicking "Pick a Git Commit to Deploy" and clicking "Deploy" next to the commit that is already deployed.
 

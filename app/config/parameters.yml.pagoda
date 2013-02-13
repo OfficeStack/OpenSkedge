@@ -1,14 +1,18 @@
 parameters:
     app_name: %branding.name%
     admin_email: %admin.email%
+    sender_email: %sender.email%
     database_driver: pdo_mysql
     database_host: %database.host%
     database_port: %database.port%
     database_name: %database.name%
     database_user: %database.user%
     database_password: %database.password%
-    mailer_transport: smtp
-    mailer_host: 127.0.0.1
+    mailer_transport: mail
+    mailer_encryption: ~
+    mailer_auth: ~
+    mailer_port: ~
+    mailer_host: ~
     mailer_user: ~
     mailer_password: ~
     locale: en

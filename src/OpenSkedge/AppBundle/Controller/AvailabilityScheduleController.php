@@ -164,6 +164,9 @@ class AvailabilityScheduleController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $mailer = $this->container->get('notify_mailer');
+            $mailer->notifyAvailabilitySchedulePost($entity);
+
             return $this->redirect($this->generateUrl('user_schedule_view', array(
                 'uid'  => $user->getId(),
                 'spid' => $spid
@@ -220,6 +223,9 @@ class AvailabilityScheduleController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            $mailer = $this->container->get('notify_mailer');
+            $mailer->notifyAvailabilityScheduleChange($entity);
 
             return $this->redirect($this->generateUrl('user_schedule_view', array(
                 'user'=> $user->getId(),

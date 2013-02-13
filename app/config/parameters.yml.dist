@@ -1,6 +1,7 @@
 parameters:
     app_name: "OpenSkedge"
     admin_email: admin@yourdomain.com
+    sender_email: no-reply@yourdomain.com
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null
@@ -8,9 +9,12 @@ parameters:
     database_user: YOUR_USER
     database_password: YOUR_PASSWORD
     mailer_transport: smtp
+    mailer_encryption: tls
+    mailer_auth: login
+    mailer_port: 587
     mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_user: ~
+    mailer_password: ~
     locale: en
     # The first day of the week
     week_start_day: Sunday
@@ -21,8 +25,8 @@ parameters:
     database_path: null
     session_handler: ~
     # If you want to use memcache for session storage
-    #   session_handler: session.handler.memcache
-    #   session_memcache_host: %memcache.host%
-    #   session_memcache_port: %memcache.port%
-    #   session_memcache_prefix: openskedge
-    #   session_memcache_expire: %memcache.expire%
+    #  session_handler: session.handler.memcache
+    session_memcache_host: 127.0.0.1
+    session_memcache_port: 11211
+    session_memcache_prefix: openskedge
+    session_memcache_expire: 3600

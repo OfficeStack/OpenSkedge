@@ -94,7 +94,8 @@ class UserController extends Controller
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $encoder = $this->get('security.encoder_factory')->getEncoder($entity);
-                $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+                $plainPassword = $entity->getPassword();
+                $password = $encoder->encodePassword($plainPassword, $entity->getSalt());
                 $entity->setPassword($password);
                 $clock = new Clock();
                 $em->persist($clock);
@@ -102,6 +103,9 @@ class UserController extends Controller
                 $entity->setClock($clock);
                 $em->persist($entity);
                 $em->flush();
+
+                $mailer = $this->container->get('notify_mailer');
+                $mailer->notifyUserCreation($entity, $plainPassword);
 
                 return $this->redirect($this->generateUrl('user_view', array('id' => $entity->getId())));
             }

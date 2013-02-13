@@ -1,0 +1,35 @@
+{% block subject %}
+{% autoescape false %}
+[{{ appname }}] Welcome {{ user.name }}!
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+Hey {{ user.name }},
+
+Welcome to {{ appname }}, a flexible employee scheduling application powered by OpenSkedge! Your manager or an employement administrator created an account for you with the following details below:
+
+Username: {{ user.name }}
+Password: {{ password }}
+
+You can login in via {{ url('login') }}
+
+{{ appname }} Management
+----
+This is an automated email sent by OpenSkedge. Do NOT respond to this email. You will not get a reply.
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}
+Hey {{ user.name }},<br>
+<br>
+Welcome to <a href="{{ url('dashboard') }}">{{ appname }}</a>, a flexible employee scheduling application powered by OpenSkedge! Your manager or an employement administrator created an account for you with the following details below:<br>
+<br>
+Username: {{ user.name }}<br>
+Password: {{ password }}<br>
+<br>
+You can login in <a href="{{ url('login') }}">here</a> (For plaintext users: {{ url('login') }})<br>
+<br>
+{{ appname }} Management<br>
+----<br>
+This is an automated email sent by OpenSkedge. Do NOT respond to this email. You will not get a reply.
+{% endblock %}

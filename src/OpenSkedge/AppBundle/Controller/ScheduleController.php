@@ -149,6 +149,7 @@ class ScheduleController extends Controller
                     if(!empty($hour)) {
                         foreach($hour as $uid) {
                             $schedule = $em->getRepository('OpenSkedgeBundle:Schedule')->findOneBy(array('schedulePeriod' => $spid, 'position' => $pid, 'user' => $uid));
+                            $new = false;
                             if(!$schedule) {
                                 $schedule = new Schedule();
                                 $tuser = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
@@ -157,12 +158,17 @@ class ScheduleController extends Controller
                                 $schedule->setUser($tuser);
                                 $schedule->setSchedulePeriod($schedulePeriod);
                                 $schedule->setPosition($position);
+                                $new = true;
                             }
                             for($sectpart=0; $sectpart < $sectiondiv; $sectpart++) {
                                 $schedule->setDayOffset($day, $timesect+$sectpart, 1);
                             }
                             $em->persist($schedule);
                             $em->flush();
+                            if($new) {
+                                $mailer = $this->container->get('notify_mailer');
+                                $mailer->notifyUserScheduleChange($entity);
+                            }
                         }
                     }
                 }
