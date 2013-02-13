@@ -167,7 +167,7 @@ class ScheduleController extends Controller
                             $em->flush();
                             if($new) {
                                 $mailer = $this->container->get('notify_mailer');
-                                $mailer->notifyUserScheduleChange($entity);
+                                $mailer->notifyUserScheduleChange($schedule);
                             }
                         }
                     }
