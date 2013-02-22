@@ -228,7 +228,7 @@ class AvailabilityScheduleController extends Controller
             $mailer->notifyAvailabilityScheduleChange($entity);
 
             return $this->redirect($this->generateUrl('user_schedule_view', array(
-                'user'=> $user->getId(),
+                'uid'=> $user->getId(),
                 'spid' => $spid
             )));
         }
