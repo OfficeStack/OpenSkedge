@@ -1,21 +1,21 @@
-colors = Array("#BBbbBB","#AAaaFF","#CCccFF","#EEeeFF");
+classes = Array("p0","p1","p2","p3");
 
-var oldcolor;       //-- variable to hold the old color, while the mouse is over a cell, so that the old color can be restored when the mouse leaves the cell
+var oldclass;  //-- variable to hold the old class, while the mouse is over a cell, so that the old color can be restored when the mouse leaves the cell
 
 //-- highlite a table cell when the mouse is over it
 function hilitecell(cell) {
-    oldcolor = cell.style.backgroundColor;
+    oldclass = cell.className;
     index = 0;
-    colorIndex = 0;
+    classIndex = 0;
     for(i=0; i<document.scheduleform.priority.length; i++) {
-        if (document.scheduleform.priority[i].checked) colorIndex=i;
+        if (document.scheduleform.priority[i].checked) classIndex=i;
     }
-    cell.style.backgroundColor = colors[document.scheduleform.priority[colorIndex].value];
+    cell.className = classes[document.scheduleform.priority[classIndex].value];
 }
 
 //-- restore the original color when the mouse leaves the cell
 function unhilitecell(cell) {
-    cell.style.backgroundColor = oldcolor;
+    cell.className = oldclass;
 }
 
 //-- function called when the use clicks in a cell
@@ -27,23 +27,20 @@ function setcell(cell, i, j) {
     hour = document.getElementById('day'+j);
     //-- get the selected color
 
-    colorIndex = 0;
+    classIndex = 0;
     for(k=0; k<document.scheduleform.priority.length; k++) {
-        if (document.scheduleform.priority[k].checked) colorIndex=k;
+        if (document.scheduleform.priority[k].checked) classIndex=k;
     }
     //-- newval is the priority the user wants to place
     //-- 0 is unavailable
     //-- 1-3 are preference levels
-    //-- 4-5 are unused preference levels
-    //-- 6 is for courses
-    //-- 7 is for comments
-    newval = document.scheduleform.priority[colorIndex].value;
+    newval = document.scheduleform.priority[classIndex].value;
 
     //-- update the hours array
     if (hour) {
         curval = hour.value.charAt(i);
-        cell.style.backgroundColor = colors[document.scheduleform.priority[colorIndex].value];
-        oldcolor = cell.style.backgroundColor;
+        cell.className = classes[document.scheduleform.priority[classIndex].value];
+        oldclass = cell.className;
         // TODO: sectiondiv should be declared before linking this script.
         for(k = 0; k < sectiondiv; k++) hour.value = hour.value.substring(0,(i+k)) + newval + hour.value.substring(i+k+1);
         /*//-- if the old value was unavailable and the new value is above 0 then subtract from the hours list
