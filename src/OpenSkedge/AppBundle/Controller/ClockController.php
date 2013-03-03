@@ -15,16 +15,6 @@ use OpenSkedge\AppBundle\Entity\User;
  */
 class ClockController extends Controller
 {
-    public function checklateAction(Request $request)
-    {
-        if($request->getMethod() == 'POST') {
-            $token = $this->container->getParameter('kernel.secret');
-            if($request->request->get('clockToken')===$token) {
-                // TODO: Check for users who have not clocked in and are 15 mins late or more.
-            }
-        }
-    }
-
     public function clockInAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
@@ -53,9 +43,7 @@ class ClockController extends Controller
 
         $em->persist($clock);
         $em->flush();
-        /*$return = array("responseCode" => 200);
-        $return = json_encode($return);
-        return new Response($return, 200, array('Content-Type'=>'application/json'));*/
+
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
@@ -107,9 +95,6 @@ class ClockController extends Controller
         $em->persist($clock);
         $em->flush();
 
-        /*$return = array("responseCode" => 200);
-        $return = json_encode($return);
-        return new Response($return, 200, array('Content-Type'=>'application/json'));*/
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
