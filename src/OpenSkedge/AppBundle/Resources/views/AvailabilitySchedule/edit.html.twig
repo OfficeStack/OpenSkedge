@@ -46,6 +46,9 @@
         <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
         <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
         {% include 'OpenSkedgeBundle:ModularBlocks:userschedule.html.twig' %}
+        <label class="checkbox">
+            <input type="checkbox" id="notify" name="notify" checked>Notify Supervisors of Availability Change
+        </label>
         <div class="form-actions">
             <button class="btn btn-primary" type="submit" name="save"><i class="icon-pencil icon-white"></i> Save Changes</button>
             <a class="btn" href="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}">Back to Schedules</a>

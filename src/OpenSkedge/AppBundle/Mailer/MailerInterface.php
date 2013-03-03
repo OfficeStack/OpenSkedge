@@ -16,4 +16,3 @@ interface MailerInterface
 
     protected function dispatchMessage($template, $context, $fromEmail, $toEmail);
 }
-?>

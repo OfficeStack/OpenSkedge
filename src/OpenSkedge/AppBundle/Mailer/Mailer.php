@@ -58,8 +58,8 @@ class Mailer
                 'supervisor' => $supervisor,
                 'appname' => $this->parameters['appname'],
             );
-            $this->dispatchMessage('OpenSkedgeBundle:Mailer:availschedulechange.txt.twig', $context,
-                                    $this->parameters['senderEmail'], $supervisor->getEmail());
+            $this->dispatchMessage('OpenSkedgeBundle:Mailer:availschedulechange.txt.twig',
+                $context, $this->parameters['senderEmail'], $supervisor->getEmail());
         }
     }
     public function notifyUserCreation(UserInterface $user, $password)

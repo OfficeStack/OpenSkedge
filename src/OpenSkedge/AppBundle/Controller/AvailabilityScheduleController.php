@@ -224,8 +224,12 @@ class AvailabilityScheduleController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $mailer = $this->container->get('notify_mailer');
-            $mailer->notifyAvailabilityScheduleChange($entity);
+            $notify = $request->request->get('notify', false);
+
+            if($notify) {
+                $mailer = $this->container->get('notify_mailer');
+                $mailer->notifyAvailabilityScheduleChange($entity);
+            }
 
             return $this->redirect($this->generateUrl('user_schedule_view', array(
                 'uid'=> $user->getId(),
