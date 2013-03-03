@@ -35,7 +35,7 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
-        "pagerfanta/pagerfanta": "dev-master",
+        "pagerfanta/pagerfanta": "1.0.*",
         "white-october/pagerfanta-bundle": "dev-master"
     },
     "scripts": {
@@ -52,6 +52,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
+    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
