@@ -5,6 +5,7 @@
         <meta name="robots" content="noindex,nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{{ appname }} - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/application.css') }}" rel="stylesheet" type="text/css" />
@@ -22,7 +23,7 @@
         {% spaceless %}{% block javascripts %}{% endblock %}{% endspaceless %}
         <footer>
             <div class="container">
-                <p class="muted credit">Powered by <a href="http://www.openskedge.org">OpenSkedge</a> &middot; Copyright &copy; 2012-{{ "now"|date("Y") }} OpenSkedge contributors &middot; Licensed under the GNU GPL version 2 or later</p>
+                <p class="muted credit">Powered by <a href="http://www.openskedge.org"><i class="openskedge-logo-blue"></i>OpenSkedge</a> &middot; Copyright &copy; 2012-{{ "now"|date("Y") }} OpenSkedge contributors &middot; Licensed under the GNU GPL version 2 or later</p>
             </div>
         </footer>
     </body>

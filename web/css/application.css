@@ -1,7 +1,5 @@
 form, #form { display: inline; }
-h3 {
-    display: inline;
-}
+h3 { display: inline; }
 .page-content-container { padding-top: 20px; }
 .sidebar-nav { padding: 9px 0; }
 .sidebar-nav a { color: #059; }
@@ -15,4 +13,28 @@ h3 {
     display: inline;
     position: relative;
     top: -4px;
+}
+.navbar,
+.navbar-inner {
+    max-height: 45px;
+    overflow: hidden;
+}
+.openskedge-logo {
+    display: inline-block;
+    line-height: 28px;
+    background: url('../img/openskedge_logo.png') no-repeat;
+    height: 28px;
+    width: 28px;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
+}
+
+.openskedge-logo-blue {
+    display: inline-block;
+    line-height: 18px;
+    background: url('../img/openskedge_logo_blue.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    vertical-align: middle;
 }
