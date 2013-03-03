@@ -1,9 +1,24 @@
+body { background: url('../img/bg.png'); }
+.well { background: url('../img/well_bg.png'); }
+.navbar,
+.navbar-inner,
+.navbar-inverse {
+    max-height: 40px;
+    overflow: hidden;
+    background-color: transparent !important;
+    background-image: none, url('../img/navbar_bg.png') !important;
+}
+.muted { color: #777; }
+hr {
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #eee;
+}
 form, #form { display: inline; }
 h3 { display: inline; }
 .page-content-container { padding-top: 20px; }
 .sidebar-nav { padding: 9px 0; }
 .sidebar-nav a { color: #059; }
-.nav>li>a:hover { background-color: #ddd; }
+.nav>li>a:hover { background-color: #eee; }
 #timeresolution {
     display: inline;
     margin-left: 10px;
@@ -14,10 +29,9 @@ h3 { display: inline; }
     position: relative;
     top: -4px;
 }
-.navbar,
-.navbar-inner {
-    max-height: 45px;
-    overflow: hidden;
+.brand {
+    position: relative;
+    top: -2px;
 }
 .openskedge-logo {
     display: inline-block;

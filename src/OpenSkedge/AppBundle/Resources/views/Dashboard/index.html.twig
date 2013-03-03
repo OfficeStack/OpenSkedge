@@ -35,7 +35,15 @@ $(document).ready(function () {
                   Logged in as <a href="{{ path('user') }}" class="navbar-link">{{ app.user.name }}</a>
                 </p>
                 <ul class="nav">
-                  <li class="active"><a href="{{ path('dashboard') }}">Dashboard</a></li>
+                  <li><a href="{{ path('dashboard') }}"><i class="icon-home icon-white"></i> Dashboard</a></li>
+                  <li><a href="{{ path('my_schedules') }}"><i class="icon-calendar icon-white"></i> Schedules</a></li>
+                  <li><a href="{{ path('user') }}"><i class="icon-user icon-white"></i> Profile</a></li>
+                  {% if is_granted('ROLE_ADMIN') %}
+                  <li><a href="{{ path('my_employees') }}"><i class="icon-hand-left icon-white"></i> Employees</a></li>
+                  {% endif %}
+                  <li><a href="{{ path('my_supervisors') }}"><i class="icon-eye-open icon-white"></i> Supervisors</a></li>
+                  <li><a href="{{ path('my_colleagues') }}"><i class="icon-thumbs-up icon-white"></i> Colleagues</a></li>
+                  <li><a href="{{ path('my_positions') }}"><i class="icon-th-list icon-white"></i> Positions</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

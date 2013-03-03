@@ -19,7 +19,10 @@
         {% endif %}
 
         <form class="form-signin" action="{{ path('login_check') }}" method="post">
-            <h2 class="form-signin-heading">{{ appname }}</h2>
+            <div class="text-center">
+                <img class="openskedge-logo-login" src="{{ asset('img/openskedge_logo_login.png') }}" alt="OpenSkedge logo" />
+            </div>
+            <h2 class="form-signin-heading text-center">{{ appname }}</h2>
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" class="input-block-level" placeholder="Username" />
 
