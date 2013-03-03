@@ -13,9 +13,41 @@
         <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
     </div>
     </form>
-    <div class="btn-group header-control">
-        <a class="btn btn-primary" href="{{ path('position_schedule_select', { 'spid': entity.id }) }}"><i class="icon-calendar icon-white"></i> Edit Position Schedule</a>
+    <hr>
+    <h4>Positions</h4>
+    {% if positions is empty %}
+    <div class="alert">
+        <strong>Sorry!</strong> No positions were found.
     </div>
+    {% else %}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Area</th>
+                <th>Position</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for position in positions %}
+            <tr>
+                <td><a href="{{ path('area_view', { 'id': position.area.id }) }}">{{ position.area.name }}</td>
+                <td><a href="{{ path('position_view', { 'id': position.id }) }}">{{ position.name }}</a></td>
+                <td>{{ position.description }}</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn" href="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': entity.id }) }}"><i class="icon-pencil"></i> Edit Schedule</a>
+                        <a class="btn btn-primary" href="{{ path('position_schedule_view', { 'pid': position.id, 'spid': entity.id }) }}"><i class="icon-eye-open icon-white"></i> View Schedule</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(position_paginator, 'twitter_bootstrap', { 'pageParameter': '[position_page]' }) }}
+    </div>
+    {% endif %}
     <hr>
     <h4>Available Users</h4>
     {% if not avails is defined or avails is empty %}
@@ -44,7 +76,7 @@
         </tbody>
     </table>
     <div class="pagerfanta">
-        {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+        {{ pagerfanta(user_paginator, 'twitter_bootstrap', { 'pageParameter': '[user_page]' }) }}
     </div>
     {% endif %}
 </div>

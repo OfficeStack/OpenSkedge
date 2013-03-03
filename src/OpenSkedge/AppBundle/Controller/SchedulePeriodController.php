@@ -58,25 +58,36 @@ class SchedulePeriodController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
+        $positions = $em->getRepository('OpenSkedgeBundle:Position')->findAll();
+
+        $position_page = $this->container->get('request')->query->get('position_page', 1);
+        $position_adapter = new ArrayAdapter($positions);
+        $position_paginator = new Pagerfanta($position_adapter);
+        $position_paginator->setMaxPerPage(15);
+        $position_paginator->setCurrentPage($position_page);
+
+        $positions = $position_paginator->getCurrentPageResults();
+
         $availSchedules = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findBy(array(
             'schedulePeriod' => $id
         ));
 
-        $page = $this->container->get('request')->query->get('page', 1);
+        $user_page = $this->container->get('request')->query->get('user_page', 1);
+        $user_adapter = new ArrayAdapter($availSchedules);
+        $user_paginator = new Pagerfanta($user_adapter);
+        $user_paginator->setMaxPerPage(15);
+        $user_paginator->setCurrentPage($user_page);
 
-        $adapter = new ArrayAdapter($availSchedules);
-        $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(15);
-        $paginator->setCurrentPage($page);
-
-        $avails = $paginator->getCurrentPageResults();
+        $avails = $user_paginator->getCurrentPageResults();
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('OpenSkedgeBundle:SchedulePeriod:view.html.twig', array(
             'entity'      => $entity,
+            'positions'   => $positions,
             'avails'      => $avails,
-            'paginator'   => $paginator,
+            'position_paginator' => $position_paginator,
+            'user_paginator'   => $user_paginator,
             'delete_form' => $deleteForm->createView(),
         ));
     }
