@@ -8,26 +8,39 @@ Copyright &copy; 2012-2013 Max Fierke
 1.  Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
     * Nginx users, see [this wiki article](https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux) for setup.
     * Apache users, point your document root to web/. The .htaccess should take care of everything.
-2.  PHP 5.3.10+ (haven't tested on 5.4 but it should work fine)
+2.  PHP 5.3.10+
 3.  PDO-supported database. MySQL/MariaDB suggested.
 4.  (optional) Memcached and PHP memcache extension.
-## Installation
 
-0.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
-1.  Run `cp app/config/parameters.yml.dist app/config/parameters.yml`
+## Installation
+1.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
+2.  Run `cp app/config/parameters.yml.dist app/config/parameters.yml`
     * `app_name` holds the application branding that is displayed to the user. You     can change it to anything. E.g. CSOM ITSS sets this to "Lab Scheduler".
     * `admin_email` is the email address of the default admin account. This address should be set to whatever the email address of who ever the admin will be (probably you).
+    * `sender_email` is the email address of the automated email account you want to use.
     * `week_start_day` is the day of the week which is considered the start of the week in your region
     * `week_start_clock` is the day of the week which is considered the start of the week as far as time
         clock functionality is concerned. This will likely be the same as above. Use the same format as your
         paper time sheets.
+    * `allowed_clock_ips` is an array which contains IP addresses to match to remote machines allowed to utilize the timeclock.
     * `secret` is used for CSRF validation. Set this to some random characters. An ideal value would be a random sha256 hash.
-2.  Run `php composer.phar install`
-3.  Run `php app/console doctrine:database:create`
-4.  Run `php app/console doctrine:schema:update --force`
-5.  Run `php app/console doctrine:fixtures:load` to bootstrap the application with some needed information (groups) and a default admin account with the username `admin` and the password `admin`.
-6.  Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and **change the password**.
-7. Add employees, areas, positions, and schedule periods and get to scheduling!
+    * The rest of the settings should be pretty self-explainatory.
+3.  Setup permissions. This will require ACL support of some kind on your system. Replace `www-data` with your web server user.
+    * If under a host that supports `chmod +a`:<pre>
+        $ rm -rf app/cache/*
+        $ rm -rf app/logs/*
+        $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo chmod +a "\`whoami\` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs</pre>
+    * If under a host that does not, enable ACL support on the filesystem and run the following:<pre>
+        $ sudo setfacl -R -m u:www-data:rwX -m u:\`whoami\`:rwX app/cache app/logs
+        $ sudo setfacl -dR -m u:www-data:rwx -m u:\`whoami\`:rwx app/cache app/logs</pre>
+    * If none of the above are available options, add `umask(0002);` to the beginning of app/console, web/app.php, and web/app_dev.php
+4.  Run `php composer.phar install`
+5.  Run `php app/console doctrine:database:create`
+6.  Run `php app/console doctrine:schema:update --force`
+7.  Run `php app/console doctrine:fixtures:load` to bootstrap the application with some needed information (groups) and a default admin account with the username `admin` and the password `admin`.
+8.  Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and **change the password**.
+9.  Add employees, areas, positions, and schedule periods and get to scheduling!
 
 ## Upgrading
 1.  Run `git pull` to fetch the latest changes to OpenSkedge. If you've made changes to OpenSkedge, you'll either want to stash them or commit them and use `git pull --rebase`.
@@ -72,7 +85,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 ### Projects that OpenSkedge uses
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/index.html) by @twitter
 * [ScrollToFixed](https://github.com/bigspotteddog/ScrollToFixed/) by @bigspotteddog
-* [Symfony 2.1.6](http://symfony.com/) and dependencies specified in composer.json
+* [Symfony 2.1](http://symfony.com/) and dependencies specified in composer.json
 
 ### Thanks to the following Employee Scheduler developers
 * John Finlay (Developer of Employee Scheduler)
