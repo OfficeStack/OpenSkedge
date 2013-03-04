@@ -31,65 +31,15 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>Deployment on a Local, VPS, Cloud, or Dedicated host</h1>
+        <h1>Installation</h1>
 
-<h2>Requirements</h2>
+<p>Read <a href="https://github.com/maxfierke/OpenSkedge/wiki/Installation-&amp;-Upgrading">the wiki article on installation and upgrading.</a></p>
 
-<ol>
-<li> Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
+<h2>Deployment on Pagoda Box</h2>
 
-<ul>
-<li>Nginx users, see <a href="https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux">this wiki article</a> for setup.</li>
-<li>Apache users, point your document root to web/. The .htaccess should take care of everything.</li>
-</ul>
-</li>
-<li> PHP 5.3.10+ (haven't tested on 5.4 but it should work fine)</li>
-<li> PDO-supported database. MySQL/MariaDB suggested.</li>
-<li>
-<p>(optional) Memcached and PHP memcache extension.</p>
+<p>Read <a href="https://github.com/maxfierke/OpenSkedge/wiki/Installation-&amp;-Upgrading">the section on Pagodabox deployment on the installation &amp; upgrading article.</a></p>
 
-<h2>Installation</h2>
-</li>
-<li><p>Run <code>php app/check.php</code> and resolve any errors before doing ANYTHING else.</p></li>
-<li>
-<p>Run <code>cp app/config/parameters.yml.dist app/config/parameters.yml</code></p>
-
-<ul>
-<li>
-<code>app_name</code> holds the application branding that is displayed to the user. You     can change it to anything. E.g. CSOM ITSS sets this to "Lab Scheduler".</li>
-<li>
-<code>admin_email</code> is the email address of the default admin account. This address should be set to whatever the email address of who ever the admin will be (probably you).</li>
-<li>
-<code>week_start_day</code> is the day of the week which is considered the start of the week in your region</li>
-<li>
-<code>week_start_clock</code> is the day of the week which is considered the start of the week as far as time
-clock functionality is concerned. This will likely be the same as above. Use the same format as your
-paper time sheets.</li>
-<li>
-<code>secret</code> is used for CSRF validation. Set this to some random characters. An ideal value would be a random sha256 hash.</li>
-</ul>
-</li>
-<li><p>Run <code>php composer.phar install</code></p></li>
-<li><p>Run <code>php app/console doctrine:database:create</code></p></li>
-<li><p>Run <code>php app/console doctrine:schema:update --force</code></p></li>
-<li><p>Run <code>php app/console doctrine:fixtures:load</code> to bootstrap the application with some needed information (groups) and a default admin account with the username <code>admin</code> and the password <code>admin</code>.</p></li>
-<li><p>Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and <strong>change the password</strong>.</p></li>
-<li><p>Add employees, areas, positions, and schedule periods and get to scheduling!</p></li>
-</ol><h2>Upgrading</h2>
-
-<ol>
-<li> Run <code>git pull</code> to fetch the latest changes to OpenSkedge. If you've made changes to OpenSkedge, you'll either want to stash them or commit them and use <code>git pull --rebase</code>.</li>
-<li> Run <code>php composer.phar install</code>
-</li>
-<li> Run by using <code>php app/console doctrine:migrations:migrate</code>. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at <a href="http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html">the Doctrine project's docs</a>.</li>
-<li> Run <code>php app/console --env=prod cache:clear</code> to clear the application's cache. <code>prod</code> should be replaced with <code>dev</code> if you're running in a development environment.</li>
-</ol><h1>Deployment on Pagoda Box</h1>
-
-<p>Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.
-See README.Pagoda.md for Pagoda Box specific installation instructions.
-I have also <a href="https://pagodabox.com/cafe/m4xm4n/openskedge">created a quickstart</a> that can be used as well.</p>
-
-<h2>FAQ</h2>
+<h1>FAQ</h1>
 
 <h3>What is OpenSkedge?</h3>
 
@@ -115,7 +65,7 @@ I have also <a href="https://pagodabox.com/cafe/m4xm4n/openskedge">created a qui
 
 <p>The origin of Carlnater McStrangelove is not completely clear. He was present in some of the code for Lab Scheduler (Carlson School of Management's version of Employee Scheduler) and was the sender of all automated Lab Scheduler emails.</p>
 
-<h2>License and Copyright</h2>
+<h1>License and Copyright</h1>
 
 <h3>License</h3>
 
@@ -138,14 +88,14 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.</p>
 <a href="https://github.com/bigspotteddog/ScrollToFixed/">ScrollToFixed</a> by <a href="https://github.com/bigspotteddog" class="user-mention">@bigspotteddog</a>
 </li>
 <li>
-<a href="http://symfony.com/">Symfony 2.1.6</a> and dependencies specified in composer.json</li>
+<a href="http://symfony.com/">Symfony 2.1</a> and dependencies specified in composer.json</li>
 </ul><h3>Thanks to the following Employee Scheduler developers</h3>
 
 <ul>
 <li>John Finlay (Developer of Employee Scheduler)</li>
 <li>Carl Allen (Developed time clock functionality for the UofMN with Joe Krall)</li>
 <li>Joe Krall (Developed time clock functionality for the UofMN with Carl Allen)</li>
-</ul><h2>Contact</h2>
+</ul><h1>Contact</h1>
 
 <p><strong>Max Fierke</strong><br>
 Homepage: <a href="http://www.maxfierke.com">www.maxfierke.com</a><br>
