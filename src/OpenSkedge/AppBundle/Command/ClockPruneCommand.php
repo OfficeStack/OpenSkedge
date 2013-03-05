@@ -14,13 +14,14 @@ class ClockPruneCommand extends ContainerAwareCommand {
     {
         $this->setName("clock:prune")
              ->setDescription('Prunes timeclock data from before the specified number of weeks back.')
-             ->addArgument('[weeks to keep]', InputArgument::REQUIRED, 'number of weeks back to keep')
+             ->addArgument('threshold', InputArgument::REQUIRED, 'number of weeks back to keep')
+             ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'Do not ask any interactive questions.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $weeks = sprintf("-%s weeks", $input->getArgument('[weeks to keep]'));
+        $weeks = sprintf("-%s weeks", $input->getArgument('threshold'));
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $currentWeek = $this->getFirstDayOfWeek(new \DateTime("now"));
@@ -39,7 +40,7 @@ class ClockPruneCommand extends ContainerAwareCommand {
         $dialog = $this->getHelperSet()->get('dialog');
 
         if (!$dialog->askConfirmation($output,
-            '<question>Continue with this action? It will purge '.count($clocksToBePruned).' database entries!</question>', false)) {
+            '<question>Continue with this action? It will purge '.count($clocksToBePruned).' database entries!</question>', false) && !$input->getOption('no-interaction')) {
             return;
         }
 
