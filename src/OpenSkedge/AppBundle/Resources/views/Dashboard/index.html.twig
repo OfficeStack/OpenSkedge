@@ -6,11 +6,11 @@
 
 {% block javascripts %}
 {% if get_controller_name()|capitalize == "Dashboard" %}
-<script type="text/javascript" src="{{ asset('js/tickingclock.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.tickingclock.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery-scrolltofixed-min.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-  setDate('{{ "now"|date("F j, Y H:i:s") }}');
+  $('#clockTime').tickingClock('{{ "now"|date("F j, Y H:i:s") }}');
   $('#clockmodule').scrollToFixed({
     marginTop: 10,
     offsets: true
