@@ -1,9 +1,4 @@
 {% extends 'OpenSkedgeBundle::base.html.twig' %}
-
-{% block stylesheets %}
-<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
 {% block javascripts %}
 {% if get_controller_name()|capitalize == "Dashboard" %}
 <script type="text/javascript" src="{{ asset('js/jquery.tickingclock.js') }}"></script>
