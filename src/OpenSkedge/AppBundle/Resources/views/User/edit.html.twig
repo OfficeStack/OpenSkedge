@@ -1,4 +1,17 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/bootstrap.colorpicker.js') }}"></script>
+<script type="text/javscript">
+$(document).ready(function() {
+    $('.color').colorpicker();
+});
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ entity.name }}</h3>
@@ -27,12 +40,20 @@
         {% endif %}
         {{ form_row(edit_form.hours) }}
         {{ form_row(edit_form.notes) }}
-        {% if entity.id != app.user.id and is_granted('ROLE_ADMIN') %}
-        {{ form_row(edit_form.color) }}
+        {% if is_granted('ROLE_ADMIN') %}
+        {{ form_label(edit_form.color) }}
+        <div class="input-append color" data-color="{{ edit_form.color.vars.value }}" data-color-format="hex">
+            {{ form_widget(edit_form.color) }}
+            <span class="add-on"><i style="background-color: {{ edit_form.color.vars.value }}"></i></span>
+        </div>
+        {% if entity.id != app.user.id %}
         {{ form_row(edit_form.supnotes) }}
-        {{ form_row(edit_form.isActive) }}
         {{ form_row(edit_form.group) }}
         {{ form_row(edit_form.supervisors) }}
+        <label class="checkbox">
+            <h5>{{ form_widget(edit_form.isActive) }}{{ edit_form.isActive.vars.label }}</h5>
+        </label>
+        {% endif %}
         {% endif %}
 
         {{ form_rest(edit_form) }}
