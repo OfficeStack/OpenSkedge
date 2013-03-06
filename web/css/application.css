@@ -1,4 +1,9 @@
-body { background: url('../img/bg.png'); }
+@import url("http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
+body {
+    background: url('../img/bg.png');
+    font-size: 14px/1.231;
+    font-family: "Lato", "Helvetica Neue", Helvetica, "Droid Sans", "Open Sans", "Liberation Sans", Arial, sans-serif;
+}
 .well { background: url('../img/well_bg.png'); }
 .navbar,
 .navbar-inner,
