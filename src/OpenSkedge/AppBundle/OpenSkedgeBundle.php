@@ -44,5 +44,19 @@ class OpenSkedgeBundle extends Bundle
                 $container->setParameter('memcache.expire', 3600);
             }
         }
+
+        if (is_readable(__DIR__.'/../../../.git/HEAD')) {
+            $headref = rtrim(substr(file_get_contents(__DIR__.'/../../../.git/HEAD'), 5));
+            if (is_readable(__DIR__.'/../../../.git/'.$headref)) {
+                $commit = file_get_contents(__DIR__.'/../../../.git/'.$headref);
+                $commit = substr($commit, 0, 7);
+            } else {
+                $commit = null;
+            }
+        } else {
+            $commit = null;
+        }
+
+        $container->setParameter('deploy_commit', (string)$commit);
     }
 }
