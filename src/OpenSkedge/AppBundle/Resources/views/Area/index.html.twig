@@ -1,12 +1,19 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ appname }} - Areas{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0]],headers:{1:{sorter:false},2:{sorter:false}}});
+});
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>Areas</h3>
     {% if is_granted('ROLE_ADMIN') %}
     <a class="btn btn-primary header-control" href="{{ path('area_new') }}"><i class="icon-plus-sign icon-white"></i> Add Area</a>
     {% endif %}
-    <table class="table table-condensed">
+    <table class="table table-condensed table-sortable">
         <thead>
             <tr>
                 <th>Name</th>

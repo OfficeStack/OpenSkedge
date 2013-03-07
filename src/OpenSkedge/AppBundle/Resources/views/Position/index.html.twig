@@ -1,5 +1,12 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ appname }} - {{ userstitle }}{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,0]],headers:{2:{sorter:false}}});
+});
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ userstitle }}</h3>
@@ -9,7 +16,7 @@
         <strong>Sorry!</strong> No positions were found.
     </div>
     {% else %}
-    <table class="table table-condensed">
+    <table class="table table-condensed table-sortable">
         <thead>
             <tr>
                 <th>Area</th>

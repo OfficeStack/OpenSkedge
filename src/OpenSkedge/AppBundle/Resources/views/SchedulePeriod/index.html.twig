@@ -1,9 +1,16 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,1],[1,1]],headers:{2:{sorter:false}}});
+});
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>Schedule Periods</h3>
     <a class="btn btn-primary header-control" href="{{ path('schedule_period_new') }}"><i class="icon-plus-sign icon-white"></i> Add Schedule Period</a>
-    <table class="table table-condensed">
+    <table class="table table-condensed table-sortable">
         <thead>
             <tr>
                 <th>Start Date</th>

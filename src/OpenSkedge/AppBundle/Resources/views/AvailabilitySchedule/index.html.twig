@@ -1,5 +1,12 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ appname }} - {{ title }}{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,1],[1,1]],headers:{2:{sorter:false}}});
+});
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ title }}</h3>
@@ -11,7 +18,7 @@
     <div class="alert">
         <strong>Sorry!</strong> {% if user.id == app.user.id %}It appears that you have not created any availability schedules yet. <a href="{{ path('user_schedule_pre_new') }}">Click here to create one</a>.{% else %}{{ user.name }} does not appear to have any schedules.{% endif %}
     {% else %}
-    <table class="table table-condensed">
+    <table class="table table-condensed table-sortable">
         <thead>
             <tr>
                 <th>Start Date</th>
