@@ -24,8 +24,8 @@
         <script src="{{ asset('js/application.js') }}"></script>
         {% spaceless %}{% block javascripts %}{% endblock %}{% endspaceless %}
         <footer>
-            <div class="container">
-                <p class="muted credit">Powered by <a href="http://www.openskedge.org"><i class="openskedge-logo-blue"></i>OpenSkedge</a> &middot; Copyright &copy; 2012-{{ "now"|date("Y") }} OpenSkedge contributors &middot; Licensed under the GNU GPL version 2 or later &middot; <a href="https://github.com/maxfierke/OpenSkedge/issues">Report a bug</a>{% if deploy_commit != null %} &middot; commit {{ deploy_commit }}{% endif %}</p>
+            <div class="container-fluid">
+                <p class="muted credit">Powered by <a href="http://www.openskedge.org"><i class="openskedge-logo-blue"></i>OpenSkedge</a> &middot; Copyright &copy; 2012-{{ "now"|date("Y") }} OpenSkedge contributors &middot; Licensed under the GNU GPL version 2 or later &middot; <a href="https://github.com/maxfierke/OpenSkedge/issues">Report a bug</a> <small class="muted pull-right text-right">{% if deploy_commit != null %}commit {{ deploy_commit }}{% endif %}</small><div class="clearfix"></div></p>
             </div>
         </footer>
     </body>
