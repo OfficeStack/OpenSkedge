@@ -8,10 +8,12 @@ body {
 .navbar,
 .navbar-inner,
 .navbar-inverse {
-    max-height: 40px;
-    overflow: hidden;
     background-color: transparent !important;
     background-image: none, url('../img/navbar_bg.png') !important;
+}
+#navbar-container {
+    position: relative;
+    top: 5px;
 }
 .muted { color: #777; }
 hr {
@@ -36,7 +38,7 @@ h3 { display: inline; }
 }
 .brand {
     position: relative;
-    top: -2px;
+    top: -3px;
 }
 .well {
     -moz-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
