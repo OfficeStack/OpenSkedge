@@ -45,6 +45,9 @@ h3 { display: inline; }
     -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
     box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
 }
+.breadcrumb {
+    border: 1px solid #ddd;
+}
 .alert { border: 1px solid #eaddc4; }
 .openskedge-logo {
     display: inline-block;
