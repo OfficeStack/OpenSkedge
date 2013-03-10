@@ -7,9 +7,8 @@ services:
         arguments: [@mailer, @twig, { senderEmail: %sender_email%, appname: %app_name% }]
     request:
         class: Symfony\Component\HttpFoundation\Request
-    openskedge.twig.extension:
+    page.twig.extension:
         class: OpenSkedge\AppBundle\Twig\Extension\PageExtension
         arguments:  [@request]
         tags:
             - { name: 'twig.extension' }
-
