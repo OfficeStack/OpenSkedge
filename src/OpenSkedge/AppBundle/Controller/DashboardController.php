@@ -50,7 +50,7 @@ class DashboardController extends Controller
         }
 
         return $this->render('OpenSkedgeBundle:Dashboard:index.html.twig', array(
-            'htime'           => mktime(0,0,0,1,1),
+            'htime'           => new \DateTime("today", new \DateTimeZone("UTC")),
             'resolution'      => $resolution,
             'avail'           => $avail,
             'schedulePeriods' => $results,

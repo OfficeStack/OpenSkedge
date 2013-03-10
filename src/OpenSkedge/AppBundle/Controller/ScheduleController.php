@@ -60,7 +60,7 @@ class ScheduleController extends Controller
         ));
 
         return $this->render('OpenSkedgeBundle:Schedule:view.html.twig', array(
-            'htime'         => mktime(0,0,0,1,1),
+            'htime'         => new \DateTime("today", new \DateTimeZone("UTC")),
             'resolution'    => $resolution,
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,
@@ -181,7 +181,7 @@ class ScheduleController extends Controller
         }
 
         return $this->render('OpenSkedgeBundle:Schedule:edit.html.twig', array(
-            'htime'         => mktime(0,0,0,1,1),
+            'htime'         => new \DateTime("today", new \DateTimeZone("UTC")),
             'resolution'    => $resolution,
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,

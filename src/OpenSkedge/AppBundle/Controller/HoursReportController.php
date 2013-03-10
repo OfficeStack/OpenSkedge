@@ -137,7 +137,7 @@ class HoursReportController extends Controller
         }
 
         return $this->render('OpenSkedgeBundle:HoursReport:generate.html.twig', array(
-            'htime'          => mktime(0,0,0,1,1),
+            'htime'          => new \DateTime("today", new \DateTimeZone("UTC")),
             'user'           => $user,
             'week'           => $week,
             'archivedClock'  => $archivedClock,

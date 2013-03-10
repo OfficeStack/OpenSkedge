@@ -52,7 +52,7 @@
         <tbody>
     {% for i in 0..sectionlen %}
             <tr>
-                <td>{{ htime|date("g:i a") }}</td>
+                <td>{{ htime|date("g:i a", false) }}</td>
             {% for j in 0..6 %}
             <td>
     {% for schedule in schedules %}

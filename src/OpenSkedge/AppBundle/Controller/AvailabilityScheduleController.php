@@ -87,7 +87,7 @@ class AvailabilityScheduleController extends Controller
         $deleteForm = $this->createDeleteForm($uid, $spid);
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:view.html.twig', array(
-            'htime'       => mktime(0,0,0,1,1),
+            'htime'       => new \DateTime("today", new \DateTimeZone("UTC")),
             'resolution'  => $resolution,
             'avail'       => $entity,
             'schedules'   => $schedules,
@@ -175,7 +175,7 @@ class AvailabilityScheduleController extends Controller
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:new.html.twig', array(
             'avail'      => $entity,
-            'htime'      => mktime(0,0,0,1,1),
+            'htime'      => new \DateTime("today", new \DateTimeZone("UTC")),
             'resolution' => $resolution,
             'create'     => true,
         ));
@@ -238,7 +238,7 @@ class AvailabilityScheduleController extends Controller
         }
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:edit.html.twig', array(
-            'htime'       => mktime(0,0,0,1,1),
+            'htime'       => new \DateTime("today", new \DateTimeZone("UTC")),
             'resolution'  => $resolution,
             'avail'       => $entity,
             'edit'        => true,

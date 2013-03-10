@@ -43,7 +43,7 @@
         <tbody>
 {% for i in 0..95 %}
             <tr>
-                <td>{{ htime|date("g:i a") }}</td>
+                <td>{{ htime|date("g:i a", false) }}</td>
     {% for j in 0..6 %}{% spaceless %}
                 <td class="{% if archivedClock.data[j][i] == '1' and scheduled.week[j][i] == '1' %}s1{% elseif archivedClock.data[j][i] == '1' and scheduled.week[j][i] == '0'%}s3{% elseif archivedClock.data[j][i] == '0' and scheduled.week[j][i] == '1' %}s2{% else %}s0{% endif %}"></td>{% endspaceless %}
     {% endfor %}{% set htime = htime|date_modify("+15 mins") %}
