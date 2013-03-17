@@ -2,6 +2,7 @@
 // Derived from FOSUserBundle
 namespace OpenSkedge\AppBundle\Mailer;
 
+use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
@@ -12,12 +13,14 @@ class Mailer
 {
     protected $mailer;
     protected $twig;
+    protected $logger;
     protected $parameters;
 
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, array $parameters)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, Logger $logger,  array $parameters)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->logger = $logger;
         $this->parameters = $parameters;
     }
 
@@ -133,7 +136,7 @@ class Mailer
         }
 
         if(!$this->mailer->send($message,$failures)) {
-            var_dump($failures);
+            $this->logger->err('An email failed to send: '.$failures);
         }
     }
 }

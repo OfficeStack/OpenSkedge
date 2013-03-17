@@ -4,7 +4,7 @@ parameters:
 services:
     notify_mailer:
         class: %notify_mailer.class%
-        arguments: [@mailer, @twig, { senderEmail: %sender_email%, appname: %app_name% }]
+        arguments: [@mailer, @twig, @logger, { senderEmail: %sender_email%, appname: %app_name% }]
     request:
         class: Symfony\Component\HttpFoundation\Request
     page.twig.extension:
