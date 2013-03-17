@@ -126,6 +126,7 @@ class Mailer
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom($fromEmail)
+            ->setReturnPath($fromEmail)
             ->setTo($toEmail);
 
         if (!empty($htmlBody)) {
