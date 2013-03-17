@@ -83,6 +83,28 @@ class Mailer
                                 $this->parameters['senderEmail'], $user->getEmail());
     }
 
+    public function notifyLateEmployee(UserInterface $user, Schedule $schedule)
+    {
+        $supervisors = $user->getSupervisors();
+        foreach ($supervisors as $supervisor) {
+            $context = array(
+                'user' => $user,
+                'supervisor' => $supervisor,
+                'position' => $schedule->getPosition(),
+                'appname' => $this->parameters['appname'],
+            );
+            $this->dispatchMessage('OpenSkedgeBundle:Mailer:lateemployee_sup.txt.twig',
+                $context, $this->parameters['senderEmail'], $supervisor->getEmail());
+        }
+        $context = array(
+                'user' => $user,
+                'position' => $schedule->getPosition(),
+                'appname' => $this->parameters['appname'],
+            );
+        $this->dispatchMessage('OpenSkedgeBundle:Mailer:lateemployee_emp.txt.twig',
+                $context, $this->parameters['senderEmail'], $user->getEmail());
+    }
+
     /**
      * Render the email, use the first line as the subject, and the rest as the body
      *
