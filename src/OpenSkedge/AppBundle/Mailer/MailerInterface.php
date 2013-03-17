@@ -13,6 +13,7 @@ interface MailerInterface
     public function notifyAvailabilityScheduleChange(AvailabilitySchedule $schedule);
     public function notifyUserCreation(UserInterface $user);
     public function notifyNewSupervisor(UserInterface $user);
+    public function notifyLateEmployee(UserInterface $user, Schedule $schedule);
 
     protected function dispatchMessage($template, $context, $fromEmail, $toEmail);
 }
