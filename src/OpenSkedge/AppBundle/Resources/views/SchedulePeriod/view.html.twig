@@ -1,4 +1,13 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ appname }} - {{ entity }} Schedule Period{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#positions").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,0]],headers:{2:{sorter:false},3:{sorter:false}}});
+    $("#users").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0]],headers:{2:{sorter:false}}});
+});
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <ul class="breadcrumb">
@@ -20,7 +29,7 @@
         <strong>Sorry!</strong> No positions were found.
     </div>
     {% else %}
-    <table class="table table-condensed">
+    <table id="positions" class="table table-condensed">
         <thead>
             <tr>
                 <th>Area</th>
@@ -55,7 +64,7 @@
         <strong>Sorry!</strong> No available users were found for this schedule period.
     </div>
     {% else %}
-    <table class="table table-condensed">
+    <table id="users" class="table table-condensed">
         <thead>
             <tr>
                 <th>Name</th>
