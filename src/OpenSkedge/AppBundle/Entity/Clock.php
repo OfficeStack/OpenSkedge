@@ -379,4 +379,20 @@ class Clock
         $setDay = 'set'.$day;
         return $this->$setDay($val);
     }
+
+    public function setDayOffset($dayint, $offset, $val)
+    {
+        $recStr = $this->getDay($dayint);
+        $recArr = str_split($recStr);
+        $recArr[$offset] = $val;
+        $rec = implode('', $recArr);
+        return $this->setDay($dayint, $rec);
+    }
+
+    public function getDayOffset($dayint, $offset)
+    {
+        $recStr = $this->getDay($dayint);
+        $recArr = str_split($recStr);
+        return $recArr[$offset];
+    }
 }
