@@ -79,5 +79,17 @@ class ClockCheckLateCommand extends ContainerAwareCommand {
                 }
             }
         }
+
+        $transport = $this->getContainer()->get('mailer')->getTransport();
+        if (!$transport instanceof \Swift_Transport_SpoolTransport) {
+            return;
+        }
+
+        $spool = $transport->getSpool();
+        if (!$spool instanceof \Swift_MemorySpool) {
+            return;
+        }
+
+        $spool->flushQueue($this->getContainer()->get('swiftmailer.transport.real'));
     }
 }
