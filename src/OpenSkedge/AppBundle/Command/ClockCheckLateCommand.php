@@ -71,12 +71,9 @@ class ClockCheckLateCommand extends ContainerAwareCommand {
                     }
 
                     foreach ($schedules as $schedule) {
-                        for ($timesect = 0; $timesect < 96; $timesect++) {
-                            for ($day = 0; $day < 7; $day++) {
-                                if ($schedule->getDayOffset($dayNum, $curIndex-1) == '1' && $user->getClock()->getDayOffset($dayNum, $curIndex-1) == '0') {
-                                    $mailer->notifyLateEmployee($user, $schedule);
-                                }
-                            }
+                        if ($schedule->getDayOffset($dayNum, $curIndex-1) == '1' && $user->getClock()->getDayOffset($dayNum, $curIndex-1) == '0') {
+                            $output->writeln($user->getName()." is late for their ".$schedule->getPosition()->getArea()->getName()." - ".$schedule->getPosition()->getName()." shift.");
+                            $mailer->notifyLateEmployee($user, $schedule);
                         }
                     }
                 }
