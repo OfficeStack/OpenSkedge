@@ -61,6 +61,14 @@ class ClockCheckLateCommand extends ContainerAwareCommand {
                     $curIndex = (int)((($curTime->getTimestamp() - $midnight->getTimestamp()) / 60) / 15);
 
                     $dayNum = $curTime->format('w');
+                    if ($curIndex == 0) {
+                        $curIndex = 96;
+                        if ($dayNum > 0) {
+                            $dayNum -= 1;
+                        } else {
+                            $dayNum = 6;
+                        }
+                    }
 
                     foreach ($schedules as $schedule) {
                         for ($timesect = 0; $timesect < 96; $timesect++) {
