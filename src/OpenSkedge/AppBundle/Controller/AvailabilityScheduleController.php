@@ -258,7 +258,7 @@ class AvailabilityScheduleController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy();
+            $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array('user' => $uid, 'schedulePeriod' => $spid));
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
@@ -272,7 +272,7 @@ class AvailabilityScheduleController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user_availability'));
+        return $this->redirect($this->generateUrl('user_schedules', array('id' => $uid)));
     }
 
     private function createDeleteForm($uid, $spid)

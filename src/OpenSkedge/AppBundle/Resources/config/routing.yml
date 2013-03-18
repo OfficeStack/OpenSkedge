@@ -63,7 +63,7 @@ user_schedule_edit:
 
 user_schedule_delete:
     pattern:  /user/{uid}/schedule/period/{spid}/delete
-    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule: delete }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:delete }
     requirements:
         uid: \d+
         spid: \d+
