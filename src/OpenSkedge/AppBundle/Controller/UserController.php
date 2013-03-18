@@ -139,15 +139,18 @@ class UserController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new UserType(), $entity);
-        if(false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $editForm->remove('color');
-            if($id == $this->getUser()->getId()) {
+            if ($id == $this->getUser()->getId()) {
                 $editForm->remove('min');
                 $editForm->remove('max');
                 $editForm->remove('supnotes');
-                $editForm->remove('isActive');
                 $editForm->remove('group');
                 $editForm->remove('supervisors');
+            }
+        } else {
+            if ($id == $this->getUser()->getId()) {
+                $editForm->remove('isActive');
             }
         }
 
