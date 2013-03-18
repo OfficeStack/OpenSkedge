@@ -1,13 +1,19 @@
 parameters:
+    # Application Configuration
     app_name: "OpenSkedge"
     admin_email: admin@yourdomain.com
     sender_email: no-reply@yourdomain.com
+
+    # Database Configuration
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null
     database_name: openskedge
     database_user: YOUR_USER
     database_password: YOUR_PASSWORD
+    database_path: null
+
+    # Mailer Configuration
     mailer_transport: smtp
     mailer_encryption: tls
     mailer_auth: login
@@ -15,14 +21,20 @@ parameters:
     mailer_host: 127.0.0.1
     mailer_user: ~
     mailer_password: ~
+
+    # Locale Configuration
     locale: en
-    # The first day of the week
+    ## The first day of the week
     week_start_day: Sunday
-    # The first day in a pay period (if different from above)
+    ## The first day in a pay period (if different from above)
     week_start_day_clock: Sunday
+
+    # Security Configuration
     allowed_clock_ips: ['127.0.0.1', 'fe80::1', '::1']
     secret: YOU_NEED_SOME_GOBBLEDIEGOOK_HERE
-    database_path: null
+    protocol: http   # http or https (recommended)
+
+    # Session Configuration
     session_handler: ~
     # If you want to use memcache for session storage
     #  session_handler: session.handler.memcache

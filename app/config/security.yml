@@ -78,7 +78,8 @@ security:
         login:
             path: ^/login
             roles: IS_AUTHENTICATED_ANONYMOUSLY
-            #requires_channel: https
+            requires_channel: %protocol%
         main:
             path: ^/
             roles: [ ROLE_USER, IS_AUTHENTICATED_FULLY ]
+            requires_channel: %protocol%
