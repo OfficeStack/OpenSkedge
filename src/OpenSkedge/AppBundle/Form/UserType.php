@@ -18,8 +18,8 @@ class UserType extends AbstractType
                     'second_name' => 'confirm',
                     'type' => 'password'))
                 ->add('name', 'text')
-                ->add('workphone', 'text', array('required' => false))
-                ->add('homephone', 'text', array('required' => false))
+                ->add('workphone', 'text', array('required' => false, 'label' => 'Work Phone'))
+                ->add('homephone', 'text', array('required' => false, 'label' => 'Home Phone'))
                 ->add('location', 'text', array('required' => false))
                 ->add('email', 'email')
                 ->add('min', 'integer')
