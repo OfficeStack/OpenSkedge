@@ -38,6 +38,10 @@
         "pagerfanta/pagerfanta": "1.0.*",
         "white-october/pagerfanta-bundle": "dev-master"
     },
+    "require-dev": {
+        "phpunit/php-code-coverage": "1.2.*@dev",
+        "phpunit/phpunit": "3.7.13"
+    },
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
