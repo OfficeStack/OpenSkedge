@@ -1,7 +1,6 @@
 parameters:
     # Application Configuration
     app_name: %branding.name%
-    admin_email: %admin.email%
     sender_email: %sender.email%
 
     # Database Configuration

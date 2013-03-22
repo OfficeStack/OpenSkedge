@@ -1,7 +1,6 @@
 parameters:
     # Application Configuration
     app_name: "OpenSkedge"
-    admin_email: admin@yourdomain.com
     sender_email: no-reply@yourdomain.com
 
     # Database Configuration

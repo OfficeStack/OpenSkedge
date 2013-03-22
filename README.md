@@ -16,7 +16,6 @@ Copyright &copy; 2012-2013 Max Fierke
 1.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
 2.  Run `cp app/config/parameters.yml.dist app/config/parameters.yml`
     * `app_name` holds the application branding that is displayed to the user. You     can change it to anything. E.g. CSOM ITSS sets this to "Lab Scheduler".
-    * `admin_email` is the email address of the default admin account. This address should be set to whatever the email address of who ever the admin will be (probably you).
     * `sender_email` is the email address of the automated email account you want to use.
     * `week_start_day` is the day of the week which is considered the start of the week in your region
     * `week_start_clock` is the day of the week which is considered the start of the week as far as time

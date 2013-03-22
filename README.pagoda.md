@@ -5,7 +5,6 @@ OpenSkedge supports the use of the PaaS provider Pagoda Box and I have included 
 Due Pagoda Box's read-only nature, there are few environmental variables that need to be set:
 
 *  SYMFONY__BRANDING__NAME should contain the desired name for the application branding. - <em>(Default: "OpenSkedge")</em>
-*  SYMFONY__ADMIN__EMAIL should contain the email address of the default administrative user - <em>(Default: "admin@yourdomain.com")</em>
 *  SYMFONY__SENDER__EMAIL should contain the email address of the no-reply email account from which automated emails should be sent. - <em>(Default: "no-reply@yourdomain.com")</em>
 *  SYMFONY__WEEK__START__DAY should contain the day of the week which is considered the start of the week in your region - <em>(Default: Sunday)</em>
 *  SYMFONY__WEEK__START__DAY__CLOCK should contain the day of the week which is considered the start of the week as far as time clock functionality is concerned. This will likely be the same as above. Use the same format as your paper time sheets. -  <em>(Default: Sunday)</em>

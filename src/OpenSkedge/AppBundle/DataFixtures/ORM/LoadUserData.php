@@ -33,7 +33,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($userAdmin);
         $userAdmin->setPassword($encoder->encodePassword('admin', $userAdmin->getSalt()));
         $userAdmin->setName('Carlnater McStrangelove');
-        $userAdmin->setEmail($this->container->getParameter('admin_email'));
+        $userAdmin->setEmail($this->container->getParameter('sender_email'));
         $userAdmin->setGroup($this->getReference('admin-group'));
         $userAdmin->setClock($this->getReference('admin-clock'));
 

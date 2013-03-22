@@ -18,12 +18,8 @@ class OpenSkedgeBundle extends Bundle
             $container->setParameter('secret', $_SERVER["OPENSKEDGE_SECRET"]);
         }
 
-        if (isset($_SERVER["SYMFONY__ADMIN__EMAIL"])) {
-            $container->setParameter('admin_email', $_SERVER["SYMFONY__ADMIN__EMAIL"]);
-        }
-
         if (isset($_SERVER["SYMFONY__SENDER__EMAIL"])) {
-            $container->setParameter('admin_email', $_SERVER["SYMFONY__SENDER__EMAIL"]);
+            $container->setParameter('sender_email', $_SERVER["SYMFONY__SENDER__EMAIL"]);
         }
 
         // Required for Pagoda Box support
