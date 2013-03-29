@@ -49,10 +49,10 @@ h3 { display: inline; }
     border: 1px solid #ddd;
 }
 .alert { border: 1px solid #eaddc4; }
-.openskedge-logo {
+.branding-logo {
     display: inline-block;
     line-height: 28px;
-    background: url('../img/openskedge_logo.png') no-repeat;
+    background: url('../img/branding_logo_small.png') no-repeat;
     height: 28px;
     width: 28px;
     vertical-align: middle;
