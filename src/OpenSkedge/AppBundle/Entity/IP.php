@@ -49,6 +49,11 @@ class IP
      */
     private $canClockIn;
 
+    public function __construct()
+    {
+        $this->canClockIn = false;
+    }
+
 
     /**
      * Get id
