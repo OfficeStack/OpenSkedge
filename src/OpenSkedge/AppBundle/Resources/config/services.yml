@@ -2,11 +2,23 @@ parameters:
     notify_mailer.class: OpenSkedge\AppBundle\Mailer\Mailer
 
 services:
+    app_settings:
+        class: OpenSkedge\AppBundle\Services\AppSettingsService
+        arguments: [@service_container]
+
     notify_mailer:
         class: %notify_mailer.class%
-        arguments: [@mailer, @twig, @logger, { senderEmail: %sender_email%, appname: %app_name% }]
+        arguments: [@mailer, @twig, @logger, { senderEmail: %sender_email% }]
+
     request:
         class: Symfony\Component\HttpFoundation\Request
+
+    app_settings.twig.extension:
+        class: OpenSkedge\AppBundle\Twig\Extension\SettingsExtension
+        arguments: [@app_settings]
+        tags:
+            - { name: 'twig.extension' }
+
     page.twig.extension:
         class: OpenSkedge\AppBundle\Twig\Extension\PageExtension
         arguments:  [@request]
