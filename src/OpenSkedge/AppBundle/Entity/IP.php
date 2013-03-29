@@ -28,6 +28,7 @@ class IP
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
      * @Assert\Ip(version="all")
      */
     private $ip;
