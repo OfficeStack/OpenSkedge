@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="robots" content="noindex,nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ appname }} - Login</title>
+        <title>{{ app_brand_name() }} - Login</title>
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-google.css') }}" rel="stylesheet" type="text/css" />
@@ -21,16 +21,16 @@
 
         <form class="form-signin" action="{{ path('login_check') }}" method="post">
             <div class="text-center">
-                <img class="openskedge-logo-login" src="{{ asset('img/openskedge_logo_login.png') }}" alt="OpenSkedge logo" />
+                <img class="branding-logo-login" src="{{ asset('img/branding_logo_large.png') }}" alt="{{app_brand_name() }} logo" />
             </div>
-            <h2 class="form-signin-heading text-center">{{ appname }}</h2>
+            <h2 class="form-signin-heading text-center">{{ app_brand_name() }}</h2>
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" class="input-block-level" placeholder="Username" required />
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" class="input-block-level" placeholder="Password" required />
 
-            <button class="btn btn-large btn-primary btn-block" type="submit" name="login">Sign Into {{ appname }}</button>
+            <button class="btn btn-large btn-primary btn-block" type="submit" name="login">Sign Into {{ app_brand_name() }}</button>
         </form>
     </div>
         <footer>

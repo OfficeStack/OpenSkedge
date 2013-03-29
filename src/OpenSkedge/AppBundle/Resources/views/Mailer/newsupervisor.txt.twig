@@ -1,15 +1,15 @@
 {% block subject %}
 {% autoescape false %}
-[{{ appname }}] {{ user.name }}, you have a new supervisor!
+[{{ app_brand_name() }}] {{ user.name }}, you have a new supervisor!
 {% endautoescape %}
 {% endblock %}
 {% block body_text %}
 {% autoescape false %}
 Hey {{ user.name }},
 
-This is just a notification email to let you know that you have a new supervisor, {{ newSupervisor.name }}, on {{ appname }}. {{ newSupervisor.name }} is now capable of scheduling you for positions.
+This is just a notification email to let you know that you have a new supervisor, {{ newSupervisor.name }}, on {{ app_brand_name() }}. {{ newSupervisor.name }} is now capable of scheduling you for positions.
 
-{{ appname }} Management
+{{ app_brand_name() }} Management
 ----
 This is an automated email sent by OpenSkedge. Do NOT respond to this email. You will not get a reply.
 {% endautoescape %}

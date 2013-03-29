@@ -24,7 +24,7 @@ $(document).ready(function () {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="{{ path('dashboard') }}"><i class="openskedge-logo"></i> {{ appname }}</a>
+            <a class="brand" href="{{ path('dashboard') }}"><i class="branding-logo"></i> {{ app_brand_name() }}</a>
             <div class="nav-collapse collapse">
                 <p class="navbar-text pull-right">
                   Logged in as <a href="{{ path('user') }}" class="navbar-link">{{ app.user.name }}</a>
@@ -68,7 +68,7 @@ $(document).ready(function () {
           <li><a href="{{ path('users') }}"><i class="icon-user"></i> Users</a></li>
           {% endif %}
           {{ include('::links.html.twig', ignore_missing = true) }}
-          <li class="nav-header">{{ appname }}</li>
+          <li class="nav-header">{{ app_brand_name() }}</li>
           <li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>
         </ul>
       </nav><!--/.well -->
