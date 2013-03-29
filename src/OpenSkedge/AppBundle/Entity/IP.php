@@ -129,7 +129,7 @@ class IP
      *
      * @return boolean
      */
-    public function getCanClockIn()
+    public function canClockIn()
     {
         return $this->canClockIn;
     }
