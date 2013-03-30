@@ -284,7 +284,7 @@ class Settings
     public function getAllowedClockIps()
     {
         $ipObjs = $this->allowedClockIps->filter(function ($ip) {
-            return $ip->canClockIn() === true;
+            return $ip->isClockEnabled() === true;
         });
         $ips = array();
         foreach($ipObjs as $ipObj) {

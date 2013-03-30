@@ -47,11 +47,11 @@ class IP
      * @ORM\Column(name="allowed_to_clock", type="boolean")
      * @Assert\NotNull()
      */
-    private $canClockIn;
+    private $clockEnabled;
 
     public function __construct()
     {
-        $this->canClockIn = false;
+        $this->clockEnabled = false;
     }
 
 
@@ -112,25 +112,25 @@ class IP
     }
 
     /**
-     * Set canClockIn
+     * Set clockEnabled
      *
-     * @param boolean $canClockIn
+     * @param boolean $clockEnabled
      * @return IP
      */
-    public function setCanClockIn($canClockIn)
+    public function setClockEnabled($clockEnabled)
     {
-        $this->canClockIn = $canClockIn;
+        $this->clockEnabled = $clockEnabled;
 
         return $this;
     }
 
     /**
-     * Get canClockIn
+     * Get clockEnabled
      *
      * @return boolean
      */
-    public function canClockIn()
+    public function isClockEnabled()
     {
-        return $this->canClockIn;
+        return $this->clockEnabled;
     }
 }
