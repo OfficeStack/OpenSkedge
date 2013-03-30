@@ -67,6 +67,11 @@ $(document).ready(function () {
           <li><a href="{{ path('schedule_periods') }}"><i class="icon-calendar"></i> Schedule</a></li>
           <li><a href="{{ path('users') }}"><i class="icon-user"></i> Users</a></li>
           {% endif %}
+          {% if is_granted('ROLE_SUPER_ADMIN') %}
+          <li class="nav-header">Admin Actions</li>
+          <li><a href="{{ path('app_settings_edit') }}"><i class="icon-wrench"></i> {{ app_brand_name() }} Settings</a></li>
+          <li><a href="{{ path('app_settings_ips') }}"><i class="icon-certificate"></i> IP Manifest</a></li>
+          {% endif %}
           {{ include('::links.html.twig', ignore_missing = true) }}
           <li class="nav-header">{{ app_brand_name() }}</li>
           <li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>
