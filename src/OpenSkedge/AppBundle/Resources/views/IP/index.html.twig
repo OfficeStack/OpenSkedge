@@ -1,0 +1,44 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - Settings - IP Manifest{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0]],headers:{3:{sorter:false}}});
+});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>IP Manifest</h3>
+    <a class="btn btn-primary header-control" href="{{ path('app_settings_ip_new') }}"><i class="icon-plus-sign icon-white"></i> Add IP Address</a>
+    <table class="table table-condensed table-sortable">
+        <thead>
+            <tr>
+                <th>IP Address</th>
+                <th>Name</th>
+                <th>Time Clock Allowed?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('app_settings_ip_edit', { 'id': entity.id }) }}">{{ entity.ip }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>{% if entity.clockEnabled == true %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a class="btn" href="{{ path('app_settings_ip_edit', { 'id': entity.id }) }}"><i class="icon-eye-open"></i> Edit</a>
+                    <form action="{{ path('app_settings_ip_delete', { 'id': entity.id }) }}" method="post">
+                        {{ form_widget(deleteForms[loop.index0]) }}
+                        <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+    </div>
+</div>
+{% endblock %}
