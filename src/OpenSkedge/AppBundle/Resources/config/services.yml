@@ -6,6 +6,9 @@ services:
         class: OpenSkedge\AppBundle\Services\AppSettingsService
         arguments: [@service_container]
 
+    dt_utils:
+        class: OpenSkedge\AppBundle\Services\DateTimeUtils
+
     notify_mailer:
         class: %notify_mailer.class%
         arguments: [@mailer, @twig, @logger, { senderEmail: %sender_email% }]
