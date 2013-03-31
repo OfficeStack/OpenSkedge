@@ -51,11 +51,6 @@ class Settings
     private $weekStartDayClock;
 
     /**
-     * @ORM\OneToMany(targetEntity="IP", mappedBy="settings")
-     */
-    private $allowedClockIps;
-
-    /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Choice(choices = {"15 mins", "30 mins", "1 hour"}, message = "Choose a valid time resolution")
@@ -251,45 +246,5 @@ class Settings
     public function getEndHour()
     {
         return $this->endHour;
-    }
-
-    /**
-     * Add allowedClockIps
-     *
-     * @param \OpenSkedge\AppBundle\Entity\IP $allowedClockIps
-     * @return Settings
-     */
-    public function addAllowedClockIp(\OpenSkedge\AppBundle\Entity\IP $allowedClockIps)
-    {
-        $this->allowedClockIps[] = $allowedClockIps;
-
-        return $this;
-    }
-
-    /**
-     * Remove allowedClockIps
-     *
-     * @param \OpenSkedge\AppBundle\Entity\IP $allowedClockIps
-     */
-    public function removeAllowedClockIp(\OpenSkedge\AppBundle\Entity\IP $allowedClockIps)
-    {
-        $this->allowedClockIps->removeElement($allowedClockIps);
-    }
-
-    /**
-     * Get allowedClockIps
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAllowedClockIps()
-    {
-        $ipObjs = $this->allowedClockIps->filter(function ($ip) {
-            return $ip->isClockEnabled() === true;
-        });
-        $ips = array();
-        foreach($ipObjs as $ipObj) {
-            $ips[] = $ipObj->getIp();
-        }
-        return $ips;
     }
 }
