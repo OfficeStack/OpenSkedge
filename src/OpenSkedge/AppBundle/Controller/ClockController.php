@@ -118,7 +118,8 @@ class ClockController extends Controller
      * @return \DateTime
      */
     private function getFirstDayOfWeek(\DateTime $date) {
-        $day = $this->container->getParameter('week_start_day_clock');
+        $appSettings = $this->get('appsettings')->getAppSettings();
+        $day = $appSettings->getWeekStartDayClock();
         $firstDay = idate('w', strtotime($day));
         $offset = 7 - $firstDay;
         $ret = clone $date;
