@@ -12,7 +12,7 @@ class IPType extends AbstractType
     {
         $builder
             ->add('ip', 'text', array('label' => 'IP Address'))
-            ->add('name', 'text')
+            ->add('name', 'text', array('required' => false))
             ->add('clockEnabled', 'checkbox', array('label' => 'Time Clock Allowed?', 'required' => false))
         ;
     }
