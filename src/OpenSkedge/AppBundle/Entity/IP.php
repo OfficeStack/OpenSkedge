@@ -22,12 +22,7 @@ class IP
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Settings", inversedBy="allowedClockIps")
-     */
-    private $settings;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotNull()
      * @Assert\Ip(version="all")
      */
@@ -132,28 +127,5 @@ class IP
     public function isClockEnabled()
     {
         return $this->clockEnabled;
-    }
-
-    /**
-     * Set settings
-     *
-     * @param \OpenSkedge\AppBundle\Entity\Settings $settings
-     * @return IP
-     */
-    public function setSettings(\OpenSkedge\AppBundle\Entity\Settings $settings = null)
-    {
-        $this->settings = $settings;
-
-        return $this;
-    }
-
-    /**
-     * Get settings
-     *
-     * @return \OpenSkedge\AppBundle\Entity\Settings
-     */
-    public function getSettings()
-    {
-        return $this->settings;
     }
 }
