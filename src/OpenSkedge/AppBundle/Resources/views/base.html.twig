@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{{ app_brand_name() }} - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' and get_action_name() != 'view' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+        <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-google.css') }}" rel="stylesheet" type="text/css" />
