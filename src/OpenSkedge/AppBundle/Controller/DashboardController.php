@@ -45,7 +45,6 @@ class DashboardController extends Controller
             $schedules = null;
         }
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
         if (in_array($clientIp, $this->get('appsettings')->getAllowedClockIps())) {
             $outside = false;
@@ -53,8 +52,13 @@ class DashboardController extends Controller
             $outside = true;
         }
 
+        $dtUtils = $this->get('dt_utils');
+
+        $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
+        $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
+
         return $this->render('OpenSkedgeBundle:Dashboard:index.html.twig', array(
-            'htime'           => new \DateTime("today", new \DateTimeZone("UTC")),
+            'htime'           => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'      => $resolution,
             'avail'           => $avail,
             'schedulePeriods' => $results,
@@ -62,6 +66,8 @@ class DashboardController extends Controller
             'selected'        => $selected,
             'outside'         => $outside,
             'clientip'        => $clientIp,
+            'startIndex'      => $startIndex,
+            'endIndex'        => $endIndex
         ));
     }
 }

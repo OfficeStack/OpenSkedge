@@ -1,15 +1,12 @@
 {% spaceless %}
 {% if resolution == "15 mins" %}
 {% set sectiondiv = 1 %}
-{% set sectionlen = 95 %}
 {% set next_section = "+15 minutes" %}
 {% elseif resolution == "30 mins" %}
 {% set sectiondiv = 2 %}
-{% set sectionlen = 47 %}
 {% set next_section = "+30 minutes" %}
 {% else %}
 {% set sectiondiv = 4 %}
-{% set sectionlen = 23 %}
 {% set next_section = "+1 hour" %}
 {% endif %}
 {% endspaceless %}
@@ -27,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-{% for i in 0..sectionlen %}
+{% for i in (startIndex/sectiondiv)..(endIndex/sectiondiv) %}
         <tr>
             <td>{{ htime|date("g:i a", false) }}</td>
         {% for j in 0..6 %}

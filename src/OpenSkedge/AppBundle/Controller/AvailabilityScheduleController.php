@@ -72,11 +72,6 @@ class AvailabilityScheduleController extends Controller
             throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
         }
 
-        /*
-         * TODO: Do not show times before or after certain points
-         * htime by default should be set to mktime(0, 0, 0, 1, 1);
-        */
-
         $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
             'user' => $uid,
             'schedulePeriod' => $spid
@@ -88,12 +83,19 @@ class AvailabilityScheduleController extends Controller
 
         $deleteForm = $this->createDeleteForm($uid, $spid);
 
+        $dtUtils = $this->get('dt_utils');
+
+        $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
+        $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
+
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:view.html.twig', array(
-            'htime'       => new \DateTime("today", new \DateTimeZone("UTC")),
+            'htime'       => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'  => $resolution,
             'avail'       => $entity,
             'schedules'   => $schedules,
             'delete_form' => $deleteForm->createView(),
+            'startIndex'  => $startIndex,
+            'endIndex'    => $endIndex
         ));
     }
 
@@ -177,11 +179,18 @@ class AvailabilityScheduleController extends Controller
             )));
         }
 
+        $dtUtils = $this->get('dt_utils');
+
+        $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
+        $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
+
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:new.html.twig', array(
             'avail'      => $entity,
-            'htime'      => new \DateTime("today", new \DateTimeZone("UTC")),
+            'htime'      => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution' => $resolution,
             'create'     => true,
+            'startIndex' => $startIndex,
+            'endIndex'   => $endIndex
         ));
     }
 
@@ -243,13 +252,20 @@ class AvailabilityScheduleController extends Controller
             )));
         }
 
+        $dtUtils = $this->get('dt_utils');
+
+        $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
+        $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
+
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:edit.html.twig', array(
-            'htime'       => new \DateTime("today", new \DateTimeZone("UTC")),
+            'htime'       => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'  => $resolution,
             'avail'       => $entity,
             'edit'        => true,
             'schedules'   => $schedules,
             'delete_form' => $deleteForm->createView(),
+            'startIndex' => $startIndex,
+            'endIndex'   => $endIndex
         ));
     }
 

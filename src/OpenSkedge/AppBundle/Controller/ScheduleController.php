@@ -61,13 +61,20 @@ class ScheduleController extends Controller
             'position'       => $pid
         ));
 
+        $dtUtils = $this->get('dt_utils');
+
+        $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
+        $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
+
         return $this->render('OpenSkedgeBundle:Schedule:view.html.twig', array(
-            'htime'         => new \DateTime("today", new \DateTimeZone("UTC")),
+            'htime'         => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'    => $resolution,
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,
             'schedules'     => $schedules,
             'delete_form'   => $deleteForm->createView(),
+            'startIndex'    => $startIndex,
+            'endIndex'      => $endIndex
         ));
     }
 
@@ -184,14 +191,21 @@ class ScheduleController extends Controller
             )));
         }
 
+        $dtUtils = $this->get('dt_utils');
+
+        $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
+        $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
+
         return $this->render('OpenSkedgeBundle:Schedule:edit.html.twig', array(
-            'htime'         => new \DateTime("today", new \DateTimeZone("UTC")),
+            'htime'         => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'    => $resolution,
             'schedulePeriod'=> $schedulePeriod,
             'position'      => $position,
             'availData'     => $availData,
             'edit'          => true,
             'deleteForm'    => $deleteForm->createView(),
+            'startIndex'    => $startIndex,
+            'endIndex'      => $endIndex
         ));
     }
 

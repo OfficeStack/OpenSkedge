@@ -2,7 +2,7 @@
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ app_brand_name() }} Settings</h3>
-
+    <hr>
     <form action="{{ path('app_settings_edit') }}" method="post" {{ form_enctype(edit_form) }}>
         {{ form_errors(edit_form) }}
 
