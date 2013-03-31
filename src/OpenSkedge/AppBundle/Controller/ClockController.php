@@ -22,8 +22,8 @@ class ClockController extends Controller
         }
 
         $appSettings = $this->get('appsettings')->getAppSettings();
-        $canTrustProxy = (isset($_SERVER['PAGODABOX']) ? true : false);
-        if (!in_array($request->getClientIp($canTrustProxy), $appSettings->getAllowedClockIps())) {
+        $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
+        if (!in_array($clientIp, $appSettings->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 
@@ -57,8 +57,8 @@ class ClockController extends Controller
         }
 
         $appSettings = $this->get('appsettings')->getAppSettings();
-        $canTrustProxy = (isset($_SERVER['PAGODABOX']) ? true : false);
-        if (!in_array($request->getClientIp($canTrustProxy), $appSettings->getAllowedClockIps())) {
+        $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
+        if (!in_array($clientIp, $appSettings->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 

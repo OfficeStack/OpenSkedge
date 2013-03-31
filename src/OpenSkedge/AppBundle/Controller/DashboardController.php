@@ -44,8 +44,7 @@ class DashboardController extends Controller
         }
 
         $appSettings = $this->get('appsettings')->getAppSettings();
-        $canTrustProxy = (isset($_SERVER['PAGODABOX']) ? true : false);
-        $clientIp = $request->getClientIp($canTrustProxy);
+        $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
         if (in_array($clientIp, $appSettings->getAllowedClockIps())) {
             $outside = false;
         } else {

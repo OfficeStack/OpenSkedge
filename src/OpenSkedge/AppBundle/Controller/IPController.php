@@ -63,6 +63,8 @@ class IPController extends Controller
         $entity  = new IP();
         $form = $this->createForm(new IPType(), $entity);
 
+        $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
+
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) {
@@ -76,7 +78,7 @@ class IPController extends Controller
 
         return $this->render('OpenSkedgeBundle:IP:new.html.twig', array(
             'entity'    => $entity,
-            'clientip'  => $request->getClientIp(),
+            'clientip'  => $clientIp,
             'form'      => $form->createView(),
         ));
     }
