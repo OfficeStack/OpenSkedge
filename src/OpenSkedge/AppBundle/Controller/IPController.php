@@ -108,7 +108,7 @@ class IPController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('app_settings_ip_view', array('id' => $id)));
+                return $this->redirect($this->generateUrl('app_settings_ips', array('id' => $id)));
             }
         }
 
