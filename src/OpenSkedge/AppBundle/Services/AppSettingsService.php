@@ -24,4 +24,15 @@ class AppSettingsService
         }
         return $appSettings;
     }
+
+    public function getAllowedClockIps()
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $ipObjs = $em->getRepository('OpenSkedgeBundle:IP')->findBy(array('clockEnabled'=> true));
+        $ips = array();
+        foreach ($ipObjs as $ipObj) {
+            $ips[] = $ipObj->getIp();
+        }
+        return $ips;
+    }
 }
