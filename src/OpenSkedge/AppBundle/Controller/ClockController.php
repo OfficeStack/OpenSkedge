@@ -22,8 +22,8 @@ class ClockController extends Controller
         }
 
         $appSettings = $this->get('appsettings')->getAppSettings();
-
-        if(!in_array($request->getClientIp(), $appSettings->getAllowedClockIps())) {
+        $canTrustProxy = (isset($_SERVER['PAGODABOX']) ? true : false);
+        if (!in_array($request->getClientIp($canTrustProxy), $appSettings->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 
@@ -49,7 +49,6 @@ class ClockController extends Controller
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
-    // TODO: Add late checking
     // TODO: Add shift change checking
     public function clockOutAction(Request $request)
     {
@@ -58,8 +57,8 @@ class ClockController extends Controller
         }
 
         $appSettings = $this->get('appsettings')->getAppSettings();
-
-        if(!in_array($request->getClientIp(), $appSettings->getAllowedClockIps())) {
+        $canTrustProxy = (isset($_SERVER['PAGODABOX']) ? true : false);
+        if (!in_array($request->getClientIp($canTrustProxy), $appSettings->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 

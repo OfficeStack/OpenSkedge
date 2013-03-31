@@ -44,8 +44,9 @@ class DashboardController extends Controller
         }
 
         $appSettings = $this->get('appsettings')->getAppSettings();
-
-        if (in_array($request->getClientIp(), $appSettings->getAllowedClockIps())) {
+        $canTrustProxy = (isset($_SERVER['PAGODABOX']) ? true : false);
+        $clientIp = $request->getClientIp($canTrustProxy);
+        if (in_array($clientIp, $appSettings->getAllowedClockIps())) {
             $outside = false;
         } else {
             $outside = true;
@@ -59,6 +60,7 @@ class DashboardController extends Controller
             'schedules'       => $schedules,
             'selected'        => $selected,
             'outside'         => $outside,
+            'clientip'        => $clientIp,
         ));
     }
 }
