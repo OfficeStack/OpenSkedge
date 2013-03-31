@@ -20,9 +20,8 @@ $('#btnClientIp').click(function () {
         {{ form_errors(form) }}
 
         {{ form_label(form.ip) }}
-        <div class="inline">
-            {{ form_widget(form.ip) }}
-            <button type="button" id="btnClientIp" class="btn">Set to Current IP Address</button>
+        {{ form_widget(form.ip) }}
+        <button type="button" id="btnClientIp" class="btn header-control">Set to Current IP Address</button>
         </div>
         {{ form_row(form.name) }}
         <label class="checkbox">
