@@ -41,8 +41,6 @@ class LoadSettingsData extends AbstractFixture implements OrderedFixtureInterfac
 
         $manager->persist($appSettings);
         $manager->flush();
-
-        $this->addReference('app-settings', $appSettings);
     }
 
     /**
