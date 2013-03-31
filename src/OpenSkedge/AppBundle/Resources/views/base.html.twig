@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="robots" content="noindex,nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{{ appname }} - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' and get_action_name() != 'view' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
+        <title>{% block title %}{{ app_brand_name() }} - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' and get_action_name() != 'view' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
@@ -16,7 +16,7 @@
         {% block content %}{% endblock %}
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>

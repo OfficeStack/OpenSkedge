@@ -21,7 +21,9 @@ class ClockController extends Controller
             throw new AccessDeniedException();
         }
 
-        if(!in_array($request->getClientIp(), $this->container->getParameter('allowed_clock_ips'))) {
+        $appSettings = $this->get('appsettings')->getAppSettings();
+        $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
+        if (!in_array($clientIp, $this->get('appsettings')->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 
@@ -47,7 +49,6 @@ class ClockController extends Controller
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
-    // TODO: Add late checking
     // TODO: Add shift change checking
     public function clockOutAction(Request $request)
     {
@@ -55,7 +56,9 @@ class ClockController extends Controller
             throw new AccessDeniedException();
         }
 
-        if(!in_array($request->getClientIp(), $this->container->getParameter('allowed_clock_ips'))) {
+        $appSettings = $this->get('appsettings')->getAppSettings();
+        $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
+        if (!in_array($clientIp, $this->get('appsettings')->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 
@@ -114,7 +117,8 @@ class ClockController extends Controller
      * @return \DateTime
      */
     private function getFirstDayOfWeek(\DateTime $date) {
-        $day = $this->container->getParameter('week_start_day_clock');
+        $appSettings = $this->get('appsettings')->getAppSettings();
+        $day = $appSettings->getWeekStartDayClock();
         $firstDay = idate('w', strtotime($day));
         $offset = 7 - $firstDay;
         $ret = clone $date;

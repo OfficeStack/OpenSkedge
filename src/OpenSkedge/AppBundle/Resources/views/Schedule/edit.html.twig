@@ -1,5 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block title %}{{ appname }} - {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}{% endblock %}
+{% block title %}{{ app_brand_name() }} - {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}{% endblock %}
 {% if resolution == "15 mins" %}
 {% set sectiondiv = 1 %}
 {% set sectionlen = 95 %}

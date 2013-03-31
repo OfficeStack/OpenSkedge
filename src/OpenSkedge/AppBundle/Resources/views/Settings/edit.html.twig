@@ -1,0 +1,22 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block modulecontent %}
+<div class="span12">
+    <h3>{{ app_brand_name() }} Settings</h3>
+
+    <form action="{{ path('app_settings_edit') }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_errors(edit_form) }}
+
+        {{ form_row(edit_form.brandName) }}
+        {{ form_label(edit_form.pruneAfter) }}
+        <div class="controls controls-row input-append">
+            {{ form_widget(edit_form.pruneAfter) }}
+            <span class="add-on">weeks</span>
+        </div>
+        {{ form_rest(edit_form) }}
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

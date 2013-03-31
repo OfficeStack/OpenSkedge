@@ -5,15 +5,11 @@ web1:
       - "php app/console --env=prod --no-debug doctrine:fixtures:load -n -v"
       - "php app/console doctrine:migrations:version 20130120002754 --add -v"
       - "php app/console doctrine:migrations:version 20130120012237 --add -v"
+      - "php app/console doctrine:migrations:version 20130330222007 --add -v"
 
 global:
     env:
-      - USE_INTL_ICU_DATA_VERSION: true
-      - SYMFONY__BRANDING__NAME: "OpenSkedge"
-      - SYMFONY__ADMIN__EMAIL: admin@mydomain.com
       - SYMFONY__SENDER__EMAIL: no-reply@mydomain.com
-      - SYMFONY__WEEK__START__DAY: Sunday
-      - SYMFONY__WEEK__START__DAY__CLOCK: Sunday
       - OPENSKEDGE_SECRET: ThisIsASecretChangeIt
       - SYMFONY__MEMCACHE__EXPIRE: 3600
 

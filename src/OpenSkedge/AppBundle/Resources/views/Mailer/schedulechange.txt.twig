@@ -1,6 +1,6 @@
 {% block subject %}
 {% autoescape false %}
-[{{ appname }}] Your {{ schedule.position.area.name }} - {{ schedule.position.name }} schedule has changed for {{ schedule.schedulePeriod }}
+[{{ app_brand_name() }}] Your {{ schedule.position.area.name }} - {{ schedule.position.name }} schedule has changed for {{ schedule.schedulePeriod }}
 {% endautoescape %}
 {% endblock %}
 {% block body_text %}
@@ -9,7 +9,7 @@ Hey {{ user.name }},
 
 This is just a notification email to let you know that your {{ schedule.position.area.name }} - {{ schedule.position.name }} schedule has changed for the {{ schedule.schedulePeriod }} scheduling period.
 
-{{ appname }} Management
+{{ app_brand_name() }} Management
 ----
 This is an automated email sent by OpenSkedge. Do NOT respond to this email. You will not get a reply.
 {% endautoescape %}

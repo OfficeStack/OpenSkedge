@@ -1,5 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
-{% block title %}{{ appname }} - {{ avail.user.name }} - Schedule for {{ avail.schedulePeriod }}{% endblock %}
+{% block title %}{{ app_brand_name() }} - {{ avail.user.name }} - Schedule for {{ avail.schedulePeriod }}{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ avail.user.name }}'s schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>

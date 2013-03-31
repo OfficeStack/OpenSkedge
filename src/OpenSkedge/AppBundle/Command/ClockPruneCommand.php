@@ -14,15 +14,21 @@ class ClockPruneCommand extends ContainerAwareCommand {
     {
         $this->setName("clock:prune")
              ->setDescription('Prunes timeclock data from before the specified number of weeks back.')
-             ->addArgument('threshold', InputArgument::REQUIRED, 'number of weeks back to keep')
+             ->addArgument('threshold', InputArgument::OPTIONAL, 'number of weeks back to keep')
              ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'Do not ask any interactive questions.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $weeks = sprintf("-%s weeks", $input->getArgument('threshold'));
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        if (!is_null($input->getArgument('threshold'))) {
+            $weeks = sprintf("-%s weeks", $input->getArgument('threshold'));
+        } else {
+            $appSettings = $this->getContainer()->get('appsettings')->getAppSettings();
+            $weeks = sprintf("-%s weeks", $appSettings->getPruneAfter());
+        }
 
         $currentWeek = $this->getFirstDayOfWeek(new \DateTime("now"));
         $threshold = $currentWeek->modify($weeks);
@@ -57,7 +63,8 @@ class ClockPruneCommand extends ContainerAwareCommand {
      */
     private function getFirstDayOfWeek(\DateTime $date)
     {
-        $day = $this->getContainer()->getParameter('week_start_day_clock');
+        $appSettings = $this->getContainer()->get('appsettings')->getAppSettings();
+        $day = $appSettings->getWeekStartDayClock();
         $firstDay = idate('w', strtotime($day));
         $offset = 7 - $firstDay;
         $ret = clone $date;

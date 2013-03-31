@@ -1,6 +1,6 @@
 {% block subject %}
 {% autoescape false %}
-[{{ appname }}] {{ user.name }} has not clocked in yet!
+[{{ app_branding_name() }}] {{ user.name }} has not clocked in yet!
 {% endautoescape %}
 {% endblock %}
 {% block body_text %}
@@ -9,7 +9,7 @@ Hey {{ supervisor.name }},
 
 This is just a notification email to let you know that one of your employees, {{ user.name }}, has not clocked in for their {{ position.name }} - {{ position.area.name }} shift of which they are currently scheduled.
 
-{{ appname }} Management
+{{ app_branding_name() }} Management
 ----
 This is an automated email sent by OpenSkedge. Do NOT respond to this email. You will not get a reply.
 {% endautoescape %}

@@ -1,0 +1,39 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - Settings - IP Manifest - Add an IP Address{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$('#btnClientIp').click(function () {
+    $('#{{ form.ip.vars.id }}').val('{{ clientip }}');
+});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('app_settings_edit') }}">{{ app_brand_name() }} Settings</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('app_settings_ips') }}">IP Manifest</a> <span class="divider">/</span></li>
+        <li class="active">New IP Address</li>
+    </ul>
+    <h3>IP Creation</h3>
+    <hr>
+    <form action="{{ path('app_settings_ip_new') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        {{ form_label(form.ip) }}
+        <div class="inline">
+            {{ form_widget(form.ip) }}
+            <button type="button" id="btnClientIp" class="btn">Set to Current IP Address</button>
+        </div>
+        {{ form_row(form.name) }}
+        <label class="checkbox">
+            <h5>{{ form_widget(form.clockEnabled) }}{{ form.clockEnabled.vars.label }}</h5>
+        </label>
+        {{ form_rest(form) }}
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Add IP Address</button>
+            <a class="btn" href="{{ path('app_settings_ips') }}">Back to IP Manifest</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
