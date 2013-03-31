@@ -13,7 +13,7 @@ class OpenSkedgeBundle extends Bundle
 
         /* Allow CSRF secret token to be set by the environment and override
          * parameters.yml
-        */
+         */
         if (isset($_SERVER["OPENSKEDGE_SECRET"])) {
             $container->setParameter('secret', $_SERVER["OPENSKEDGE_SECRET"]);
         }
@@ -22,8 +22,7 @@ class OpenSkedgeBundle extends Bundle
             $container->setParameter('sender_email', $_SERVER["SYMFONY__SENDER__EMAIL"]);
         }
 
-        // Required for Pagoda Box support
-        if (isset($_SERVER["DB1_PORT"])) {
+        if (isset($_SERVER["DB1_PORT"])) { // Pagoda Box MySQL database detection
             $container->setParameter('database.port', $_SERVER["DB1_PORT"]);
             $container->setParameter('database.host', $_SERVER["DB1_HOST"]);
             $container->setParameter('database.name', $_SERVER["DB1_NAME"]);
@@ -31,7 +30,7 @@ class OpenSkedgeBundle extends Bundle
             $container->setParameter('database.password', $_SERVER["DB1_PASS"]);
         }
 
-        if (isset($_SERVER["CACHE1_HOST"])) {
+        if (isset($_SERVER["CACHE1_HOST"])) { // Pagoda Box memcache detection
             $container->setParameter('memcache.host', $_SERVER["CACHE1_HOST"]);
             $container->setParameter('memcache.port', $_SERVER["CACHE1_PORT"]);
             if (isset($_SERVER["SYMFONY__MEMCACHE__EXPIRE"])) {
@@ -41,6 +40,7 @@ class OpenSkedgeBundle extends Bundle
             }
         }
 
+        // Get the commit id from HEAD if we're deployed as a git repo.
         if (is_readable(__DIR__.'/../../../.git/HEAD')) {
             $headref = rtrim(substr(file_get_contents(__DIR__.'/../../../.git/HEAD'), 5));
             if (is_readable(__DIR__.'/../../../.git/'.$headref)) {
@@ -50,6 +50,7 @@ class OpenSkedgeBundle extends Bundle
                 $commit = null;
             }
         } else {
+            // Not deployed as a git repo, so we have no commit id.
             $commit = null;
         }
 

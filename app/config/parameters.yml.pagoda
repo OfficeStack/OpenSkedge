@@ -1,8 +1,4 @@
 parameters:
-    # Application Configuration
-    app_name: %branding.name%
-    sender_email: %sender.email%
-
     # Database Configuration
     database_driver: pdo_mysql
     database_host: %database.host%
@@ -12,6 +8,7 @@ parameters:
     database_password: %database.password%
 
     # Mailer Configuration
+    sender_email: %sender.email%
     mailer_transport: mail
     mailer_encryption: ~
     mailer_auth: ~
@@ -22,13 +19,8 @@ parameters:
 
     # Locale Configuration
     locale: en
-    ## The first day of the week
-    week_start_day: %week.start.day%
-    ## The first day in a pay period (if different from above)
-    week_start_day_clock: %week.start.day.clock%
 
     # Security Configuration
-    allowed_clock_ips: ['127.0.0.1', 'fe80::1', '::1']
     secret: ThisIsNotASecretAndNeedsToBeChanged
     protocol: http   # http or https (recommended)
 

@@ -1,0 +1,35 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - Settings - IP Manifest - {{ entity.ip }} - Edit{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('app_settings_edit') }}">{{ app_brand_name() }} Settings</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('app_settings_ips') }}">IP Manifest</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('app_settings_ip_edit', { 'id': entity.id }) }}">{{ entity.ip }}</a> <span class="divider">/</span></li>
+        <li class="active">Edit</li>
+    </ul>
+    <h3>{{ entity.ip }}</h3>
+    <div class="btn-group header-control">
+        <form action="{{ path('app_settings_ip_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+        </form>
+    </div>
+    <hr>
+    <form action="{{ path('app_settings_ip_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_errors(edit_form) }}
+
+        {{ form_row(edit_form.ip) }}
+        {{ form_row(edit_form.name) }}
+        <label class="checkbox">
+            <h5>{{ form_widget(edit_form.clockEnabled) }}{{ edit_form.clockEnabled.vars.label }}</h5>
+        </label>
+        {{ form_rest(edit_form) }}
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Save Changes</button>
+            <a class="btn" href="{{ path('app_settings_ips') }}">Back to IP Manifest</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

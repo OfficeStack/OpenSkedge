@@ -253,6 +253,31 @@ report_hours_generate:
         id: \d+
         _method:  POST
 
+app_settings_ips:
+    pattern:  /app/settings/ip-manifest/
+    defaults: { _controller: OpenSkedgeBundle:IP:index }
+
+app_settings_ip_new:
+    pattern:  /app/settings/ip/new
+    defaults: { _controller: OpenSkedgeBundle:IP:new }
+
+app_settings_ip_edit:
+    pattern:  /app/settings/ip/{id}/edit
+    defaults: { _controller: OpenSkedgeBundle:IP:edit }
+    requirements:
+        id: \d+
+
+app_settings_ip_delete:
+    pattern:  /app/settings/ip/{id}/delete
+    defaults: { _controller: OpenSkedgeBundle:IP:delete }
+    requirements:
+        id: \d+
+        _method:  POST
+
+app_settings_edit:
+    pattern:  /app/settings
+    defaults: { _controller: OpenSkedgeBundle:Settings:edit }
+
 default:
     pattern: /
     defaults: { _controller: OpenSkedgeBundle:Default:index }

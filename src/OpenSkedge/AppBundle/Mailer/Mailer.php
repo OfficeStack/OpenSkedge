@@ -30,7 +30,6 @@ class Mailer
         $context = array(
             'user' => $user,
             'schedule' => $schedule,
-            'appname' => $this->parameters['appname'],
         );
         $this->dispatchMessage('OpenSkedgeBundle:Mailer:schedulechange.txt.twig', $context,
                                 $this->parameters['senderEmail'], $user->getEmail());
@@ -44,7 +43,6 @@ class Mailer
                 'user' => $user,
                 'schedulePeriod' => $schedule->getSchedulePeriod(),
                 'supervisor' => $supervisor,
-                'appname' => $this->parameters['appname'],
             );
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:availschedulepost.txt.twig', $context,
                                     $this->parameters['senderEmail'], $supervisor->getEmail());
@@ -59,7 +57,6 @@ class Mailer
                 'user' => $user,
                 'schedulePeriod' => $schedule->getSchedulePeriod(),
                 'supervisor' => $supervisor,
-                'appname' => $this->parameters['appname'],
             );
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:availschedulechange.txt.twig',
                 $context, $this->parameters['senderEmail'], $supervisor->getEmail());
@@ -70,7 +67,6 @@ class Mailer
         $context = array(
             'user' => $user,
             'password' => $password,
-            'appname' => $this->parameters['appname'],
         );
         $this->dispatchMessage('OpenSkedgeBundle:Mailer:newuser.txt.twig', $context,
                                 $this->parameters['senderEmail'], $user->getEmail());
@@ -80,7 +76,6 @@ class Mailer
         $context = array(
             'user' => $user,
             'newSupervisor' => $newSupervisor,
-            'appname' => $this->parameters['appname'],
         );
         $this->dispatchMessage('OpenSkedgeBundle:Mailer:newsupervisor.txt.twig', $context,
                                 $this->parameters['senderEmail'], $user->getEmail());
@@ -94,7 +89,6 @@ class Mailer
                 'user' => $user,
                 'supervisor' => $supervisor,
                 'position' => $schedule->getPosition(),
-                'appname' => $this->parameters['appname'],
             );
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:lateemployee_sup.txt.twig',
                 $context, $this->parameters['senderEmail'], $supervisor->getEmail());
@@ -102,7 +96,6 @@ class Mailer
         $context = array(
                 'user' => $user,
                 'position' => $schedule->getPosition(),
-                'appname' => $this->parameters['appname'],
             );
         $this->dispatchMessage('OpenSkedgeBundle:Mailer:lateemployee_emp.txt.twig',
                 $context, $this->parameters['senderEmail'], $user->getEmail());

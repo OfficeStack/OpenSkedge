@@ -8,23 +8,17 @@ Copyright &copy; 2012-2013 Max Fierke
 1.  Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
     * Nginx users, see [this wiki article](https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux) for setup.
     * Apache users, point your document root to web/. The .htaccess should take care of everything.
-2.  PHP 5.3.10+
+2.  PHP 5.3.10+ (Tested on 5.3.10, 5.3.18, and 5.4.6)
 3.  PDO-supported database. MySQL/MariaDB suggested.
 4.  (optional) Memcached and PHP memcache extension.
 
 ## Installation
 1.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
 2.  Run `cp app/config/parameters.yml.dist app/config/parameters.yml`
-    * `app_name` holds the application branding that is displayed to the user. You     can change it to anything. E.g. CSOM ITSS sets this to "Lab Scheduler".
     * `sender_email` is the email address of the automated email account you want to use.
-    * `week_start_day` is the day of the week which is considered the start of the week in your region
-    * `week_start_clock` is the day of the week which is considered the start of the week as far as time
-        clock functionality is concerned. This will likely be the same as above. Use the same format as your
-        paper time sheets.
-    * `allowed_clock_ips` is an array which contains IP addresses to match to remote machines allowed to utilize the timeclock.
     * `secret` is used for CSRF validation. Set this to some random characters. An ideal value would be a random sha256 hash.
     * The rest of the settings should be pretty self-explainatory.
-3.  Setup permissions. This will require ACL support of some kind on your system. Replace `www-data` with your web server user.
+3.  Setup permissions. This will require ACL support of some kind on your file system. Replace `www-data` with your web server user.
     * If under a host that supports `chmod +a`:<pre>
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
