@@ -82,7 +82,9 @@ class AvailabilityScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
-        $resolution = $request->request->get('timeresolution', '1 hour');
+        $appSettings = $this->get('appsettings')->getAppSettings();
+
+        $resolution = $request->request->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         $deleteForm = $this->createDeleteForm($uid, $spid);
 
@@ -143,7 +145,9 @@ class AvailabilityScheduleController extends Controller
             ));
         }
 
-        $resolution = $request->query->get('timeresolution', '1 hour');
+        $appSettings = $this->get('appsettings')->getAppSettings();
+
+        $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         $entity = new AvailabilitySchedule();
 
@@ -204,7 +208,9 @@ class AvailabilityScheduleController extends Controller
             throw new AccessDeniedException();
         }
 
-        $resolution = $request->query->get('timeresolution', '1 hour');
+        $appSettings = $this->get('appsettings')->getAppSettings();
+
+        $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $spid, 'user' => $user->getId()));
 

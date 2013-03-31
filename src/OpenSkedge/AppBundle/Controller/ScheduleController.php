@@ -50,7 +50,9 @@ class ScheduleController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
-        $resolution = $request->request->get('timeresolution', '1 hour');
+        $appSettings = $this->get('appsettings')->getAppSettings();
+
+        $resolution = $request->request->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         $deleteForm = $this->createDeleteForm($pid, $spid);
 
@@ -138,7 +140,9 @@ class ScheduleController extends Controller
 
         $deleteForm = $this->createDeleteForm($pid, $spid);
 
-        $resolution = $request->query->get('timeresolution', '1 hour');
+        $appSettings = $this->get('appsettings')->getAppSettings();
+
+        $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         if ($request->getMethod() == 'POST') {
             $sectiondiv = $request->request->get('sectiondiv');

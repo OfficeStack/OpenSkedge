@@ -21,9 +21,11 @@ class DashboardController extends Controller
 
         $user = $this->getUser();
 
+        $appSettings = $this->get('appsettings')->getAppSettings();
+
         $selected = $request->request->get('schedulePeriod', 0);
 
-        $resolution = $request->request->get('timeresolution', '1 hour');
+        $resolution = $request->request->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         $results = $em->createQuery('SELECT sp, s, a FROM OpenSkedgeBundle:SchedulePeriod sp
                                     LEFT JOIN sp.schedules s JOIN sp.availabilitySchedules a
