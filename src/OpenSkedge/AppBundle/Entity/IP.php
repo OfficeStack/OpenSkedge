@@ -133,4 +133,27 @@ class IP
     {
         return $this->clockEnabled;
     }
+
+    /**
+     * Set settings
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Settings $settings
+     * @return IP
+     */
+    public function setSettings(\OpenSkedge\AppBundle\Entity\Settings $settings = null)
+    {
+        $this->settings = $settings;
+
+        return $this;
+    }
+
+    /**
+     * Get settings
+     *
+     * @return \OpenSkedge\AppBundle\Entity\Settings
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
 }
