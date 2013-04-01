@@ -45,10 +45,16 @@ class UserController extends Controller
 
         $entities = $paginator->getCurrentPageResults();
 
+        $entity  = new User();
+        $form = $this->createForm(new UserType(), $entity, array(
+            'validation_groups' => array('Default', 'user_creation')
+        ));
+
         return $this->render('OpenSkedgeBundle:User:index.html.twig', array(
             'userstitle' => 'Users',
-            'entities' => $entities,
-            'paginator' => $paginator,
+            'entities'   => $entities,
+            'paginator'  => $paginator,
+            'form'       => $form->createView()
         ));
     }
 

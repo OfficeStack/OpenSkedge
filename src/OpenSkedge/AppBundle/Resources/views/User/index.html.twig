@@ -11,7 +11,7 @@ $(document).ready(function () {
 <div class="span12">
     <h3>{{ userstitle }}</h3>
     {% if not displayonly|default(false) %}
-    <a class="btn btn-primary header-control" href="{{ path('user_new') }}"><i class="icon-plus-sign icon-white"></i> Add User</a>
+    <a class="btn btn-primary header-control" href="#newUser" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Add User</a>
     {% endif %}
     <hr>
     {% if entities is empty %}
@@ -62,4 +62,21 @@ $(document).ready(function () {
     </div>
     {% endif %}
 </div>
+{% if not displayonly|default(false) %}
+<div id="newUser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newUserLabel" aria-hidden="true">
+    <form action="{{ path('user_new') }}" method="post" {{ form_enctype(form) }}>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myUserLabel">Add User</h3>
+      </div>
+      <div class="modal-body">
+        {% include 'OpenSkedgeBundle:User:new_form_fields.html.twig' %}
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Back to Users</button>
+        <button type="submit" class="btn btn-primary">Add User</button>
+      </div>
+    </form>
+</div>
+{% endif %}
 {% endblock %}
