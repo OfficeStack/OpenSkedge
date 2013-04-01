@@ -217,7 +217,7 @@ class Settings
      */
     public function setStartHour($startHour)
     {
-        $this->startHour = $startHour;
+        $this->startHour = date("H:i:s", strtotime($startHour));
 
         return $this;
     }
@@ -229,7 +229,7 @@ class Settings
      */
     public function getStartHour()
     {
-        return $this->startHour;
+        return date("g:i A", strtotime($this->startHour));
     }
 
     /**
@@ -240,7 +240,7 @@ class Settings
      */
     public function setEndHour($endHour)
     {
-        $this->endHour = $endHour;
+        $this->endHour = date("H:i:s", strtotime($endHour));
 
         return $this;
     }
@@ -252,6 +252,6 @@ class Settings
      */
     public function getEndHour()
     {
-        return $this->endHour;
+        return date("g:i A", strtotime($this->endHour));
     }
 }
