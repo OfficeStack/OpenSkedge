@@ -12,31 +12,7 @@
 <div class="span12">
     <h3>Create a New User</h3>
     <form action="{{ path('user_new') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_errors(form) }}
-
-        {{ form_row(form.username) }}
-        {{ form_row(form.password) }}
-        {{ form_row(form.name) }}
-        {{ form_row(form.workphone) }}
-        {{ form_row(form.homephone) }}
-        {{ form_row(form.location) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.min) }}
-        {{ form_row(form.max) }}
-        {{ form_row(form.hours) }}
-        {{ form_row(form.notes) }}
-        {{ form_label(form.color) }}
-        <div id="colorField" class="input-append color" data-color="{{ form.color.vars.value }}" data-color-format="hex">
-            {{ form_widget(form.color) }}
-            <span class="add-on"><i style="background-color: {{ form.color.vars.value }}"></i></span>
-        </div>
-        {{ form_row(form.supnotes) }}
-        {{ form_row(form.group) }}
-        {{ form_row(form.supervisors) }}
-        <label class="checkbox">
-            <h5>{{ form_widget(form.isActive) }}{{ form.isActive.vars.label }}</h5>
-        </label>
-        {{ form_rest(form) }}
+        {% include 'OpenSkedgeBundle:User:new_form_fields.html.twig' %}
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Create User</button>
             <a class="btn" href="{{ path('users') }}">Back to Users</a>

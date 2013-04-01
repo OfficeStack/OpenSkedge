@@ -1,0 +1,19 @@
+{{ form_errors(form) }}
+
+{{ form_row(form.username) }}
+{{ form_row(form.password) }}
+{{ form_row(form.name) }}
+{{ form_row(form.email) }}
+<label class="control-label">Hours:</label>
+<div class="controls controls-row">
+    Min: {{ form_widget(form.min, { 'attr': { 'class': 'input-mini' } }) }}
+    Max: {{ form_widget(form.max, { 'attr': { 'class': 'input-mini' } }) }}
+    Desired: {{ form_widget(form.hours, { 'attr': { 'class': 'input-mini' } }) }}
+</div>
+{{ form_row(form.supnotes) }}
+{{ form_row(form.group) }}
+{{ form_row(form.supervisors) }}
+<label class="checkbox">
+    <h5>{{ form_widget(form.isActive) }}{{ form.isActive.vars.label }}</h5>
+</label>
+{{ form_row(form._token) }}
