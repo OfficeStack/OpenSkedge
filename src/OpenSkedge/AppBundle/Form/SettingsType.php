@@ -13,7 +13,7 @@ class SettingsType extends AbstractType
         $days = array('sunday' => 'Sunday', 'monday' => 'Monday', 'tuesday' => 'Tuesday', 'wednesday' =>'Wednesday', 'thursday' => 'Thursday', 'friday' => 'Friday', 'saturday' => 'Saturday');
         $builder
             ->add('brandName', 'text', array('label' => 'Brand Name'))
-            ->add('pruneAfter', 'text', array('attr' => array('class' => 'span10'), 'label' => 'Keep time clock data for'))
+            ->add('pruneAfter', 'integer', array('attr' => array('class' => 'span12'), 'label' => 'Keep time clock data for'))
             ->add('weekStartDay', 'choice', array('label' => 'Week Start Day', 'choices' => $days))
             ->add('weekStartDayClock', 'choice', array('label' => 'Week Start Day (Pay Period)','choices' => $days))
             ->add('defaultTimeResolution', 'choice', array(
