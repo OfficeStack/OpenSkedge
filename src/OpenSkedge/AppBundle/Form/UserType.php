@@ -27,7 +27,7 @@ class UserType extends AbstractType
                 ->add('hours', 'integer', array('label' => 'Desired Hours', 'required' => false))
                 ->add('notes', 'textarea', array('required' => false))
                 ->add('supnotes', 'textarea', array('label' => 'Supervisor Notes', 'required' => false))
-                ->add('color', 'text', array('required' => false))
+                ->add('color', 'text', array('required' => false, 'attr' => array('class' => 'span12')))
                 ->add('isActive', 'checkbox', array('label' => 'Active', 'required' => false))
                 ->add('group', 'entity', array(
                         'label' => 'User Role',
