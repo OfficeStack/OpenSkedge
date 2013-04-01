@@ -280,17 +280,23 @@ class AvailabilityScheduleController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array('user' => $uid, 'schedulePeriod' => $spid));
+            $availabilitySchedule = $em->getRepository('OpenSkedgeBundle:AvailabilitySchedule')->findOneBy(array('user' => $uid, 'schedulePeriod' => $spid));
+            $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('user' => $uid, 'schedulePeriod' => $spid));
 
-            if (!$entity) {
+            if (!$availabilitySchedule instanceof AvailabilitySchedule) {
                 throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
             }
 
-            if ($this->getUser() != $entity->getUser()) {
+            if ($this->getUser() != $availabilitySchedule->getUser()) {
                 throw new AccessDeniedException();
             }
 
-            $em->remove($entity);
+            $em->remove($availabilitySchedule);
+
+            foreach ($schedules as $schedule) {
+                $em->remove($schedule);
+            }
+
             $em->flush();
         }
 
