@@ -5,12 +5,8 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset('js/bootstrap.colorpicker.js') }}"></script>
-<script type="text/javscript">
-$(document).ready(function() {
-    $('.color').colorpicker();
-});
-</script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.colorpicker.js') }}"></script>
+<script type="text/javascript">$('#colorField').colorpicker();</script>
 {% endblock %}
 {% block modulecontent %}
 <div class="span12">
@@ -42,7 +38,7 @@ $(document).ready(function() {
         {{ form_row(edit_form.notes) }}
         {% if is_granted('ROLE_ADMIN') %}
         {{ form_label(edit_form.color) }}
-        <div class="input-append color" data-color="{{ edit_form.color.vars.value }}" data-color-format="hex">
+        <div id="colorField" class="input-append color" data-color="{{ edit_form.color.vars.value }}" data-color-format="hex">
             {{ form_widget(edit_form.color) }}
             <span class="add-on"><i style="background-color: {{ edit_form.color.vars.value }}"></i></span>
         </div>
