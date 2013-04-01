@@ -6,7 +6,7 @@ class DateTimeUtils
 {
     public function timeStrToDateTime($timeString)
     {
-        $timeArr = explode(":", $timeString);
+        $timeArr = explode(":", date("H:i:s", strtotime($timeString)));
         $time = new \DateTime("midnight today", new \DateTimeZone("UTC"));
         $time->setTime($timeArr[0], $timeArr[1], $timeArr[2]);
 
