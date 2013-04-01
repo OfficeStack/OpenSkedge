@@ -26,11 +26,11 @@ class SettingsType extends AbstractType
                 ))
             ->add('startHour', 'text', array(
                     'label' => 'Schedule Start Hour',
-                    'attr' => array('class' => 'span12', 'data-show-inputs' => false)
+                    'attr' => array('class' => 'span12', 'data-show-inputs' => 'false')
                 ))
             ->add('endHour', 'text', array(
                     'label' => 'Schedule End Hour',
-                    'attr' => array('class' => 'span12', 'data-show-inputs' => false)
+                    'attr' => array('class' => 'span12', 'data-show-inputs' => 'false')
                 ))
         ;
     }
