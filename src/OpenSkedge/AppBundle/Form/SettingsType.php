@@ -24,15 +24,13 @@ class SettingsType extends AbstractType
                         '1 hour'  => '1 hour',
                     ),
                 ))
-            ->add('startHour', 'time', array(
-                    'input' => 'string',
-                    'widget' => 'single_text',
-                    'label' => 'Schedule Start Hour'
+            ->add('startHour', 'text', array(
+                    'label' => 'Schedule Start Hour',
+                    'attr' => array('class' => 'span12', 'data-show-inputs' => false)
                 ))
-            ->add('endHour', 'time', array(
-                    'input' => 'string',
-                    'widget' => 'single_text',
-                    'label' => 'Schedule End Hour'
+            ->add('endHour', 'text', array(
+                    'label' => 'Schedule End Hour',
+                    'attr' => array('class' => 'span12', 'data-show-inputs' => false)
                 ))
         ;
     }

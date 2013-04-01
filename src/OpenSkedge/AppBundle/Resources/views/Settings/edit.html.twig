@@ -1,4 +1,16 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/timepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/bootstrap.timepicker.min.js') }}"></script>
+<script type="text/javascript">
+    $('#{{ edit_form.startHour.vars.id }}').timepicker();
+    $('#{{ edit_form.endHour.vars.id }}').timepicker();
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>{{ app_brand_name() }} Settings</h3>
@@ -8,9 +20,22 @@
 
         {{ form_row(edit_form.brandName) }}
         {{ form_label(edit_form.pruneAfter) }}
-        <div class="controls controls-row input-append">
+        <div class="input-append">
             {{ form_widget(edit_form.pruneAfter) }}
             <span class="add-on">weeks</span>
+        </div>
+        {{ form_row(edit_form.weekStartDay) }}
+        {{ form_row(edit_form.weekStartDayClock) }}
+        {{ form_row(edit_form.defaultTimeResolution) }}
+        {{ form_label(edit_form.startHour) }}
+        <div class="input-append bootstrap-timepicker">
+            {{ form_widget(edit_form.startHour) }}
+            <span class="add-on"><i class="icon-time"></i></span>
+        </div>
+        {{ form_label(edit_form.endHour) }}
+        <div class="input-append bootstrap-timepicker">
+            {{ form_widget(edit_form.endHour) }}
+            <span class="add-on"><i class="icon-time"></i></span>
         </div>
         {{ form_rest(edit_form) }}
 
