@@ -24,6 +24,7 @@ class Settings
     /**
      * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      * @Assert\Length(min="2", max="64",
      *                minMessage="Brand Name must be {{ limit }} or more characters.",
      *                maxMessage="Brand Name cannot be more than {{ limit }} characters."
@@ -33,6 +34,7 @@ class Settings
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="integer")
      */
     private $pruneAfter;
 
@@ -40,6 +42,7 @@ class Settings
      * @ORM\Column(type="string", length=9)
      * @Assert\NotBlank()
      * @Assert\Choice(choices = {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"}, message = "Choose a valid day of the week.")
+     * @Assert\Type(type="string")
      */
     private $weekStartDay;
 
@@ -47,6 +50,7 @@ class Settings
      * @ORM\Column(type="string", length=9)
      * @Assert\NotBlank()
      * @Assert\Choice(choices = {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"}, message = "Choose a valid day of the week.")
+     * @Assert\Type(type="string")
      */
     private $weekStartDayClock;
 
@@ -54,18 +58,21 @@ class Settings
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Choice(choices = {"15 mins", "30 mins", "1 hour"}, message = "Choose a valid time resolution")
+     * @Assert\Type(type="string")
      */
     private $defaultTimeResolution;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $startHour;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $endHour;
 
