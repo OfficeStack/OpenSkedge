@@ -98,7 +98,7 @@ class ScheduleController extends Controller
 
         $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
 
-        if(!$schedulePeriod) {
+        if (!$schedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
@@ -107,8 +107,7 @@ class ScheduleController extends Controller
         ));
 
         $availData = array();
-        foreach($availSchedules as $avail)
-        {
+        foreach ($availSchedules as $avail) {
             /* We're using this entity as a temporary container
              * which generates a schedule based on the user's
              * availability schedule and any scheduled positions they may have.
@@ -119,22 +118,22 @@ class ScheduleController extends Controller
              */
             $genAS = new Schedule();
             $genAS->setUser($avail->getUser());
-            foreach($avail->getUser()->getSchedules() as $schedule) {
+            foreach ($avail->getUser()->getSchedules() as $schedule) {
                 $isPosition = ($schedule->getPosition()->getId() == $position->getId());
                 $isSchedulePeriod = ($schedule->getSchedulePeriod()->getId() == $schedulePeriod->getId());
-                for($timesect = 0; $timesect < 96; $timesect++) {
+                for ($timesect = 0; $timesect < 96; $timesect++) {
                     for ($day = 0; $day < 7; $day++) {
                         // Check the availability schedule to see if the user is available at all.
-                        if($avail->getDayOffset($day, $timesect) != '0' && $isSchedulePeriod) {
-                            if($isPosition && $schedule->getDayOffset($day, $timesect) == '1') {
+                        if ($avail->getDayOffset($day, $timesect) != '0' && $isSchedulePeriod) {
+                            if ($isPosition && $schedule->getDayOffset($day, $timesect) == '1') {
                                 $genAS->setDayOffset($day, $timesect, 2);
-                            } else if(!$isPosition && $schedule->getDayOffset($day, $timesect) == '1' && $genAS->getDayOffset($day, $timesect) != '2') {
+                            } else if (!$isPosition && $schedule->getDayOffset($day, $timesect) == '1' && $genAS->getDayOffset($day, $timesect) != '2') {
                                 $genAS->setDayOffset($day, $timesect, 1);
                             } else if ($schedule->getDayOffset($day, $timesect) == '0' && $genAS->getDayOffset($day, $timesect) == 0) {
                                 $genAS->setDayOffset($day, $timesect, 3);
                             }
                         } else {
-                            if($avail->getDayOffset($day, $timesect) == '0') {
+                            if ($avail->getDayOffset($day, $timesect) == '0') {
                                 $genAS->setDayOffset($day, $timesect, 1);
                             }
                         }
@@ -153,35 +152,57 @@ class ScheduleController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $sectiondiv = $request->request->get('sectiondiv');
-            for($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
-                for($day = 0; $day < 7; $day++) {
+            $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $spid, 'position' => $pid));
+            $uids = array();
+            foreach ($schedules as $schedule) {
+                $uids[] = $schedule->getUser()->getId();
+            }
+            for ($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
+                for ($day = 0; $day < 7; $day++) {
                     $hourtxt = "hour-".$timesect."-".$day;
                     $hour = $request->request->get($hourtxt);
-                    if(!empty($hour)) {
-                        foreach($hour as $uid) {
-                            $schedule = $em->getRepository('OpenSkedgeBundle:Schedule')->findOneBy(array('schedulePeriod' => $spid, 'position' => $pid, 'user' => $uid));
-                            $new = false;
-                            if(!$schedule) {
-                                $schedule = new Schedule();
-                                $tuser = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
-                                if(!$tuser)
-                                    throw $this->createNotFoundException('Unable to find User entity');
-                                $schedule->setUser($tuser);
-                                $schedule->setSchedulePeriod($schedulePeriod);
-                                $schedule->setPosition($position);
-                                $new = true;
+                    if (!$hour === null) {
+                        foreach ($hour as $uid) {
+                            $uids[] = $uid;
+                        }
+                    }
+                }
+            }
+            $uids = array_unique($uids);
+            foreach ($uids as $uid) {
+                $schedule = $em->getRepository('OpenSkedgeBundle:Schedule')->findOneBy(array('schedulePeriod' => $spid, 'position' => $pid, 'user' => $uid));
+                $new = false;
+                if (!$schedule instanceof Schedule) {
+                    $schedule = new Schedule();
+                    $tuser = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
+                    if (!$tuser instanceof \OpenSkedge\AppBundle\Entity\User) {
+                        throw $this->createNotFoundException('Unable to find User entity');
+                    }
+                    $schedule->setUser($tuser);
+                    $schedule->setSchedulePeriod($schedulePeriod);
+                    $schedule->setPosition($position);
+                    $new = true;
+                }
+                for ($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
+                    for ($day = 0; $day < 7; $day++) {
+                        $hourtxt = "hour-".$timesect."-".$day;
+                        $hour = $request->request->get($hourtxt);
+                        if ($hour === null or !in_array($uid, $hour)) {
+                            for ($sectpart = 0; $sectpart < $sectiondiv; $sectpart++) {
+                                $schedule->setDayOffset($day, $timesect+$sectpart, 0);
                             }
-                            for($sectpart=0; $sectpart < $sectiondiv; $sectpart++) {
+                        } else {
+                            for ($sectpart = 0; $sectpart < $sectiondiv; $sectpart++) {
                                 $schedule->setDayOffset($day, $timesect+$sectpart, 1);
-                            }
-                            $em->persist($schedule);
-                            $em->flush();
-                            if($new) {
-                                $mailer = $this->container->get('notify_mailer');
-                                $mailer->notifyUserScheduleChange($schedule);
                             }
                         }
                     }
+                }
+                $em->persist($schedule);
+                $em->flush();
+                if ($new) {
+                    $mailer = $this->container->get('notify_mailer');
+                    $mailer->notifyUserScheduleChange($schedule);
                 }
             }
 
