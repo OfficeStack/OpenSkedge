@@ -10,6 +10,11 @@
     Max: {{ form_widget(form.max, { 'attr': { 'class': 'input-mini' } }) }}
     Desired: {{ form_widget(form.hours, { 'attr': { 'class': 'input-mini' } }) }}
 </div>
+{{ form_label(form.color) }}
+<div id="colorField" class="input-append color" data-color="{{ form.color.vars.value }}" data-color-format="hex">
+    {{ form_widget(form.color) }}
+    <span class="add-on"><i style="background-color: {{ form.color.vars.value }}"></i></span>
+</div>
 {{ form_row(form.supnotes) }}
 {{ form_row(form.group) }}
 {{ form_row(form.supervisors) }}
