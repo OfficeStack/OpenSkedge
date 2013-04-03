@@ -161,9 +161,9 @@ class ScheduleController extends Controller
                 for ($day = 0; $day < 7; $day++) {
                     $hourtxt = "hour-".$timesect."-".$day;
                     $hour = $request->request->get($hourtxt);
-                    if (!$hour === null) {
+                    if (!empty($hour)) {
                         foreach ($hour as $uid) {
-                            $uids[] = $uid;
+                            $uids[] = (int)$uid;
                         }
                     }
                 }
