@@ -113,7 +113,7 @@ class UserController extends Controller
                 $mailer = $this->container->get('notify_mailer');
                 $mailer->notifyUserCreation($entity, $plainPassword);
 
-                return $this->redirect($this->generateUrl('user_view', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('users'));
             }
         }
 
