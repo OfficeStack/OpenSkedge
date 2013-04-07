@@ -6,7 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use OpenSkedge\AppBundle\Entity\Position;
 use OpenSkedge\AppBundle\Entity\Schedule;
+use OpenSkedge\AppBundle\Entity\SchedulePeriod;
 use OpenSkedge\AppBundle\Form\ScheduleType;
 
 /**
