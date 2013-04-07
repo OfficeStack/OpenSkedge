@@ -7,8 +7,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * Controller for OpenSkedge Dashboard
+ *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
+ */
 class DashboardController extends Controller
 {
+    /**
+     * Display the user's current schedules, time clock, and any other additional modules.
+     *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
@@ -37,8 +54,8 @@ class DashboardController extends Controller
                                     AND sp.endTime >= CURRENT_TIMESTAMP() AND s.schedulePeriod = sp.id
                                     AND a.schedulePeriod = sp.id AND s.user = :uid AND a.user = :uid)
                                     ORDER BY sp.endTime DESC')
-                      ->setParameter('uid', $user->getId())
-                      ->getResult();
+            ->setParameter('uid', $user->getId())
+            ->getResult();
 
         // If we've got results, populate the relevant arrays.
         if (count($results) > 0) {
@@ -50,7 +67,7 @@ class DashboardController extends Controller
             $schedules = null;
         }
 
-        /* If running on Pagoda, get the user's IP directly from HTTP_X_FORWARDED_FOR,
+        /* If running on Pagoda Box, get the user's IP directly from HTTP_X_FORWARDED_FOR,
          * otherwise, go to Request::getClientIp()
          */
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
