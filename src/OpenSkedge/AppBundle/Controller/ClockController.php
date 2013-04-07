@@ -1,29 +1,53 @@
 <?php
+
 namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use OpenSkedge\AppBundle\Entity\ArchivedClock;
 use OpenSkedge\AppBundle\Entity\Clock;
 use OpenSkedge\AppBundle\Entity\User;
 
 /**
- * Clock controller.
+ * Controller for manipulating time clock entities
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class ClockController extends Controller
 {
+    /**
+     * Mark the user as clocked in & update the clock in timestamp.
+     * If it's a new week from their last clock in, backup their time clock
+     * to an ArchivedClock entity.
+     *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function clockInAction(Request $request)
     {
+        // Ensure the accessing user is authenticated and authorized ROLE_USER
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
         }
 
+        // Grab a few services.
         $appSettings = $this->get('appsettings')->getAppSettings();
+        $dtUtils = $this->get('dt_utils');
+
+        /* If running on Pagoda Box, get the user's IP directly from HTTP_X_FORWARDED_FOR,
+         * otherwise, go to Request::getClientIp()
+         */
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
-        if (!in_array($clientIp, $this->get('appsettings')->getAllowedClockIps())) {
+        if (!in_array($clientIp, $appSettings->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 
@@ -33,10 +57,12 @@ class ClockController extends Controller
         $clock = $user->getClock();
 
         $now = new \DateTime("now");
-        $lastClockWeek = $this->getFirstDayOfWeek($clock->getLastClock());
-        $thisWeek = $this->getFirstDayOfWeek($now);
-        if($lastClockWeek->getTimestamp() < $thisWeek->getTimestamp()) {
-            $archivedClock = $this->backupClock($user, $clock);
+        $lastClockWeek = $dtUtils->getFirstDayOfWeek($clock->getLastClock(), true);
+        $thisWeek = $dtUtils->getFirstDayOfWeek($now, true);
+
+        // If the current user's clock entity is from before the current week, back it up and reset.
+        if ($lastClockWeek->getTimestamp() < $thisWeek->getTimestamp()) {
+            $archivedClock = $this->_backupClock($user, $clock);
             $clock->resetClock();
             $em->persist($archivedClock);
         }
@@ -49,14 +75,23 @@ class ClockController extends Controller
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
-    // TODO: Add shift change checking
+    /**
+     * Mark the user as clocked out & update the relevant time records.
+     *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function clockOutAction(Request $request)
     {
+        // Ensure the accessing user is authenticated and authorized ROLE_USER
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
         }
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        /* If running on Pagoda Box, get the user's IP directly from HTTP_X_FORWARDED_FOR,
+         * otherwise, go to Request::getClientIp()
+         */
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
         if (!in_array($clientIp, $this->get('appsettings')->getAllowedClockIps())) {
             throw new AccessDeniedException();
@@ -64,34 +99,34 @@ class ClockController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $cur_time = new \DateTime("now");
+        $curTime = new \DateTime("now");
 
         $user = $this->getUser();
         $clock = $user->getClock();
 
-        $last_clock = $clock->getLastClock();
-        $start_time = clone $last_clock;
+        $lastClock = $clock->getLastClock();
+        $startTime = clone $lastClock;
 
         /* TODO: If they're clocking in over two pay periods. (e.g. Sunday night to monday morning)
          * we should update their archivedClock for that week.
          *
-         * If the date of last_clock is the previous day, we need to update two timerecords.
+         * If the date of lastClock is the previous day, we need to update two timerecords.
          */
-        if($last_clock->format('w') == $cur_time->format('w')-1) {
-            $prev_day_end = clone $last_clock;
-            $prev_day_end->setTime(23, 59, 59);
-            $getDay = "get".$last_clock->format('D');
-            $yesterday_timerecord = static::updateTimeRecord($clock->$getDay(), $last_clock, $prev_day_end);
-            $setDay = "set".$last_clock->format('D');
-            $clock->$setDay($yesterday_timerecord);
+        if ($lastClock->format('w') == $curTime->format('w')-1) {
+            $prevDayEnd = clone $lastClock;
+            $prevDayEnd->setTime(23, 59, 59);
+            $getDay = "get".$lastClock->format('D');
+            $yesterdayTimerecord = $this->_updateTimeRecord($clock->$getDay(), $lastClock, $prevDayEnd);
+            $setDay = "set".$lastClock->format('D');
+            $clock->$setDay($yesterdayTimerecord);
             // The the final timerecord will be a continuation of midnight today until the current time.
-            $start_time = new \DateTime("midnight today");
+            $startTime = new \DateTime("midnight today");
         }
 
         $getDay = "get".date('D');
         $setDay = "set".date('D');
-        $cur_timerecord = $clock->$getDay();
-        $timerecord = self::updateTimeRecord($cur_timerecord, $start_time, $cur_time);
+        $curTimerecord = $clock->$getDay();
+        $timerecord = $this->_updateTimeRecord($curTimerecord, $startTime, $curTime);
         $clock->$setDay($timerecord);
         $clock->setStatus(false);
 
@@ -101,35 +136,41 @@ class ClockController extends Controller
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
-    private function backupClock($user, $clock)
+    /**
+     * Backup a Clock entity to an ArchivedClock entity.
+     *
+     * @param UserInterface $user  The user of which's clock to manipulate.
+     * @param Clock         $clock The user's Clock entity
+     *
+     * @return ArchivedClock
+     */
+    private function _backupClock(UserInterface $user, Clock $clock)
     {
+        $dtUtils = $this->get('dt_utils');
+
         $archivedClock = new ArchivedClock();
         $archivedClock->setUser($user);
-        for($i = 0; $i < 7; $i++) {
+
+        for ($i = 0; $i < 7; $i++) {
             $archivedClock->setDay($i, $clock->getDay($i));
         }
-        $archivedClock->setWeek($this->getFirstDayOfWeek($clock->getLastClock()));
+        $archivedClock->setWeek($dtUtils->getFirstDayOfWeek($clock->getLastClock()));
+
         return $archivedClock;
     }
 
     /**
-     * @param \DateTime $date A given date
-     * @return \DateTime
+     * Set 1s in the given timerecord 96-character string from $start to $end
+     *
+     * @param string    $timerecord 96-character time record string
+     * @param \DateTime $start      Start time
+     * @param \DateTime $end        End time
+     *
+     * @return string
      */
-    private function getFirstDayOfWeek(\DateTime $date) {
-        $appSettings = $this->get('appsettings')->getAppSettings();
-        $day = $appSettings->getWeekStartDayClock();
-        $firstDay = idate('w', strtotime($day));
-        $offset = 7 - $firstDay;
-        $ret = clone $date;
-        $ret->modify(-(($date->format('w') + $offset) % 7) . 'days');
-        $ret->modify('midnight');
-        return $ret;
-    }
-
-    private static function updateTimeRecord($timerecord, \DateTime $start, \DateTime $end)
+    private function _updateTimeRecord($timerecord, \DateTime $start, \DateTime $end)
     {
-        // Get the UNIX timestamp for midnight.
+        // Get a \DateTime for midnight of $start's day.
         $daystart = clone $start;
         $daystart->setTime(0, 0, 0);
 
@@ -137,9 +178,11 @@ class ClockController extends Controller
         $startInd = round((($start->getTimestamp() - $daystart->getTimestamp()) / 60) / 15);
         // Time record index of the end time (inclusive)
         $endInd = round((($end->getTimestamp() - $daystart->getTimestamp()) / 60) / 15);
-        for($i = $startInd; $i < $endInd; $i++) {
+
+        for ($i = $startInd; $i < $endInd; $i++) {
             $timerecord[$i] = '1';
         }
+
         return $timerecord;
     }
 }
