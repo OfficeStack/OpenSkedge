@@ -10,14 +10,21 @@ use OpenSkedge\AppBundle\Entity\Schedule;
 use OpenSkedge\AppBundle\Form\ScheduleType;
 
 /**
- * Schedule controller.
+ * Controller for CRUD operations on Schedule entities.
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class ScheduleController extends Controller
 {
     /**
      * Lists all Schedule entities.
      *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -31,8 +38,13 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Finds and displays a Schedule entity.
+     * Finds and displays a Schedule entity for a specific position and schedule period.
      *
+     * @param Request $request The user's request object
+     * @param integer $pid     Position ID from request
+     * @param integer $spid    Schedule period ID from request
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function viewAction(Request $request, $pid, $spid)
     {
@@ -40,18 +52,19 @@ class ScheduleController extends Controller
 
         $position = $em->getRepository('OpenSkedgeBundle:Position')->find($pid);
 
-        if (!$position) {
+        if (!$position instanceof Position) {
             throw $this->createNotFoundException('Unable to find Position entity.');
         }
 
         $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
 
-        if(!$schedulePeriod) {
+        if (!$schedulePeriod instanceof SchedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
         $appSettings = $this->get('appsettings')->getAppSettings();
 
+        // Get the requested time resolution, if available. Default to global default.
         $resolution = $request->request->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         $deleteForm = $this->createDeleteForm($pid, $spid);
@@ -81,6 +94,11 @@ class ScheduleController extends Controller
     /**
      * Edits an existing Schedule entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $pid     Position ID from request
+     * @param integer $spid    Schedule period ID from request
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $pid, $spid)
     {
@@ -92,13 +110,13 @@ class ScheduleController extends Controller
 
         $position = $em->getRepository('OpenSkedgeBundle:Position')->find($pid);
 
-        if (!$position) {
+        if (!$position instanceof Position) {
             throw $this->createNotFoundException('Unable to find Position entity.');
         }
 
         $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
 
-        if (!$schedulePeriod) {
+        if (!$schedulePeriod instanceof SchedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
@@ -148,15 +166,29 @@ class ScheduleController extends Controller
 
         $appSettings = $this->get('appsettings')->getAppSettings();
 
+        // Get the requested time resolution, if available. Default to global default.
         $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
         if ($request->getMethod() == 'POST') {
+            // Get the section divisor from the resolution used when the form was POSTed.
             $sectiondiv = $request->request->get('sectiondiv');
+
             $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $spid, 'position' => $pid));
+
             $uids = array();
+
+            /**
+             * Populate UID array with UIDs of users who already have
+             * schedule for $pid and $spid.
+             */
             foreach ($schedules as $schedule) {
                 $uids[] = $schedule->getUser()->getId();
             }
+
+            /**
+             * Append UID array with UIDs of users who have been scheduled
+             * in the POSTed request.
+             */
             for ($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
                 for ($day = 0; $day < 7; $day++) {
                     $hourtxt = "hour-".$timesect."-".$day;
@@ -168,10 +200,15 @@ class ScheduleController extends Controller
                     }
                 }
             }
+            // Filter out duplicate UIDs.
             $uids = array_unique($uids);
+
+            // Build or rebuild the schedule for each UID.
             foreach ($uids as $uid) {
+                // Get the user's schedule for this $pid and $spid, if it exists.
                 $schedule = $em->getRepository('OpenSkedgeBundle:Schedule')->findOneBy(array('schedulePeriod' => $spid, 'position' => $pid, 'user' => $uid));
                 $new = false;
+                // If it doesn't exist, create it.
                 if (!$schedule instanceof Schedule) {
                     $schedule = new Schedule();
                     $tuser = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
@@ -181,13 +218,19 @@ class ScheduleController extends Controller
                     $schedule->setUser($tuser);
                     $schedule->setSchedulePeriod($schedulePeriod);
                     $schedule->setPosition($position);
+                    // Mark that this is a new schedule for the user.
                     $new = true;
                 }
+
+                /**
+                 * If the each timesect exists in the POSTed data, mark it as scheduled.
+                 * If it doesn't exist in the POSTed data, mark it as not scheduled.
+                 */
                 for ($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
                     for ($day = 0; $day < 7; $day++) {
-                        $hourtxt = "hour-".$timesect."-".$day;
-                        $hour = $request->request->get($hourtxt);
-                        if ($hour === null or !in_array($uid, $hour)) {
+                        $hourElement = "hour-".$timesect."-".$day;
+                        $hourUids = $request->request->get($hourElement);
+                        if ($hour === null or !in_array($uid, $hourUids)) {
                             for ($sectpart = 0; $sectpart < $sectiondiv; $sectpart++) {
                                 $schedule->setDayOffset($day, $timesect+$sectpart, 0);
                             }
@@ -200,6 +243,8 @@ class ScheduleController extends Controller
                 }
                 $em->persist($schedule);
                 $em->flush();
+
+                // If this is a new schedule, notify the user of their new schedule.
                 if ($new) {
                     $mailer = $this->container->get('notify_mailer');
                     $mailer->notifyUserScheduleChange($schedule);
@@ -231,8 +276,13 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Deletes a Schedule entity.
+     * Deletes all Schedule entities with specified position and schedule period.
      *
+     * @param Request $request The user's request object
+     * @param integer $pid     Position ID from request
+     * @param integer $spid    Schedule period ID from request
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $pid, $spid)
     {
@@ -250,11 +300,11 @@ class ScheduleController extends Controller
                 'position' => $pid
             ));
 
-            if (!$schedules) {
+            if (empty($schedules)) {
                 throw $this->createNotFoundException('Unable to find Schedule entity.');
             }
-            foreach($schedules as $schedule)
-            {
+
+            foreach ($schedules as $schedule) {
                 $em->remove($schedule);
             }
             $em->flush();
@@ -265,8 +315,6 @@ class ScheduleController extends Controller
 
     private function createDeleteForm()
     {
-        return $this->createFormBuilder()
-            ->getForm()
-        ;
+        return $this->createFormBuilder()->getForm();
     }
 }

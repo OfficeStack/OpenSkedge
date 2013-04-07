@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @category Controller
  * @package  OpenSkedge\AppBundle\Controller
  * @author   Max Fierke <max@maxfierke.com>
- * @license  GNU General Public License version 3
+ * @license  GNU General Public License, version 3
  * @version  GIT: $Id$
  * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
