@@ -244,7 +244,6 @@ class ScheduleController extends Controller
                     }
                 }
                 $em->persist($schedule);
-                $em->flush();
 
                 // If this is a new schedule, notify the user of their new schedule.
                 if ($new) {
@@ -252,6 +251,8 @@ class ScheduleController extends Controller
                     $mailer->notifyUserScheduleChange($schedule);
                 }
             }
+
+            $em->flush();
 
             return $this->redirect($this->generateUrl('position_schedule_view', array(
                 'pid' => $pid,
