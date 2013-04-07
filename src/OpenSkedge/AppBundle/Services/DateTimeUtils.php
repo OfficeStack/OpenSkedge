@@ -2,8 +2,25 @@
 
 namespace OpenSkedge\AppBundle\Services;
 
+/**
+ * A service class for functions commonly used by OpenSkedge
+ *
+ * @category Services
+ * @package  OpenSkedge\AppBundle\Services
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
+ */
 class DateTimeUtils
 {
+    /**
+     * Converts a string containing a time to a \DateTime object
+     *
+     * @param string $timeString A string containing a time such as "4:00 am" or "23:00"
+     *
+     * @return \DateTime
+     */
     public function timeStrToDateTime($timeString)
     {
         $timeArr = explode(":", date("H:i:s", strtotime($timeString)));
@@ -13,6 +30,14 @@ class DateTimeUtils
         return $time;
     }
 
+    /**
+     * Round a \DateTime object or string to the nearest 15 minute chunk and return
+     * the index out of 95. (There are 96 fifteen minute chunks in a 24-hour day)
+     *
+     * @param \DateTime|string $time A given time
+     *
+     * @return integer
+     */
     public function getIndexFromTime($time)
     {
         if (!is_string($time) && !$time instanceof \DateTime) {
