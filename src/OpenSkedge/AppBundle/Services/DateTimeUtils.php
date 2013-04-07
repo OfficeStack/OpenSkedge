@@ -29,4 +29,31 @@ class DateTimeUtils
 
         return $index;
     }
+
+    /**
+     * Take a \DateTime object and get the date of the first day of its week
+     * dependant on global application settings.
+     *
+     * @param \DateTime $date  A given date
+     * @param boolean   $clock The locale week start day or time clock week start day
+     *
+     * @return \DateTime
+     */
+    public function getFirstDayOfWeek(\DateTime $date, $clock = false)
+    {
+        $appSettings = $this->get('appsettings')->getAppSettings();
+
+        if ($clock) {
+            $day = $appSettings->getWeekStartDayClock();
+        } else {
+            $day = $appSettings->getWeekStartDay();
+        }
+
+        $firstDay = idate('w', strtotime($day));
+        $offset = 7 - $firstDay;
+        $ret = clone $date;
+        $ret->modify(-(($date->format('w') + $offset) % 7) . 'days');
+        $ret->modify('midnight');
+        return $ret;
+    }
 }
