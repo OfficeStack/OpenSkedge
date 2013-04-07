@@ -193,10 +193,10 @@ class ScheduleController extends Controller
              */
             for ($timesect = 0; $timesect < 96; $timesect+=$sectiondiv) {
                 for ($day = 0; $day < 7; $day++) {
-                    $hourtxt = "hour-".$timesect."-".$day;
-                    $hour = $request->request->get($hourtxt);
-                    if (!empty($hour)) {
-                        foreach ($hour as $uid) {
+                    $hourElement = "hour-".$timesect."-".$day;
+                    $hourUids = $request->request->get($hourElement);
+                    if (!empty($hourUids)) {
+                        foreach ($hourUids as $uid) {
                             $uids[] = (int)$uid;
                         }
                     }
@@ -232,7 +232,7 @@ class ScheduleController extends Controller
                     for ($day = 0; $day < 7; $day++) {
                         $hourElement = "hour-".$timesect."-".$day;
                         $hourUids = $request->request->get($hourElement);
-                        if ($hour === null or !in_array($uid, $hourUids)) {
+                        if (empty($hourUids) or !in_array($uid, $hourUids)) {
                             for ($sectpart = 0; $sectpart < $sectiondiv; $sectpart++) {
                                 $schedule->setDayOffset($day, $timesect+$sectpart, 0);
                             }
