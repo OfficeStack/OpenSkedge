@@ -6,31 +6,42 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
+use OpenSkedge\AppBundle\Entity\SchedulePeriod;
+use OpenSkedge\AppBundle\Entity\User;
 use OpenSkedge\AppBundle\Form\AvailabilityScheduleType;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 /**
- * AvailabilitySchedule controller.
+ * Controller for CRUD operations on AvailabilitySchedule entities
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class AvailabilityScheduleController extends Controller
 {
     /**
-     * Lists all AvailabilitySchedule entities.
+     * Lists all AvailabilitySchedule entities for the specified user id.
      *
+     * @param integer $id ID of User entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        if(is_null($id)) {
+        if (is_null($id)) {
             $user = $this->getUser();
             $title = 'My Schedules';
         } else {
             $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
-            if (!$user) {
+            if (!$user instanceof User) {
                 throw $this->createNotFoundException('Unable to find User');
             }
             $title = $user->getName()."'s Schedules";
@@ -56,8 +67,13 @@ class AvailabilityScheduleController extends Controller
     }
 
     /**
-     * Finds and displays a AvailabilitySchedule entity.
+     * Finds and displays a user's schedule for a specific schedule period.
      *
+     * @param Request $request The user's request object
+     * @param integer $uid     User ID from route
+     * @param integer $spid    Schedule period ID from route
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function viewAction(Request $request, $uid, $spid)
     {
@@ -68,7 +84,7 @@ class AvailabilityScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
-        if (!$entity) {
+        if (!$entity instanceof AvailabilitySchedule) {
             throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
         }
 
@@ -99,6 +115,14 @@ class AvailabilityScheduleController extends Controller
         ));
     }
 
+    /**
+     * Requests a schedule period to create an availablity schedule for
+     * and passes it on to newAction()
+     *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function precreateAction(Request $request)
     {
         $form = $this->createForm(new AvailabilityScheduleType());
@@ -119,6 +143,10 @@ class AvailabilityScheduleController extends Controller
     /**
      * Creates a new AvailabilitySchedule entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $spid    Schedule period ID from route
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request, $spid)
     {
@@ -126,7 +154,7 @@ class AvailabilityScheduleController extends Controller
 
         $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
 
-        if (!$schedulePeriod) {
+        if (!$schedulePeriod instanceof SchedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
@@ -137,7 +165,8 @@ class AvailabilityScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
-        if(!empty($existing)) {
+        // If an availability schedule already exists for the given schedule period, give an error.
+        if (!empty($existing)) {
             return $this->render('OpenSkedgeBundle::error.html.twig', array(
                 'action' => 'New Availability Schedule',
                 'error' => array(
@@ -158,13 +187,9 @@ class AvailabilityScheduleController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $data = $request->request->get('day');
-            $entity->setSun($data[0]);
-            $entity->setMon($data[1]);
-            $entity->setTue($data[2]);
-            $entity->setWed($data[3]);
-            $entity->setThu($data[4]);
-            $entity->setFri($data[5]);
-            $entity->setSat($data[6]);
+            for ($i = 0; $i < 7; $i++) {
+                $entity->setDay($i, $data[$i]);
+            }
             $entity->setLastUpdated();
 
             $em->persist($entity);
@@ -197,6 +222,10 @@ class AvailabilityScheduleController extends Controller
     /**
      * Edits an existing AvailabilitySchedule entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $spid    Schedule period ID from request
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $spid)
     {
@@ -209,10 +238,11 @@ class AvailabilityScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
-        if (!$entity) {
+        if (!$entity instanceof AvailabilitySchedule) {
             throw $this->createNotFoundException('Unable to find AvailabilitySchedule entity.');
         }
 
+        // If the user is not the same as the user assigned to $entity, kick them out!
         if ($user != $entity->getUser()) {
             throw new AccessDeniedException();
         }
@@ -221,19 +251,16 @@ class AvailabilityScheduleController extends Controller
 
         $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
+        // Get the user's schedule positions
         $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $spid, 'user' => $user->getId()));
 
         $deleteForm = $this->createDeleteForm($user->getId(), $spid);
 
         if ($request->getMethod() == 'POST') {
             $data = $request->request->get('day');
-            $entity->setSun($data[0]);
-            $entity->setMon($data[1]);
-            $entity->setTue($data[2]);
-            $entity->setWed($data[3]);
-            $entity->setThu($data[4]);
-            $entity->setFri($data[5]);
-            $entity->setSat($data[6]);
+            for ($i = 0; $i < 7; $i++) {
+                $entity->setDay($i, $data[$i]);
+            }
             $entity->setLastUpdated();
 
             $em->persist($entity);
@@ -241,7 +268,7 @@ class AvailabilityScheduleController extends Controller
 
             $notify = $request->request->get('notify', false);
 
-            if($notify) {
+            if ($notify) {
                 $mailer = $this->container->get('notify_mailer');
                 $mailer->notifyAvailabilityScheduleChange($entity);
             }
@@ -264,14 +291,19 @@ class AvailabilityScheduleController extends Controller
             'edit'        => true,
             'schedules'   => $schedules,
             'delete_form' => $deleteForm->createView(),
-            'startIndex' => $startIndex,
-            'endIndex'   => $endIndex
+            'startIndex'  => $startIndex,
+            'endIndex'    => $endIndex
         ));
     }
 
     /**
-     * Deletes a AvailabilitySchedule entity.
+     * Deletes a AvailabilitySchedule entity and the associated Schedule entities.
      *
+     * @param Request $request The user's request object
+     * @param integer $uid     User ID from route
+     * @param integer $spid    Schedule period ID from route
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $uid, $spid)
     {
