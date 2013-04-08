@@ -55,7 +55,7 @@ class PositionController extends Controller
     /**
      * Finds and displays a Position entity.
      *
-     * @param integer $id ID of user
+     * @param integer $id ID of Position entity
      *
      * @return Symfony\Component\HttpFoundation\Response
      */

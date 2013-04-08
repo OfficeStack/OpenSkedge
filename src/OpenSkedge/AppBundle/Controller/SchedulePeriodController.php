@@ -174,7 +174,7 @@ class SchedulePeriodController extends Controller
      * Deletes a SchedulePeriod entity.
      *
      * @param Request $request The user's request object
-     * @param integer $id      ID of user
+     * @param integer $id      ID of SchedulePeriod entity
      *
      * @return Symfony\Component\HttpFoundation\Response
      */
