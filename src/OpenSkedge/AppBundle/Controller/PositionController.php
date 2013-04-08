@@ -249,51 +249,8 @@ class PositionController extends Controller
         ));
     }
 
-    public function selectAction(Request $request, $spid)
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
-        $selectForm = $this->createFormBuilder()
-            ->add('position', 'entity', array(
-                  'label' => 'Position',
-                  'class' => 'OpenSkedgeBundle:Position',
-                  'empty_value' => 'Select a Position'))
-            ->getForm();
-
-        $em = $this->getDoctrine()->getManager();
-
-        $schedulePeriod = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($spid);
-
-        if (!$schedulePeriod) {
-            throw $this->createNotFoundException('Unable to find SchedulePeriod');
-        }
-
-        if ($request->getMethod() == 'POST') {
-            $selectForm->bind($request);
-            if ($selectForm->isValid()) {
-                $data = $selectForm->getData();
-                $pid = $data['position']->getId();
-                return $this->redirect($this->generateUrl('position_schedule_edit', array(
-                    'spid' => $spid,
-                    'pid'  => $pid
-                )));
-            }
-        }
-
-        return $this->render('OpenSkedgeBundle:Position:select.html.twig', array(
-            'form'           => $selectForm->createView(),
-            'schedulePeriod' => $schedulePeriod,
-        ));
-
-    }
-
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->createFormBuilder(array('id' => $id))->add('id', 'hidden')->getForm();
     }
 }
