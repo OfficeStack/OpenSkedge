@@ -34,19 +34,19 @@ class LoadIPData extends AbstractFixture implements OrderedFixtureInterface, Con
         $localhost_ipv4 = new IP();
         $localhost_ipv4->setIP('127.0.0.1')
             ->setName('Server')
-            ->setClockEnabled(true)
+            ->setClockEnabled(true);
         $manager->persist($localhost_ipv4);
 
         $localhost_ipv6_ll1 = new IP();
         $localhost_ipv6_ll1->setIP('::1')
             ->setName('Server')
-            ->setClockEnabled(true)
+            ->setClockEnabled(true);
         $manager->persist($localhost_ipv6_ll1);
 
         $localhost_ipv6_ll2 = new IP();
         $localhost_ipv6_ll2->setIP('fe80::1')
             ->setName('Server')
-            ->setClockEnabled(true)
+            ->setClockEnabled(true);
         $manager->persist($localhost_ipv6_ll2);
 
         $manager->flush();
