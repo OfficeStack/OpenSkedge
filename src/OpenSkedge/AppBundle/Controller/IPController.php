@@ -10,14 +10,21 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 /**
- * IP controller.
+ * Controller for CRUD operations on IP entities
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class IPController extends Controller
 {
     /**
      * Lists all IP entities.
      *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -38,6 +45,7 @@ class IPController extends Controller
 
         $entities = $paginator->getCurrentPageResults();
 
+        // Create a deletion form object for each entity to be rendered by Twig
         $deleteForms = array();
         foreach ($entities as $entity) {
             $deleteForms[] = $this->createDeleteForm($entity->getId())->createView();
@@ -53,9 +61,13 @@ class IPController extends Controller
     /**
      * Creates a new IP entity.
      *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
+        // Only administrators are allowed here. Kick everyone else out.
         if (false === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
@@ -63,6 +75,9 @@ class IPController extends Controller
         $entity  = new IP();
         $form = $this->createForm(new IPType(), $entity);
 
+        /* If running on Pagoda Box, get the user's IP directly from HTTP_X_FORWARDED_FOR,
+         * otherwise, go to Request::getClientIp()
+         */
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
 
         if ($request->getMethod() == 'POST') {
@@ -86,9 +101,14 @@ class IPController extends Controller
     /**
      * Edits an existing IP entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of IP entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
+        // Only administrators are allowed here. Kick everyone else out.
         if (false === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
@@ -124,6 +144,10 @@ class IPController extends Controller
     /**
      * Deletes a IP entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of IP entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
@@ -151,9 +175,6 @@ class IPController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->createFormBuilder(array('id' => $id))->add('id', 'hidden')->getForm();
     }
 }
