@@ -17,14 +17,21 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 
 /**
- * User controller.
+ * Controller for CRUD operations on User entities
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class UserController extends Controller
 {
     /**
      * Lists all User entities.
      *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -61,15 +68,21 @@ class UserController extends Controller
     /**
      * Finds and displays a User entity.
      *
+     * @param integer $id ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        if (is_null($id))
+
+        if (is_null($id)) {
             $id = $this->getUser()->getId();
+        }
+
         $entity = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
-        if (!$entity) {
+        if (!$entity instanceof User) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
@@ -83,6 +96,9 @@ class UserController extends Controller
     /**
      * Creates a new User entity.
      *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -126,9 +142,14 @@ class UserController extends Controller
     /**
      * Edits an existing User entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
+        // Only allow access if the user is authenticated as a supervisor, or it is their own profile.
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $id != $this->getUser()->getId()) {
             throw new AccessDeniedException();
         }
@@ -137,7 +158,7 @@ class UserController extends Controller
 
         $entity = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
-        if (!$entity) {
+        if (!$entity instanceof User) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
@@ -147,17 +168,15 @@ class UserController extends Controller
         $editForm = $this->createForm(new UserType(), $entity);
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $editForm->remove('color');
-            if ($id == $this->getUser()->getId()) {
-                $editForm->remove('min');
-                $editForm->remove('max');
-                $editForm->remove('supnotes');
-                $editForm->remove('group');
-                $editForm->remove('supervisors');
-            }
-        } else {
-            if ($id == $this->getUser()->getId()) {
-                $editForm->remove('isActive');
-            }
+            $editForm->remove('min');
+            $editForm->remove('max');
+        }
+
+        if ($id == $this->getUser()->getId()) {
+            $editForm->remove('supnotes');
+            $editForm->remove('group');
+            $editForm->remove('supervisors');
+            $editForm->remove('isActive');
         }
 
         if ($request->getMethod() == 'POST') {
@@ -165,7 +184,7 @@ class UserController extends Controller
             if ($editForm->isValid()) {
                 $this->cleanupCollections($editForm);
                 $plainPassword = $editForm->getViewData()->getPassword();
-                if (!empty($plainPassword))  {
+                if (!empty($plainPassword)) {
                     $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
                     $password = $encoder->encodePassword($plainPassword, $entity->getSalt());
                     $entity->setPassword($password);
@@ -189,9 +208,14 @@ class UserController extends Controller
     /**
      * Deletes a User entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
+        // Only supervisors can delete other users, but not themselves.
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') || $id == $this->getUser()->getId()) {
             throw new AccessDeniedException();
         }
@@ -203,7 +227,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
-            if (!$entity) {
+            if (!$entity instanceof User) {
                 throw $this->createNotFoundException('Unable to find User entity.');
             }
 
@@ -216,20 +240,21 @@ class UserController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->createFormBuilder(array('id' => $id))->add('id', 'hidden')->getForm();
     }
 
     /**
      * Lists all supervisors for the User.
+     *
+     * @param integer $id ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function supervisorsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(is_null($id)) {
+        if (is_null($id)) {
             $user = $this->getUser();
             $userstitle = 'My Supervisors';
             $emptymsg = "You don't have any supervisors. You're such a boss!";
@@ -265,12 +290,16 @@ class UserController extends Controller
 
     /**
      * Lists all employees for the User.
+     *
+     * @param integer $id ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function employeesAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(is_null($id)) {
+        if (is_null($id)) {
             $user = $this->getUser();
             $userstitle = 'My Employees';
             $emptymsg = "You don't have any employees. Keep working! You'll get there one day!";
@@ -304,11 +333,18 @@ class UserController extends Controller
         ));
     }
 
+    /**
+     * List a user's colleagues (those with the same supervisor).
+     *
+     * @param integer $id ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function colleaguesAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(is_null($id)) {
+        if (is_null($id)) {
             $user = $this->getUser();
             $userstitle = 'My Colleagues';
             $emptymsg = "You don't have any colleagues.";
@@ -325,7 +361,7 @@ class UserController extends Controller
 
         $supervisors = $user->getSupervisors();
         $entities = array();
-        foreach($supervisors as $s) {
+        foreach ($supervisors as $s) {
             $entities = array_merge($entities, $s->getEmployees()->filter(
                 function ($entity) use ($user) {
                     return $entity->getId() != $user->getId();
@@ -355,7 +391,9 @@ class UserController extends Controller
     /**
      * Ensure that any removed items collections actually get removed
      *
-     * @param \Symfony\Component\Form\Form $form
+     * @param \Symfony\Component\Form\Form $form A Symfony form object
+     *
+     * @return void
      */
     protected function cleanupCollections(Form $form)
     {
