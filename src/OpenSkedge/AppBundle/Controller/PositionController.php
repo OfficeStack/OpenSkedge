@@ -236,6 +236,7 @@ class PositionController extends Controller
 
         $qb = $em->createQueryBuilder();
 
+        // Grab all current schedule periods
         $schedulePeriods = $qb->select('sp')
             ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
             ->where('sp.startTime < CURRENT_TIMESTAMP()')
@@ -243,6 +244,7 @@ class PositionController extends Controller
             ->getQuery()
             ->getResult();
 
+        // Get all the schedules for each schedule period
         $schedules = array();
         foreach ($schedulePeriods as $schedulePeriod) {
             $schedules[] = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
@@ -251,8 +253,8 @@ class PositionController extends Controller
             ));
         }
 
+        // Get the position for each schedule
         $positions = array();
-
         for ($i=0; $i<count($schedules); $i++) {
             foreach($schedules[$i] as $schedule)
             {
@@ -260,6 +262,7 @@ class PositionController extends Controller
             }
         }
 
+        // Remove duplicate positions
         $positions = array_unique($positions);
 
         $page = $this->container->get('request')->query->get('page', 1);
@@ -273,8 +276,8 @@ class PositionController extends Controller
 
         return $this->render('OpenSkedgeBundle:Position:index.html.twig', array(
             'userstitle' => $userstitle,
-            'entities' => $entities,
-            'paginator' => $paginator,
+            'entities'   => $entities,
+            'paginator'  => $paginator,
         ));
     }
 
