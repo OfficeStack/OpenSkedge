@@ -17,7 +17,6 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "ext-memcache": "*",
         "symfony/symfony": "2.1.*",
         "doctrine/data-fixtures": "1.0.*@dev",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
@@ -42,6 +41,9 @@
         "phpunit/php-code-coverage": "1.2.*@dev",
         "phpunit/phpunit": "3.7.13"
     },
+    "suggest": {
+        "ext-memcache": "Store user sessions in memcache instead of to disk."
+    },
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
@@ -56,6 +58,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
+    "prefer-stable": true,
     "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
