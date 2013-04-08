@@ -12,14 +12,21 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 /**
- * SchedulePeriod controller.
+ * Controller for CRUD operations on SchedulePeriod entities
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class SchedulePeriodController extends Controller
 {
     /**
      * Lists all SchedulePeriod entities.
      *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -47,6 +54,9 @@ class SchedulePeriodController extends Controller
     /**
      * Finds and displays a SchedulePeriod entity.
      *
+     * @param integer $id ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -54,7 +64,7 @@ class SchedulePeriodController extends Controller
 
         $entity = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
 
-        if (!$entity) {
+        if (!$entity instanceof SchedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
@@ -95,6 +105,9 @@ class SchedulePeriodController extends Controller
     /**
      * Creates a new SchedulePeriod entity.
      *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -122,6 +135,10 @@ class SchedulePeriodController extends Controller
     /**
      * Edits an existing SchedulePeriod entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of SchedulePeriod
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -129,7 +146,7 @@ class SchedulePeriodController extends Controller
 
         $entity = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
 
-        if (!$entity) {
+        if (!$entity instanceof SchedulePeriod) {
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
@@ -156,6 +173,10 @@ class SchedulePeriodController extends Controller
     /**
      * Deletes a SchedulePeriod entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
@@ -166,7 +187,7 @@ class SchedulePeriodController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->find($id);
 
-            if (!$entity) {
+            if (!$entity instanceof SchedulePeriod) {
                 throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
             }
 
@@ -179,9 +200,6 @@ class SchedulePeriodController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->createFormBuilder(array('id' => $id))->add('id', 'hidden')->getForm();
     }
 }
