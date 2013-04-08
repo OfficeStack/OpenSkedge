@@ -1,4 +1,5 @@
 <?php
+
 namespace OpenSkedge\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -8,6 +9,16 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use OpenSkedge\AppBundle\Entity\User;
 
+/**
+ * Adds an admin user with the User:Password admin:admin
+ *
+ * @category ORM
+ * @package  OpenSkedge\AppBundle\DataFixtures\ORM
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
+ */
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**

@@ -10,7 +10,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use OpenSkedge\AppBundle\Entity\IP;
 
-
+/**
+ * Adds a list of localhost IP addresses to the list of IPs able
+ * to utilize time clock functionality in OpenSkedge.
+ *
+ * @category ORM
+ * @package  OpenSkedge\AppBundle\DataFixtures\ORM
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
+ */
 class LoadIPData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**

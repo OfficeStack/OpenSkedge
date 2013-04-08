@@ -1,4 +1,5 @@
 <?php
+
 namespace OpenSkedge\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -6,6 +7,16 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenSkedge\AppBundle\Entity\Group;
 
+/**
+ * Adds the default user roles to the database.
+ *
+ * @category ORM
+ * @package  OpenSkedge\AppBundle\DataFixtures\ORM
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
+ */
 class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
