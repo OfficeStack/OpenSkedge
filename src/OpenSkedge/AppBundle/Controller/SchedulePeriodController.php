@@ -192,6 +192,17 @@ class SchedulePeriodController extends Controller
             }
 
             $em->remove($entity);
+
+            $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $id));
+            foreach ($schedules as $schedule) {
+                $em->remove($schedule);
+            }
+
+            $availSchedules = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array('schedulePeriod' => $id));
+            foreach ($availSchedules as $availSchedule) {
+                $em->remove($availSchedule);
+            }
+
             $em->flush();
         }
 
