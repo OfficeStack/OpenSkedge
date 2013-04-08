@@ -8,18 +8,28 @@ use OpenSkedge\AppBundle\Entity\Settings;
 use OpenSkedge\AppBundle\Form\SettingsType;
 
 /**
- * Settings controller.
+ * Controller for manipulating application settings
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class SettingsController extends Controller
 {
 
     /**
-     * Edits an existing Settings entity.
+     * Edit application settings
      *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request)
     {
+        // Only allow access to Administrators
         if (false === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
