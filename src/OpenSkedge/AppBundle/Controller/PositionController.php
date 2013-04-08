@@ -6,21 +6,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use OpenSkedge\AppBundle\Entity\Area;
 use OpenSkedge\AppBundle\Entity\Position;
+use OpenSkedge\AppBundle\Entity\User;
 use OpenSkedge\AppBundle\Form\PositionType;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 /**
- * Position controller.
+ * Controller for CRUD operations on Position entities
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class PositionController extends Controller
 {
     /**
      * Lists all Position entities.
      *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -46,6 +55,9 @@ class PositionController extends Controller
     /**
      * Finds and displays a Position entity.
      *
+     * @param integer $id ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -53,7 +65,7 @@ class PositionController extends Controller
 
         $entity = $em->getRepository('OpenSkedgeBundle:Position')->find($id);
 
-        if (!$entity) {
+        if (!$entity instanceof Position) {
             throw $this->createNotFoundException('Unable to find Position entity.');
         }
 
@@ -83,6 +95,10 @@ class PositionController extends Controller
     /**
      * Creates a new Position entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $aid     ID of the parent Area entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request, $aid)
     {
@@ -94,7 +110,7 @@ class PositionController extends Controller
 
         $area = $em->getRepository('OpenSkedgeBundle:Area')->find($aid);
 
-        if (!$area) {
+        if (!$area instanceof Area) {
             throw $this->createNotFoundException('Unable to find Area entity.');
         }
 
@@ -122,6 +138,10 @@ class PositionController extends Controller
     /**
      * Edits an existing Position entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of Position entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -133,7 +153,7 @@ class PositionController extends Controller
 
         $entity = $em->getRepository('OpenSkedgeBundle:Position')->find($id);
 
-        if (!$entity) {
+        if (!$entity instanceof Position) {
             throw $this->createNotFoundException('Unable to find Position entity.');
         }
 
@@ -161,6 +181,10 @@ class PositionController extends Controller
     /**
      * Deletes a Position entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of Position entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
@@ -175,7 +199,7 @@ class PositionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('OpenSkedgeBundle:Position')->find($id);
 
-            if (!$entity) {
+            if (!$entity instanceof Position) {
                 throw $this->createNotFoundException('Unable to find Position entity.');
             }
 
@@ -186,17 +210,24 @@ class PositionController extends Controller
         return $this->redirect($this->generateUrl('position'));
     }
 
+    /**
+     * Finds and displays a user's scheduled positions
+     *
+     * @param integer $id ID of user
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function positionsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(is_null($id)) {
+        if (is_null($id)) {
             $user = $this->getUser();
             $userstitle = 'My Positions';
         } else {
             $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
-            if (!$user) {
+            if (!$user instanceof User) {
                 throw $this->createNotFoundException('Unable to find User.');
             }
 
@@ -205,17 +236,15 @@ class PositionController extends Controller
 
         $qb = $em->createQueryBuilder();
 
-        $time = time();
-
         $schedulePeriods = $qb->select('sp')
-                              ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
-                              ->where('sp.startTime < CURRENT_TIMESTAMP()')
-                              ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
-                              ->getQuery()
-                              ->getResult();
-        $schedules = array();
+            ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
+            ->where('sp.startTime < CURRENT_TIMESTAMP()')
+            ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
+            ->getQuery()
+            ->getResult();
 
-        foreach($schedulePeriods as $schedulePeriod) {
+        $schedules = array();
+        foreach ($schedulePeriods as $schedulePeriod) {
             $schedules[] = $em->getRepository('OpenSkedgeBundle:Schedule')->findBy(array(
                 'schedulePeriod' => $schedulePeriod->getId(),
                 'user' => $user->getId(),
