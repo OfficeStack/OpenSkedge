@@ -13,14 +13,21 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 /**
- * Area controller.
+ * Controller for CRUD operations on Area entities
  *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
  */
 class AreaController extends Controller
 {
     /**
      * Lists all Area entities.
      *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -48,6 +55,9 @@ class AreaController extends Controller
     /**
      * Finds and displays a Area entity.
      *
+     * @param integer $id ID of Area entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -56,7 +66,7 @@ class AreaController extends Controller
         $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
         $entities = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array('area' => $id), array("name" => 'ASC'));
 
-        if (!$entity) {
+        if (!$entity instanceof Area) {
             throw $this->createNotFoundException('Unable to find Area entity.');
         }
 
@@ -82,6 +92,9 @@ class AreaController extends Controller
     /**
      * Creates a new Area entity.
      *
+     * @param Request $request The user's request object
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -112,6 +125,10 @@ class AreaController extends Controller
     /**
      * Edits an existing Area entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of Area entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -123,7 +140,7 @@ class AreaController extends Controller
 
         $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
 
-        if (!$entity) {
+        if (!$entity instanceof Area) {
             throw $this->createNotFoundException('Unable to find Area entity.');
         }
 
@@ -150,6 +167,10 @@ class AreaController extends Controller
     /**
      * Deletes a Area entity.
      *
+     * @param Request $request The user's request object
+     * @param integer $id      ID of Area entity
+     *
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
@@ -164,7 +185,7 @@ class AreaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('OpenSkedgeBundle:Area')->find($id);
 
-            if (!$entity) {
+            if (!$entity instanceof Area) {
                 throw $this->createNotFoundException('Unable to find Area entity.');
             }
 
@@ -177,9 +198,6 @@ class AreaController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->createFormBuilder(array('id' => $id))->add('id', 'hidden')->getForm();
     }
 }
