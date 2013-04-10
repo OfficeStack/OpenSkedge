@@ -64,7 +64,7 @@ class ScheduleController extends Controller
             throw $this->createNotFoundException('Unable to find SchedulePeriod entity.');
         }
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        $appSettings = $this->get('app_settings')->getAppSettings();
 
         // Get the requested time resolution, if available. Default to global default.
         $resolution = $request->request->get('timeresolution', $appSettings->getDefaultTimeResolution());
@@ -166,7 +166,7 @@ class ScheduleController extends Controller
 
         $deleteForm = $this->createDeleteForm($pid, $spid);
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        $appSettings = $this->get('app_settings')->getAppSettings();
 
         // Get the requested time resolution, if available. Default to global default.
         $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());

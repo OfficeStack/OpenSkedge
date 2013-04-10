@@ -93,7 +93,7 @@ class AvailabilityScheduleController extends Controller
             'schedulePeriod' => $spid
         ));
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        $appSettings = $this->get('app_settings')->getAppSettings();
 
         $resolution = $request->request->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
@@ -176,7 +176,7 @@ class AvailabilityScheduleController extends Controller
             ));
         }
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        $appSettings = $this->get('app_settings')->getAppSettings();
 
         $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());
 
@@ -247,7 +247,7 @@ class AvailabilityScheduleController extends Controller
             throw new AccessDeniedException();
         }
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        $appSettings = $this->get('app_settings')->getAppSettings();
 
         $resolution = $request->query->get('timeresolution', $appSettings->getDefaultTimeResolution());
 

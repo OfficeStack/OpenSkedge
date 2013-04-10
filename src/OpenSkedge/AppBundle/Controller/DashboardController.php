@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
         $user = $this->getUser();
 
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        $appSettings = $this->get('app_settings')->getAppSettings();
 
         $selected = $request->request->get('schedulePeriod', 0);
 
@@ -71,7 +71,7 @@ class DashboardController extends Controller
          * otherwise, go to Request::getClientIp()
          */
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
-        if (in_array($clientIp, $this->get('appsettings')->getAllowedClockIps())) {
+        if (in_array($clientIp, $this->get('app_settings')->getAllowedClockIps())) {
             $outside = false;
         } else {
             $outside = true;

@@ -40,14 +40,14 @@ class ClockController extends Controller
         }
 
         // Grab a few services.
-        $appSettings = $this->get('appsettings')->getAppSettings();
+        $appSettingsService = $this->get('app_settings');
         $dtUtils = $this->get('dt_utils');
 
         /* If running on Pagoda Box, get the user's IP directly from HTTP_X_FORWARDED_FOR,
          * otherwise, go to Request::getClientIp()
          */
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
-        if (!in_array($clientIp, $appSettings->getAllowedClockIps())) {
+        if (!in_array($clientIp, $appSettingsService->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 
@@ -93,7 +93,7 @@ class ClockController extends Controller
          * otherwise, go to Request::getClientIp()
          */
         $clientIp = (isset($_ENV['PAGODABOX']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $request->getClientIp());
-        if (!in_array($clientIp, $this->get('appsettings')->getAllowedClockIps())) {
+        if (!in_array($clientIp, $this->get('app_settings')->getAllowedClockIps())) {
             throw new AccessDeniedException();
         }
 
