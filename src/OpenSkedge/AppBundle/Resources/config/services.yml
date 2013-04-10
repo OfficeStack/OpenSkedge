@@ -8,6 +8,7 @@ services:
 
     dt_utils:
         class: OpenSkedge\AppBundle\Services\DateTimeUtils
+        arguments: [@app_settings]
 
     notify_mailer:
         class: %notify_mailer.class%
