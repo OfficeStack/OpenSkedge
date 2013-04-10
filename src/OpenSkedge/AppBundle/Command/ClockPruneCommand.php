@@ -30,7 +30,9 @@ class ClockPruneCommand extends ContainerAwareCommand {
             $weeks = sprintf("-%s weeks", $appSettings->getPruneAfter());
         }
 
-        $currentWeek = $this->getFirstDayOfWeek(new \DateTime("now"));
+        $dtUtils = $this->getContainer()->get('dt_utils');
+
+        $currentWeek = $dtUtils->getFirstDayOfWeek(new \DateTime("now"), true);
         $threshold = $currentWeek->modify($weeks);
 
         $clocksToBePruned = $em->createQuery('SELECT ac FROM OpenSkedgeBundle:ArchivedClock ac
@@ -55,21 +57,5 @@ class ClockPruneCommand extends ContainerAwareCommand {
             $em->remove($clock);
             $em->flush();
         }
-    }
-
-    /**
-     * @param \DateTime $date A given date
-     * @return \DateTime
-     */
-    private function getFirstDayOfWeek(\DateTime $date)
-    {
-        $appSettings = $this->getContainer()->get('appsettings')->getAppSettings();
-        $day = $appSettings->getWeekStartDayClock();
-        $firstDay = idate('w', strtotime($day));
-        $offset = 7 - $firstDay;
-        $ret = clone $date;
-        $ret->modify(-(($date->format('w') + $offset) % 7) . 'days');
-        $ret->modify('midnight');
-        return $ret;
     }
 }
