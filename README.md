@@ -3,14 +3,15 @@
 
 Copyright &copy; 2012-2013 Max Fierke
 
-# Deployment on a Local, VPS, Cloud, or Dedicated host
+# Deployment on a Local, VPS/Cloud, Fortrabbit, or Dedicated host
 ## Requirements
 1.  Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
     * Nginx users, see [this wiki article](https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux) for setup.
     * Apache users, point your document root to web/. The .htaccess should take care of everything.
 2.  PHP 5.3.10+ (Tested on 5.3.10, 5.3.18, and 5.4.6)
 3.  PDO-supported database. MySQL/MariaDB suggested.
-4.  (optional) Memcached and PHP memcache extension.
+4.  [Composer](http://getcomposer.org) for installing dependencies
+5.  (optional) Memcached and PHP memcache extension.
 
 ## Installation
 1.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
@@ -28,18 +29,20 @@ Copyright &copy; 2012-2013 Max Fierke
         $ sudo setfacl -R -m u:www-data:rwX -m u:\`whoami\`:rwX app/cache app/logs
         $ sudo setfacl -dR -m u:www-data:rwx -m u:\`whoami\`:rwx app/cache app/logs</pre>
     * If none of the above are available options, add `umask(0002);` to the beginning of app/console, web/app.php, and web/app_dev.php
-4.  Run `php composer.phar install`
-5.  Run `php app/console doctrine:database:create`
+4.  Run `php composer.phar install --prefer-dist`
+5.  Run `php app/console doctrine:database:create` if you have not already created a database for OpenSkedge.
 6.  Run `php app/console doctrine:schema:update --force`
 7.  Run `php app/console doctrine:fixtures:load` to bootstrap the application with some needed information (groups) and a default admin account with the username `admin` and the password `admin`.
-8.  Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and **change the password**.
-9.  Add employees, areas, positions, and schedule periods and get to scheduling!
+8.  Run `php app/console --env=prod cache:clear` to clear and warmup the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
+9.  Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and **change the password**.
+10.  Add employees, areas, positions, and schedule periods and get to scheduling!
 
 ## Upgrading
 1.  Run `git pull` to fetch the latest changes to OpenSkedge. If you've made changes to OpenSkedge, you'll either want to stash them or commit them and use `git pull --rebase`.
 2.  Run `php composer.phar install`
-3.  Run by using `php app/console doctrine:migrations:migrate`. NOTE: This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at [the Doctrine project's docs](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html).
-4.  Run `php app/console --env=prod cache:clear` to clear the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
+3.  Run by using `php app/console doctrine:migrations:migrate`. NOTE: **Only supports MySQL**. This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at [the Doctrine project's docs](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html).
+    *   If you're on database other than MySQL such as PostgreSQL, you'll have to adapt the migrations yourself, or risk **potential data loss** and/or application breakage by running `php app/console doctrine:schema:update --force`.
+4.  Run `php app/console --env=prod cache:clear` to clear and warmup the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
 
 # Deployment on Pagoda Box
 Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.
@@ -67,7 +70,7 @@ The origin of Carlnater McStrangelove is not completely clear. He was present in
 
 ## License and Copyright
 ### License
-OpenSkedge, technically a derivative work of Employee Scheduler, is available under the GNU General Public License version 2 or later.
+OpenSkedge, technically a derivative work of Employee Scheduler, is available under the GNU General Public License version 3 or later.
 See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 
 ### Authors and Contributors
@@ -77,8 +80,12 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 
 ### Projects that OpenSkedge uses
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/index.html) by @twitter
+* [TODC Bootstrap](https://github.com/todc/todc-bootstrap) by @todc
+* [TODC Datepicker](https://github.com/todc/todc-datepicker) by @todc
+* [Colorpicker for Bootstrap](http://www.eyecon.ro/bootstrap-colorpicker/) by Stefan Petre
 * [ScrollToFixed](https://github.com/bigspotteddog/ScrollToFixed/) by @bigspotteddog
-* [Symfony 2.1](http://symfony.com/) and dependencies specified in composer.json
+* [TableSorter](http://tablesorter.com/) by [@lovepeacenukes](https://twitter.com/lovepeacenukes)
+* [Symfony 2.1](http://symfony.com/), [Doctrine](http://www.doctrine-project.org/) and dependencies specified in composer.json
 
 ### Thanks to the following Employee Scheduler developers
 * John Finlay (Developer of Employee Scheduler)
