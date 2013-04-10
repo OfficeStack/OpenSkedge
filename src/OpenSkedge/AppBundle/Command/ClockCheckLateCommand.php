@@ -11,28 +11,45 @@ use Symfony\Component\Console\Output\OutputInterface;
 use OpenSkedge\AppBundle\Entity\Schedule;
 use OpenSkedge\AppBundle\Entity\User;
 
-class ClockCheckLateCommand extends ContainerAwareCommand {
+/**
+ * CLI command for checking which users are late and alerting their supervisors
+ *
+ * @category Controller
+ * @package  OpenSkedge\AppBundle\Controller
+ * @author   Max Fierke <max@maxfierke.com>
+ * @license  GNU General Public License, version 3
+ * @version  GIT: $Id$
+ * @link     https://github.com/maxfierke/OpenSkedge OpenSkedge Github
+ */
+class ClockCheckLateCommand extends ContainerAwareCommand
+{
 
+    /**
+     * {@inheritDoc}
+     */
     protected function configure()
     {
         $this->setName("clock:check-late")
             ->setDescription('Check for users who have yet to clock in for a shift and notify each of their supervisors.');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $mailer = $this->getContainer()->get('notify_mailer');
 
-        $results = $em->createQuery('SELECT sp FROM OpenSkedgeBundle:SchedulePeriod sp
+        $schedulePeriods = $em->createQuery('SELECT sp FROM OpenSkedgeBundle:SchedulePeriod sp
                                     WHERE (sp.startTime <= CURRENT_TIMESTAMP()
                                     AND sp.endTime >= CURRENT_TIMESTAMP())
                                     ORDER BY sp.endTime DESC')
             ->getResult();
 
         $schedules = array();
-        foreach ($results as $result) {
-            $schedules[] = $result->getSchedules();
+        foreach ($schedulePeriods as $schedulePeriod) {
+            $schedules[] = $schedulePeriod->getSchedules();
         }
 
         $users = array();
@@ -46,7 +63,7 @@ class ClockCheckLateCommand extends ContainerAwareCommand {
         foreach ($results as $schedulePeriod) {
             foreach ($uids as $uid) {
                 $user = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
-                if (!$user) {
+                if (!$user instanceof User) {
                     throw new Exception('User was not found! There appears to be an orphaned schedule.');
                 } else {
                     $schedules = $em->createQuery('SELECT s FROM OpenSkedgeBundle:Schedule s
@@ -58,21 +75,31 @@ class ClockCheckLateCommand extends ContainerAwareCommand {
 
                     $midnight = new \DateTime("midnight today");
                     $curTime = new \DateTime("now");
+
+                    // Determine which 15 minute segment of the day we're in currently.
                     $curIndex = (int)((($curTime->getTimestamp() - $midnight->getTimestamp()) / 60) / 15);
 
                     $dayNum = $curTime->format('w');
+
+                    // If in the first 15 mins of today, check the last 15 mins of yesterday.
                     if ($curIndex == 0) {
                         $curIndex = 96;
-                        if ($dayNum > 0) {
+                        if ($dayNum > 0) { // If after sunday, go back a day.
                             $dayNum -= 1;
-                        } else {
+                        } else {           // Otherwise, go back to saturday.
                             $dayNum = 6;
                         }
                     }
 
+                    /**
+                     * Check the last 15 minutes to see if the user was clocked in,
+                     * if they were supposed to be.
+                     */
                     foreach ($schedules as $schedule) {
                         if ($schedule->getDayOffset($dayNum, $curIndex-1) == '1' && $user->getClock()->getDayOffset($dayNum, $curIndex-1) == '0') {
+                            // Write the output to the console
                             $output->writeln($user->getName()." is late for their ".$schedule->getPosition()->getArea()->getName()." - ".$schedule->getPosition()->getName()." shift.");
+                            // Send their supervisors an email.
                             $mailer->notifyLateEmployee($user, $schedule);
                         }
                     }
@@ -90,6 +117,7 @@ class ClockCheckLateCommand extends ContainerAwareCommand {
             return;
         }
 
+        // Flush the email spool manually.
         $spool->flushQueue($this->getContainer()->get('swiftmailer.transport.real'));
     }
 }
