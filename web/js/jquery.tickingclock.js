@@ -1,3 +1,8 @@
+/**
+ * jQuery Ticking Clock by Max Fierke
+ * Part of OpenSkedge (https://github.com/maxfierke/OpenSkedge)
+ * Licensed under the GNU General Public License, version 3 or later.
+ */
 (function($) {
     $.fn.tickingClock = function(theDate) {
         var currentTime = new Date(theDate);
