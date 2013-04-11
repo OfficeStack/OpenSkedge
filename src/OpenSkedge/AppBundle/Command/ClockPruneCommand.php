@@ -44,7 +44,7 @@ class ClockPruneCommand extends ContainerAwareCommand
         if (!is_null($input->getArgument('threshold'))) {
             $weeks = sprintf("-%s weeks", $input->getArgument('threshold'));
         } else { // Otherwise take the threshold from the application settings.
-            $appSettings = $this->getContainer()->get('appsettings')->getAppSettings();
+            $appSettings = $this->getContainer()->get('app_settings')->getAppSettings();
             $weeks = sprintf("-%s weeks", $appSettings->getPruneAfter());
         }
 
