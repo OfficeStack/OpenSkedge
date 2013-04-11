@@ -14,6 +14,9 @@ namespace OpenSkedge\AppBundle\Services;
  */
 class DateTimeUtils
 {
+    /**
+     * @var AppSettingsService
+     */
     protected $appSettingsService;
 
     /**
