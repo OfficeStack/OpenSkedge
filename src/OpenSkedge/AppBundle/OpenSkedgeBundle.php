@@ -42,6 +42,13 @@ class OpenSkedgeBundle extends Bundle
             }
         }
 
+        if (extension_loaded('apc') && ini_get('apc.enabled')) {
+            $container->setParameter('metadata_cache_driver', 'apc');
+            $container->setParameter('result_cache_driver', 'apc');
+            $container->setParameter('query_cache_driver', 'apc');
+        }
+
+
         // Get the commit id from HEAD if we're deployed as a git repo.
         if (is_readable(__DIR__.'/../../../.git/HEAD')) {
             $headref = rtrim(substr(file_get_contents(__DIR__.'/../../../.git/HEAD'), 5));
