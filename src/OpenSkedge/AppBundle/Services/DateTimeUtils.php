@@ -57,7 +57,7 @@ class DateTimeUtils
      */
     public function getIndexFromTime($time)
     {
-        if (!is_string($time) && !$time instanceof \DateTime) {
+        if (empty($time) or (!is_string($time) and !$time instanceof \DateTime)) {
             throw new \InvalidArgumentException('Expected string or instance of DateTime');
         }
 
