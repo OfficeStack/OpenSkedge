@@ -1,5 +1,5 @@
 {
-    "hash": "8c5bbaf6bff2b63eb50012ccbd899bd0",
+    "hash": "2150a4430f1c326e31d71a468eaf3ace",
     "packages": [
         {
             "name": "doctrine/common",
@@ -866,12 +866,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/Pagerfanta.git",
-                "reference": "4fded9adde16a4133b4db9f14815efadbbd268d1"
+                "reference": "797944b0f70f71a24a273752dbf063cba5b11513"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/4fded9adde16a4133b4db9f14815efadbbd268d1",
-                "reference": "4fded9adde16a4133b4db9f14815efadbbd268d1",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/797944b0f70f71a24a273752dbf063cba5b11513",
+                "reference": "797944b0f70f71a24a273752dbf063cba5b11513",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +918,7 @@
                 "page",
                 "paging"
             ],
-            "time": "2013-04-04 17:07:12"
+            "time": "2013-04-10 12:34:33"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -1424,16 +1424,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.12.2",
+            "version": "v1.12.3",
             "source": {
                 "type": "git",
-                "url": "git://github.com/fabpot/Twig.git",
-                "reference": "v1.12.2"
+                "url": "https://github.com/fabpot/Twig.git",
+                "reference": "v1.12.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.12.2",
-                "reference": "v1.12.2",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.12.3",
+                "reference": "v1.12.3",
                 "shasum": ""
             },
             "require": {
@@ -1469,7 +1469,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-02-09 18:21:53"
+            "time": "2013-04-08 12:40:11"
         },
         {
             "name": "white-october/pagerfanta-bundle",
