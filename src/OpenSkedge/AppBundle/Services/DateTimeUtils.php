@@ -58,7 +58,7 @@ class DateTimeUtils
     public function getIndexFromTime($time)
     {
         if (!is_string($time) && !$time instanceof \DateTime) {
-            throw new InvalidArgumentException('Expected string or instance of DateTime');
+            throw new \InvalidArgumentException('Expected string or instance of DateTime');
         }
 
         $dayStart = new \DateTime("midnight today", new \DateTimeZone("UTC"));
