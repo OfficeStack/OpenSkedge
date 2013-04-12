@@ -15,9 +15,9 @@ namespace OpenSkedge\AppBundle\Services;
 class DateTimeUtils
 {
     /**
-     * @var AppSettingsService
+     * @var \OpenSkedge\AppBundle\Entity\Settings
      */
-    protected $appSettingsService;
+    protected $appSettings;
 
     /**
      * Inject services into DateTimeUtils
@@ -28,7 +28,7 @@ class DateTimeUtils
      */
     public function __construct(AppSettingsService $appSettingsService)
     {
-        $this->appSettingsService = $appSettingsService;
+        $this->appSettings = $appSettingsService->getAppSettings();
     }
 
     /**
@@ -83,12 +83,10 @@ class DateTimeUtils
      */
     public function getFirstDayOfWeek(\DateTime $date, $clock = false)
     {
-        $appSettings = $this->appSettingsService->getAppSettings();
-
         if ($clock) {
-            $day = $appSettings->getWeekStartDayClock();
+            $day = $this->appSettings->getWeekStartDayClock();
         } else {
-            $day = $appSettings->getWeekStartDay();
+            $day = $this->appSettings->getWeekStartDay();
         }
 
         $firstDay = idate('w', strtotime($day));
