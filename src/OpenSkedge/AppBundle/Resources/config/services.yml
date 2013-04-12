@@ -4,7 +4,7 @@ parameters:
 services:
     app_settings:
         class: OpenSkedge\AppBundle\Services\AppSettingsService
-        arguments: [@service_container]
+        arguments: [@doctrine.orm.default_entity_manager]
 
     dt_utils:
         class: OpenSkedge\AppBundle\Services\DateTimeUtils

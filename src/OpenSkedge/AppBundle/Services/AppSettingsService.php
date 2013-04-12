@@ -2,23 +2,21 @@
 
 namespace OpenSkedge\AppBundle\Services;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class AppSettingsService
 {
-    private $container;
+    private $em;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ObjectManager $em)
     {
-        $this->container = $container;
+        $this->em = $em;
     }
 
     public function getAppSettings()
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
         // Grab the settings row from os_settings
-        $appSettings = $em->getRepository('OpenSkedgeBundle:Settings')->find(1);
+        $appSettings = $this->em->getRepository('OpenSkedgeBundle:Settings')->find(1);
         if (!$appSettings instanceof \OpenSkedge\AppBundle\Entity\Settings) {
             throw new Exception('OpenSkedge settings could not be found');
         }
@@ -27,8 +25,7 @@ class AppSettingsService
 
     public function getAllowedClockIps()
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $ipObjs = $em->getRepository('OpenSkedgeBundle:IP')->findBy(array('clockEnabled'=> true));
+        $ipObjs = $this->em->getRepository('OpenSkedgeBundle:IP')->findBy(array('clockEnabled'=> true));
         $ips = array();
         foreach ($ipObjs as $ipObj) {
             $ips[] = $ipObj->getIp();
