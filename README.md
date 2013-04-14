@@ -1,7 +1,8 @@
 # OpenSkedge
-[OpenSkedge](http://github.com/maxfierke/OpenSkedge)
+[OpenSkedge](http://github.com/maxfierke/OpenSkedge) 
+[![Build Status](https://travis-ci.org/maxfierke/OpenSkedge.png)](https://travis-ci.org/maxfierke/OpenSkedge)
 
-Copyright &copy; 2012-2013 Max Fierke
+Created by Max Fierke
 
 # Deployment on a Local, VPS/Cloud, Fortrabbit, or Dedicated host
 ## Requirements
