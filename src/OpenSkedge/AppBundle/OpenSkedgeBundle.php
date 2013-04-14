@@ -43,9 +43,9 @@ class OpenSkedgeBundle extends Bundle
         }
 
         if (extension_loaded('apc') && ini_get('apc.enabled')) {
-            $container->setParameter('metadata_cache_driver', 'apc');
-            $container->setParameter('result_cache_driver', 'apc');
-            $container->setParameter('query_cache_driver', 'apc');
+            $container->setParameter('doctrine.orm.metadata_cache_driver', 'apc');
+            $container->setParameter('doctrine.orm.result_cache_driver', 'apc');
+            $container->setParameter('doctrine.orm.query_cache_driver', 'apc');
         }
 
 
