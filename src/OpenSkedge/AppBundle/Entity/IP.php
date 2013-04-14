@@ -61,9 +61,10 @@ class IP
     }
 
     /**
-     * Set ip
+     * Set IP Address
      *
-     * @param string $ip
+     * @param string $ip IP address
+     *
      * @return IP
      */
     public function setIp($ip)
@@ -86,7 +87,8 @@ class IP
     /**
      * Set name
      *
-     * @param string $name
+     * @param string $name A friendly identifier
+     *
      * @return IP
      */
     public function setName($name)
@@ -109,7 +111,8 @@ class IP
     /**
      * Set clockEnabled
      *
-     * @param boolean $clockEnabled
+     * @param boolean $clockEnabled Whether or not the IP is allowed to clock in.
+     *
      * @return IP
      */
     public function setClockEnabled($clockEnabled)
