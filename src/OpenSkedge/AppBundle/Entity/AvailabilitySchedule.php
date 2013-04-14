@@ -128,6 +128,8 @@ class AvailabilitySchedule
             case 6:
                 $day = 'Sat';
                 break;
+            default:
+                throw new \UnexpectedValueException('Input does not refer to a day!');
         }
         $getDay = 'get'.$day;
         return $this->$getDay();
@@ -165,7 +167,7 @@ class AvailabilitySchedule
                 $day = 'Sat';
                 break;
             default:
-                return $this;
+                throw new \UnexpectedValueException('Input does not refer to a day!');
         }
         $setDay = 'set'.$day;
         return $this->$setDay($val);
