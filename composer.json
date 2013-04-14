@@ -1,7 +1,7 @@
 {
     "name": "openskedge/openskedge",
     "description": "A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.",
-    "license": "GPL-2.0+",
+    "license": "GPL-3.0+",
     "keywords": ["employee", "scheduling"],
     "homepage": "http://openskedge.org",
     "authors": [
@@ -16,7 +16,7 @@
         "psr-0": { "": "src/" }
     },
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.3.10",
         "symfony/symfony": "2.1.*",
         "doctrine/data-fixtures": "1.0.*@dev",
         "doctrine/doctrine-fixtures-bundle": "dev-master",

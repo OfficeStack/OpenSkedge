@@ -1,5 +1,5 @@
 {
-    "hash": "0e8982a772d58305250db7ea77c9716c",
+    "hash": "b56bab69fbaffec0759378e6b67f8210",
     "packages": [
         {
             "name": "doctrine/common",
@@ -1888,7 +1888,7 @@
         "phpunit/php-code-coverage": 20
     },
     "platform": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.10"
     },
     "platform-dev": [
 
