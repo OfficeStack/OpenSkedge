@@ -1,5 +1,4 @@
 # OpenSkedge
-[OpenSkedge](http://github.com/maxfierke/OpenSkedge) 
 [![Build Status](https://travis-ci.org/maxfierke/OpenSkedge.png)](https://travis-ci.org/maxfierke/OpenSkedge)
 
 Created by Max Fierke
@@ -94,7 +93,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 * Joe Krall (Developed time clock functionality for the UofMN with Carl Allen)
 
 ## Contact
-**Max Fierke**  
-Homepage: [www.maxfierke.com](http://www.maxfierke.com)  
-Twitter: [@m4xm4n](http://twitter.com/m4xm4n)  
-Github: [@maxfierke](https://github.com/maxfierke)  
+**Max Fierke**
+Homepage: [www.maxfierke.com](http://www.maxfierke.com)
+Twitter: [@m4xm4n](http://twitter.com/m4xm4n)
+Github: [@maxfierke](https://github.com/maxfierke)
