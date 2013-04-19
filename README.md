@@ -1,5 +1,6 @@
 # OpenSkedge
 [![Build Status](https://travis-ci.org/maxfierke/OpenSkedge.png)](https://travis-ci.org/maxfierke/OpenSkedge)
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/d3ee5bf3c0818d24e5e13a4219cf5f2e "githalytics.com")](http://githalytics.com/maxfierke/OpenSkedge)
 
 Created by Max Fierke
 
