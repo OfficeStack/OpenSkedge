@@ -7,9 +7,8 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
-use OpenSkedge\AppBundle\Mailer\MailerInterface;
 
-class NoopMailer
+class NoopMailer implements MailerInterface
 {
     public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, Logger $logger, array $parameters)
     {

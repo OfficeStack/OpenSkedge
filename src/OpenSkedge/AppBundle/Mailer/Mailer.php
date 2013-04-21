@@ -7,9 +7,8 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
-use OpenSkedge\AppBundle\Mailer\MailerInterface;
 
-class Mailer
+class Mailer implements MailerInterface
 {
     protected $mailer;
     protected $twig;
@@ -104,10 +103,12 @@ class Mailer
     /**
      * Render the email, use the first line as the subject, and the rest as the body
      *
-     * @param string $template
-     * @param string $context
-     * @param string $fromEmail
-     * @param string $toEmail
+     * @param string $templateName  Name of the Twig template to use to render the email.
+     * @param string $context       Variables and their values to inject into the rendered email.
+     * @param string $fromEmail     The originating email address
+     * @param string $toEmail       The destination email address
+     *
+     * @return void
      */
     protected function dispatchMessage($templateName, $context, $fromEmail, $toEmail)
     {

@@ -15,5 +15,5 @@ interface MailerInterface
     public function notifyNewSupervisor(UserInterface $user);
     public function notifyLateEmployee(UserInterface $user, Schedule $schedule);
 
-    protected function dispatchMessage($template, $context, $fromEmail, $toEmail);
+    function dispatchMessage($template, $context, $fromEmail, $toEmail);
 }
