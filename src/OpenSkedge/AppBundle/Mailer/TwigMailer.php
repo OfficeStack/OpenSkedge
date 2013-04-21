@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
 
-class Mailer implements MailerInterface
+class TwigMailer implements MailerInterface
 {
     protected $mailer;
     protected $twig;

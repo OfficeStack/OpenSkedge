@@ -1,5 +1,5 @@
 parameters:
-    notify_mailer.class: OpenSkedge\AppBundle\Mailer\Mailer
+    notify_mailer.class: OpenSkedge\AppBundle\Mailer\TwigMailer
 
 services:
     app_settings:
