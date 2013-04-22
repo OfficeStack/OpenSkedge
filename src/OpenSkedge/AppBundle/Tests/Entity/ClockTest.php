@@ -19,7 +19,7 @@ class ClockTest extends \PHPUnit_Framework_TestCase
     private $_emptyRec = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
     /**
-     * Run a test to ensure instatiation of Clock objects is working.
+     * Run a test to ensure instantiation of Clock objects is working.
      *
      * @return void
      */

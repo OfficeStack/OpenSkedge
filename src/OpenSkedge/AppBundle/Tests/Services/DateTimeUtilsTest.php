@@ -40,7 +40,7 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Run a test to ensure instatiation of DateTimeUtils objects is working.
+     * Run a test to ensure instantiation of DateTimeUtils objects is working.
      *
      * @return void
      */

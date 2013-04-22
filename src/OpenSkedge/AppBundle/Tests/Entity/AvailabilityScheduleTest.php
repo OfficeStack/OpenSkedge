@@ -19,7 +19,7 @@ class AvailabilityScheduleTest extends \PHPUnit_Framework_TestCase
     private $_emptyRec = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
     /**
-     * Run a test to ensure instatiation of AvailabilitySchedule objects is working.
+     * Run a test to ensure instantiation of AvailabilitySchedule objects is working.
      *
      * @return void
      */

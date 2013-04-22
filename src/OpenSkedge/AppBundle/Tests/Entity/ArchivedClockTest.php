@@ -19,7 +19,7 @@ class ArchivedClockTest extends \PHPUnit_Framework_TestCase
     private $_emptyRec = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
     /**
-     * Run a test to ensure instatiation of ArchivedClock objects is working.
+     * Run a test to ensure instantiation of ArchivedClock objects is working.
      *
      * @return void
      */

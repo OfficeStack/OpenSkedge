@@ -17,7 +17,7 @@ use OpenSkedge\AppBundle\Entity\IP;
 class IPTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Run a test to ensure instatiation of IP objects is working.
+     * Run a test to ensure instantiation of IP objects is working.
      *
      * @return void
      */

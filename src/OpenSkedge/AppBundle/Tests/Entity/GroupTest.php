@@ -17,7 +17,7 @@ use OpenSkedge\AppBundle\Entity\Group;
 class GroupTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Run a test to ensure instatiation of Group objects is working.
+     * Run a test to ensure instantiation of Group objects is working.
      *
      * @return void
      */

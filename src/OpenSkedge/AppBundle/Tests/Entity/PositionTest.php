@@ -17,7 +17,7 @@ use OpenSkedge\AppBundle\Entity\Position;
 class PositionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Run a test to ensure instatiation of Position objects is working.
+     * Run a test to ensure instantiation of Position objects is working.
      *
      * @return void
      */

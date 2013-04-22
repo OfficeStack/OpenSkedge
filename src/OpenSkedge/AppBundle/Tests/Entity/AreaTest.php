@@ -17,7 +17,7 @@ use OpenSkedge\AppBundle\Entity\Area;
 class AreaTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Run a test to ensure instatiation of Area objects is working.
+     * Run a test to ensure instantiation of Area objects is working.
      *
      * @return void
      */

@@ -17,7 +17,7 @@ use OpenSkedge\AppBundle\Entity\User;
 class UserTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Run a test to ensure instatiation of User objects is working.
+     * Run a test to ensure instantiation of User objects is working.
      *
      * @return void
      */
