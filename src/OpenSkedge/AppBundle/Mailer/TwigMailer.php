@@ -3,7 +3,6 @@
 namespace OpenSkedge\AppBundle\Mailer;
 
 use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
@@ -131,7 +130,7 @@ class TwigMailer implements MailerInterface
         }
 
         if(!$this->mailer->send($message,$failures)) {
-            $this->logger->err('An email failed to send: '.$failures);
+            $this->logger->error('An email failed to send: '.$failures);
         }
     }
 }
