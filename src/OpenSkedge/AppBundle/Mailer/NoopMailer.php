@@ -3,7 +3,6 @@
 namespace OpenSkedge\AppBundle\Mailer;
 
 use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
@@ -36,10 +35,6 @@ class NoopMailer implements MailerInterface
     }
 
     public function notifyLateEmployee(UserInterface $user, Schedule $schedule)
-    {
-    }
-
-    protected function dispatchMessage($templateName, $context, $fromEmail, $toEmail)
     {
     }
 }
