@@ -13,6 +13,12 @@ $(document).ready(function () {
     {% if is_granted('ROLE_ADMIN') %}
     <a class="btn btn-primary header-control" href="{{ path('area_new') }}"><i class="icon-plus-sign icon-white"></i> Add Area</a>
     {% endif %}
+    <hr>
+    {% if entities is empty %}
+    <div class="alert">
+        <strong>Sorry!</strong> No areas found. You should <a href="{{ path('areas') }}">create one</a>.
+    </div>
+    {% else %}
     <table class="table table-condensed table-sortable">
         <thead>
             <tr>
@@ -44,5 +50,6 @@ $(document).ready(function () {
     <div class="pagerfanta">
         {{ pagerfanta(paginator, 'twitter_bootstrap') }}
     </div>
+    {% endif %}
 </div>
 {% endblock %}

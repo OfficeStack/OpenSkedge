@@ -11,6 +11,12 @@ $(document).ready(function () {
 <div class="span12">
     <h3>IP Manifest</h3>
     <a class="btn btn-primary header-control" href="{{ path('app_settings_ip_new') }}"><i class="icon-plus-sign icon-white"></i> Add IP Address</a>
+    <hr>
+    {% if entities is empty %}
+    <div class="alert">
+        <strong>Sorry!</strong> No IP addresses were found. Users will not be able to clock in and out until you add an IP address from which they may clock in and out.
+    </div>
+    {% else %}
     <table class="table table-condensed table-sortable">
         <thead>
             <tr>
@@ -40,5 +46,6 @@ $(document).ready(function () {
     <div class="pagerfanta">
         {{ pagerfanta(paginator, 'twitter_bootstrap') }}
     </div>
+    {% endif %}
 </div>
 {% endblock %}
