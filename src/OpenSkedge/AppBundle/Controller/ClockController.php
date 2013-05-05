@@ -70,6 +70,29 @@ class ClockController extends Controller
         $clock->setLastClock($now);
 
         $em->persist($clock);
+
+        // Get a list of late shifts from today where the user has not arrived.
+        $lateShifts = $em->createQuery('SELECT DISTINCT ls FROM OpenSkedgeBundle:LateShift ls
+                                    WHERE (ls.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), ls.creationTime) = 0
+                                    AND ls.user = :uid) ORDER BY ls.creationTime DESC')
+                                ->setParameter('uid', $user->getId())
+                                ->getResult();
+        // Get the time record index for the current time.
+        $curIndex = $dtUtils->getIndexFromTime($now);
+        // Get the day number from the current day.
+        $dayNumber = $now->format("w");
+
+        foreach ($lateShifts as $lateShift) {
+            /* If one of the position schedules associated with one today's lateshifts is scheduled for now,
+             * they are arriving for the shift and thus arrivalTime should be set to indicate they showed up
+             * for the shift.
+             */
+            if ($lateShift->getSchedule()->getDayOffset($dayNumber, $curIndex) == '1') {
+                $lateShift->setArrivalTime($now);
+                $em->persist($lateShift);
+            }
+        }
+
         $em->flush();
 
         return $this->redirect($this->generateUrl('dashboard'));
