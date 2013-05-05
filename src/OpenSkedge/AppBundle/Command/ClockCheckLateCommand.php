@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use OpenSkedge\AppBundle\Entity\LateShift;
 use OpenSkedge\AppBundle\Entity\Schedule;
 use OpenSkedge\AppBundle\Entity\User;
 
@@ -101,8 +102,30 @@ class ClockCheckLateCommand extends ContainerAwareCommand
                             $output->writeln($user->getName()." is late for their ".$schedule->getPosition()->getArea()->getName()." - ".$schedule->getPosition()->getName()." shift.");
                             // Send their supervisors an email.
                             $mailer->notifyLateEmployee($user, $schedule);
+                            $lateShifts = $em->createQuery('SELECT DISTINCT ls FROM OpenSkedgeBundle:LateShift ls
+                                    WHERE (ls.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), ls.creationTime) = 0
+                                    AND ls.schedule = :sid) ORDER BY ls.creationTime DESC')
+                                ->setParameter('sid', $schedule->getId())
+                                ->getResult();
+
+                            if (count($lateShifts) > 0) {
+                                $lateShift = $lateShifts[0];
+                            } else {
+                                $lateShift = null;
+                            }
+
+                            if (!$lateShift instanceof LateShift) {
+                                // Create a LateShift entity about this event (if not already created).
+                                $lateShift = new LateShift();
+                                $lateShift->setUser($user);
+                                $lateShift->setSchedule($schedule);
+                                $lateShift->setSchedulePeriod($schedule->getSchedulePeriod());
+                                $lateShift->setPosition($schedule->getPosition());
+                                $em->persist($lateShift);
+                            }
                         }
                     }
+                    $em->flush();
                 }
             }
         }
