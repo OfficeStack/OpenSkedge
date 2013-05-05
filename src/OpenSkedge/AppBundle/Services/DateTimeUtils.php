@@ -77,10 +77,11 @@ class DateTimeUtils
      *
      * @param integer $day   A numerical day of the week (0-6)
      * @param integer $index An index refering to a 15 minute chunk in a day
+     * @param boolean $utc   Return timezone UTC (default system)
      *
      * @return \DateTime
      */
-    public function getDateTimeFromIndex($day, $index)
+    public function getDateTimeFromIndex($day, $index, $utc = false)
     {
         if (!is_int($day) or !is_int($index)) {
             throw new \InvalidArgumentException('Expected  two integer arguments.');
@@ -92,7 +93,11 @@ class DateTimeUtils
 
         $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
         $fullMinutes = ($index * 15);
-        $dt = new \DateTime("midnight this ".$days[$day]);
+        if (!$utc) {
+            $dt = new \DateTime("midnight this ".$days[$day]);
+        } else {
+            $dt = new \DateTime("midnight this ".$days[$day], new \DateTimeZone("UTC"));
+        }
         $dt->setTime(0, $fullMinutes, 0);
 
         return $dt;

@@ -173,5 +173,20 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
         $time3DT->setTime(8, 45, 0);
         $this->assertEquals($time3DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(6, $time3Ind)->getTimestamp());
 
+        $time4Ind = 5;
+        $time4DT = new \DateTime("midnight this sunday", new \DateTimeZone("UTC"));
+        $time4DT->setTime(1, 15, 0);
+        $this->assertEquals($time4DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(0, $time4Ind, true)->getTimestamp());
+
+        $time5Ind = 95;
+        $time5DT = new \DateTime("midnight this thursday", new \DateTimeZone("UTC"));
+        $time5DT->setTime(23, 45, 0);
+        $this->assertEquals($time5DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(4, $time5Ind, true)->getTimestamp());
+
+        $time6Ind = 35;
+        $time6DT = new \DateTime("midnight this saturday", new \DateTimeZone("UTC"));
+        $time6DT->setTime(8, 45, 0);
+        $this->assertEquals($time6DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(6, $time6Ind, true)->getTimestamp());
+
     }
 }
