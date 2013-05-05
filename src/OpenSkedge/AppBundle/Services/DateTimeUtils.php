@@ -73,6 +73,32 @@ class DateTimeUtils
     }
 
     /**
+     * Convert a 15 minute chunk index and return a DateTime object.
+     *
+     * @param integer $day   A numerical day of the week (0-6)
+     * @param integer $index An index refering to a 15 minute chunk in a day
+     *
+     * @return \DateTime
+     */
+    public function getDateTimeFromIndex($day, $index)
+    {
+        if (!is_int($day) or !is_int($index)) {
+            throw new \InvalidArgumentException('Expected  two integer arguments.');
+        } elseif ($day < 0 or $day > 6) {
+            throw new \OutOfRangeException('Excepted a day number from 0 to 6 (inclusive)');
+        } elseif ($index < 0 or $index > 95) {
+            throw new \OutOfRangeException('Excepted a 15 min chunk index from 0 to 95 (inclusive)');
+        }
+
+        $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
+        $fullMinutes = ($index * 15);
+        $dt = new \DateTime("midnight this ".$days[$day]);
+        $dt->setTime(0, $fullMinutes, 0);
+
+        return $dt;
+    }
+
+    /**
      * Take a \DateTime object and get the date of the first day of its week
      * dependant on global application settings.
      *

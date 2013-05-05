@@ -150,4 +150,28 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($test3ExpResult->getTimestamp(), $this->_dtUtils->getFirstDayOfWeek($test3DT, false)->getTimestamp());
         $this->assertEquals($test3ExpResultClock->getTimestamp(), $this->_dtUtils->getFirstDayOfWeek($test3DT, true)->getTimestamp());
     }
+
+    /**
+     * Run tests to ensure the the correct DateTime is returned from getDateTimeFromIndex()
+     *
+     * @return void
+     */
+    public function testDateTimeFromIndex()
+    {
+        $time1Ind = 5;
+        $time1DT = new \DateTime("midnight this sunday");
+        $time1DT->setTime(1, 15, 0);
+        $this->assertEquals($time1DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(0, $time1Ind)->getTimestamp());
+
+        $time2Ind = 95;
+        $time2DT = new \DateTime("midnight this thursday");
+        $time2DT->setTime(23, 45, 0);
+        $this->assertEquals($time2DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(4, $time2Ind)->getTimestamp());
+
+        $time3Ind = 35;
+        $time3DT = new \DateTime("midnight this saturday");
+        $time3DT->setTime(8, 45, 0);
+        $this->assertEquals($time3DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(6, $time3Ind)->getTimestamp());
+
+    }
 }
