@@ -88,7 +88,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 * [Colorpicker for Bootstrap](http://www.eyecon.ro/bootstrap-colorpicker/) by Stefan Petre
 * [ScrollToFixed](https://github.com/bigspotteddog/ScrollToFixed/) by @bigspotteddog
 * [TableSorter](http://tablesorter.com/) by [@lovepeacenukes](https://twitter.com/lovepeacenukes)
-* [Symfony 2.1](http://symfony.com/), [Doctrine](http://www.doctrine-project.org/) and dependencies specified in composer.json
+* [Symfony 2.2](http://symfony.com/), [Doctrine](http://www.doctrine-project.org/) and dependencies specified in composer.json
 
 ### Thanks to the following Employee Scheduler developers
 * John Finlay (Developer of Employee Scheduler)
