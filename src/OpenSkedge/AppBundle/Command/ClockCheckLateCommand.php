@@ -53,14 +53,14 @@ class ClockCheckLateCommand extends ContainerAwareCommand
         }
 
         $users = array();
-        for ($i = 0; $i < count($results); $i++) {
+        for ($i = 0; $i < count($schedulePeriods); $i++) {
             foreach ($schedules[$i] as $schedule) {
                 $users[] = $schedule->getUser()->getId();
             }
         }
         $uids = array_unique($users);
 
-        foreach ($results as $schedulePeriod) {
+        foreach ($schedulePeriods as $schedulePeriod) {
             foreach ($uids as $uid) {
                 $user = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
                 if (!$user instanceof User) {
