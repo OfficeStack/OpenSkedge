@@ -60,17 +60,19 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
 
         $test1DT = clone $midnight;
         $test1DT->setTime(4, 0, 0);
-        $test1Result = $this->_dtUtils->timeStrToDateTime("4:00am");
+        $test1Result = $this->_dtUtils->timeStrToDateTime("4:00am", true);
         $this->assertEquals($test1DT->getTimestamp(), $test1Result->getTimestamp());
-
-        $test2DT = clone $midnight;
-        $test2DT->setTime(23, 0, 0);
-        $test2Result = $this->_dtUtils->timeStrToDateTime("23:00");
-        $this->assertEquals($test2DT->getTimestamp(), $test2Result->getTimestamp());
 
         $test3DT = clone $midnight;
         $test3DT->setTime(11, 27, 33);
-        $test3Result = $this->_dtUtils->timeStrToDateTime("11:27:33 am");
+        $test3Result = $this->_dtUtils->timeStrToDateTime("11:27:33 am", true);
+        $this->assertEquals($test3DT->getTimestamp(), $test3Result->getTimestamp());
+
+        $midnight = new \DateTime("midnight today");
+
+        $test3DT = clone $midnight;
+        $test3DT->setTime(23, 0, 0);
+        $test3Result = $this->_dtUtils->timeStrToDateTime("23:00");
         $this->assertEquals($test3DT->getTimestamp(), $test3Result->getTimestamp());
 
         $test4DT = clone $midnight;
@@ -96,7 +98,7 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
 
         $test3Ind = 35;
         $test3Time = new \DateTime("8:47", new \DateTimeZone("UTC"));
-        $this->assertEquals($test3Ind, $this->_dtUtils->getIndexFromTime($test3Time));
+        $this->assertEquals($test3Ind, $this->_dtUtils->getIndexFromTime($test3Time, true));
 
     }
 

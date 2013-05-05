@@ -38,10 +38,14 @@ class DateTimeUtils
      *
      * @return \DateTime
      */
-    public function timeStrToDateTime($timeString)
+    public function timeStrToDateTime($timeString, $utc = false)
     {
         $timeArr = explode(":", date("H:i:s", strtotime($timeString)));
-        $time = new \DateTime("midnight today", new \DateTimeZone("UTC"));
+        if ($utc) {
+            $time = new \DateTime("midnight today", new \DateTimeZone("UTC"));
+        } else {
+            $time = new \DateTime("midnight today");
+        }
         $time->setTime($timeArr[0], $timeArr[1], $timeArr[2]);
 
         return $time;
@@ -55,16 +59,20 @@ class DateTimeUtils
      *
      * @return integer
      */
-    public function getIndexFromTime($time)
+    public function getIndexFromTime($time, $utc = false)
     {
         if (empty($time) or (!is_string($time) and !$time instanceof \DateTime)) {
             throw new \InvalidArgumentException('Expected string or instance of DateTime');
         }
 
-        $dayStart = new \DateTime("midnight today", new \DateTimeZone("UTC"));
+        if ($utc) {
+            $dayStart = new \DateTime("midnight today", new \DateTimeZone("UTC"));
+        } else {
+            $dayStart = new \DateTime("midnight today");
+        }
 
         if (is_string($time)) {
-            $time = $this->timeStrToDateTime($time);
+            $time = $this->timeStrToDateTime($time, $utc);
         }
 
         $index = (int)((($time->getTimestamp() - $dayStart->getTimestamp()) / 60) / 15);
