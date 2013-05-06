@@ -2,21 +2,16 @@
 {% block javascripts %}
 {% if get_controller_name()|capitalize == "Dashboard" %}
 <script type="text/javascript" src="{{ asset('js/jquery.tickingclock.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery-scrolltofixed-min.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
   $('#clockTime').tickingClock('{{ "now"|date("F j, Y H:i:s") }}');
-  $('#clockmodule').scrollToFixed({
-    marginTop: 10,
-    offsets: true
-  });
 });
 </script>
 {% endif %}
 {% endblock %}
 
 {% block content %}
-<header class="navbar navbar-inverse navbar-static-top">
+<header class="navbar navbar-googlebar navbar-inverse navbar-static-top">
     <div class="navbar-inner">
         <div id="navbar-container" class="container-fluid">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -72,43 +67,50 @@ $(document).ready(function () {
 
 <div id="container" class="container-fluid">
   <div id="page-content-container" class="row-fluid page-content-container">
-    <section id="sidebar" class="span3">
-      <nav class="well sidebar-nav">
-        <ul class="nav nav-list">
-          <li class="nav-header">My Actions</li>
-          <li><a href="{{ path('dashboard') }}"><i class="icon-home"></i> Dashboard</a></li>
-          <li><a href="{{ path('my_schedules') }}"><i class="icon-calendar"></i> Schedules</a></li>
-          <li><a href="{{ path('user') }}"><i class="icon-user"></i> Profile</a></li>
-          {% if is_granted('ROLE_ADMIN') %}
-          <li><a href="{{ path('my_employees') }}"><i class="icon-hand-left"></i> Employees</a></li>
-          {% endif %}
-          <li><a href="{{ path('my_supervisors') }}"><i class="icon-eye-open"></i> Supervisors</a></li>
-          <li><a href="{{ path('my_colleagues') }}"><i class="icon-thumbs-up"></i> Colleagues</a></li>
-          <li><a href="{{ path('my_positions') }}"><i class="icon-th-list"></i> Positions</a></li>
-          {% if is_granted('ROLE_ADMIN') %}
-          <li class="nav-header">Supervisor Actions</li>
-          <li><a href="{{ path('areas') }}"><i class="icon-th-large"></i> Areas &amp; Positions</a></li>
-          <li><a href="{{ path('reports') }}"><i class="icon-file"></i> Reports</a></li>
-          <li><a href="{{ path('schedule_periods') }}"><i class="icon-calendar"></i> Schedule</a></li>
-          <li><a href="{{ path('users') }}"><i class="icon-user"></i> Users</a></li>
-          {% endif %}
-          {% if is_granted('ROLE_SUPER_ADMIN') %}
-          <li class="nav-header">Admin Actions</li>
-          <li><a href="{{ path('app_settings_edit') }}"><i class="icon-wrench"></i> {{ app_brand_name() }} Settings</a></li>
-          <li><a href="{{ path('app_settings_ips') }}"><i class="icon-certificate"></i> IP Manifest</a></li>
-          {% endif %}
-          {{ include('::links.html.twig', ignore_missing = true) }}
-          <li class="nav-header">{{ app_brand_name() }}</li>
-          <li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>
-        </ul>
-      </nav><!--/.well -->
-    </section><!--/span3-->
+    <div class="span3">
+      <div class="row-fluid">
+        {% if get_controller_name() == "dashboard" %}
+        {% include 'OpenSkedgeBundle:Dashboard:clockmodule.html.twig' %}
+        {% endif %}
+        <section id="sidebar" class="row-fluid">
+          <nav class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">My Actions</li>
+              <li><a href="{{ path('dashboard') }}"><i class="icon-home"></i> Dashboard</a></li>
+              <li><a href="{{ path('my_schedules') }}"><i class="icon-calendar"></i> Schedules</a></li>
+              <li><a href="{{ path('user') }}"><i class="icon-user"></i> Profile</a></li>
+              {% if is_granted('ROLE_ADMIN') %}
+              <li><a href="{{ path('my_employees') }}"><i class="icon-hand-left"></i> Employees</a></li>
+              {% endif %}
+              <li><a href="{{ path('my_supervisors') }}"><i class="icon-eye-open"></i> Supervisors</a></li>
+              <li><a href="{{ path('my_colleagues') }}"><i class="icon-thumbs-up"></i> Colleagues</a></li>
+              <li><a href="{{ path('my_positions') }}"><i class="icon-th-list"></i> Positions</a></li>
+              {% if is_granted('ROLE_ADMIN') %}
+              <li class="nav-header">Supervisor Actions</li>
+              <li><a href="{{ path('areas') }}"><i class="icon-th-large"></i> Areas &amp; Positions</a></li>
+              <li><a href="{{ path('reports') }}"><i class="icon-file"></i> Reports</a></li>
+              <li><a href="{{ path('schedule_periods') }}"><i class="icon-calendar"></i> Schedule</a></li>
+              <li><a href="{{ path('users') }}"><i class="icon-user"></i> Users</a></li>
+              {% endif %}
+              {% if is_granted('ROLE_SUPER_ADMIN') %}
+              <li class="nav-header">Admin Actions</li>
+              <li><a href="{{ path('app_settings_edit') }}"><i class="icon-wrench"></i> {{ app_brand_name() }} Settings</a></li>
+              <li><a href="{{ path('app_settings_ips') }}"><i class="icon-certificate"></i> IP Manifest</a></li>
+              {% endif %}
+              {{ include('::links.html.twig', ignore_missing = true) }}
+              <li class="nav-header">{{ app_brand_name() }}</li>
+              <li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>
+            </ul>
+          </nav><!--/.well -->
+        </section><!--/span3-->
+      </div>
+    </div>
     <section id="modulecontent" class="span9">
     {% set alertTypeAvaillable = [ 'info', 'success', 'warning', 'error'] %}
     {% for alert in alertTypeAvaillable %}
         {% if app.session.getFlashBag().has(alert) %}
             <div class="alert alert-{{ alert }}" >
-                <button class="close" data-dismiss="alert">×</button>
+                <button class="close" data-dismiss="alert">&times;</button>
                 {% for alert in app.session.getFlashBag().get(alert) %}
                 {{ alert }}
                 {% endfor %}
@@ -116,9 +118,17 @@ $(document).ready(function () {
         {% endif %}
     {% endfor %}
     {% block modulecontent %}
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a href="{{ path('dashboard') }}">My Schedule</a>
+          </li>
+          <li><a href="#">My Shifts</a></li>
+          <li><a href="#">Open Shifts</a></li>
+          <li><a href="{{ path('late_shifts') }}">Late Shifts</a></li>
+          <li><a href="{{ path('missed_shifts') }}">Missed Shifts</a></li>
+        </ul>
         <div class="row-fluid">
           {% include 'OpenSkedgeBundle:Dashboard:schedulemodule.html.twig' %}
-          {% include 'OpenSkedgeBundle:Dashboard:clockmodule.html.twig' %}
         </div>
     {% endblock %}
     </section><!--/span9-->

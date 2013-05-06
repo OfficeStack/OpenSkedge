@@ -21,7 +21,7 @@ hr {
 }
 form, #form { display: inline; }
 h3 { display: inline; }
-.page-content-container { padding-top: 20px; }
+.page-content-container { padding-top: 25px; }
 .sidebar-nav { padding: 9px 0; }
 .sidebar-nav a { color: #059; }
 .nav>li>a:hover { background-color: #eee; }
