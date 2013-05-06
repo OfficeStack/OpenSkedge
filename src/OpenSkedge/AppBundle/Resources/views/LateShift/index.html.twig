@@ -12,34 +12,28 @@
         $(this).hide();
         $(this).siblings('.btn-save').show();
         $(this).siblings('.btn-close').show();
-        $(this).parent().prev().children('input')[0].disabled = false;
+        $(this).parent().prev().prev().children('select')[0].disabled = false;
     });
     $('.btn-close').on("click", function () {
         $(this).hide();
         $(this).siblings('.btn-save').hide();
         $(this).siblings('.btn-edit').show();
-        $(this).parent().prev().children('input')[0].disabled = true;
+        $(this).parent().prev().prev().children('select')[0].disabled = true;
     })
 </script>
 {% endblock %}
 {% block modulecontent %}
-<ul class="nav nav-tabs">
-    <li><a href="{{ path('dashboard') }}">My Schedule</a></li>
-    <li><a href="#">My Shifts</a></li>
-    <li><a href="#">Open Shifts</a></li>
-    <li{% if get_action_name() == 'late' %} class="active"{% endif %}><a href="{{ path('late_shifts') }}">Late Shifts</a></li>
-    <li{% if get_action_name() == 'missed' %} class="active"{% endif %}><a href="{{ path('missed_shifts') }}">Missed Shifts</a></li>
-</ul>
 {% if entities is empty %}
 <div class="alert">
-    <strong>Sweet!</strong> No {{ get_action_name() }} shift records found. Nice job!
+    <strong>Sweet!</strong> No late or missed shift records found.
 </div>
 {% else %}
 <table class="table table-hover table-condensed">
     <thead>
         <tr>
+            <th>User</th>
             <th>Shift Start</th>
-            {% if get_action_name() == 'late' %}<th>Arrival Time</th>{% endif %}
+            <th>Arrival Time</th>
             <th>Status</th>
             <th>Reason</th>
             <th>Actions</th>
@@ -49,10 +43,16 @@
     {% for entity in entities %}
         <tr>
             <form action="{{ path('lateshift_update', {'id': entity.id }) }}" method="post">
+                <td><a href="{{ path('user_view', {'id': entity.id }) }}">{{ entity.user.name }}</a></td>
                 <td>{% if entity.creationTime %}{{ entity.creationTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                {% if entity.arrivalTime %}<td class="text-error">{{ entity.arrivalTime|date('Y-m-d H:i:s') }}</td>{% endif %}
-                <td>{{ entity.status }}</td>
-                <td><input type="text" name="lateshift[notes]" value="{{ entity.notes }}" disabled="disabled" /></td>
+                <td class="text-error">{% if entity.arrivalTime %}{{ entity.arrivalTime|date('Y-m-d H:i:s') }}{% else %}<strong>Missed</strong>{% endif %}</td>
+                <td>
+                    <select name="lateshift[status]" disabled="disabled">
+                        <option value="Excused"{% if entity.status == "Excused" %} selected="selected"{% endif %}>Excused</option>
+                        <option value="Unknown"{% if entity.status == "Unknown" %} selected="selected"{% endif %}>Unknown</option>
+                        <option value="Unexcused"{% if entity.status == "Unexcused" %} selected="selected"{% endif %}>Unexcused</option>
+                </td>
+                <td>{% if entity.notes %}{{ entity.notes }}{% endif %}</td>
                 <td>
                     <button class="btn btn-edit" type="button"><i class="icon-pencil"></i> Edit</button>
                     <button class="btn btn-primary btn-save" type="submit"><i class="icon-ok icon-white"></i> Save</button>

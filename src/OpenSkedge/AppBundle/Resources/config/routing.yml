@@ -241,6 +241,10 @@ reports:
     pattern:  /reports/
     defaults: { _controller: OpenSkedgeBundle:Report:index }
 
+report_late_missed_shift:
+    pattern:  /report/shifts/late-or-missed
+    defaults: { _controller: OpenSkedgeBundle:LateShift:index }
+
 report_hours:
     pattern:  /report/hours/
     defaults: { _controller: OpenSkedgeBundle:HoursReport:index }

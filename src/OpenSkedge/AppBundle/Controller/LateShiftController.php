@@ -37,10 +37,20 @@ class LateShiftController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('OpenSkedgeBundle:LateShift')->findAll();
+        $missedAndLateShifts = $em->getRepository('OpenSkedgeBundle:LateShift')->findAll();
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($missedAndLateShifts);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(35);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
 
         return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
-            'entities' => $entities,
+            'entities'    => $entities,
+            'paginator'   => $paginator,
         ));
     }
 
