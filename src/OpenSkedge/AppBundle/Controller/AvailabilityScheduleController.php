@@ -133,6 +133,7 @@ class AvailabilityScheduleController extends Controller
                 $spid = $form->getData()->getSchedulePeriod()->getId();
                 return $this->redirect($this->generateUrl('user_schedule_new', array('spid' => $spid)));
             }
+            $request->getSession()->setFlash('error', 'Availability schedule could not be created! Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:precreate.html.twig', array(
@@ -167,13 +168,8 @@ class AvailabilityScheduleController extends Controller
 
         // If an availability schedule already exists for the given schedule period, give an error.
         if (!empty($existing)) {
-            return $this->render('OpenSkedgeBundle::error.html.twig', array(
-                'action' => 'New Availability Schedule',
-                'error' => array(
-                    'title' => 'Availability Schedule Already Exists',
-                    'msg' => 'You already have an availability schedule for the schedule period you selected.'
-                    )
-            ));
+            $request->getSession()->setFlash('error', 'Availability schedule could not be created! You already have an availability schedule for the schedule period you selected.');
+            return $this->redirect($this->generateUrl('user_schedules'));
         }
 
         $appSettings = $this->get('app_settings')->getAppSettings();
@@ -323,13 +319,17 @@ class AvailabilityScheduleController extends Controller
                 throw new AccessDeniedException();
             }
 
-            $em->remove($availabilitySchedule);
-
             foreach ($schedules as $schedule) {
                 $em->remove($schedule);
             }
 
+            $em->remove($availabilitySchedule);
+
             $em->flush();
+
+            $request->getSession()->setFlash('success', 'Availability schedule deleted successfully.');
+        } else {
+            $request->getSession()->setFlash('error', 'Availability schedule could not be deleted! If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('user_schedules', array('id' => $uid)));
