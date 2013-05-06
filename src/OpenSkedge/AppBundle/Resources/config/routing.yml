@@ -13,17 +13,17 @@ dashboard:
     defaults: { _controller: OpenSkedgeBundle:Dashboard:index }
 
 late_shifts:
-    pattern:  /shifts/late
+    pattern:  /shifts/late/
     defaults: { _controller: OpenSkedgeBundle:LateShift:late }
 
 missed_shifts:
-    pattern:  /shifts/missed
+    pattern:  /shifts/missed/
     defaults: { _controller: OpenSkedgeBundle:LateShift:missed }
 
 lateshift_update:
     pattern:  /shifts/late/{id}/
     defaults: { _controller: OpenSkedgeBundle:LateShift:update }
-    methods: [POST, PUT, PATCH]
+    methods: [POST, PATCH]
     requirements:
         id: \d+
 
@@ -242,7 +242,7 @@ reports:
     defaults: { _controller: OpenSkedgeBundle:Report:index }
 
 report_late_missed_shift:
-    pattern:  /report/shifts/late-or-missed
+    pattern:  /report/shifts/late-or-missed/
     defaults: { _controller: OpenSkedgeBundle:LateShift:index }
 
 report_hours:
