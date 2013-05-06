@@ -12,6 +12,21 @@ dashboard:
     pattern:  /dashboard/
     defaults: { _controller: OpenSkedgeBundle:Dashboard:index }
 
+late_shifts:
+    pattern:  /shifts/late
+    defaults: { _controller: OpenSkedgeBundle:LateShift:late }
+
+missed_shifts:
+    pattern:  /shifts/missed
+    defaults: { _controller: OpenSkedgeBundle:LateShift:missed }
+
+lateshift_update:
+    pattern:  /shifts/late/{id}/
+    defaults: { _controller: OpenSkedgeBundle:LateShift:update }
+    methods: [POST, PUT, PATCH]
+    requirements:
+        id: \d+
+
 user_new:
     pattern:  /user/new
     defaults: { _controller: OpenSkedgeBundle:User:new }

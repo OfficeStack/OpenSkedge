@@ -1,0 +1,72 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - {{ get_action_name()|capitalize }} Shifts{% endblock %}
+{% block stylesheets %}
+<style type="text/css">
+.btn-save, .btn-close { display: none; }
+</style>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.btn-edit').on("click", function () {
+        $(this).hide();
+        $(this).siblings('.btn-save').show();
+        $(this).siblings('.btn-close').show();
+        $(this).parent().prev().children('input')[0].disabled = false;
+    });
+    $('.btn-close').on("click", function () {
+        $(this).hide();
+        $(this).siblings('.btn-save').hide();
+        $(this).siblings('.btn-edit').show();
+        $(this).parent().prev().children('input')[0].disabled = true;
+    })
+</script>
+{% endblock %}
+{% block modulecontent %}
+<ul class="nav nav-tabs">
+    <li><a href="{{ path('dashboard') }}">My Schedule</a></li>
+    <li><a href="#">My Shifts</a></li>
+    <li><a href="#">Open Shifts</a></li>
+    <li{% if get_action_name() == 'late' %} class="active"{% endif %}><a href="{{ path('late_shifts') }}">Late Shifts</a></li>
+    <li{% if get_action_name() == 'missed' %} class="active"{% endif %}><a href="{{ path('missed_shifts') }}">Missed Shifts</a></li>
+    <li><a href="#">Statistics</a></li>
+</ul>
+{% if entities is empty %}
+<div class="alert">
+    <strong>Sweet!</strong> No {{ get_action_name() }} shift records found. Nice job!
+</div>
+{% else %}
+<table class="table table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>Shift Start</th>
+            {% if get_action_name() == 'late' %}<th>Arrival Time</th>{% endif %}
+            <th>Status</th>
+            <th>Reason</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <form action="{{ path('lateshift_update', {'id': entity.id }) }}" method="post">
+                <td>{% if entity.creationTime %}{{ entity.creationTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                {% if entity.arrivalTime %}<td class="text-error">{{ entity.arrivalTime|date('Y-m-d H:i:s') }}</td>{% endif %}
+                <td>{{ entity.status }}</td>
+                <td><input type="text" name="lateshift[notes]" value="{{ entity.notes }}" disabled="disabled" /></td>
+                <td>
+                    <button class="btn btn-edit" type="button"><i class="icon-pencil"></i> Edit</button>
+                    <button class="btn btn-primary btn-save" type="submit"><i class="icon-ok icon-white"></i> Save</button>
+                    <button class="btn btn-close" type="button"><i class="icon-remove"></i></button>
+                </td>
+                <input type="hidden" name="lateshift[_token]" value="{{ csrf_token('lateshift_update') }}" />
+            </form>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagerfanta">
+    {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+</div>
+{% endif %}
+{% endblock %}
