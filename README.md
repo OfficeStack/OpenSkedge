@@ -86,7 +86,6 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 * [TODC Bootstrap](https://github.com/todc/todc-bootstrap) by @todc
 * [TODC Datepicker](https://github.com/todc/todc-datepicker) by @todc
 * [Colorpicker for Bootstrap](http://www.eyecon.ro/bootstrap-colorpicker/) by Stefan Petre
-* [ScrollToFixed](https://github.com/bigspotteddog/ScrollToFixed/) by @bigspotteddog
 * [TableSorter](http://tablesorter.com/) by [@lovepeacenukes](https://twitter.com/lovepeacenukes)
 * [Symfony 2.2](http://symfony.com/), [Doctrine](http://www.doctrine-project.org/) and dependencies specified in composer.json
 
