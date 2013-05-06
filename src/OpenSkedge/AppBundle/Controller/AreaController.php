@@ -98,7 +98,7 @@ class AreaController extends Controller
      */
     public function newAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -132,7 +132,7 @@ class AreaController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -174,7 +174,7 @@ class AreaController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
