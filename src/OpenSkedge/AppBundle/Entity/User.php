@@ -160,6 +160,11 @@ class User implements AdvancedUserInterface, \Serializable
      **/
     private $employees;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LateShift", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $lateShifts;
+
     public function __construct()
     {
         $this->min = 10;

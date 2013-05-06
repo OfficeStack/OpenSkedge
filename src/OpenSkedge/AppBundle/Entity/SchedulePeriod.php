@@ -45,6 +45,11 @@ class SchedulePeriod
     private $endTime;
 
     /**
+     * @ORM\OneToMany(targetEntity="LateShift", mappedBy="schedulePeriod", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $lateShifts;
+
+    /**
      * Constructor
      */
     public function __construct()

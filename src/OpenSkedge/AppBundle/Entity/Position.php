@@ -49,6 +49,11 @@ class Position
      */
     private $schedules;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LateShift", mappedBy="position", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $lateShifts;
+
     public function __construct()
     {
         $this->schedules = new \Doctrine\Common\Collections\ArrayCollection();

@@ -51,6 +51,11 @@ class Schedule extends BaseEntity\RecordBaseEntity
      */
     private $lastUpdated;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LateShift", mappedBy="schedule", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $lateShifts;
+
     public function __construct()
     {
         parent::__construct();
