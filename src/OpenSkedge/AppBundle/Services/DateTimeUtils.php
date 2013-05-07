@@ -135,4 +135,46 @@ class DateTimeUtils
         $ret->modify('midnight');
         return $ret;
     }
+
+    /**
+     * Get the intervals as \DateTime instance when a user is scheduled, clocked, etc. for a specific day
+     *
+     * @param string  $dayRecord    Time record string
+     * @param integer $day          Day number (0 = Sunday, ..., 6 = Saturday)
+     *
+     * @return array
+     */
+    public function getDateTimeIntervals($dayRecord, $day, $utc = false)
+    {
+        $intervals = array();
+        $firstIndex = strpos($dayRecord, '1'); // Inclusive
+        $lastIndex = strrpos($dayRecord, '1')+1; // Exclusive
+
+        // If there are no matches, end
+        if ($firstIndex === false or $lastIndex === false) {
+            return $intervals;
+        }
+
+        $prev = '0';
+        // Go all the way to the element after the last match, or the end of the string (which ever is less).
+        for ($i = $firstIndex; $i < min(96, $lastIndex+1); $i++) {
+            if ($prev == '0' and $dayRecord[$i] == '1') {
+                // A new interval starts here.
+                $start = $i;
+            } else if ($prev == '1' and $dayRecord[$i] == '0') {
+                // An interval ends here. Add a DateTime pair to the $intervals array
+                $intervals[] = array($this->getDateTimeFromIndex($day, $start, $utc), $this->getDateTimeFromIndex($day, $i+1, $utc));
+            } else if ($prev == '1' and $dayRecord[$i] == '1' and $i == 95) {
+                // If we reach the end of the string, set the end of the interval to tomorrow at midnight.
+                $startDT = $this->getDateTimeFromIndex($day, $start, $utc);
+                $endDT = clone $startDT;
+                $endDT->modify("+1 day");
+                $endDT->setTime(0, 0, 0);
+                $intervals[] = array($startDT, $endDT);
+            }
+            $prev = $dayRecord[$i];
+        }
+
+        return $intervals;
+    }
 }
