@@ -222,7 +222,6 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
         );
 
         $genIntervals = $this->_dtUtils->getDateTimeIntervals($testRecord, 0);
-        var_dump($genIntervals);
 
         for ($i = 0; $i < count($testIntervals); $i++) {
             $this->assertEquals($testIntervals[$i][0], $genIntervals[$i][0]);
