@@ -39,12 +39,6 @@ class LateShift extends BaseEntity\ShiftBaseEntity
     protected $creationTime;
 
     /**
-     * @ORM\Column(type="string", nullable=true, length=255)
-     * @Assert\Type(type="string")
-     */
-    protected $notes;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="lateShifts")
      * @ORM\JoinColumn(name="uid", referencedColumnName="id")
      **/
