@@ -90,7 +90,7 @@ class LateShiftController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $lateShifts = $em->createQuery('SELECT DISTINCT ls FROM OpenSkedgeBundle:LateShift ls
+        $lateShifts = $em->createQuery('SELECT ls FROM OpenSkedgeBundle:LateShift ls
                 WHERE (ls.arrivalTime IS NOT NULL AND ls.user = :uid) ORDER BY ls.creationTime DESC')
             ->setParameter('uid', $this->getUser()->getId())
             ->getResult();
