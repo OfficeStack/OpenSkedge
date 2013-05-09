@@ -165,6 +165,16 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $lateShifts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Shift", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $shifts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Shift", mappedBy="pickedUpBy", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $pickedUpShifts;
+
     public function __construct()
     {
         $this->min = 10;
@@ -178,6 +188,9 @@ class User implements AdvancedUserInterface, \Serializable
         $this->supervisors = new ArrayCollection();
         $this->employees = new ArrayCollection();
         $this->archivedClocks = new ArrayCollection();
+        $this->lateShifts = new ArrayCollection();
+        $this->shifts = new ArrayCollection();
+        $this->pickedUpShifts = new ArrayCollection();
     }
 
     public function __toString()
@@ -837,5 +850,104 @@ class User implements AdvancedUserInterface, \Serializable
     public function getArchivedClocks()
     {
         return $this->archivedClocks;
+    }
+
+    /**
+     * Add lateShifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\LateShift $lateShifts
+     * @return User
+     */
+    public function addLateShift(\OpenSkedge\AppBundle\Entity\LateShift $lateShifts)
+    {
+        $this->lateShifts[] = $lateShifts;
+
+        return $this;
+    }
+
+    /**
+     * Remove lateShifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\LateShift $lateShifts
+     */
+    public function removeLateShift(\OpenSkedge\AppBundle\Entity\LateShift $lateShifts)
+    {
+        $this->lateShifts->removeElement($lateShifts);
+    }
+
+    /**
+     * Get lateShifts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLateShifts()
+    {
+        return $this->lateShifts;
+    }
+
+    /**
+     * Add shifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Shift $shifts
+     * @return User
+     */
+    public function addShift(\OpenSkedge\AppBundle\Entity\Shift $shifts)
+    {
+        $this->shifts[] = $shifts;
+
+        return $this;
+    }
+
+    /**
+     * Remove shifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Shift $shifts
+     */
+    public function removeShift(\OpenSkedge\AppBundle\Entity\Shift $shifts)
+    {
+        $this->shifts->removeElement($shifts);
+    }
+
+    /**
+     * Get shifts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getShifts()
+    {
+        return $this->shifts;
+    }
+
+    /**
+     * Add pickedUpShifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Shift $pickedUpShifts
+     * @return User
+     */
+    public function addPickedUpShift(\OpenSkedge\AppBundle\Entity\Shift $pickedUpShifts)
+    {
+        $this->pickedUpShifts[] = $pickedUpShifts;
+
+        return $this;
+    }
+
+    /**
+     * Remove pickedUpShifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Shift $pickedUpShifts
+     */
+    public function removePickedUpShift(\OpenSkedge\AppBundle\Entity\Shift $pickedUpShifts)
+    {
+        $this->pickedUpShifts->removeElement($pickedUpShifts);
+    }
+
+    /**
+     * Get pickedUpShifts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPickedUpShifts()
+    {
+        return $this->pickedUpShifts;
     }
 }
