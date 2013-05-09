@@ -216,7 +216,7 @@ class PositionController extends Controller
             $request->getSession()->setFlash('error', 'Position could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
         }
 
-        return $this->redirect($this->generateUrl('position'));
+        return $this->redirect($this->generateUrl('areas'));
     }
 
     /**

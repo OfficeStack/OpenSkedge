@@ -32,8 +32,9 @@ class Position
 
     /**
      * @ORM\Column(type="string", length=300)
+     * @Assert\NotBlank(message="Please describe the position.")
      * @Assert\Length(max = "140",
-     *      maxMessage = "An Area's description cannot be longer than than {{ limit }} characters length"
+     *      maxMessage = "A Position's description cannot be longer than than {{ limit }} characters length"
      * )
      */
     private $description;
