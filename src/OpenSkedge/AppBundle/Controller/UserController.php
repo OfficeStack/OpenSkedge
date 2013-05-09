@@ -398,6 +398,106 @@ class UserController extends Controller
     }
 
     /**
+     * Lists all LateShift entites where the user missed their shift (never clocked in)
+     *
+     */
+    public function missedShiftsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if (is_null($id)) {
+            $user = $this->getUser();
+        } else {
+            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+                throw new AccessDeniedException();
+            }
+            $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
+
+            if (!$user instanceof User) {
+                throw $this->createNotFoundException('Unable to find User.');
+            }
+        }
+
+        $missedShifts = $em->createQuery('SELECT ls FROM OpenSkedgeBundle:LateShift ls
+                WHERE (ls.arrivalTime IS NULL AND ls.user = :uid) ORDER BY ls.creationTime DESC')
+            ->setParameter('uid', $user->getId())
+            ->getResult();
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($missedShifts);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
+
+        if ($user->getId() == $this->getUser()->getId()) {
+            return $this->render('OpenSkedgeBundle:LateShift:latemissed.html.twig', array(
+                'entities'    => $entities,
+                'paginator'   => $paginator,
+                'title'       => "My Missing Shifts"
+            ));
+        } else {
+            return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
+                'entities'    => $entities,
+                'paginator'   => $paginator,
+                'title'       => $user->getName()."'s Missing Shifts"
+            ));
+        }
+    }
+
+    /**
+     * Lists all LateShift entites where the user was late for their shift (but they did come in)
+     *
+     */
+    public function lateShiftsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if (is_null($id)) {
+            $user = $this->getUser();
+        } else {
+            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+                throw new AccessDeniedException();
+            }
+            $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
+
+            if (!$user instanceof User) {
+                throw $this->createNotFoundException('Unable to find User.');
+            }
+        }
+
+        $lateShifts = $em->createQuery('SELECT ls FROM OpenSkedgeBundle:LateShift ls
+                WHERE (ls.arrivalTime IS NOT NULL AND ls.user = :uid) ORDER BY ls.creationTime DESC')
+            ->setParameter('uid', $user->getId())
+            ->getResult();
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($lateShifts);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
+
+        if ($user->getId() == $this->getUser()->getId()) {
+            return $this->render('OpenSkedgeBundle:LateShift:latemissed.html.twig', array(
+                'entities'    => $entities,
+                'paginator'   => $paginator,
+                'title'       => "My Late Shifts"
+            ));
+        } else {
+            return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
+                'entities'    => $entities,
+                'paginator'   => $paginator,
+                'title'       => $user->getName()."'s Late Shifts"
+            ));
+        }
+    }
+
+    /**
      * Ensure that any removed items collections actually get removed
      *
      * @param \Symfony\Component\Form\Form $form A Symfony form object
