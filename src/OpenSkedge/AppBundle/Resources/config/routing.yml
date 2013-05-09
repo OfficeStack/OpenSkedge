@@ -12,6 +12,10 @@ dashboard:
     pattern:  /dashboard/
     defaults: { _controller: OpenSkedgeBundle:Dashboard:index }
 
+posted_shifts:
+    pattern:  /shifts/posted/
+    defaults: { _controller: OpenSkedgeBundle:Shift:posted }
+
 late_shifts:
     pattern:  /shifts/late/
     defaults: { _controller: OpenSkedgeBundle:LateShift:late }
@@ -27,26 +31,29 @@ lateshift_update:
     requirements:
         id: \d+
 
-user_new:
-    pattern:  /user/new
-    defaults: { _controller: OpenSkedgeBundle:User:new }
+shift_create:
+    pattern:  /shift/
+    defaults: { _controller: OpenSkedgeBundle:Shift:create }
+    methods: [POST, PUT]
 
-user_view:
-    pattern:  /user/{id}/
-    defaults: { _controller: OpenSkedgeBundle:User:view }
+shift_edit:
+    pattern:  /shift/{id}/edit
+    defaults: { _controller: OpenSkedgeBundle:Shift:edit }
+    methods: [GET, POST]
     requirements:
         id: \d+
 
-user_edit:
-    pattern:  /user/{id}/edit
-    defaults: { _controller: OpenSkedgeBundle:User:edit }
+shift_update:
+    pattern:  /shift/{id}/
+    defaults: { _controller: OpenSkedgeBundle:Shift:update }
+    methods: [POST, PUT, PATCH]
     requirements:
         id: \d+
 
-user_delete:
-    pattern:  /user/{id}/delete
-    defaults: { _controller: OpenSkedgeBundle:User:delete }
-    methods: [POST]
+shift_view:
+    pattern:  /shift/{id}/
+    defaults: { _controller: OpenSkedgeBundle:Shift:view }
+    methods: [GET]
     requirements:
         id: \d+
 
@@ -106,21 +113,92 @@ my_positions:
     pattern:  /user/positions/
     defaults: { _controller: OpenSkedgeBundle:Position:positions, id: ~ }
 
+my_shifts:
+    pattern:  /user/shifts/
+    defaults: { _controller: OpenSkedgeBundle:User:shifts, id: ~ }
+
+my_shifts_late:
+    pattern:  /user/shifts/late/
+    defaults: { _controller: OpenSkedgeBundle:User:lateShifts, id: ~ }
+
+my_shifts_missed:
+    pattern:  /user/shifts/missed/
+    defaults: { _controller: OpenSkedgeBundle:User:missedShifts, id: ~ }
+
+my_shifts_taken:
+    pattern:  /user/shifts/taken/
+    defaults: { _controller: OpenSkedgeBundle:User:takenShifts, id: ~ }
+
 user_employees:
     pattern:  /user/{id}/employees/
     defaults: { _controller: OpenSkedgeBundle:User:employees }
+    requirements:
+        id: \d+
 
 user_supervisors:
     pattern:  /user/{id}/supervisors/
     defaults: { _controller: OpenSkedgeBundle:User:supervisors }
+    requirements:
+        id: \d+
 
 user_colleagues:
     pattern:  /user/{id}/colleagues/
     defaults: { _controller: OpenSkedgeBundle:User:colleagues }
+    requirements:
+        id: \d+
 
 user_positions:
     pattern:  /user/{id}/positions/
     defaults: { _controller: OpenSkedgeBundle:Position:positions }
+    requirements:
+        id: \d+
+
+user_shifts:
+    pattern:  /user/{id}/shifts/
+    defaults: { _controller: OpenSkedgeBundle:User:shifts }
+    requirements:
+        id: \d+
+
+user_shifts_late:
+    pattern:  /user/{id}/shifts/late/
+    defaults: { _controller: OpenSkedgeBundle:User:lateShifts }
+    requirements:
+        id: \d+
+
+user_shifts_missed:
+    pattern:  /user/{id}/shifts/missed/
+    defaults: { _controller: OpenSkedgeBundle:User:missedShifts }
+    requirements:
+        id: \d+
+
+user_shifts_late:
+    pattern:  /user/{id}/shifts/taken/
+    defaults: { _controller: OpenSkedgeBundle:User:takenShifts }
+    requirements:
+        id: \d+
+
+user_new:
+    pattern:  /user/new
+    defaults: { _controller: OpenSkedgeBundle:User:new }
+
+user_view:
+    pattern:  /user/{id}/
+    defaults: { _controller: OpenSkedgeBundle:User:view }
+    requirements:
+        id: \d+
+
+user_edit:
+    pattern:  /user/{id}/edit
+    defaults: { _controller: OpenSkedgeBundle:User:edit }
+    requirements:
+        id: \d+
+
+user_delete:
+    pattern:  /user/{id}/delete
+    defaults: { _controller: OpenSkedgeBundle:User:delete }
+    methods: [POST]
+    requirements:
+        id: \d+
 
 users:
     pattern:  /users/
@@ -225,6 +303,8 @@ schedule_period_new:
 schedule_period_edit:
     pattern:  /schedule/period/{id}/edit
     defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:edit }
+    requirements:
+        id: \d+
 
 schedule_period_delete:
     pattern:  /schedule/period/{id}/delete
@@ -240,10 +320,6 @@ schedule_period_view:
 reports:
     pattern:  /reports/
     defaults: { _controller: OpenSkedgeBundle:Report:index }
-
-report_late_missed_shift:
-    pattern:  /report/shifts/late-or-missed/
-    defaults: { _controller: OpenSkedgeBundle:LateShift:index }
 
 report_hours:
     pattern:  /report/hours/
@@ -263,6 +339,14 @@ report_hours_generate:
     methods: [POST]
     requirements:
         id: \d+
+
+report_shifts:
+    pattern:  /report/shifts/
+    defaults: { _controller: OpenSkedgeBundle:Shift:index }
+
+report_late_missed_shifts:
+    pattern:  /report/shifts/late-or-missed/
+    defaults: { _controller: OpenSkedgeBundle:LateShift:index }
 
 app_settings_ips:
     pattern:  /app/settings/ip-manifest/
