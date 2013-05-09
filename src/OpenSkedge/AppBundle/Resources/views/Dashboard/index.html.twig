@@ -123,9 +123,9 @@ $(document).ready(function () {
             <a href="{{ path('dashboard') }}">My Schedule</a>
           </li>
           <li><a href="#">My Shifts</a></li>
-          <li><a href="#">Open Shifts</a></li>
-          <li><a href="{{ path('late_shifts') }}">Late Shifts</a></li>
-          <li><a href="{{ path('missed_shifts') }}">Missed Shifts</a></li>
+          <li><a href="{{ path('my_shifts_late') }}">My Late Shifts</a></li>
+          <li><a href="{{ path('my_shifts_missed') }}">My Missed Shifts</a></li>
+          <li><a href="{{ path('posted_shifts')}}">Posted Shifts</a></li>
         </ul>
         <div class="row-fluid">
           {% include 'OpenSkedgeBundle:Dashboard:schedulemodule.html.twig' %}
