@@ -16,8 +16,12 @@
                 <td>Generate time clock reports for users which compare clocked in hours with hours scheduled.</td>
             </tr>
             <tr>
-                <td><a class="btn btn-primary" href="{{ path('report_late_missed_shift') }}">Late/Missed Shift Report</a></td>
-                <td>View late/missed shift logs and the user supplied reason for being late/absent. You may also set them to excuse or unexcused.</td>
+                <td><a class="btn btn-primary" href="{{ path('report_late_missed_shifts') }}">Late/Missed Shift Report</a></td>
+                <td>View late/missed shift logs and the user supplied reason for being late/absent.<br>You may also set them to excuse or unexcused.</td>
+            </tr>
+            <tr>
+                <td><a class="btn btn-primary" href="{{ path('report_shifts') }}">Shift Trade Report</a></td>
+                <td>View shifts posted for trade and the user supplied reason for posting.<br>You may also set them to approved or unapproved.</td>
             </tr>
         </tbody>
     </table>
