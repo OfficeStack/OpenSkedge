@@ -51,62 +51,70 @@ class LateShiftController extends Controller
         return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
             'entities'    => $entities,
             'paginator'   => $paginator,
+            'title'       => "Late and Missed Shifts",
         ));
     }
 
     /**
-     * Lists all LateShift entites where the user missed their shift (never clocked in)
-     *
-     */
-    public function missedAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $missedShifts = $em->createQuery('SELECT ls FROM OpenSkedgeBundle:LateShift ls
-                WHERE (ls.arrivalTime IS NULL AND ls.user = :uid) ORDER BY ls.creationTime DESC')
-            ->setParameter('uid', $this->getUser()->getId())
-            ->getResult();
-
-        $page = $this->container->get('request')->query->get('page', 1);
-
-        $adapter = new ArrayAdapter($missedShifts);
-        $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(15);
-        $paginator->setCurrentPage($page);
-
-        $entities = $paginator->getCurrentPageResults();
-
-        return $this->render('OpenSkedgeBundle:LateShift:latemissed.html.twig', array(
-            'entities'    => $entities,
-            'paginator'   => $paginator,
-        ));
-    }
-
-    /**
-     * Lists all LateShift entites where the user was late for their shift (but they did come in)
+     * Lists all late shifts.
      *
      */
     public function lateAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        $lateShifts = $em->createQuery('SELECT ls FROM OpenSkedgeBundle:LateShift ls
-                WHERE (ls.arrivalTime IS NOT NULL AND ls.user = :uid) ORDER BY ls.creationTime DESC')
-            ->setParameter('uid', $this->getUser()->getId())
+        $lateShifts = $em->createQuery("SELECT late FROM OpenSkedgeBundle:LateShift late WHERE late.arrivalTime IS NOT NULL")
             ->getResult();
 
         $page = $this->container->get('request')->query->get('page', 1);
 
         $adapter = new ArrayAdapter($lateShifts);
         $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(15);
+        $paginator->setMaxPerPage(35);
         $paginator->setCurrentPage($page);
 
         $entities = $paginator->getCurrentPageResults();
 
-        return $this->render('OpenSkedgeBundle:LateShift:latemissed.html.twig', array(
+        return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
             'entities'    => $entities,
             'paginator'   => $paginator,
+            'title'       => "Late Users",
+        ));
+    }
+
+    /**
+     * Lists all missed shifts.
+     *
+     */
+    public function missedAction()
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $lateShifts = $em->createQuery("SELECT late FROM OpenSkedgeBundle:LateShift late
+                    WHERE (late.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), late.creationTime) != 0)")
+            ->getResult();
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($lateShifts);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(35);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
+
+        return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
+            'entities'    => $entities,
+            'paginator'   => $paginator,
+            'title'       => "Late Users",
         ));
     }
 
