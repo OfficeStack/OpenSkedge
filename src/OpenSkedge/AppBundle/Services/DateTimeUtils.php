@@ -92,7 +92,7 @@ class DateTimeUtils
     public function getDateTimeFromIndex($day, $index, $utc = false)
     {
         if (!is_int($day) or !is_int($index)) {
-            throw new \InvalidArgumentException('Expected  two integer arguments.');
+            throw new \InvalidArgumentException('Expected two integer arguments.');
         } elseif ($day < 0 or $day > 6) {
             throw new \OutOfRangeException('Excepted a day number from 0 to 6 (inclusive)');
         } elseif ($index < 0 or $index > 95) {
