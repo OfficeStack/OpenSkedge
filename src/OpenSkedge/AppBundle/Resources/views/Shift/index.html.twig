@@ -8,6 +8,7 @@
 {% block javascripts %}
 {{ parent() }}
 <script type="text/javascript">
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,1],[2,1]],headers:{6:{sorter:false}}});
     $('.btn-edit').on("click", function () {
         $(this).hide();
         $(this).siblings('.btn-save').show();
@@ -28,7 +29,7 @@
     <strong>Sorry!</strong> No shifts have been posted for trade.
 </div>
 {% else %}
-<table class="table table-hover table-condensed">
+<table class="table table-hover table-condensed table-sortable">
     <thead>
         <tr>
             <th>Position</th>
