@@ -1,4 +1,6 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - {{ entity }} Schedule Period - Edit{% endblock %}
+
 {% block stylesheets %}
 {{ parent() }}
 <link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" />

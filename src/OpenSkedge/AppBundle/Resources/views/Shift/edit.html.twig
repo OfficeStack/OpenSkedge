@@ -1,0 +1,71 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/timepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.timepicker.min.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#startDate').datepicker();
+    $('#startTime').timepicker();
+    $('#endDate').datepicker();
+    $('#endTime').timepicker();
+});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('dashboard') }}">Dashboard</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('shift_view', { 'id': entity.id }) }}">{{ entity.position }} - {{ entity.startTime|date('M d, Y') }} {{ entity.startTime|date('g:i A') }} to {{ entity.endTime|date('g:i A') }}</a> <span class="divider">/</span></li>
+        <li class="active">Edit</li>
+    </ul>
+    <h3>{{ entity.position }}</h3>
+    <h4>{{ entity.startTime|date('M d, Y') }}</h4>
+    <h5>{{ entity.startTime|date('g:i A') }} to {{ entity.endTime|date('g:i A') }}</h5>
+    {% if is_granted('ROLE_ADMIN') or (entity.user.id == app.user.id and entity.pickedUpBy == null) %}
+    <div class="btn-group">
+        <form action="{{ path('shift_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+        </form>
+    </div>
+    {% endif %}
+    <hr>
+    <form action="{{ path('shift_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_label(edit_form.startTime) }}
+        <div class="input-append date" id="startDate" data-date="{{ edit_form.startTime.vars.value['date']['year'] }}-{{ edit_form.startTime.vars.value['date']['month'] }}-{{ edit_form.startTime.vars.value['date']['day'] }}" data-date-format="yyyy-mm-dd">
+            <input type="text" name="shift[startTime][date]" value="{{ edit_form.startTime.vars.value['date']['year'] }}-{{ edit_form.startTime.vars.value['date']['month'] }}-{{ edit_form.startTime.vars.value['date']['day'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+        <div class="input-append bootstrap-timepicker">
+            <input type="text" id="startTime" name="shift[startTime][time]" value="{{ edit_form.startTime.vars.value['time']['hour'] }}:{{ edit_form.startTime.vars.value['time']['minute'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-time"></i></span>
+        </div>
+
+        {{ form_label(edit_form.endTime) }}
+        <div class="input-append date" id="endDate" data-date="{{ edit_form.endTime.vars.value['date']['year'] }}-{{ edit_form.endTime.vars.value['date']['month'] }}-{{ edit_form.endTime.vars.value['date']['day'] }}" data-date-format="yyyy-mm-dd">
+            <input type="text" name="shift[endTime][date]" value="{{ edit_form.endTime.vars.value['date']['year'] }}-{{ edit_form.endTime.vars.value['date']['month'] }}-{{ edit_form.endTime.vars.value['date']['day'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+        <div class="input-append bootstrap-timepicker">
+            <input type="text" id="endTime" name="shift[endTime][time]" value="{{ edit_form.endTime.vars.value['time']['hour'] }}:{{ edit_form.endTime.vars.value['time']['minute'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-time"></i></span>
+        </div>
+
+        {{ form_row(edit_form.notes) }}
+        {{ form_row(edit_form.schedulePeriod) }}
+        {{ form_row(edit_form.position) }}
+
+        {{ form_widget(edit_form._token) }}
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Save Changes</button>
+            <a class="btn" href="{{ path('shift_view', { 'id': entity.id }) }}">Cancel Changes</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

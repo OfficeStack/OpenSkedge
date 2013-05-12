@@ -1,0 +1,51 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - {{ entity.position }} - {{ entity.startTime|date('Y-m-d g:i A') }}-{{ entity.endTime|date('Y-m-d g:i A') }}{% endblock %}
+{% block modulecontent %}
+<div class="span12">
+    <ul class="breadcrumb">
+        <li><a href="{{ path('dashboard') }}">Dashboard</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a> <span class="divider">/</span></li>
+        <li>{{ entity.position }} - {{ entity.startTime|date('M d, Y') }} {{ entity.startTime|date('g:i A') }} to {{ entity.endTime|date('g:i A') }}</li>
+    </ul>
+    <h3>{{ entity.position }}</h3>
+    <h4>{{ entity.startTime|date('M d, Y') }}</h4>
+    <h5>{{ entity.startTime|date('g:i A') }} to {{ entity.endTime|date('g:i A') }}</h5>
+    <h6>Status:
+        {% if entity.status == 'approved' %}<span class="text-success">
+        {% elseif entity.status == 'unapproved' %}<span class="text-error">
+        {% else %}<span class="text-warning">{% endif %}{{ entity.status|capitalize }}</span>
+    </h6>
+    {% if is_granted('ROLE_ADMIN') or (entity.user.id == app.user.id and entity.pickedUpBy == null) %}
+    <form action="{{ path('shift_delete', { 'id': entity.id }) }}" method="post">
+    <div class="btn-group">
+        <a class="btn" href="{{ path('shift_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
+        {{ form_widget(delete_form) }}
+        <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i> Delete</button>
+    </div>
+    </form>
+    {% endif %}
+    <hr>
+    <table class="table table-condensed">
+        <tbody>
+            <tr>
+                <th>Posted</th>
+                <td>{{ entity.creationTime|date('Y-m-d g:i A') }}</td>
+            </tr>
+            <tr>
+                <th>Posted By</th>
+                <td>{{ entity.user.name }}</td>
+            </tr>
+            {% if entity.pickedUpBy %}
+            <tr>
+                <th>Picked Up By</th>
+                <td>{{ entity.pickedUpBy.name }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Notes</th>
+                <td>{{ entity.notes }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

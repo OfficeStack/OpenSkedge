@@ -25,23 +25,13 @@ class ShiftBaseEntity
     */
    protected $notes;
 
-   /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="lateShifts")
-    * @ORM\JoinColumn(name="uid", referencedColumnName="id")
-    **/
    protected $user;
 
-   /**
-    * @ORM\ManyToOne(targetEntity="SchedulePeriod", inversedBy="lateShifts")
-    * @ORM\JoinColumn(name="spid", referencedColumnName="id")
-    */
    protected $schedulePeriod;
 
-   /**
-    * @ORM\ManyToOne(targetEntity="Position", inversedBy="lateShifts")
-    * @ORM\JoinColumn(name="pid", referencedColumnName="id")
-    */
    protected $position;
+
+   protected $schedule;
 
    /**
      * Set notes
