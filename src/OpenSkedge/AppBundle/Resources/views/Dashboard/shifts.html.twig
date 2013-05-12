@@ -35,7 +35,7 @@
                 <td>{{ shift.startTime|date('Y-m-d h:i A') }}</td>
                 <td>{{ shift.endTime|date('Y-m-d h:i A') }}</td>
                 <td>{{ shift.status|capitalize }}</td>
-                <td><a href="{{ path('user_view', {'id': shift.user.id }) }}">{{ shift.user.name }}</a></td>
+                <td><a href="{{ path('user_view', {'id': shift.user.id }) }}">{{ shift.user.name }}</a><br>on {{ entity.creationTime|date('Y-m-d h:i A') }}</td>
                 <td>
                     <div class="btn-group">
                         <input type="hidden" name="shift[pickedUpBy]" value="" />
