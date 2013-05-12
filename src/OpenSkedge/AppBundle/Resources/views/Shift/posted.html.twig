@@ -58,7 +58,7 @@ $(document).ready(function () {
                     <form action="{{ path('shift_update', {'id': entity.id }) }}" method="post">
                         <input type="hidden" name="shift[pickedUpBy]" value="" />
                         <input type="hidden" name="shift[_token]" value="{{ csrf_token('shift_modify') }}" />
-                        <button class="btn btn-primary" type="submit">Release Shift</button>
+                        <button class="btn btn-danger" type="submit"><i class="icon-minus icon-white"></i> Release Shift</button>
                     </form>
                 {% elseif entity.pickedUpBy %}
                     <a href="{{ path('user_view', {'id': entity.pickedUpBy.id }) }}">{{ entity.pickedUpBy.name }}</a>
@@ -66,7 +66,7 @@ $(document).ready(function () {
                     <form action="{{ path('shift_update', {'id': entity.id }) }}" method="post">
                         <input type="hidden" name="shift[pickedUpBy]" value="{{ app.user.id }}" />
                         <input type="hidden" name="shift[_token]" value="{{ csrf_token('shift_modify') }}" />
-                        <button class="btn btn-primary" type="submit">Take Shift</button>
+                        <button class="btn btn-success" type="submit"><i class="icon-plus icon-white"></i> Take Shift</button>
                     </form>
                 {% else %}
                     Open
@@ -92,7 +92,7 @@ $(document).ready(function () {
     <form action="{{ path('shift_create') }}" method="post" {{ form_enctype(newForm) }}>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 id="myUserLabel">Post Shift</h3>
+        <h3 id="postShiftLabel">Post Shift</h3>
       </div>
       <div class="modal-body">
         {{ form_label(newForm.startTime) }}
