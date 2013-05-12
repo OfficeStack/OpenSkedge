@@ -96,4 +96,68 @@ class DashboardController extends Controller
             'endIndex'        => $endIndex
         ));
     }
+
+    /**
+     * Lists all Shift entites the user has picked up (if within the current week)
+     * and the intervals the user is scheduled.
+     *
+     */
+    public function shiftsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $dtUtils = $this->get('dt_utils');
+        $weekStart = $dtUtils->getFirstDayOfWeek(new \DateTime());
+        $weekEnd = clone $weekStart;
+        $weekEnd->modify('+7 day');
+
+        $week = new \DatePeriod($weekStart, new \DateInterval("P1D"), $weekEnd);
+
+        $schedulePeriods = $em->createQuery('SELECT sp FROM OpenSkedgeBundle:SchedulePeriod sp
+            WHERE (sp.startTime <= CURRENT_TIMESTAMP() AND sp.endTime >= CURRENT_TIMESTAMP()) ORDER BY sp.startTime, sp.endTime ASC')
+            ->getResult();
+
+        $shifts = array();
+        $posintervals = array();
+        foreach ($schedulePeriods as $schedulePeriod) {
+            $tempShifts = $em->createQuery('SELECT shift FROM OpenSkedgeBundle:Shift shift
+                    WHERE (shift.startTime >= :ws AND shift.startTime <= :we AND shift.pickedUpBy = :uid AND shift.schedulePeriod = :spid AND shift.status != \'unapproved\') ORDER BY shift.startTime ASC')
+                ->setParameter('ws', $weekStart)
+                ->setParameter('we', $weekEnd)
+                ->setParameter('uid', $user->getId())
+                ->setParameter('spid', $schedulePeriod->getId())
+                ->getResult();
+            $shifts += $tempShifts;
+
+            $schedules = $em->createQuery('SELECT s FROM OpenSkedgeBundle:Schedule s
+                    WHERE (s.schedulePeriod = :spid AND s.user = :uid)')
+                ->setParameter('uid', $user->getId())
+                ->setParameter('spid', $schedulePeriod->getId())
+                ->getResult();
+
+            $intervals = array();
+            foreach ($schedules as $schedule) {
+                $interval            = new \stdClass;
+                $interval->position  = $schedule->getPosition();
+                $interval->sunday    = $dtUtils->getDateTimeIntervals($schedule->getSun(), 0);
+                $interval->monday    = $dtUtils->getDateTimeIntervals($schedule->getMon(), 1);
+                $interval->tuesday   = $dtUtils->getDateTimeIntervals($schedule->getTue(), 2);
+                $interval->wednesday = $dtUtils->getDateTimeIntervals($schedule->getWed(), 3);
+                $interval->thursday  = $dtUtils->getDateTimeIntervals($schedule->getThu(), 4);
+                $interval->friday    = $dtUtils->getDateTimeIntervals($schedule->getFri(), 5);
+                $interval->saturday  = $dtUtils->getDateTimeIntervals($schedule->getSat(), 6);
+                $intervals[]         = $interval;
+            }
+            $posintervals[] = $intervals;
+        }
+
+        return $this->render('OpenSkedgeBundle:Dashboard:shifts.html.twig', array(
+            'shifts'          => $shifts,
+            'schedulePeriods' => $schedulePeriods,
+            'intervals'       => $posintervals,
+            'week'            => $week
+        ));
+    }
 }
