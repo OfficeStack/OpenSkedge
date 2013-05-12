@@ -53,13 +53,13 @@
     </tbody>
 </table>
 {% endif %}
-{% if intervals is empty %}
-<div class="alert">
-    <strong>Sorry!</strong> No schedule(s) found for you in any current scheduling periods.
-</div>
-{% else %}
 {% for schedulePeriod in intervals %}
 <h4>Shifts from {{ schedulePeriods[loop.index0].startTime|date('M d, Y') }} to {{ schedulePeriods[loop.index0].endTime|date('M d, Y') }}</h4>
+{% if schedulePeriod is empty %}
+<div class="alert">
+    <strong>Sorry!</strong> No schedule(s) found for you in the {{ schedulePeriods[loop.index0].startTime|date('M d, Y') }} to {{ schedulePeriods[loop.index0].endTime|date('M d, Y') }} schedule period.
+</div>
+{% else %}
 <table id="position-schedule-table" class="table table-hover table-condensed table-sortable">
     <thead>
         <tr>
@@ -85,6 +85,6 @@
     {% endfor %}
     </tbody>
 </table>
-{% endfor %}
 {% endif %}
+{% endfor %}
 {% endblock %}
