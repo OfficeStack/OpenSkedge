@@ -14,12 +14,12 @@ class OpenSkedgeBundle extends Bundle
         /* Allow CSRF secret token to be set by the environment and override
          * parameters.yml
          */
-        if (isset($_SERVER["OPENSKEDGE_SECRET"])) {
-            $container->setParameter('secret', $_SERVER["OPENSKEDGE_SECRET"]);
+        if (getenv("OPENSKEDGE_SECRET")) {
+            $container->setParameter('secret', getenv("OPENSKEDGE_SECRET"));
         }
 
-        if (isset($_SERVER["SYMFONY__SENDER__EMAIL"])) {
-            $container->setParameter('sender_email', $_SERVER["SYMFONY__SENDER__EMAIL"]);
+        if (getenv("SYMFONY__SENDER__EMAIL")) {
+            $container->setParameter('sender_email', getenv("SYMFONY__SENDER__EMAIL"));
         }
 
         if (isset($_ENV["PAGODABOX"])) {
@@ -34,8 +34,8 @@ class OpenSkedgeBundle extends Bundle
             if (isset($_SERVER["CACHE1_HOST"])) { // Pagoda Box memcache detection
                 $container->setParameter('memcache.host', $_SERVER["CACHE1_HOST"]);
                 $container->setParameter('memcache.port', $_SERVER["CACHE1_PORT"]);
-                if (isset($_SERVER["SYMFONY__MEMCACHE__EXPIRE"])) {
-                    $container->setParameter('memcache.expire', $_SERVER["SYMFONY__MEMCACHE__EXPIRE"]);
+                if (getenv("SYMFONY__MEMCACHE__EXPIRE")) {
+                    $container->setParameter('memcache.expire', getenv("SYMFONY__MEMCACHE__EXPIRE"));
                 } else {
                     $container->setParameter('memcache.expire', 3600);
                 }
