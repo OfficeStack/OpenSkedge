@@ -30,10 +30,10 @@
 {% block modulecontent %}
 <ul class="nav nav-tabs">
     <li><a href="{{ path('dashboard') }}">My Schedule</a></li>
-    <li><a href="#">My Shifts</a></li>
-    <li{% if action == 'late' %} class="active"{% endif %}><a href="{{ path('my_shifts_late') }}">My Late Shifts</a></li>
-    <li{% if action == 'missed' %} class="active"{% endif %}><a href="{{ path('my_shifts_missed') }}">My Missed Shifts</a></li>
-    <li><a href="{{ path('posted_shifts')}}">Posted Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts') }}">My Shifts</a></li>
+    <li{% if action == 'late' %} class="active"{% endif %}><a href="{{ path('dashboard_shifts_late') }}">My Late Shifts</a></li>
+    <li{% if action == 'missed' %} class="active"{% endif %}><a href="{{ path('dashboard_shifts_missed') }}">My Missed Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a></li>
 </ul>
 {% if entities is empty %}
 <div class="alert">

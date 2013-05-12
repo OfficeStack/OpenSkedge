@@ -12,17 +12,21 @@ dashboard:
     pattern:  /dashboard/
     defaults: { _controller: OpenSkedgeBundle:Dashboard:index }
 
-posted_shifts:
-    pattern:  /shifts/posted/
+dashboard_shifts:
+    pattern:  /dashboard/shifts/
+    defaults: { _controller: OpenSkedgeBundle:Dashboard:shifts }
+
+dashboard_shifts_posted:
+    pattern:  /dashboard/shifts/posted/
     defaults: { _controller: OpenSkedgeBundle:Shift:posted }
 
-late_shifts:
-    pattern:  /shifts/late/
-    defaults: { _controller: OpenSkedgeBundle:LateShift:late }
+dashboard_shifts_late:
+    pattern:  /dashboard/shifts/late/
+    defaults: { _controller: OpenSkedgeBundle:User:lateShifts, id: ~ }
 
-missed_shifts:
-    pattern:  /shifts/missed/
-    defaults: { _controller: OpenSkedgeBundle:LateShift:missed }
+dashboard_shifts_missed:
+    pattern:  /dashboard/shifts/missed/
+    defaults: { _controller: OpenSkedgeBundle:User:missedShifts, id: ~ }
 
 lateshift_update:
     pattern:  /shifts/late/{id}/
@@ -39,7 +43,6 @@ shift_create:
 shift_edit:
     pattern:  /shift/{id}/edit
     defaults: { _controller: OpenSkedgeBundle:Shift:edit }
-    methods: [GET, POST]
     requirements:
         id: \d+
 
@@ -112,22 +115,6 @@ my_colleagues:
 my_positions:
     pattern:  /user/positions/
     defaults: { _controller: OpenSkedgeBundle:Position:positions, id: ~ }
-
-my_shifts:
-    pattern:  /user/shifts/
-    defaults: { _controller: OpenSkedgeBundle:User:shifts, id: ~ }
-
-my_shifts_late:
-    pattern:  /user/shifts/late/
-    defaults: { _controller: OpenSkedgeBundle:User:lateShifts, id: ~ }
-
-my_shifts_missed:
-    pattern:  /user/shifts/missed/
-    defaults: { _controller: OpenSkedgeBundle:User:missedShifts, id: ~ }
-
-my_shifts_taken:
-    pattern:  /user/shifts/taken/
-    defaults: { _controller: OpenSkedgeBundle:User:takenShifts, id: ~ }
 
 user_employees:
     pattern:  /user/{id}/employees/
@@ -347,6 +334,14 @@ report_shifts:
 report_late_missed_shifts:
     pattern:  /report/shifts/late-or-missed/
     defaults: { _controller: OpenSkedgeBundle:LateShift:index }
+
+report_late_shifts:
+    pattern:  /report/shifts/late/
+    defaults: { _controller: OpenSkedgeBundle:LateShift:late }
+
+report_missed_shifts:
+    pattern:  /report/shifts/missed/
+    defaults: { _controller: OpenSkedgeBundle:LateShift:missed }
 
 app_settings_ips:
     pattern:  /app/settings/ip-manifest/
