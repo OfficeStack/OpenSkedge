@@ -1,6 +1,6 @@
 {% extends 'OpenSkedgeBundle::base.html.twig' %}
 {% block javascripts %}
-{% if get_controller_name()|capitalize == "Dashboard" %}
+{% if get_controller_name() == "dashboard" and get_action_name() == "index" %}
 <script type="text/javascript" src="{{ asset('js/jquery.tickingclock.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -69,7 +69,7 @@ $(document).ready(function () {
   <div id="page-content-container" class="row-fluid page-content-container">
     <div class="span3">
       <div class="row-fluid">
-        {% if get_controller_name() == "dashboard" %}
+        {% if get_controller_name() == "dashboard" and get_action_name() == 'index' %}
         {% include 'OpenSkedgeBundle:Dashboard:clockmodule.html.twig' %}
         {% endif %}
         <section id="sidebar" class="row-fluid">
