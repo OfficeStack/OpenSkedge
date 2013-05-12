@@ -40,6 +40,12 @@ shift_create:
     defaults: { _controller: OpenSkedgeBundle:Shift:create }
     methods: [POST, PUT]
 
+shift_delete:
+    pattern:  /shift/{id}/delete
+    defaults: { _controller: OpenSkedgeBundle:Shift:delete }
+    requirements:
+        id: \d+
+
 shift_edit:
     pattern:  /shift/{id}/edit
     defaults: { _controller: OpenSkedgeBundle:Shift:edit }
