@@ -98,7 +98,7 @@ class ShiftController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $pastShifts = $em->createQuery('SELECT shift FROM OpenSkedgeBundle:Shift shift
-                                          WHERE (shift.endTime < CURRENT_TIMESTAMP() AND shift.pickedUpBy = :uid AND shift.status != \'unapproved\')')
+                                          WHERE (shift.endTime < CURRENT_TIMESTAMP() AND shift.pickedUpBy = :uid AND shift.status != \'unapproved\') ORDER BY shift.endTime DESC')
             ->setParameter('uid', $this->getUser()->getId())
             ->getResult();
 

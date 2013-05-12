@@ -67,7 +67,7 @@ class LateShiftController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $lateShifts = $em->createQuery("SELECT late FROM OpenSkedgeBundle:LateShift late WHERE late.arrivalTime IS NOT NULL")
+        $lateShifts = $em->createQuery("SELECT late FROM OpenSkedgeBundle:LateShift late WHERE late.arrivalTime IS NOT NULL ORDER BY late.creationTime DESC")
             ->getResult();
 
         $page = $this->container->get('request')->query->get('page', 1);
@@ -99,7 +99,7 @@ class LateShiftController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $lateShifts = $em->createQuery("SELECT late FROM OpenSkedgeBundle:LateShift late
-                    WHERE (late.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), late.creationTime) != 0)")
+                    WHERE (late.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), late.creationTime) != 0) ORDER BY late.creationTime DESC")
             ->getResult();
 
         $page = $this->container->get('request')->query->get('page', 1);
