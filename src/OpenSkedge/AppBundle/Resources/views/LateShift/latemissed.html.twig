@@ -55,8 +55,8 @@
     {% for entity in entities %}
         <tr>
             <form action="{{ path('lateshift_update', {'id': entity.id }) }}" method="post">
-                <td>{% if entity.creationTime %}{{ entity.creationTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                {% if entity.arrivalTime %}<td class="text-error">{{ entity.arrivalTime|date('Y-m-d H:i:s') }}</td>{% endif %}
+                <td>{% if entity.creationTime %}{{ entity.creationTime|date('Y-m-d g:i A') }}{% endif %}</td>
+                {% if entity.arrivalTime %}<td class="text-error">{{ entity.arrivalTime|date('Y-m-d g:i A') }}</td>{% endif %}
                 <td>{{ entity.status }}</td>
                 <td><input type="text" name="lateshift[notes]" value="{{ entity.notes }}" disabled="disabled" /></td>
                 <td>
