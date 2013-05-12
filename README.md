@@ -35,7 +35,7 @@ Created by Max Fierke
 6.  Run `php app/console doctrine:schema:update --force`
 7.  Run `php app/console doctrine:fixtures:load` to bootstrap the application with some needed information (groups) and a default admin account with the username `admin` and the password `admin`.
 8.  Run `php app/console --env=prod cache:clear` to clear and warmup the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
-9.  Run `php app/console --env=prod assetic:dump` to dump assets. `prod` should be replaced with `dev` if you're running in a development environment.
+9.  Run `php app/console --env=prod assets:install` to install Assetic assets into the web root. `prod` should be replaced with `dev` if you're running in a development environment.
 10.  Navigate to the OpenSkedge installation in a browser, login as the bootstrapped admin and **change the password**.
 11.  Add employees, areas, positions, and schedule periods and get to scheduling!
 
@@ -45,7 +45,7 @@ Created by Max Fierke
 3.  Run by using `php app/console doctrine:migrations:migrate`. NOTE: **Only supports MySQL**. This should be pretty safe but if issues occur, you should be able to roll back by migrating down. That said, it's probably best to test the migration on your development server before pushing it to production. Read more about using migrations at [the Doctrine project's docs](http://docs.doctrine-project.org/projects/doctrine-migrations/en/latest/index.html).
     *   If you're on a database other than MySQL such as PostgreSQL, you'll have to adapt the migrations yourself, or risk **potential data loss** and/or application breakage by running `php app/console doctrine:schema:update --force`.
 4.  Run `php app/console --env=prod cache:clear` to clear and warmup the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
-5.  Run `php app/console --env=prod assetic:dump` to dump assets. `prod` should be replaced with `dev` if you're running in a development environment.
+5.  Run `php app/console --env=prod assets:install` to install Assetic assets into the web root. `prod` should be replaced with `dev` if you're running in a development environment.
 
 # Deployment on Pagoda Box
 Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.
