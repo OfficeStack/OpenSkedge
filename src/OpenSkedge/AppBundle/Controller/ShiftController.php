@@ -179,7 +179,7 @@ class ShiftController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('OpenSkedgeBundle:Shift:show.html.twig', array(
+        return $this->render('OpenSkedgeBundle:Shift:view.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
