@@ -20,6 +20,10 @@ dashboard_shifts_posted:
     pattern:  /dashboard/shifts/posted/
     defaults: { _controller: OpenSkedgeBundle:Shift:posted }
 
+dashboard_shifts_past:
+    pattern:  /dashboard/shifts/past/
+    defaults: { _controller: OpenSkedgeBundle:Shift:past }
+
 dashboard_shifts_late:
     pattern:  /dashboard/shifts/late/
     defaults: { _controller: OpenSkedgeBundle:User:lateShifts, id: ~ }

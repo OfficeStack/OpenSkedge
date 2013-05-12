@@ -90,6 +90,34 @@ class ShiftController extends Controller
     }
 
     /**
+     * Lists past Shift entities that the user has picked up.
+     *
+     */
+    public function pastAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pastShifts = $em->createQuery('SELECT shift FROM OpenSkedgeBundle:Shift shift
+                                          WHERE (shift.endTime < CURRENT_TIMESTAMP() AND shift.pickedUpBy = :uid AND shift.status != \'unapproved\')')
+            ->setParameter('uid', $this->getUser()->getId())
+            ->getResult();
+
+        $page = $this->container->get('request')->query->get('page', 1);
+
+        $adapter = new ArrayAdapter($pastShifts);
+        $paginator = new Pagerfanta($adapter);
+        $paginator->setMaxPerPage(15);
+        $paginator->setCurrentPage($page);
+
+        $entities = $paginator->getCurrentPageResults();
+
+        return $this->render('OpenSkedgeBundle:Shift:past.html.twig', array(
+            'entities'    => $entities,
+            'paginator'   => $paginator,
+        ));
+    }
+
+    /**
      * Creates a new Shift entity.
      *
      */

@@ -1,0 +1,52 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - My Past Shifts{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,1],[2,1]],headers:{5:{sorter:false}}});
+});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<ul class="nav nav-tabs">
+    <li><a href="{{ path('dashboard') }}">My Schedule</a></li>
+    <li><a href="{{ path('dashboard_shifts') }}">My Shifts</a></li>
+    <li class="active"><a href="{{ path('dashboard_shifts_past') }}">My Past Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_late') }}">My Late Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_missed') }}">My Missed Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a></li>
+</ul>
+{% if entities is empty %}
+<div class="alert">
+    <strong>Sorry!</strong> You've not picked up any shifts.
+</div>
+{% else %}
+<table class="table table-hover table-condensed table-sortable">
+    <thead>
+        <tr>
+            <th>Position</th>
+            <th>Shift Start</th>
+            <th>Shift End</th>
+            <th>Status</th>
+            <th>Posted By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.position.area.name }} - {{ entity.position.name }}</td>
+            <td>{{ entity.startTime|date('Y-m-d h:i A') }}</td>
+            <td>{{ entity.endTime|date('Y-m-d h:i A') }}</td>
+            <td>{{ entity.status|capitalize }}</td>
+            <td><a href="{{ path('user_view', {'id': entity.user.id }) }}">{{ entity.user.name }}</a><br>on {{ entity.creationTime|date('Y-m-d h:i A') }}</a></td>
+            <td><a class="btn btn-primary" href="{{ path('shift_view', {'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> Details</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagerfanta">
+    {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+</div>
+{% endif %}
+{% endblock %}
