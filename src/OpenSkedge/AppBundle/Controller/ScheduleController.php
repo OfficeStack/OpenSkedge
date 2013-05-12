@@ -311,6 +311,9 @@ class ScheduleController extends Controller
                 $em->remove($schedule);
             }
             $em->flush();
+            $request->getSession()->setFlash('success', 'Schedule deleted successfully.');
+        } else {
+            $request->getSession()->setFlash('error', 'Schedule could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('schedule_periods'));

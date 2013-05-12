@@ -102,6 +102,10 @@ class ClockCheckLateCommand extends ContainerAwareCommand
                             $output->writeln($user->getName()." is late for their ".$schedule->getPosition()->getArea()->getName()." - ".$schedule->getPosition()->getName()." shift.");
                             // Send their supervisors an email.
                             $mailer->notifyLateEmployee($user, $schedule);
+
+                            /* Get a collection of LateShift entities for today from the user
+                             * where the user has not clocked in for the shift yet.
+                             */
                             $lateShifts = $em->createQuery('SELECT DISTINCT ls FROM OpenSkedgeBundle:LateShift ls
                                     WHERE (ls.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), ls.creationTime) = 0
                                     AND ls.schedule = :sid) ORDER BY ls.creationTime DESC')

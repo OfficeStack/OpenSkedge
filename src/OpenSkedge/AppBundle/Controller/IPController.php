@@ -87,8 +87,12 @@ class IPController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
+                $request->getSession()->setFlash('success', $entity->getIp().' added successfully.');
+
                 return $this->redirect($this->generateUrl('app_settings_ips'));
             }
+
+            $request->getSession()->setFlash('error', 'IP address could not be added to the manifest. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:IP:new.html.twig', array(
@@ -130,8 +134,11 @@ class IPController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
+                $request->getSession()->setFlash('success', $entity->getIp().' updated successfully.');
+
                 return $this->redirect($this->generateUrl('app_settings_ips', array('id' => $id)));
             }
+            $request->getSession()->setFlash('error', $entity->getIp().' could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:IP:edit.html.twig', array(
@@ -168,6 +175,10 @@ class IPController extends Controller
 
             $em->remove($entity);
             $em->flush();
+
+            $request->getSession()->setFlash('success', 'IP address removed from manifest successfully.');
+        } else {
+            $request->getSession()->setFlash('error', 'IP address could not be removed. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('app_settings_ips'));

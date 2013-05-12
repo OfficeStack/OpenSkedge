@@ -1,0 +1,90 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - My Shifts{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    $("#shift-table").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,0],[2,0]],headers:{5:{sorter:false}}});
+    $("#position-schedule-table").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0]],headers:{1:{sorter:false},2:{sorter:false},3:{sorter:false},4:{sorter:false},5:{sorter:false},6:{sorter:false},7:{sorter:false}}});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<ul class="nav nav-tabs">
+    <li><a href="{{ path('dashboard') }}">My Schedule</a></li>
+    <li class="active"><a href="{{ path('dashboard_shifts') }}">My Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_past') }}">My Past Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_late') }}">My Late Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_missed') }}">My Missed Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a></li>
+</ul>
+{% if not shifts is empty %}
+<h4>Shifts Picked Up By You This Week</h4>
+<table id="shift-table" class="table table-hover table-condensed table-sortable">
+    <thead>
+        <tr>
+            <th>Position</th>
+            <th>Shift Start</th>
+            <th>Shift End</th>
+            <th>Posted By</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for shift in shifts %}
+        <tr>
+            <form action="{{ path('shift_update', {'id': shift.id }) }}" method="post">
+                <td>{{ shift.position }}</td>
+                <td>{{ shift.startTime|date('Y-m-d h:i A') }}</td>
+                <td>{{ shift.endTime|date('Y-m-d h:i A') }}</td>
+                <td>{{ shift.status|capitalize }}</td>
+                <td><a href="{{ path('user_view', {'id': shift.user.id }) }}">{{ shift.user.name }}</a><br>on {{ shift.creationTime|date('Y-m-d h:i A') }}</td>
+                <td>
+                    <div class="btn-group">
+                        <input type="hidden" name="shift[pickedUpBy]" value="" />
+                        <input type="hidden" name="shift[_token]" value="{{ csrf_token('shift_modify') }}" />
+                        <button class="btn btn-danger" type="submit"><i class="icon-minus icon-white"></i> Release Shift</button>
+                        <a class="btn btn-primary" href="{{ path('shift_view', {'id': shift.id }) }}"><i class="icon-eye-open icon-white"></i> Details</a>
+                    </div>
+                </td>
+                <input type="hidden" name="shift[_token]" value="{{ csrf_token('shift_modify') }}" />
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% for schedulePeriod in intervals %}
+<h4>Shifts from {{ schedulePeriods[loop.index0].startTime|date('M d, Y') }} to {{ schedulePeriods[loop.index0].endTime|date('M d, Y') }}</h4>
+{% if schedulePeriod is empty %}
+<div class="alert">
+    <strong>Sorry!</strong> No schedule(s) found for you in the {{ schedulePeriods[loop.index0].startTime|date('M d, Y') }} to {{ schedulePeriods[loop.index0].endTime|date('M d, Y') }} schedule period.
+</div>
+{% else %}
+<table id="position-schedule-table" class="table table-hover table-condensed table-sortable">
+    <thead>
+        <tr>
+            <th>Position</th>
+            {% for day in week %}
+            <th>{{ day|date('l') }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for positionSchedule in schedulePeriod %}
+        <tr>
+            <td>{{ positionSchedule.position }}</td>
+            {% for day in week %}
+            <td>
+                {% set var = day|date('l')|lower %}
+                {% for interval in attribute(positionSchedule, var) %}
+                    {{ interval[0]|date('g:i a') }} - {{ interval[1]|date('g:i a') }}<br>
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - Shift Trade Report{% endblock %}
+{% block stylesheets %}
+<style type="text/css">
+.btn-save, .btn-close { display: none; }
+</style>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,1],[2,1]],headers:{6:{sorter:false}}});
+    $('.btn-edit').on("click", function () {
+        $(this).hide();
+        $(this).siblings('.btn-save').show();
+        $(this).siblings('.btn-close').show();
+        $(this).parent().parent().prev().children('select')[0].disabled = false;
+    });
+    $('.btn-close').on("click", function () {
+        $(this).hide();
+        $(this).siblings('.btn-save').hide();
+        $(this).siblings('.btn-edit').show();
+        $(this).parent().parent().prev().children('select')[0].disabled = true;
+    })
+</script>
+{% endblock %}
+{% block modulecontent %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('reports') }}">Reports</a> <span class="divider">/</span></li>
+    <li class="active">Shift Trade Report</li>
+</ul>
+{% if entities is empty %}
+<div class="alert">
+    <strong>Sorry!</strong> No shifts have been posted for trade.
+</div>
+{% else %}
+<table class="table table-hover table-condensed table-sortable">
+    <thead>
+        <tr>
+            <th>Position</th>
+            <th>Shift Start</th>
+            <th>Shift End</th>
+            <th>Posted By</th>
+            <th>Picked Up By</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <form action="{{ path('shift_update', {'id': entity.id }) }}" method="post">
+                <td>{{ entity.position }}</td>
+                <td>{{ entity.startTime|date('Y-m-d h:i A') }}</td>
+                <td>{{ entity.endTime|date('Y-m-d h:i A') }}</td>
+                <td><a href="{{ path('user_view', {'id': entity.user.id }) }}">{{ entity.user.name }}</a></td>
+                <td>{% if entity.pickedUpBy %}<a href="{{ path('user_view', {'id': entity.pickedUpBy.id }) }}">{{ entity.pickedUpBy.name }}</a>{% endif %}</td>
+                <td>
+                    <select name="shift[status]" disabled="disabled">
+                        <option value="approved"{% if entity.status == "approved" %} selected="selected"{% endif %}>Approved</option>
+                        <option value="pending"{% if entity.status == "pending" %} selected="selected"{% endif %}>Pending Approval</option>
+                        <option value="unapproved"{% if entity.status == "unapproved" %} selected="selected"{% endif %}>Denied</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-edit" type="button"><i class="icon-pencil"></i> Edit</button>
+                        <button class="btn btn-primary btn-save" type="submit"><i class="icon-ok icon-white"></i> Save</button>
+                        <button class="btn btn-close" type="button"><i class="icon-remove"></i></button>
+                        <a class="btn btn-info" href="{{ path('shift_view', {'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> Details</a>
+                    </div>
+                </td>
+                <input type="hidden" name="shift[_token]" value="{{ csrf_token('shift_modify') }}" />
+            </form>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagerfanta">
+    {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+</div>
+{% endif %}
+{% endblock %}

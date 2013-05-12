@@ -1,0 +1,131 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - Posted Shifts{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/timepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.timepicker.min.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,1],[2,1]],headers:{6:{sorter:false}}});
+    $('#startDate').datepicker();
+    $('#startTime').timepicker();
+    $('#endDate').datepicker();
+    $('#endTime').timepicker();
+});
+</script>
+{% endblock %}
+{% block modulecontent %}
+<ul class="nav nav-tabs">
+    <li><a href="{{ path('dashboard') }}">My Schedule</a></li>
+    <li><a href="{{ path('dashboard_shifts') }}">My Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_past') }}">My Past Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_late') }}">My Late Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_missed') }}">My Missed Shifts</a></li>
+    <li class="active"><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a></li>
+</ul>
+<a class="btn btn-primary" href="#postShift" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Post Shift</a>
+<br><br>
+{% if entities is empty %}
+<div class="alert">
+    <strong>Sorry!</strong> No shifts have been posted for trade.
+</div>
+{% else %}
+<table class="table table-hover table-condensed table-sortable">
+    <thead>
+        <tr>
+            <th>Position</th>
+            <th>Shift Start</th>
+            <th>Shift End</th>
+            <th>Status</th>
+            <th>Posted By</th>
+            <th>Picked Up By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.position.area.name }} - {{ entity.position.name }}</td>
+            <td>{{ entity.startTime|date('Y-m-d h:i A') }}</td>
+            <td>{{ entity.endTime|date('Y-m-d h:i A') }}</td>
+            <td>{{ entity.status|capitalize }}</td>
+            <td><a href="{{ path('user_view', {'id': entity.user.id }) }}">{{ entity.user.name }}</a><br>on {{ entity.creationTime|date('Y-m-d h:i A') }}</a></td>
+            <td>
+                {% if entity.pickedUpBy and entity.pickedUpBy.id == app.user.id %}
+                    <form action="{{ path('shift_update', {'id': entity.id }) }}" method="post">
+                        <input type="hidden" name="shift[pickedUpBy]" value="" />
+                        <input type="hidden" name="shift[_token]" value="{{ csrf_token('shift_modify') }}" />
+                        <button class="btn btn-danger" type="submit"><i class="icon-minus icon-white"></i> Release Shift</button>
+                    </form>
+                {% elseif entity.pickedUpBy %}
+                    <a href="{{ path('user_view', {'id': entity.pickedUpBy.id }) }}">{{ entity.pickedUpBy.name }}</a>
+                {% elseif entity.user.id != app.user.id %}
+                    <form action="{{ path('shift_update', {'id': entity.id }) }}" method="post">
+                        <input type="hidden" name="shift[pickedUpBy]" value="{{ app.user.id }}" />
+                        <input type="hidden" name="shift[_token]" value="{{ csrf_token('shift_modify') }}" />
+                        <button class="btn btn-success" type="submit"><i class="icon-plus icon-white"></i> Take Shift</button>
+                    </form>
+                {% else %}
+                    Open
+                {% endif %}
+            </td>
+            <td>
+                {% if not entity.pickedUpBy and entity.user.id == app.user.id %}
+                    <a class="btn" href="{{ path('shift_edit', {'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ path('shift_view', {'id': entity.id }) }}"><i class="icon-eye-open icon-white"></i> Details</a>
+                {% endif %}
+            </td>
+            </form>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagerfanta">
+    {{ pagerfanta(paginator, 'twitter_bootstrap') }}
+</div>
+{% endif %}
+<div id="postShift" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="postShiftLabel" aria-hidden="true">
+    <form action="{{ path('shift_create') }}" method="post" {{ form_enctype(newForm) }}>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="postShiftLabel">Post Shift</h3>
+      </div>
+      <div class="modal-body">
+        {{ form_label(newForm.startTime) }}
+        <div class="input-append date" id="startDate" data-date="{{ newForm.startTime.vars.value['date']['year'] }}-{{ newForm.startTime.vars.value['date']['month'] }}-{{ newForm.startTime.vars.value['date']['day'] }}" data-date-format="yyyy-mm-dd">
+            <input type="text" name="shift[startTime][date]" value="{{ newForm.startTime.vars.value['date']['year'] }}-{{ newForm.startTime.vars.value['date']['month'] }}-{{ newForm.startTime.vars.value['date']['day'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+        <div class="input-append bootstrap-timepicker">
+            <input type="text" id="startTime" name="shift[startTime][time]" value="{{ newForm.startTime.vars.value['time']['hour'] }}:{{ newForm.startTime.vars.value['time']['minute'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-time"></i></span>
+        </div>
+
+        {{ form_label(newForm.endTime) }}
+        <div class="input-append date" id="endDate" data-date="{{ newForm.endTime.vars.value['date']['year'] }}-{{ newForm.endTime.vars.value['date']['month'] }}-{{ newForm.endTime.vars.value['date']['day'] }}" data-date-format="yyyy-mm-dd">
+            <input type="text" name="shift[endTime][date]" value="{{ newForm.endTime.vars.value['date']['year'] }}-{{ newForm.endTime.vars.value['date']['month'] }}-{{ newForm.endTime.vars.value['date']['day'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+        <div class="input-append bootstrap-timepicker">
+            <input type="text" id="endTime" name="shift[endTime][time]" value="{{ newForm.endTime.vars.value['time']['hour'] }}:{{ newForm.endTime.vars.value['time']['minute'] }}" class="input-small" />
+            <span class="add-on"><i class="icon-time"></i></span>
+        </div>
+
+        {{ form_row(newForm.notes) }}
+        {{ form_row(newForm.schedulePeriod) }}
+        {{ form_row(newForm.position) }}
+
+        {{ form_widget(newForm._token) }}
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Back to Shifts</button>
+        <button type="submit" class="btn btn-primary">Post Shift</button>
+      </div>
+    </form>
+</div>
+{% endblock %}

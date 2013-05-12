@@ -56,10 +56,17 @@ class Schedule extends BaseEntity\RecordBaseEntity
      */
     private $lateShifts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Shift", mappedBy="schedule", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $shifts;
+
     public function __construct()
     {
         parent::__construct();
         $this->lastUpdated = time();
+        $this->lateShifts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->shifts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getWeek()
@@ -190,5 +197,71 @@ class Schedule extends BaseEntity\RecordBaseEntity
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Add lateShifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\LateShift $lateShifts
+     * @return Schedule
+     */
+    public function addLateShift(\OpenSkedge\AppBundle\Entity\LateShift $lateShifts)
+    {
+        $this->lateShifts[] = $lateShifts;
+
+        return $this;
+    }
+
+    /**
+     * Remove lateShifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\LateShift $lateShifts
+     */
+    public function removeLateShift(\OpenSkedge\AppBundle\Entity\LateShift $lateShifts)
+    {
+        $this->lateShifts->removeElement($lateShifts);
+    }
+
+    /**
+     * Get lateShifts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLateShifts()
+    {
+        return $this->lateShifts;
+    }
+
+    /**
+     * Add shifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Shift $shifts
+     * @return Schedule
+     */
+    public function addShift(\OpenSkedge\AppBundle\Entity\Shift $shifts)
+    {
+        $this->shifts[] = $shifts;
+
+        return $this;
+    }
+
+    /**
+     * Remove shifts
+     *
+     * @param \OpenSkedge\AppBundle\Entity\Shift $shifts
+     */
+    public function removeShift(\OpenSkedge\AppBundle\Entity\Shift $shifts)
+    {
+        $this->shifts->removeElement($shifts);
+    }
+
+    /**
+     * Get shifts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getShifts()
+    {
+        return $this->shifts;
     }
 }

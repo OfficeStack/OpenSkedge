@@ -191,4 +191,41 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($time6DT->getTimestamp(), $this->_dtUtils->getDateTimeFromIndex(6, $time6Ind, true)->getTimestamp());
 
     }
+
+    /**
+     * Run tests to ensure the the correct intervals are returned from getDateTimeIntervals()
+     *
+     * @return void
+     */
+    public function testDateTimeIntervals()
+    {
+        $interval1Start = new \DateTime("midnight this sunday");
+        $interval1End = new \DateTime("midnight this sunday");
+        $interval1End->setTime(1, 30, 0);
+
+        $interval2Start = new \DateTime("midnight this sunday");
+        $interval2Start->setTime(11, 15, 0);
+        $interval2End = new \DateTime("midnight this sunday");
+        $interval2End->setTime(16, 45, 0);
+
+        $interval3Start = new \DateTime("midnight this sunday");
+        $interval3Start->setTime(20, 30, 0);
+        $interval3End = new \DateTime("midnight this sunday");
+        $interval3End->modify("+1 day");
+
+        $testRecord = "111110000000000000000000000000000000000000000111111111111111111111000000000000000011111111111111";
+
+        $testIntervals = array(
+            array($interval1Start, $interval1End),
+            array($interval2Start, $interval2End),
+            array($interval3Start, $interval3End),
+        );
+
+        $genIntervals = $this->_dtUtils->getDateTimeIntervals($testRecord, 0);
+
+        for ($i = 0; $i < count($testIntervals); $i++) {
+            $this->assertEquals($testIntervals[$i][0], $genIntervals[$i][0]);
+            $this->assertEquals($testIntervals[$i][1], $genIntervals[$i][1]);
+        }
+    }
 }
