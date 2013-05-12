@@ -4,6 +4,7 @@
 {{ parent() }}
 <script type="text/javascript">
     $("#shift-table").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0],[1,0],[2,0]],headers:{5:{sorter:false}}});
+    $("#position-schedule-table").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0]],headers:{1:{sorter:false},2:{sorter:false},3:{sorter:false},4:{sorter:false},5:{sorter:false},6:{sorter:false},7:{sorter:false}}});
 </script>
 {% endblock %}
 {% block modulecontent %}
@@ -58,7 +59,7 @@
 {% else %}
 {% for schedulePeriod in intervals %}
 <h4>Shifts from {{ schedulePeriods[loop.index0].startTime|date('M d, Y') }} to {{ schedulePeriods[loop.index0].endTime|date('M d, Y') }}</h4>
-<table class="table table-hover table-condensed table-sortable">
+<table id="position-schedule-table" class="table table-hover table-condensed table-sortable">
     <thead>
         <tr>
             <th>Position</th>
