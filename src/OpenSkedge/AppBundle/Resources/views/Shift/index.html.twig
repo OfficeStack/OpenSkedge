@@ -24,6 +24,10 @@
 </script>
 {% endblock %}
 {% block modulecontent %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('reports') }}">Reports</a> <span class="divider">/</span></li>
+    <li class="active">Shift Trade Report</li>
+</ul>
 {% if entities is empty %}
 <div class="alert">
     <strong>Sorry!</strong> No shifts have been posted for trade.
