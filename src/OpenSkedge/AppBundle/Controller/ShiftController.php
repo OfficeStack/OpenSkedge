@@ -256,7 +256,6 @@ class ShiftController extends Controller
 
             $request->getSession()->setFlash('success', 'Shift updated successfully.');
         } else {
-            var_dump($editForm->getErrorsAsString(4));
             $request->getSession()->setFlash('error', 'Shift failed to update!');
         }
 
