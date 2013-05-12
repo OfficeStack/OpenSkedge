@@ -283,7 +283,7 @@ class ShiftController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('shift'));
+        return $this->redirect($this->generateUrl('report_shifts'));
     }
 
     /**
