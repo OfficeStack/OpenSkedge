@@ -8,6 +8,10 @@ login_check:
 logout:
     pattern:  /logout
 
+api:
+    resource: "@OpenSkedgeBundle/Resources/config/routing_api.yml"
+    prefix:   /api
+
 dashboard:
     pattern:  /dashboard/
     defaults: { _controller: OpenSkedgeBundle:Dashboard:index }
@@ -37,33 +41,35 @@ dashboard_stats:
     defaults: { _controller: OpenSkedgeBundle:Stats:index, id: ~ }
 
 lateshift_update:
-    pattern:  /shifts/late/{id}/
+    pattern:  /shifts/late/{id}/update
     defaults: { _controller: OpenSkedgeBundle:LateShift:update }
-    methods: [POST, PATCH]
+    methods: [POST]
     requirements:
         id: \d+
 
 shift_create:
     pattern:  /shift/
     defaults: { _controller: OpenSkedgeBundle:Shift:create }
-    methods: [POST, PUT]
+    methods: [POST]
 
 shift_delete:
     pattern:  /shift/{id}/delete
     defaults: { _controller: OpenSkedgeBundle:Shift:delete }
+    methods: [POST]
     requirements:
         id: \d+
 
 shift_edit:
     pattern:  /shift/{id}/edit
     defaults: { _controller: OpenSkedgeBundle:Shift:edit }
+    methods: [GET]
     requirements:
         id: \d+
 
 shift_update:
-    pattern:  /shift/{id}/
+    pattern:  /shift/{id}/edit
     defaults: { _controller: OpenSkedgeBundle:Shift:update }
-    methods: [POST, PUT, PATCH]
+    methods: [POST]
     requirements:
         id: \d+
 
