@@ -8,9 +8,6 @@ body {
   max-width: 400px;
   margin: 0 auto 20px;
 }
-#footer {
-  text-align: center;
-}
 .form-signin {
   padding: 19px 29px 29px;
   background-color: #fff;
