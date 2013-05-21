@@ -29,13 +29,19 @@ class PositionController extends Controller
     /**
      * Lists all Position entities.
      *
+     * @param integer $aid ID of parent area (used for filtering results)
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction($aid)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $positions = $em->getRepository('OpenSkedgeBundle:Position')->findAll();
+        if ($aid !== null) {
+            $positions = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array('area' => $aid), array('name' => 'ASC'));
+        } else {
+            $positions = $em->getRepository('OpenSkedgeBundle:Position')->findBy(array(), array('name' => 'ASC'));
+        }
 
         $page = $this->container->get('request')->query->get('page', 1);
 
