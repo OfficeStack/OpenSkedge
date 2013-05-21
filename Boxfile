@@ -8,7 +8,7 @@ web1:
     default_gateway: app.php
     index_list: [app.php]
 
-    php_version: 5.3.10
+    php_version: 5.3.23
     php_extensions:
       - apc
       - intl
