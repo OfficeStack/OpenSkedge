@@ -163,7 +163,7 @@ class DateTimeUtils
                 $start = $i;
             } else if ($prev == '1' and $dayRecord[$i] == '0') {
                 // An interval ends here. Add a DateTime pair to the $intervals array
-                $intervals[] = array($this->getDateTimeFromIndex($day, $start, $utc), $this->getDateTimeFromIndex($day, $i+1, $utc));
+                $intervals[] = array($this->getDateTimeFromIndex($day, $start, $utc), $this->getDateTimeFromIndex($day, $i, $utc));
             } else if ($prev == '1' and $dayRecord[$i] == '1' and $i == 95) {
                 // If we reach the end of the string, set the end of the interval to tomorrow at midnight.
                 $startDT = $this->getDateTimeFromIndex($day, $start, $utc);

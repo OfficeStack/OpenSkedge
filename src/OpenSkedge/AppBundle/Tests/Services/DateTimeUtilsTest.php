@@ -201,12 +201,12 @@ class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
     {
         $interval1Start = new \DateTime("midnight this sunday");
         $interval1End = new \DateTime("midnight this sunday");
-        $interval1End->setTime(1, 30, 0);
+        $interval1End->setTime(1, 15, 0);
 
         $interval2Start = new \DateTime("midnight this sunday");
         $interval2Start->setTime(11, 15, 0);
         $interval2End = new \DateTime("midnight this sunday");
-        $interval2End->setTime(16, 45, 0);
+        $interval2End->setTime(16, 30, 0);
 
         $interval3Start = new \DateTime("midnight this sunday");
         $interval3Start->setTime(20, 30, 0);
