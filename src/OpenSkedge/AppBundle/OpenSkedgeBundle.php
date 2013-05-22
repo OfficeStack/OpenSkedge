@@ -2,6 +2,7 @@
 
 namespace OpenSkedge\AppBundle;
 
+use OpenSkedge\AppBundle\DependencyInjection\Security\Factory\ApiTokenAuthenticationFactory;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -68,5 +69,8 @@ class OpenSkedgeBundle extends Bundle
         }
 
         $container->setParameter('deploy_commit', (string)$commit);
+
+        $extension = $container->getExtension('security');
+        $extension->addSecurityListenerFactory(new ApiTokenAuthenticationFactory());
     }
 }

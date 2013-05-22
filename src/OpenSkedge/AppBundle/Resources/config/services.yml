@@ -1,5 +1,6 @@
 parameters:
     notify_mailer.class: OpenSkedge\AppBundle\Mailer\TwigMailer
+    security.authentication.provider.api_token_auth.class: OpenSkedge\AppBundle\Security\Authentication\Provider\ApiTokenAuthenticationProvider
 
 services:
     app_settings:
@@ -42,3 +43,7 @@ services:
         class: OpenSkedge\AppBundle\Command\WorkerRunCommand
         tags:
             - { name: monolog.logger, channel: worker }
+
+    security.authentication.provider.api_token_auth:
+        class: %security.authentication.provider.api_token_auth.class%
+        arguments:  ["", @security.user_checker, "", @security.encoder_factory, %security.authentication.hide_user_not_found%]
