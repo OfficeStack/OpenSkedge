@@ -14,20 +14,14 @@ security:
     providers:
         main:
             entity: { class: OpenSkedge\AppBundle\Entity\User, property: username }
-        in_memory:
-            memory:
-                users:
-                    testemp:
-                        password: testemp
-                        roles: [ 'ROLE_USER' ]
-                    testsup:
-                        password: testsup
-                        roles: [ 'ROLE_ADMIN' ]
-                    testadmin:
-                        password: testadmin
-                        roles: [ 'ROLE_SUPER_ADMIN']
 
     firewalls:
+        rest_api:
+            pattern: /api/.*
+            api_token_auth:
+                provider: main
+            stateless:  true
+            context: application
         main:
             pattern: /.*
             provider: main
@@ -68,7 +62,7 @@ security:
                 realm: "OpenSkedge Authentication Required"
             security: true
             anonymous: true
-
+            context: application
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
