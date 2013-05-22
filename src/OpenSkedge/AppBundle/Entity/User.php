@@ -174,6 +174,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $pickedUpShifts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ApiToken", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $apiTokens;
+
     public function __construct()
     {
         $this->min = 10;
@@ -948,5 +953,38 @@ class User implements AdvancedUserInterface, \Serializable
     public function getPickedUpShifts()
     {
         return $this->pickedUpShifts;
+    }
+
+    /**
+     * Add ApiTokens
+     *
+     * @param \OpenSkedge\AppBundle\Entity\ApiToken $apiTokens
+     * @return User
+     */
+    public function addApiToken(\OpenSkedge\AppBundle\Entity\ApiToken $apiTokens)
+    {
+        $this->apiTokens[] = $apiTokens;
+
+        return $this;
+    }
+
+    /**
+     * Remove ApiTokens
+     *
+     * @param \OpenSkedge\AppBundle\Entity\ApiToken $apiTokens
+     */
+    public function removeApiToken(\OpenSkedge\AppBundle\Entity\ApiToken $apiTokens)
+    {
+        $this->apiTokens->removeElement($apiTokens);
+    }
+
+    /**
+     * Get ApiTokens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getApiTokens()
+    {
+        return $this->apiTokens;
     }
 }
