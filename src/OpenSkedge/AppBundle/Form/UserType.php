@@ -11,6 +11,10 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if($options['request'] === 'PATCH') {
+            $subscriber = new EventSubscriber\PatchSubscriber();
+            $builder->addEventSubscriber($subscriber);
+        }
         $builder->add('username', 'text')
                 ->add('password', 'repeated', array(
                     'required' => false,
@@ -56,7 +60,8 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'OpenSkedge\AppBundle\Entity\User'
+            'data_class' => 'OpenSkedge\AppBundle\Entity\User',
+            'request' => ''
         ));
     }
 
