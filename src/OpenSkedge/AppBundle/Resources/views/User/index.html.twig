@@ -2,10 +2,10 @@
 {% block title %}{{ app_brand_name() }} - {{ userstitle }}{% endblock %}
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/colorpicker.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('js/bootstrap.colorpicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.colorpicker.min.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
     $(".table-sortable").tablesorter({theme:'oskedge',widgets:["uitheme"],headerTemplate:'{content} {icon}',sortList:[[0,0]],headers:{4:{sorter:false},5:{sorter:false},6:{sorter:false},7:{sorter:false}}});

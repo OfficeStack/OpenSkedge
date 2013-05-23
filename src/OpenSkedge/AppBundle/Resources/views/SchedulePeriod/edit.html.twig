@@ -3,10 +3,10 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.datepicker.min.js') }}"></script>
 <script type="text/javascript">
 $('#schedulePeriodStart').datepicker({ format: 'mm-dd-yyyy', autoclose: true });
 $('#schedulePeriodEnd').datepicker({ format: 'mm-dd-yyyy', autoclose: true });

@@ -1,11 +1,11 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/colorpicker.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script type="text/javascript" src="{{ asset('js/bootstrap.colorpicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.colorpicker.min.js') }}"></script>
 <script type="text/javascript">$('#colorField').colorpicker();</script>
 {% endblock %}
 {% block modulecontent %}
