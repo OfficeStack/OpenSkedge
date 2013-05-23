@@ -4,6 +4,7 @@ namespace OpenSkedge\AppBundle\Entity\BaseEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * OpenSkedge\AppBundle\Entity\BaseEntity\RecordBaseEntity
@@ -15,42 +16,49 @@ class RecordBaseEntity
     /**
      * @ORM\Column(type="string", length=96)
      * @Assert\Length(min="96", max="96")
+     * @Serializer\Type("string")
      */
     protected $sun;
 
     /**
      * @ORM\Column(type="string", length=96)
      * @Assert\Length(min="96", max="96")
+     * @Serializer\Type("string")
      */
     protected $mon;
 
     /**
      * @ORM\Column(type="string", length=96)
      * @Assert\Length(min="96", max="96")
+     * @Serializer\Type("string")
      */
     protected $tue;
 
     /**
      * @ORM\Column(type="string", length=96)
      * @Assert\Length(min="96", max="96")
+     * @Serializer\Type("string")
      */
     protected $wed;
 
     /**
      * @ORM\Column(type="string", length=96)
      * @Assert\Length(min="96", max="96")
+     * @Serializer\Type("string")
      */
     protected $thu;
 
     /**
      * @ORM\Column(type="string", length=96)
      * @Assert\Length(min="96", max="96")
+     * @Serializer\Type("string")
      */
     protected $fri;
 
     /**
      * @ORM\Column(type="string", length=96)
      * @Assert\Length(min="96", max="96")
+     * @Serializer\Type("string")
      */
     protected $sat;
 
