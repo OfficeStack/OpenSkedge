@@ -124,7 +124,7 @@ class ClockController extends Controller
 
         $curTime = new \DateTime("now");
         $yesterday = clone $curTime;
-        $yesterday->modify("-1 day");
+        $yesterday->modify("-1 days");
 
         $user = $this->getUser();
         $clock = $user->getClock();
@@ -137,7 +137,7 @@ class ClockController extends Controller
          *
          * If the date of lastClock is the previous day, we need to update two timerecords.
          */
-        if ($lastClock->format('Y-m-d') == $yesterday->format('Y-m-d')) {
+        if ($lastClock->format('Y-m-d') === $yesterday->format('Y-m-d')) {
             $prevDayEnd = clone $lastClock;
             $prevDayEnd->setTime(23, 59, 59);
             $getDay = "get".$lastClock->format('D');
@@ -146,7 +146,7 @@ class ClockController extends Controller
             $clock->$setDay($yesterdayTimerecord);
             // The the final timerecord will be a continuation of midnight today until the current time.
             $startTime = new \DateTime("midnight today");
-        } else {
+        } elseif ($lastClock->format('Y-m-d') < $yesterday->format('Y-m-d')) {
             /* They forgot to clock out over a number of days.
              * set $curTime to 23,59,59 on the last day the clocked in.
              * Not a perfect solution, but it minimizes the damage from not clocking out.
