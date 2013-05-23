@@ -3,6 +3,7 @@
 namespace OpenSkedge\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -12,7 +13,10 @@ use OpenSkedge\AppBundle\Entity\Schedule;
 use OpenSkedge\AppBundle\Entity\User;
 
 use Pagerfanta\Pagerfanta;
+use Pagerfanta\Exception\NotValidMaxPerPageException;
+use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 /**
  * Controller for generating time clock reports
@@ -47,13 +51,21 @@ class HoursReportController extends Controller
             ->getResult();
 
         $page = $this->container->get('request')->query->get('page', 1);
+        $limit = $this->container->get('request')->query->get('limit', 15);
 
         $adapter = new ArrayAdapter($archivedClockWeeks);
         $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(15);
-        $paginator->setCurrentPage($page);
 
-        $entities = $paginator->getCurrentPageResults();
+        try {
+            $paginator->setMaxPerPage($limit);
+            $paginator->setCurrentPage($page);
+
+            $entities = $paginator->getCurrentPageResults();
+        } catch (NotValidMaxPerPageException $e) {
+            throw new HttpException(400, 'Not a valid limit', $e, array(), $e->getCode());
+        } catch (NotValidCurrentPageException $e) {
+            throw $this->createNotFoundException('Page does not exist.');
+        }
 
         return $this->render('OpenSkedgeBundle:HoursReport:index.html.twig', array(
             'entities' => $entities,
@@ -82,16 +94,30 @@ class HoursReportController extends Controller
         $week->setDate($year, $month, $day);
         $week->setTime(0, 0, 0);  // Midnight
 
-        $archivedClocks = $em->getRepository('OpenSkedgeBundle:ArchivedClock')->findBy(array('week' => $week));
+        $week = $this->container->get('dt_utils')->getFirstDayOfWeek($week);
+
+        $archivedClocksQB = $em->createQueryBuilder()
+                             ->select('ac')
+                             ->from('OpenSkedgeBundle:ArchivedClock', 'ac')
+                             ->where('ac.week = :week')
+                             ->setParameter('week', $week);
 
         $page = $this->container->get('request')->query->get('page', 1);
+        $limit = $this->container->get('request')->query->get('limit', 15);
 
-        $adapter = new ArrayAdapter($archivedClocks);
+        $adapter = new DoctrineORMAdapter($archivedClocksQB);
         $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(15);
-        $paginator->setCurrentPage($page);
 
-        $entities = $paginator->getCurrentPageResults();
+        try {
+            $paginator->setMaxPerPage($limit);
+            $paginator->setCurrentPage($page);
+
+            $entities = $paginator->getCurrentPageResults();
+        } catch (NotValidMaxPerPageException $e) {
+            throw new HttpException(400, 'Not a valid limit', $e, array(), $e->getCode());
+        } catch (NotValidCurrentPageException $e) {
+            throw $this->createNotFoundException('Page does not exist.');
+        }
 
         return $this->render('OpenSkedgeBundle:HoursReport:view.html.twig', array(
             'week'      => $week,
