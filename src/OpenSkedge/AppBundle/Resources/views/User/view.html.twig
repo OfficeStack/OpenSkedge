@@ -38,43 +38,59 @@
                 <th>Role</th>
                 <td>{{ entity.group.name }}</td>
             </tr>
+            {% if entity.workphone %}
             <tr>
                 <th>Work Phone</th>
                 <td>{{ entity.workphone }}</td>
             </tr>
+            {% endif %}
+            {% if entity.homephone %}
             <tr>
                 <th>Home Phone</th>
                 <td>{{ entity.homephone }}</td>
             </tr>
+            {% endif %}
+            {% if entity.location %}
             <tr>
                 <th>Location</th>
                 <td>{{ entity.location }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Email</th>
                 <td>{{ entity.email }}</td>
             </tr>
+            {% if entity.min %}
             <tr>
                 <th>Minimum Hours</th>
                 <td>{{ entity.min }}</td>
             </tr>
+            {% endif %}
+            {% if entity.max %}
             <tr>
                 <th>Maximum Hours</th>
                 <td>{{ entity.max }}</td>
             </tr>
+            {% endif %}
+            {% if entity.hours %}
             <tr>
                 <th>Requested Hours</th>
                 <td>{{ entity.hours }}</td>
             </tr>
+            {% endif %}
+            {% if entity.notes %}
             <tr>
                 <th>Notes</th>
                 <td>{{ entity.notes }}</td>
             </tr>
+            {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
+            {% if entity.supnotes %}
             <tr>
                 <th>Supervisor Notes</th>
                 <td>{{ entity.supnotes }}</td>
             </tr>
+            {% endif %}
             {% endif %}
             <tr>
                 <th>Color</th>
