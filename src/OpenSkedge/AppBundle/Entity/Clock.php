@@ -3,10 +3,12 @@
 namespace OpenSkedge\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Table(name="os_clock")
  * @ORM\Entity()
+ * @Serializer\XmlRoot("clock")
  */
 class Clock extends BaseEntity\RecordBaseEntity
 {
@@ -14,6 +16,7 @@ class Clock extends BaseEntity\RecordBaseEntity
      * @ORM\Column(name="id", type="integer", unique=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Exclude
      */
     private $id;
 
@@ -25,11 +28,13 @@ class Clock extends BaseEntity\RecordBaseEntity
 
     /**
      * @ORM\Column(type="boolean")
+     * @Serializer\Type("boolean")
      */
     private $status;
 
     /**
      * @ORM\Column(name="last_clock", type="datetime")
+     * @Serializer\Type("DateTime<'c'>")
      */
     private $lastClock;
 
