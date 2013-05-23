@@ -50,7 +50,15 @@ class ClockController extends Controller
 
         $this->get('clock_utils')->clockIn($this->getUser());
 
-        return $this->redirect($this->generateUrl('dashboard'));
+        if ($request->getContentType() === 'json' or $request->getContentType() === 'xml') {
+            return new Response(
+                '',
+                200,
+                array('content-type' => 'application/'.$request->getContentType())
+            );
+        } else {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
     }
 
     /**
@@ -77,6 +85,14 @@ class ClockController extends Controller
 
         $this->get('clock_utils')->clockOut($this->getUser());
 
-        return $this->redirect($this->generateUrl('dashboard'));
+        if ($request->getContentType() === 'json' or $request->getContentType() === 'xml') {
+            return new Response(
+                '',
+                200,
+                array('content-type' => 'application/'.$request->getContentType())
+            );
+        } else {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
     }
 }
