@@ -5,10 +5,12 @@ namespace OpenSkedge\AppBundle\Entity;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Table(name="os_groups")
  * @ORM\Entity()
+ * @Serializer\XmlRoot("group")
  */
 class Group implements RoleInterface
 {
@@ -16,22 +18,27 @@ class Group implements RoleInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Type("integer")
+     * @Serializer\ReadOnly
      */
     protected $id;
 
     /**
      * @ORM\Column(name="name", type="string", length=30)
+     * @Serializer\Type("string")
      */
     protected $name;
 
     /**
      * @ORM\Column(name="role", type="string", length=20, unique=true)
+     * @Serializer\Type("string")
      */
     protected $role;
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="group")
      * @ORM\OrderBy({"name" = "ASC"})
+     * @Serializer\Exclude
      */
     protected $users;
 
