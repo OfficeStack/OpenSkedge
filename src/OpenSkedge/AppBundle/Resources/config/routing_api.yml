@@ -76,15 +76,19 @@ api_position_delete:
         id: \d+
         _format:  json|xml
 
-api_clock_in:
-    pattern:  /clock/in
-    defaults: { _controller: OpenSkedgeBundle:Clock:clockIn }
-    methods: [POST]
+api_clock_get:
+    pattern:  /clock/
+    defaults: { _controller: OpenSkedgeBundle:Clock:get, _format: json }
+    methods: [GET]
+    requirements:
+        _format:  json|xml
 
-api_clock_out:
-    pattern:  /clock/out
-    defaults: { _controller: OpenSkedgeBundle:Clock:clockOut }
-    methods: [POST]
+api_clock_put:
+    pattern:  /clock/
+    defaults: { _controller: OpenSkedgeBundle:Clock:put, _format: json }
+    methods: [PUT]
+    requirements:
+        _format:  json|xml
 
 api_position_schedule_edit:
     pattern:  /schedule/period/{spid}/position/{pid}/
