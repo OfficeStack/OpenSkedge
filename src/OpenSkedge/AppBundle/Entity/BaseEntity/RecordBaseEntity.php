@@ -75,31 +75,30 @@ class RecordBaseEntity
     {
         switch((int)$dayint) {
             case 0:
-                $day = 'Sun';
+                $day = 'sun';
                 break;
             case 1:
-                $day = 'Mon';
+                $day = 'mon';
                 break;
             case 2:
-                $day = 'Tue';
+                $day = 'tue';
                 break;
             case 3:
-                $day = 'Wed';
+                $day = 'wed';
                 break;
             case 4:
-                $day = 'Thu';
+                $day = 'thu';
                 break;
             case 5:
-                $day = 'Fri';
+                $day = 'fri';
                 break;
             case 6:
-                $day = 'Sat';
+                $day = 'sat';
                 break;
             default:
                 throw new \UnexpectedValueException('Input does not refer to a day!');
         }
-        $getDay = 'get'.$day;
-        return $this->$getDay();
+        return $this->{$day};
     }
 
     /**
@@ -113,47 +112,67 @@ class RecordBaseEntity
     {
         switch((int)$dayint) {
             case 0:
-                $day = 'Sun';
+                $day = 'sun';
                 break;
             case 1:
-                $day = 'Mon';
+                $day = 'mon';
                 break;
             case 2:
-                $day = 'Tue';
+                $day = 'tue';
                 break;
             case 3:
-                $day = 'Wed';
+                $day = 'wed';
                 break;
             case 4:
-                $day = 'Thu';
+                $day = 'thu';
                 break;
             case 5:
-                $day = 'Fri';
+                $day = 'fri';
                 break;
             case 6:
-                $day = 'Sat';
+                $day = 'sat';
                 break;
             default:
                 throw new \UnexpectedValueException('Input does not refer to a day!');
         }
-        $setDay = 'set'.$day;
-        return $this->$setDay($val);
+        return $this->{$day} = $val;
     }
 
     public function setDayOffset($dayint, $offset, $val)
     {
-        $recStr = $this->getDay($dayint);
-        $recArr = str_split($recStr);
-        $recArr[$offset] = $val;
-        $rec = implode('', $recArr);
-        return $this->setDay($dayint, $rec);
+        switch((int)$dayint) {
+            case 0:
+                $day = 'sun';
+                break;
+            case 1:
+                $day = 'mon';
+                break;
+            case 2:
+                $day = 'tue';
+                break;
+            case 3:
+                $day = 'wed';
+                break;
+            case 4:
+                $day = 'thu';
+                break;
+            case 5:
+                $day = 'fri';
+                break;
+            case 6:
+                $day = 'sat';
+                break;
+            default:
+                throw new \UnexpectedValueException('Input does not refer to a day!');
+        }
+        $this->{$day}[$offset] = $val;
+        return $this;
     }
 
     public function getDayOffset($dayint, $offset)
     {
         $recStr = $this->getDay($dayint);
-        $recArr = str_split($recStr);
-        return $recArr[$offset];
+        return $recStr[$offset];
     }
 
     /**
