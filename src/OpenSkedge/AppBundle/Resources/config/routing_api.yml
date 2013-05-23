@@ -1,250 +1,299 @@
 
 api_areas:
     pattern:  /areas/
-    defaults: { _controller: OpenSkedgeBundle:Area:index }
+    defaults: { _controller: OpenSkedgeBundle:Area:index, _format: json }
+    requirements:
+        _format:  json|xml
 
 api_area_new:
     pattern:  /area/
-    defaults: { _controller: OpenSkedgeBundle:Area:new }
+    defaults: { _controller: OpenSkedgeBundle:Area:new, _format: json }
     methods:  [POST]
+    requirements:
+        _format:  json|xml
 
 api_area_view:
     pattern:  /area/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Area:view }
+    defaults: { _controller: OpenSkedgeBundle:Area:view, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_area_edit:
     pattern:  /area/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Area:edit }
+    defaults: { _controller: OpenSkedgeBundle:Area:edit, _format: json }
     methods:  [PUT, PATCH]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_area_delete:
     pattern:  /area/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Area:delete }
+    defaults: { _controller: OpenSkedgeBundle:Area:delete, _format: json }
     methods:  [DELETE]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_positions:
     pattern:  /area/{id}/positions/
-    defaults: { _controller: OpenSkedgeBundle:Position:index }
+    defaults: { _controller: OpenSkedgeBundle:Position:index, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_position_new:
     pattern:  /area/{id}/position/
-    defaults: { _controller: OpenSkedgeBundle:Position:new }
+    defaults: { _controller: OpenSkedgeBundle:Position:new, _format: json }
     methods:  [POST]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_position_view:
     pattern:  /area/position/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Position:view }
+    defaults: { _controller: OpenSkedgeBundle:Position:view, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_position_edit:
     pattern:  /area/position/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Position:edit }
+    defaults: { _controller: OpenSkedgeBundle:Position:edit, _format: json }
     methods:  [PUT, PATCH]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_position_delete:
     pattern:  /area/position/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Position:delete }
+    defaults: { _controller: OpenSkedgeBundle:Position:delete, _format: json }
     methods:  [DELETE]
     requirements:
         id: \d+
+        _format:  json|xml
+
+api_clock_in:
+    pattern:  /clock/in
+    defaults: { _controller: OpenSkedgeBundle:Clock:clockIn }
+    methods: [POST]
+
+api_clock_out:
+    pattern:  /clock/out
+    defaults: { _controller: OpenSkedgeBundle:Clock:clockOut }
+    methods: [POST]
 
 api_position_schedule_edit:
     pattern:  /schedule/period/{spid}/position/{pid}/
-    defaults: { _controller: OpenSkedgeBundle:Schedule:edit }
+    defaults: { _controller: OpenSkedgeBundle:Schedule:edit, _format: json }
     methods:  [PUT, PATCH]
     requirements:
         pid: \d+
         spid: \d+
+        _format:  json|xml
 
 api_position_schedule_view:
     pattern:  /schedule/period/{spid}/position/{pid}/
-    defaults: { _controller: OpenSkedgeBundle:Schedule:view }
+    defaults: { _controller: OpenSkedgeBundle:Schedule:view, _format: json }
     methods:  [GET]
     requirements:
         pid: \d+
         spid: \d+
+        _format:  json|xml
 
 api_position_schedule_delete:
     pattern:  /schedule/period/{spid}/position/{pid}/
-    defaults: { _controller: OpenSkedgeBundle:Schedule:delete }
+    defaults: { _controller: OpenSkedgeBundle:Schedule:delete, _format: json }
     methods:  [DELETE]
     requirements:
         pid: \d+
         spid: \d+
+        _format:  json|xml
 
 api_lateshift_update:
     pattern:  /shifts/late/{id}/
-    defaults: { _controller: OpenSkedgeBundle:LateShift:update }
+    defaults: { _controller: OpenSkedgeBundle:LateShift:update, _format: json }
     methods:  [PUT, PATCH]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_shift_create:
     pattern:  /shift/
-    defaults: { _controller: OpenSkedgeBundle:Shift:create }
+    defaults: { _controller: OpenSkedgeBundle:Shift:create, _format: json }
     methods:  [POST]
+    requirements:
+        _format:  json|xml
 
 api_shift_view:
     pattern:  /shift/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Shift:view }
+    defaults: { _controller: OpenSkedgeBundle:Shift:view, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_shift_update:
     pattern:  /shift/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Shift:update }
+    defaults: { _controller: OpenSkedgeBundle:Shift:update, _format: json }
     methods:  [PUT, PATCH]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_shift_delete:
     pattern:  /shift/{id}/
-    defaults: { _controller: OpenSkedgeBundle:Shift:delete }
+    defaults: { _controller: OpenSkedgeBundle:Shift:delete, _format: json }
     methods:  [DELETE]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_schedule_new_post:
     pattern:  /user/{uid}/schedule/
-    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:new }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:new, _format: json }
     methods:  [POST]
     requirements:
         uid: \d+
+        _format:  json|xml
 
 api_user_schedule_new_put:
     pattern:  /user/{uid}/schedule/period/{spid}/
-    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:new }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:new, _format: json }
     methods:  [PUT]
     requirements:
         uid: \d+
         spid: \d+
+        _format:  json|xml
 
 api_user_schedule_edit:
     pattern:  /user/{uid}/schedule/period/{spid}/
-    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:edit }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:edit, _format: json }
     methods:  [PUT, PATCH]
     requirements:
         uid: \d+
         spid: \d+
+        _format:  json|xml
 
 api_user_schedule_delete:
     pattern:  /user/{uid}/schedule/period/{spid}/
-    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:delete }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:delete, _format: json }
     methods:  [DELETE]
     requirements:
         uid: \d+
         spid: \d+
+        _format:  json|xml
 
 api_user_schedule_view:
     pattern:  /user/{uid}/schedule/period/{spid}/
-    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:view }
+    defaults: { _controller: OpenSkedgeBundle:AvailabilitySchedule:view, _format: json }
     methods:  [GET]
     requirements:
         uid: \d+
         spid: \d+
+        _format:  json|xml
 
 api_user_employees:
     pattern:  /user/{id}/employees/
-    defaults: { _controller: OpenSkedgeBundle:User:employees }
+    defaults: { _controller: OpenSkedgeBundle:User:employees, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_supervisors:
     pattern:  /user/{id}/supervisors/
-    defaults: { _controller: OpenSkedgeBundle:User:supervisors }
+    defaults: { _controller: OpenSkedgeBundle:User:supervisors, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
-user_colleagues:
+api_user_colleagues:
     pattern:  /user/{id}/colleagues/
-    defaults: { _controller: OpenSkedgeBundle:User:colleagues }
+    defaults: { _controller: OpenSkedgeBundle:User:colleagues, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_positions:
     pattern:  /user/{id}/positions/
-    defaults: { _controller: OpenSkedgeBundle:Position:positions }
+    defaults: { _controller: OpenSkedgeBundle:Position:positions, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_shifts:
     pattern:  /user/{id}/shifts/
-    defaults: { _controller: OpenSkedgeBundle:User:shifts }
+    defaults: { _controller: OpenSkedgeBundle:User:shifts, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_shifts_late:
     pattern:  /user/{id}/shifts/late/
-    defaults: { _controller: OpenSkedgeBundle:User:lateShifts }
+    defaults: { _controller: OpenSkedgeBundle:User:lateShifts, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_shifts_missed:
     pattern:  /user/{id}/shifts/missed/
-    defaults: { _controller: OpenSkedgeBundle:User:missedShifts }
+    defaults: { _controller: OpenSkedgeBundle:User:missedShifts, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_shifts_late:
     pattern:  /user/{id}/shifts/taken/
-    defaults: { _controller: OpenSkedgeBundle:User:takenShifts }
+    defaults: { _controller: OpenSkedgeBundle:User:takenShifts, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_new:
     pattern:  /user/
-    defaults: { _controller: OpenSkedgeBundle:User:new }
+    defaults: { _controller: OpenSkedgeBundle:User:new, _format: json }
     methods:  [POST]
+    requirements:
+        _format:  json|xml
 
 api_user_view:
     pattern:  /user/{id}/
-    defaults: { _controller: OpenSkedgeBundle:User:view }
+    defaults: { _controller: OpenSkedgeBundle:User:view, _format: json }
     methods:  [GET]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_edit:
     pattern:  /user/{id}/
-    defaults: { _controller: OpenSkedgeBundle:User:edit }
+    defaults: { _controller: OpenSkedgeBundle:User:edit, _format: json }
     methods:  [PUT, PATCH]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_user_delete:
     pattern:  /user/{id}/
-    defaults: { _controller: OpenSkedgeBundle:User:delete }
+    defaults: { _controller: OpenSkedgeBundle:User:delete, _format: json }
     methods:  [DELETE]
     requirements:
         id: \d+
+        _format:  json|xml
 
 api_users:
     pattern:  /users/
-    defaults: { _controller: OpenSkedgeBundle:User:index }
+    defaults: { _controller: OpenSkedgeBundle:User:index, _format: json }
     methods:  [GET]
     requirements:
         _format:  json|xml
