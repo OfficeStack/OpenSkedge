@@ -79,7 +79,7 @@ class ClockPruneCommand extends ContainerAwareCommand
         foreach ($clocksToBePruned as $clock) {
             $output->writeln("Pruning timeclock data for week of ".$clock->getWeek()->format('Y-M-d'));
             $em->remove($clock);
-            $em->flush();
         }
+        $em->flush();
     }
 }
