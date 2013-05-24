@@ -132,7 +132,6 @@ class LateShiftController extends Controller
             throw $this->createNotFoundException('Unable to find LateShift entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new LateShiftType(), $entity);
         $editForm->bind($request);
 

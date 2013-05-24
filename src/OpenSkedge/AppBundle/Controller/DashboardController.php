@@ -34,8 +34,6 @@ class DashboardController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $qb = $em->createQueryBuilder();
-
         $user = $this->getUser();
 
         $appSettings = $this->get('app_settings')->getAppSettings();
