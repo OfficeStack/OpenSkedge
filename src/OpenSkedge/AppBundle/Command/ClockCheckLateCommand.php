@@ -107,7 +107,7 @@ class ClockCheckLateCommand extends ContainerAwareCommand
                     // If they do, they're late.
                     if ($pickedUpShift instanceof Shift) {
                         // Write the output to the console
-                        $output->writeln($user->getName()." is late for a ".$pickedUpShift->getPosition()." shift they picked up from ".$shift->getUser());
+                        $output->writeln($user->getName()." is late for a ".$pickedUpShift->getPosition()." shift they picked up from ".$pickedUpShift->getUser());
                         $late = true;
                         $lateSchedule = $pickedUpShift->getSchedule();
                     }
