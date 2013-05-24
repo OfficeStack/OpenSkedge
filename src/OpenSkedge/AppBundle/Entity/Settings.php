@@ -33,6 +33,7 @@ class Settings
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      * @Assert\Type(type="integer")
      */
     private $pruneAfter;
