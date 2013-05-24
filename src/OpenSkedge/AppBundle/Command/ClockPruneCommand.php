@@ -39,12 +39,15 @@ class ClockPruneCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $appSettings = $this->getContainer()->get('app_settings')->getAppSettings();
 
         // If passed an argument from the command, use it.
         if (!is_null($input->getArgument('threshold'))) {
             $weeks = sprintf("-%s weeks", $input->getArgument('threshold'));
+        } else if ($appSettings->getPruneAfter() == 0) {
+            // Disable pruning if pruneAfter is set to 0 weeks.
+            return;
         } else { // Otherwise take the threshold from the application settings.
-            $appSettings = $this->getContainer()->get('app_settings')->getAppSettings();
             $weeks = sprintf("-%s weeks", $appSettings->getPruneAfter());
         }
 
