@@ -117,6 +117,43 @@ api_position_schedule_delete:
         spid: \d+
         _format:  json|xml
 
+api_schedule_periods:
+    pattern:  /schedule/periods/
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:index, _format: json }
+    methods:  [GET]
+    requirements:
+        _format:  json|xml
+
+api_schedule_period:
+    pattern:  /schedule/period/
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:new, _format: json }
+    methods:  [POST]
+    requirements:
+        _format:  json|xml
+
+api_schedule_period_edit:
+    pattern:  /schedule/period/{id}/
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:edit, _format: json }
+    methods:  [PUT, PATCH]
+    requirements:
+        id: \d+
+        _format:  json|xml
+
+api_schedule_period_delete:
+    pattern:  /schedule/period/{id}/
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:delete, _format: json }
+    methods:  [DELETE]
+    requirements:
+        id: \d+
+        _format:  json|xml
+
+api_schedule_period_view:
+    pattern:  /schedule/period/{id}/
+    defaults: { _controller: OpenSkedgeBundle:SchedulePeriod:view, _format: json }
+    methods: [GET]
+    requirements:
+        _format:  json|xml
+
 api_lateshift_update:
     pattern:  /shifts/late/{id}/
     defaults: { _controller: OpenSkedgeBundle:LateShift:update, _format: json }
