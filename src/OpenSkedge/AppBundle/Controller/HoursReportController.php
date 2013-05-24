@@ -142,7 +142,6 @@ class HoursReportController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-
         $year = $request->request->get('year');
         $day = $request->request->get('day');
         $month = $request->request->get('month');
@@ -151,15 +150,20 @@ class HoursReportController extends Controller
         $week->setDate($year, $month, $day);
         $week->setTime(0, 0, 0);  // Midnight
 
+        $dtUtils = $this->container->get('dt_utils');
+        $week = $dtUtils->getFirstDayOfWeek($week);
+        $nextWeek = clone $week;
+        $nextWeek->modify("+7 days");
+
         $user = $em->getRepository('OpenSkedgeBundle:User')->find($id);
 
-        if (!$user) {
+        if (!$user instanceof User) {
             $this->createNotFoundException('User entity was not found!');
         }
 
         $archivedClock = $em->getRepository('OpenSkedgeBundle:ArchivedClock')->findOneBy(array('week' => $week, 'user' => $id));
 
-        if (!$archivedClock) {
+        if (!$archivedClock instanceof ArchivedClock) {
             $this->createNotFoundException('User clock data not found for specified week!');
         }
 
@@ -187,6 +191,33 @@ class HoursReportController extends Controller
                                 $scheduled->setDayOffset($day, $timesect, '1');
                         }
                     }
+                }
+            }
+        }
+
+        $shifts = $em->createQuery("SELECT sh FROM OpenSkedgeBundle:Shift sh
+            WHERE (sh.pickedUpBy = :user AND sh.startTime >= :week AND sh.endTime < :nextWeek AND sh.status != 'unapproved')")
+            ->setParameter('user', $user)
+            ->setParameter('week', $week)
+            ->setParameter('nextWeek', $nextWeek)
+            ->getResult();
+
+        foreach ($shifts as $shift) {
+            $startIndex = $dtUtils->getIndexFromTime($shift->getStartTime());
+            $endIndex = $dtUtils->getIndexFromTime($shift->getEndTime());
+            // Update the schedule composite to mark shifts they had picked up.
+            if ($shift->getStartTime()->format('w') === $shift->getEndTime()->format('w')) {
+                $day = $shift->getStartTime()->format('w');
+                for ($i = $startIndex; $i < $endIndex; $i++) {
+                    $scheduled->setDayOffset($day, $i, '1');
+                }
+            } else if ($shift->getStartTime()->format('w') === $shift->getEndTime()->format('w')-1) {
+                $day = $shift->getStartTime()->format('w');
+                for ($i = $startIndex; $i < 96; $i++) {
+                    $scheduled->setDayOffset($day, $i, '1');
+                }
+                for ($i = 0; $i < $endIndex; $i++) {
+                    $scheduled->setDayOffset($day+1, $i, '1');
                 }
             }
         }
