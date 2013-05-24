@@ -26,7 +26,7 @@ class ClockPruneCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName("clock:prune")
+        $this->setName("openskedge:clock:prune")
              ->setDescription('Prunes timeclock data from before the specified number of weeks back.')
              ->addArgument('threshold', InputArgument::OPTIONAL, 'number of weeks back to keep')
              ->addOption('no-interaction', 'n', InputOption::VALUE_NONE, 'Do not ask any interactive questions.')

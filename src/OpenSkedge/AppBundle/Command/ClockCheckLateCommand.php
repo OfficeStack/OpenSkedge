@@ -31,7 +31,7 @@ class ClockCheckLateCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName("clock:check-late")
+        $this->setName("openskedge:clock:check-late")
             ->setDescription('Check for users who have yet to clock in for a shift and notify each of their supervisors.');
     }
 
