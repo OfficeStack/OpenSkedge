@@ -41,8 +41,15 @@ class ShiftType extends AbstractType
                 ))
             ->add('position', 'entity', array(
                     'class' => 'OpenSkedgeBundle:Position',
-                    'attr'  => array('class' => 'input-xlarge')
-                ))
+                    'attr'  => array('class' => 'input-xlarge'),
+                    'query_builder' => function(\Doctrine\ORM\EntityRepository $er) {
+                        $qb = $er->createQueryBuilder('p');
+                        $qb->select('p')
+                           ->leftJoin('p.area', 'a')
+                           ->orderBy('a.name, p.name', 'ASC');
+                        return $qb;
+                    })
+                )
         ;
     }
 
