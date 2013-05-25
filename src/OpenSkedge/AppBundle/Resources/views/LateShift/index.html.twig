@@ -19,10 +19,46 @@
         $(this).siblings('.btn-save').hide();
         $(this).siblings('.btn-edit').show();
         $(this).parent().prev().prev().children('select')[0].disabled = true;
-    })
+    });
+    $('#limit-35').on("click", function () {
+        $('#limit').val(35);
+        $('#lateshift-filter').submit();
+    });
+    $('#limit-50').on("click", function () {
+        $('#limit').val(50);
+        $('#lateshift-filter').submit();
+    });
+    $('#limit-100').on("click", function () {
+        $('#limit').val(100);
+        $('#lateshift-filter').submit();
+    });
 </script>
 {% endblock %}
 {% block modulecontent %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('reports') }}">Reports</a> <span class="divider">/</span></li>
+    <li class="active">Late &amp; Missed Shift Report</li>
+</ul>
+<form id="lateshift-filter" action="{{ path(app.request.attributes.get('_route')) }}" method="GET">
+    <input type="hidden" id="limit" name="limit" value="35" />
+    <div class="navbar navbar-toolbar">
+      <div class="navbar-inner">
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <a href="{{ path('report_late_missed_shifts') }}" class="btn">All</a>
+            <a href="{{ path('report_late_shifts') }}" class="btn">Late Only</a>
+            <a href="{{ path('report_missed_shifts') }}" class="btn">Missed Only</a>
+          </div>
+
+          <div class="btn-group">
+            <button id="limit-35" class="btn">35</button>
+            <button id="limit-50" class="btn">50</button>
+            <button id="limit-100" class="btn">100</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
 {% if entities is empty %}
 <div class="alert">
     <strong>Sweet!</strong> No late or missed shift records found.
@@ -44,8 +80,8 @@
         <tr>
             <form action="{{ path('lateshift_update', {'id': entity.id }) }}" method="post">
                 <td><a href="{{ path('user_view', {'id': entity.id }) }}">{{ entity.user.name }}</a></td>
-                <td>{% if entity.creationTime %}{{ entity.creationTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td class="text-error">{% if entity.arrivalTime %}{{ entity.arrivalTime|date('Y-m-d H:i:s') }}{% else %}<strong>Missed</strong>{% endif %}</td>
+                <td>{% if entity.creationTime %}{{ entity.creationTime|date('Y-m-d g:i A') }}{% endif %}</td>
+                <td class="text-error">{% if entity.arrivalTime %}{{ entity.arrivalTime|date('Y-m-d g:i A') }}{% else %}<strong>Missed</strong>{% endif %}</td>
                 <td>
                     <select name="lateshift[status]" disabled="disabled">
                         <option value="Excused"{% if entity.status == "Excused" %} selected="selected"{% endif %}>Excused</option>

@@ -4,8 +4,7 @@ body {
     font-family: "Lato", "Helvetica Neue", Helvetica, "Droid Sans", "Open Sans", "Liberation Sans", Arial, sans-serif;
 }
 .well { background: url('../img/well_bg.png'); }
-.navbar,
-.navbar-inner,
+.navbar-inner-masthead,
 .navbar-inverse {
     background-color: transparent !important;
     background-image: none, url('../img/navbar_bg.png') !important;

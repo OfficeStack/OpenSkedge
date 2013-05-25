@@ -11,7 +11,9 @@ use OpenSkedge\AppBundle\Entity\LateShift;
 use OpenSkedge\AppBundle\Form\LateShiftType;
 
 use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Exception\NotValidMaxPerPageException;
+use Pagerfanta\Exception\NotValidCurrentPageException;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 /**
  * Controller for OpenSkedge LateShift entities
@@ -37,16 +39,27 @@ class LateShiftController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $missedAndLateShifts = $em->getRepository('OpenSkedgeBundle:LateShift')->findBy(array(), array('creationTime' => 'DESC'));
+        $missedAndLateShiftsQB = $em->createQueryBuilder()
+            ->select('late')
+            ->from('OpenSkedgeBundle:LateShift', 'late')
+            ->orderBy('late.creationTime', 'DESC');
 
         $page = $this->container->get('request')->query->get('page', 1);
+        $limit = $this->container->get('request')->query->get('limit', 35);
 
-        $adapter = new ArrayAdapter($missedAndLateShifts);
+        $adapter = new DoctrineORMAdapter($missedAndLateShiftsQB);
         $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(35);
-        $paginator->setCurrentPage($page);
 
-        $entities = $paginator->getCurrentPageResults();
+        try {
+            $paginator->setMaxPerPage($limit);
+            $paginator->setCurrentPage($page);
+
+            $entities = $paginator->getCurrentPageResults();
+        } catch (NotValidMaxPerPageException $e) {
+            throw new HttpException(400, 'Not a valid limit', $e, array(), $e->getCode());
+        } catch (NotValidCurrentPageException $e) {
+            throw $this->createNotFoundException('Page does not exist.');
+        }
 
         return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
             'entities'    => $entities,
@@ -67,17 +80,28 @@ class LateShiftController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $lateShifts = $em->createQuery("SELECT late FROM OpenSkedgeBundle:LateShift late WHERE late.arrivalTime IS NOT NULL ORDER BY late.creationTime DESC")
-            ->getResult();
+        $lateShiftsQB = $em->createQueryBuilder()
+            ->select('late')
+            ->from('OpenSkedgeBundle:LateShift', 'late')
+            ->where('late.arrivalTime IS NOT NULL')
+            ->orderBy('late.creationTime', 'DESC');
 
         $page = $this->container->get('request')->query->get('page', 1);
+        $limit = $this->container->get('request')->query->get('limit', 35);
 
-        $adapter = new ArrayAdapter($lateShifts);
+        $adapter = new DoctrineORMAdapter($lateShiftsQB);
         $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(35);
-        $paginator->setCurrentPage($page);
 
-        $entities = $paginator->getCurrentPageResults();
+        try {
+            $paginator->setMaxPerPage($limit);
+            $paginator->setCurrentPage($page);
+
+            $entities = $paginator->getCurrentPageResults();
+        } catch (NotValidMaxPerPageException $e) {
+            throw new HttpException(400, 'Not a valid limit', $e, array(), $e->getCode());
+        } catch (NotValidCurrentPageException $e) {
+            throw $this->createNotFoundException('Page does not exist.');
+        }
 
         return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
             'entities'    => $entities,
@@ -98,18 +122,29 @@ class LateShiftController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $lateShifts = $em->createQuery("SELECT late FROM OpenSkedgeBundle:LateShift late
-                    WHERE (late.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), late.creationTime) != 0) ORDER BY late.creationTime DESC")
-            ->getResult();
+        $missedShiftsQB = $em->createQueryBuilder()
+            ->select('late')
+            ->from('OpenSkedgeBundle:LateShift', 'late')
+            ->where('late.arrivalTime IS NULL')
+            ->andWhere('DATE_DIFF(CURRENT_DATE(), late.creationTime) != 0')
+            ->orderBy('late.creationTime', 'DESC');
 
         $page = $this->container->get('request')->query->get('page', 1);
+        $limit = $this->container->get('request')->query->get('limit', 35);
 
-        $adapter = new ArrayAdapter($lateShifts);
+        $adapter = new DoctrineORMAdapter($missedShiftsQB);
         $paginator = new Pagerfanta($adapter);
-        $paginator->setMaxPerPage(35);
-        $paginator->setCurrentPage($page);
 
-        $entities = $paginator->getCurrentPageResults();
+        try {
+            $paginator->setMaxPerPage($limit);
+            $paginator->setCurrentPage($page);
+
+            $entities = $paginator->getCurrentPageResults();
+        } catch (NotValidMaxPerPageException $e) {
+            throw new HttpException(400, 'Not a valid limit', $e, array(), $e->getCode());
+        } catch (NotValidCurrentPageException $e) {
+            throw $this->createNotFoundException('Page does not exist.');
+        }
 
         return $this->render('OpenSkedgeBundle:LateShift:index.html.twig', array(
             'entities'    => $entities,
