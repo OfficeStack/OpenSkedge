@@ -28,3 +28,8 @@ services:
         arguments:  [@request]
         tags:
             - { name: 'twig.extension' }
+
+    worker_command:
+        class: OpenSkedge\AppBundle\Command\WorkerRunCommand
+        tags:
+            - { name: monolog.logger, channel: worker }

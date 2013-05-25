@@ -15,9 +15,16 @@ monolog:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
+            channels: !worker
         firephp:
             type:  firephp
             level: info
+            channels: !worker
+        worker:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.worker.log"
+            level: debug
+            channels: worker
 
 assetic:
     use_controller: true

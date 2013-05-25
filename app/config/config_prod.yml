@@ -13,7 +13,14 @@ monolog:
             type:         fingers_crossed
             action_level: error
             handler:      nested
+            channels: !worker
         nested:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
+            channels: !worker
+        worker:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.worker.log"
+            level: error
+            channels: worker
