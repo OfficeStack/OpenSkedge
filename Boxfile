@@ -41,6 +41,34 @@ db1:
 cache1:
     type: memcached
 
+worker1:
+    type: php
+    exec: "php app/console --env=prod --no-debug -n openskedge:worker:run"
+    shared_writable_dirs:
+      - app/cache
+      - app/logs
+
+    php_version: 5.3.23
+    php_extensions:
+      - apc
+      - intl
+      - mbstring
+      - xsl
+      - mysql
+      - pdo_mysql
+      - zip
+      - memcache
+
+    php_short_open_tag: "0"
+    php_magic_quotes_gpc: "0"
+    php_register_globals: "0"
+    php_session_autostart: "0"
+    php_date_timezone: America/Chicago
+
+    after_build:
+      - "cp app/config/parameters.yml.pagoda app/config/parameters.yml"
+      - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
+
 global:
     env:
       - USE_INTL_ICU_DATA_VERSION: true
