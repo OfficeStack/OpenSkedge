@@ -63,7 +63,7 @@ class WorkerRunCommand extends ContainerAwareCommand
 
             if ($now->format('l') === ucfirst($pruneTrigger) and $startPrune) {
                 echo "[".date('Y-m-d H:i:s')."] Launching Prune Process\n";
-                $pruneProcess = new Process("php app/console openskedge:clock:prune");
+                $pruneProcess = new Process("php app/console openskedge:clock:prune --no-interaction");
                 $pruneProcess->run(function ($type, $buffer) use ($logger) {
                     if (Process::ERR === $type) {
                         $logger->error($buffer);
@@ -76,7 +76,7 @@ class WorkerRunCommand extends ContainerAwareCommand
             }
 
             echo "[".date('Y-m-d H:i:s')."] Dispatching spooled emails...";
-            $swiftmailerSpoolSend = new Process("php app/console swiftmailer:spool:send");
+            $swiftmailerSpoolSend = new Process("php app/console --no-interaction swiftmailer:spool:send");
             $swiftmailerSpoolSend->run(function ($type, $buffer) use ($logger) {
                     if (Process::ERR === $type) {
                         $logger->error($buffer);
