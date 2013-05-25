@@ -37,7 +37,7 @@ class LateShiftController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $missedAndLateShifts = $em->getRepository('OpenSkedgeBundle:LateShift')->findAll();
+        $missedAndLateShifts = $em->getRepository('OpenSkedgeBundle:LateShift')->findBy(array(), array('creationTime' => 'DESC'));
 
         $page = $this->container->get('request')->query->get('page', 1);
 
