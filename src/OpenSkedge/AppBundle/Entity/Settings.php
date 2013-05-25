@@ -82,7 +82,6 @@ class Settings
     public function __construct()
     {
         $this->id = 1; // OpenSkedge expects application settings to be ID 1.
-        $this->allowedClockIps = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -113,9 +113,13 @@ class Schedule extends BaseEntity\RecordBaseEntity
      * @param integer $lastupdated
      * @return Schedule
      */
-    public function setLastUpdated()
+    public function setLastUpdated($time = null)
     {
-        $this->lastupdated = time();
+        if ($time === null) {
+            $this->lastUpdated = time();
+        } else {
+            $this->lastUpdated = $time;
+        }
 
         return $this;
     }
@@ -127,7 +131,7 @@ class Schedule extends BaseEntity\RecordBaseEntity
      */
     public function getLastUpdated()
     {
-        return $this->lastupdated;
+        return $this->lastUpdated;
     }
 
     /**
