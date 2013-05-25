@@ -36,7 +36,7 @@ class PatchSubscriber implements EventSubscriberInterface
      */
     protected function unbind($form)
     {
-        if ($form->hasChildren()) {
+        if ($form->count() > 0) {
             $ary = array();
             foreach ($form->getChildren() as $name => $child) {
                 $ary[$name] = $this->unbind($child);
