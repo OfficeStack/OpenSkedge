@@ -46,7 +46,7 @@ class WorkerRunCommand extends ContainerAwareCommand
         while (1) {
             $now = new \DateTime();
 
-            echo "[".date('Y-m-d H:i:s')."] Run #".$i." (Current Mem Usage: ".bcdiv(memory_get_usage(), 1048576, 2)."M / Peak Mem Usage: ".bcdiv(memory_get_peak_usage(), 1048576, 2)."M)\n";
+            echo "[".date('Y-m-d H:i:s')."] Run #".$i." (Current Mem Usage: ".intval(memory_get_usage() / 1048576)."M / Peak Mem Usage: ".intval(memory_get_peak_usage() / 1048576)."M)\n";
 
             echo "[".date('Y-m-d H:i:s')."] Checking for Late Employees...";
             $checkLateProcess = new Process("php app/console openskedge:clock:check-late");
