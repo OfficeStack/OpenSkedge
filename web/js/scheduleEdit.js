@@ -7,8 +7,10 @@ function hilitecell(cell) {
     oldclass = cell.className;
     index = 0;
     classIndex = 0;
-    for(i=0; i<document.scheduleform.priority.length; i++) {
-        if (document.scheduleform.priority[i].checked) classIndex=i;
+    for (i = 0; i < document.scheduleform.priority.length; i++) {
+        if (document.scheduleform.priority[i].checked) {
+            classIndex=i;
+        }
     }
     cell.className = classes[document.scheduleform.priority[classIndex].value];
 }
@@ -28,8 +30,10 @@ function setcell(cell, i, j) {
     //-- get the selected color
 
     classIndex = 0;
-    for(k=0; k<document.scheduleform.priority.length; k++) {
-        if (document.scheduleform.priority[k].checked) classIndex=k;
+    for (k = 0; k < document.scheduleform.priority.length; k++) {
+        if (document.scheduleform.priority[k].checked) {
+            classIndex=k;
+        }
     }
     //-- newval is the priority the user wants to place
     //-- 0 is unavailable
@@ -42,30 +46,44 @@ function setcell(cell, i, j) {
         cell.className = classes[document.scheduleform.priority[classIndex].value];
         oldclass = cell.className;
         // TODO: sectiondiv should be declared before linking this script.
-        for(k = 0; k < sectiondiv; k++) hour.value = hour.value.substring(0,(i+k)) + newval + hour.value.substring(i+k+1);
-        /*//-- if the old value was unavailable and the new value is above 0 then subtract from the hours list
-        if ((curval == 0)&&(newval>0)) {
-            document.scheduleform.maxleft.value = parseFloat(document.scheduleform.maxleft.value) - 1/<?php print $sections_in_hour; ?>;
-            document.scheduleform.totalhours.value = parseFloat(document.scheduleform.totalhours.value) + 1/<?php print $sections_in_hour; ?>;
-            if (document.scheduleform.minleft.value>0) {
-                document.scheduleform.minleft.value = parseFloat(document.scheduleform.minleft.value) - 1/<?php print $sections_in_hour; ?>;
+        for (k = 0; k < sectiondiv; k++) {
+            hour.value = hour.value.substring(0,(i+k)) + newval + hour.value.substring(i+k+1);
+        }
+        //-- if the old value was unavailable and the new value is above 0 then subtract from the hours list
+        if (curval == 0 && newval > 0) {
+            $('#maxleft').text(parseFloat($('#maxleft').text()) - (0.25 * sectiondiv));
+            $('#totalhours').text(parseFloat($('#totalhours').text()) + (0.25 * sectiondiv));
+            if ($('#minleft').text() > 0) {
+                $('#minleft').text(parseFloat($('#minleft').text()) - (0.25 * sectiondiv));
             }
         }
         //-- if the old value was a preference level and the new value is unavailable then add to the hours list
-        else if ((curval > 0) && (newval==0)) {
-            document.scheduleform.maxleft.value = parseFloat(document.scheduleform.maxleft.value) + 1/<?php print $sections_in_hour; ?>;
-            document.scheduleform.totalhours.value = parseFloat(document.scheduleform.totalhours.value) - 1/<?php print $sections_in_hour; ?>;
-            if (document.scheduleform.totalhours.value < <?php print $user->min; ?>) document.scheduleform.minleft.value = parseFloat(document.scheduleform.minleft.value) + 1/<?php print $sections_in_hour; ?>;
-        }*/
+        else if (curval > 0 && newval == 0) {
+            $('#maxleft').text(parseFloat($('#maxleft').text()) + (0.25 * sectiondiv));
+            $('#totalhours').text(parseFloat($('#totalhours').text()) - (0.25 * sectiondiv));
+            if ($('#totalhours').text() < usermin) {
+                $('#minleft').text(parseFloat($('#minleft').text()) + (0.25 * sectiondiv));
+            }
+        }
+
+        if ($('#minleft').text() > 0) {
+            $('#minleft').removeClass('badge-success');
+            $('#minleft').addClass('badge-important');
+        } else {
+            $('#minleft').removeClass('badge-important');
+            $('#minleft').addClass('badge-success');
+        }
     }
 }
 
 //-- function to fill in a day with a certain color
 function fillDay(j) {
-    for(i=0; i<96; i++) {
+    for (i = 0; i < 96; i++) {
         cell = document.getElementById('cell-'+i+'-'+j);
         if (cell) {
-            if (cell.name!="assigned") setcell(cell, i, j);
+            if (cell.name != "assigned") {
+                setcell(cell, i, j);
+            }
         }
     }
     return false;

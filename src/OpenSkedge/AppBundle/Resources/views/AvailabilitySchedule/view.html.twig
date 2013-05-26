@@ -13,21 +13,34 @@
     </form>
     {% endif %}
     <hr>
-    <div class="row-fluid">
-        <div class="span8">
-            <table class="table table-condensed table-bordered schedule-table">
-                <tr>
-                    <td class="p0">Unavailable</td>
-                    <td class="p1">Low Preference</td>
-                    <td class="p2">Medium Preference</td>
-                    <td class="p3">High Preference</td>
-                </tr>
-            </table>
-        </div>
-        <form id="timeresolution" class="form-inline inline" action="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}" method="post">
-        {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
+    <div class="row-fluid schedule-table-controls">
+        <table class="table table-condensed table-bordered schedule-table span9">
+            <tr>
+                <td class="p0 span3">Unavailable</td>
+                <td class="p1 span3">Low Preference</td>
+                <td class="p2 span3">Medium Preference</td>
+                <td class="p3 span3">High Preference</td>
+            </tr>
+        </table>
+
+        <form id="timeresolution" class="span3" action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="get">
+            {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
         </form>
     </div>
+    <table class="table table-condensed">
+        <thead>
+            <th><strong>Total Hours Available</strong></th>
+            <th><strong>Total Hours Desired</strong></th>
+            <th><strong>Total Hours Scheduled</strong></th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ hrsAvail }}</td>
+                <td>{{ avail.user.hours }}</td>
+                <td>{{ hrsSched }}</td>
+            </tr>
+        </tbody>
+    </table>
     {% include 'OpenSkedgeBundle:ModularBlocks:userschedule.html.twig' %}
 </div>
 {% endblock %}

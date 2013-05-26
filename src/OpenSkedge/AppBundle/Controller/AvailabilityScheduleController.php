@@ -104,6 +104,22 @@ class AvailabilityScheduleController extends Controller
         $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
         $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
 
+        $hoursAvailable = 0;
+        for ($day = 0; $day < 7; $day++) {
+            $timeRec = $entity->getDay($day);
+            $hoursAvailable += substr_count($timeRec, '1') + substr_count($timeRec, '2') + substr_count($timeRec, '3');
+        }
+        $hoursAvailable = $hoursAvailable / 4;
+
+        $hoursScheduled = 0;
+        foreach($schedules as $schedule) {
+            $scheduleSum = 0;
+            for ($day = 0; $day < 7; $day++) {
+                $scheduleSum += substr_count($schedule->getDay($day), '1');
+            }
+            $hoursScheduled += $scheduleSum / 4;
+        }
+
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:view.html.twig', array(
             'htime'       => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'  => $resolution,
@@ -111,7 +127,9 @@ class AvailabilityScheduleController extends Controller
             'schedules'   => $schedules,
             'delete_form' => $deleteForm->createView(),
             'startIndex'  => $startIndex,
-            'endIndex'    => $endIndex
+            'endIndex'    => $endIndex,
+            'hrsAvail'    => $hoursAvailable,
+            'hrsSched'    => $hoursScheduled
         ));
     }
 
@@ -280,6 +298,22 @@ class AvailabilityScheduleController extends Controller
         $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
         $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
 
+        $hoursAvailable = 0;
+        for ($day = 0; $day < 7; $day++) {
+            $timeRec = $entity->getDay($day);
+            $hoursAvailable += substr_count($timeRec, '1') + substr_count($timeRec, '2') + substr_count($timeRec, '3');
+        }
+        $hoursAvailable = $hoursAvailable / 4;
+
+        $hoursScheduled = 0;
+        foreach($schedules as $schedule) {
+            $scheduleSum = 0;
+            for ($day = 0; $day < 7; $day++) {
+                $scheduleSum += substr_count($schedule->getDay($day), '1');
+            }
+            $hoursScheduled += $scheduleSum / 4;
+        }
+
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:edit.html.twig', array(
             'htime'       => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'  => $resolution,
@@ -288,7 +322,9 @@ class AvailabilityScheduleController extends Controller
             'schedules'   => $schedules,
             'delete_form' => $deleteForm->createView(),
             'startIndex'  => $startIndex,
-            'endIndex'    => $endIndex
+            'endIndex'    => $endIndex,
+            'hrsAvail'    => $hoursAvailable,
+            'hrsSched'    => $hoursScheduled
         ));
     }
 

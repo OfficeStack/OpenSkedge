@@ -2,41 +2,67 @@
 {% if resolution == "15 mins" %}{% set sectiondiv = 1 %}{% elseif resolution == "30 mins" %}{% set sectiondiv = 2 %}{% else %}{% set sectiondiv = 4 %}{% endif %}
 {% block javascripts %}
 <script type="text/javascript">
-    var sectiondiv={{ sectiondiv }};
+    var sectiondiv = {{ sectiondiv }};
+    var usermin = {{ app.user.min }};
 </script>
 <script type="text/javascript" src="{{ asset('js/scheduleEdit.js') }}"></script>
 {% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <h3>New Availability Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
-    <form id="timeresolution" class="form-inline inline header-control" action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="get">
-        {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
-    </form>
     <hr>
     <form action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
-        <table class="table table-condensed table-bordered schedule-table">
-            <tr>
-                <td class="p0">
-                    <label class="checkbox">
-                        <input type="radio" name="priority" value="0" id="p0">Unavailable
-                    </label>
-                </td>
-                <td class="p1">
-                    <label class="checkbox">
-                        <input type="radio" name="priority" value="1" id="p1">Low Preference
-                    </label>
-                </td>
-                <td class="p2">
-                    <label class="checkbox">
-                        <input type="radio" name="priority" value="2" id="p2">Medium Preference
-                    </label>
-                </td>
-                <td class="p3">
-                    <label class="checkbox">
-                        <input type="radio" name="priority" value="3" id="p3" checked>High Preference
-                    </label>
-                </td>
-            </tr>
+        <div class="row-fluid schedule-table-controls">
+            <table class="table table-condensed table-bordered schedule-table span9">
+                <tr>
+                    <td class="p0 span3">
+                        <label class="checkbox">
+                            <input type="radio" name="priority" value="0" id="p0"> Unavailable
+                        </label>
+                    </td>
+                    <td class="p1 span3">
+                        <label class="checkbox">
+                            <input type="radio" name="priority" value="1" id="p1"> Low Preference
+                        </label>
+                    </td>
+                    <td class="p2 span3">
+                        <label class="checkbox">
+                            <input type="radio" name="priority" value="2" id="p2"> Medium Preference
+                        </label>
+                    </td>
+                    <td class="p3 span3">
+                        <label class="checkbox">
+                            <input type="radio" name="priority" value="3" id="p3" checked> High Preference
+                        </label>
+                    </td>
+                </tr>
+            </table>
+
+            <form id="timeresolution" class="span3" action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="get">
+                {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
+            </form>
+        </div>
+        <table class="table table-condensed">
+            <thead>
+                <th>Minimum Hours</th>
+                <th>Maximum Hours</th>
+                <th>Hours left to reach minimum</th>
+                <th>Hours left to reach maximum</th>
+                <th><strong>Total Hours Available</strong></th>
+                <th><strong>Total Hours Desired</strong></th>
+                <th><strong>Total Hours Scheduled</strong></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ app.user.min }}</td>
+                    <td>{{ app.user.max }}</td>
+                    <td><span class="badge badge-important" id="minleft">{{ app.user.min }}</span></td>
+                    <td><span class="badge badge-info" id="maxleft">{{ app.user.max }}</span></td>
+                    <td><span class="badge badge-info" id="totalhours">0</span></td>
+                    <td>{{ app.user.hours }}</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
         </table>
         <input type="hidden" id="day0" size="108" name="day[]" value="{{ avail.sun }}">
         <input type="hidden" id="day1" size="108" name="day[]" value="{{ avail.mon }}">
