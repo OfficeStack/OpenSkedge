@@ -14,6 +14,7 @@ use Symfony\Component\Form\Form;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 
 /**
@@ -41,11 +42,15 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('OpenSkedgeBundle:User')->findBy(array(), array('name' => 'ASC'));
+        $usersQB = $em->createQueryBuilder()
+            ->select('u')
+            ->from('OpenSkedgeBundle:User', 'u')
+            ->innerJoin('u.group', 'g')
+            ->orderBy('u.name', 'ASC');
 
         $page = $this->container->get('request')->query->get('page', 1);
 
-        $adapter = new ArrayAdapter($users);
+        $adapter = new DoctrineORMAdapter($usersQB);
         $paginator = new Pagerfanta($adapter);
         $paginator->setMaxPerPage(15);
         $paginator->setCurrentPage($page);
