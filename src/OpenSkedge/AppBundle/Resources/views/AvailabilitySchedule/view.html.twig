@@ -23,7 +23,7 @@
             </tr>
         </table>
 
-        <form id="timeresolution" class="span3" action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="get">
+        <form id="timeresolution" class="span3" action="{{ path('user_schedule_view', { 'uid': avail.user.id, 'spid': avail.schedulePeriod.id }) }}" method="post">
             {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
         </form>
     </div>

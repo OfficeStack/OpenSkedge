@@ -11,6 +11,9 @@
 <div class="span12">
     <h3>Schedule for {{ avail.schedulePeriod.startTime|date('M-d-Y') }} to {{ avail.schedulePeriod.endTime|date('M-d-Y') }}</h3>
     <hr>
+    <form id="timeresolution" class="span3" action="{{ path('user_schedule_edit', { 'spid': avail.schedulePeriod.id }) }}" method="get">
+        {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
+    </form>
     <form action="{{ path('user_schedule_edit', { 'spid': avail.schedulePeriod.id }) }}" method="post" name="scheduleform">
         <div class="row-fluid schedule-table-controls">
             <table class="table table-condensed table-bordered schedule-table span9">
@@ -37,10 +40,6 @@
                     </td>
                 </tr>
             </table>
-
-            <form id="timeresolution" class="span3" action="{{ path('user_schedule_new', { 'spid': avail.schedulePeriod.id }) }}" method="get">
-                {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
-            </form>
         </div>
         <table class="table table-condensed">
             <thead>
