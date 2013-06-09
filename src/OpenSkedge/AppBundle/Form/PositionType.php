@@ -16,7 +16,13 @@ class PositionType extends AbstractType
             ->add('area', 'entity', array(
                     'class' => 'OpenSkedgeBundle:Area',
                     'property' => 'name',
-                    'multiple' => false))
+                    'multiple' => false,
+                    'query_builder' => function(\Doctrine\ORM\EntityRepository $er) {
+                        $qb = $er->createQueryBuilder('a');
+                        $qb->select('a')
+                           ->orderBy('a.name', 'ASC');
+                        return $qb;
+                    }))
         ;
     }
 
