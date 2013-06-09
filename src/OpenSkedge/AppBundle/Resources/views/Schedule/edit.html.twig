@@ -1,15 +1,43 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ app_brand_name() }} - {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}{% endblock %}
-{% if resolution == "15 mins" %}
-{% set sectiondiv = 1 %}
-{% set next_section = "+15 minutes" %}
-{% elseif resolution == "30 mins" %}
-{% set sectiondiv = 2 %}
-{% set next_section = "+30 minutes" %}
-{% else %}
-{% set sectiondiv = 4 %}
-{% set next_section = "+1 hour" %}
-{% endif %}
+{% if resolution == "15 mins" %}{% set sectiondiv = 1 %}{% set next_section = "+15 minutes" %}{% elseif resolution == "30 mins" %}{% set sectiondiv = 2 %}{% set next_section = "+30 minutes" %}{% else %}{% set sectiondiv = 4 %}{% set next_section = "+1 hour" %}{% endif %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    var sectiondiv = {{ sectiondiv }};
+    //-- every time a checkbox is pressed then this function is called
+    //-- it updates the total hours for each employee and makes sure that
+    //-- they will not be scheduled for more than their maximum allowed hours
+    //-- the miss count is used to remind the supervisor that there is a reason
+    //-- the box isn't being checked and to stop trying to check it
+    miss_count = 0;
+    $('input[type=checkbox]').change(function () {
+        uid = $(this).val();
+        totalhours = $('#u'+uid+'_total');
+        maxhours = $('#u'+uid+'_max');
+        total = parseInt(totalhours.text());
+        max = parseInt(maxhours.text());
+        console.log('Checkbox for use with UID: '+uid+' state changed. (Total: '+total+', Max: '+max+')');
+        if (this.checked) {
+            console.log('Checkbox has been checked.');
+            if (total < max) {
+                totalhours.text(parseFloat(totalhours.text()) + (0.25 * sectiondiv));
+            } else {
+                this.checked = false;
+                miss_count++;
+                if (miss_count > 2) {
+                    alert('Maximum number of hours reached for that employee (UID: '+uid+')');
+                    miss_count = 0;
+                }
+            }
+        } else if (!this.checked || totalhours.text() > 0) {
+            totalhours.text(parseFloat(totalhours.text()) - (0.25 * sectiondiv));
+        }
+        return;
+    });
+});
+</script>
+{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <ul class="breadcrumb">
@@ -20,10 +48,26 @@
         <li class="active">Edit</li>
     </ul>
     <h3>Editing {{ position.area.name }} - {{ position.name }} schedule for {{ schedulePeriod }}</h3>
+    <hr>
     <form id="timeresolution" class="form-inline inline header-control" action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="get">
         {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
     </form>
-    <hr>
+    <table class="table table-condensed">
+        <thead>
+            <th>Employee</th>
+            <th>Total Hours</th>
+            <th>Maximum Hours</th>
+        </thead>
+        <tbody>
+    {% for avail in availData %}
+            <tr>
+                <td>{{ avail.gen.user.name }}</td>
+                <td><span class="badge badge-info" id="u{{ avail.gen.user.id }}_total">{{ avail.totalHours }}</span></td>
+                <td id="u{{ avail.gen.user.id }}_max">{{ avail.gen.user.max }}</td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
     <form action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="post" name="scheduleform">
         <input type="hidden" name="sectiondiv" value="{{ sectiondiv }}">
         <table class="table table-condensed table-bordered schedule-table">

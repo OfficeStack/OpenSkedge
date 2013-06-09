@@ -138,6 +138,7 @@ class ScheduleController extends Controller
              */
             $genAS = new Schedule();
             $genAS->setUser($avail->getUser());
+            $hoursScheduled = 0;
             foreach ($avail->getUser()->getSchedules() as $schedule) {
                 $isPosition = ($schedule->getPosition()->getId() == $position->getId());
                 $isSchedulePeriod = ($schedule->getSchedulePeriod()->getId() == $schedulePeriod->getId());
@@ -159,9 +160,14 @@ class ScheduleController extends Controller
                         }
                     }
                 }
+                $scheduleSum = 0;
+                for ($day = 0; $day < 7; $day++) {
+                    $scheduleSum += substr_count($schedule->getDay($day), '1');
+                }
+                $hoursScheduled += $scheduleSum / 4;
             }
             // Pass the user's availability schedule too, as we'll need to reference that for priorties.
-            $availData[] = array('gen' => $genAS, 'schedule' => $avail);
+            $availData[] = array('gen' => $genAS, 'schedule' => $avail, 'totalHours' => $hoursScheduled);
         }
 
         $deleteForm = $this->createDeleteForm($pid, $spid);
