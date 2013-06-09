@@ -46,9 +46,9 @@
     {% spaceless %}
                     <td>
                     {% for avail in availData %}
-                        {% if avail.gen.week[j][i * sectiondiv] != '1' and avail.schedule.week[j][i * sectiondiv] != 0 %}
+                        {% if avail.gen.getDayOffset(j, (i * sectiondiv)) != '1' and avail.schedule.getDayOffset(j, (i * sectiondiv)) != 0 %}
                         <div class="avail-user" style="background-color: {{ avail.gen.user.color }}">
-                        <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.gen.user.id }}"{% if avail.gen.week[j][i * sectiondiv] == '2' %} checked{% endif %} /><a href="{{ path('user_schedule_view', { 'uid': avail.gen.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.schedule.week[j][i * sectiondiv] }} - {{ avail.gen.user.name }}</a>
+                            <input type="checkbox" name="hour-{{ i * sectiondiv}}-{{ j }}[]" value="{{ avail.gen.user.id }}"{% if avail.gen.getDayOffset(j, (i * sectiondiv)) == '2' %} checked{% endif %} /><a href="{{ path('user_schedule_view', { 'uid': avail.gen.user.id, 'spid': schedulePeriod.id })}}" target="_blank">P{{ avail.schedule.getDayOffset(j, (i * sectiondiv)) }} - {{ avail.gen.user.name }}</a>
                         </div>
                         {% endif %}
                     {% endfor %}
