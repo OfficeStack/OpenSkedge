@@ -26,6 +26,7 @@ web1:
     php_date_timezone: America/Chicago
 
     after_build:
+      - "rm -rf vendor/"
       - "cp app/config/parameters.yml.pagoda app/config/parameters.yml"
       - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
 
@@ -66,6 +67,7 @@ worker1:
     php_date_timezone: America/Chicago
 
     after_build:
+      - "rm -rf vendor/"
       - "cp app/config/parameters.yml.pagoda app/config/parameters.yml"
       - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
 
