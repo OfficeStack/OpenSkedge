@@ -112,11 +112,11 @@ class AreaController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', $entity->getName().' created successfully.');
+                $request->getSession()->getFlashBag()->add('success', $entity->getName().' created successfully.');
 
                 return $this->redirect($this->generateUrl('area_view', array('id' => $entity->getId())));
             }
-            $request->getSession()->setFlash('error', 'Area could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Area could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:Area:new.html.twig', array(
@@ -156,11 +156,11 @@ class AreaController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', $entity->getName().' updated successfully.');
+                $request->getSession()->getFlashBag()->add('success', $entity->getName().' updated successfully.');
 
                 return $this->redirect($this->generateUrl('area_view', array('id' => $id)));
             }
-            $request->getSession()->setFlash('error', $entity->getName().' could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', $entity->getName().' could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:Area:edit.html.twig', array(
@@ -197,9 +197,9 @@ class AreaController extends Controller
 
             $em->remove($entity);
             $em->flush();
-            $request->getSession()->setFlash('success', 'Area deleted successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'Area deleted successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'Area could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Area could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('areas'));

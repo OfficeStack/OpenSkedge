@@ -146,7 +146,7 @@ class ShiftController extends Controller
                     ->setParameter('spid', $entity->getSchedulePeriod()->getId())
                     ->getSingleResult();
             } catch (\Doctrine\ORM\NoResultException $e) {
-                $request->getSession()->setFlash('error', 'Shift could not be posted! Your\'re not scheduled for the selected position in the selected scheduling period.');
+                $request->getSession()->getFlashBag()->add('error', 'Shift could not be posted! Your\'re not scheduled for the selected position in the selected scheduling period.');
                 return new RedirectResponse($referer);
             }
 
@@ -154,7 +154,7 @@ class ShiftController extends Controller
             $endDT = $entity->getEndTime();
 
             if ($startDT->format('Y-m-d') != $endDT->format('Y-m-d')) {
-                $request->getSession()->setFlash('error', 'Shift could not be posted! Shift start and end times must be on the same date.');
+                $request->getSession()->getFlashBag()->add('error', 'Shift could not be posted! Shift start and end times must be on the same date.');
                 return new RedirectResponse($referer);
             }
 
@@ -173,7 +173,7 @@ class ShiftController extends Controller
             }
 
             if(!$inInterval) {
-                $request->getSession()->setFlash('error', 'Shift could not be posted! You cannot put up a shift that you\'re not scheduled for.');
+                $request->getSession()->getFlashBag()->add('error', 'Shift could not be posted! You cannot put up a shift that you\'re not scheduled for.');
                 return new RedirectResponse($referer);
             }
 
@@ -183,9 +183,9 @@ class ShiftController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $request->getSession()->setFlash('success', 'Shift posted successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'Shift posted successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'Shift could not be posted! Invalid data given.');
+            $request->getSession()->getFlashBag()->add('error', 'Shift could not be posted! Invalid data given.');
         }
 
         return new RedirectResponse($referer);
@@ -256,7 +256,7 @@ class ShiftController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new ShiftType(), $entity);
         if (!is_null($entity->getPickedUpBy()) and $entity->getPickedUpBy()->getId() != $this->getUser()->getId() and false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            $request->getSession()->setFlash('error', 'Shift has been picked up and cannot be modified!');
+            $request->getSession()->getFlashBag()->add('error', 'Shift has been picked up and cannot be modified!');
             return new RedirectResponse($referer);
         } elseif ($entity->getUser()->getId() != $this->getUser()->getId() and false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $editForm->remove('startTime');
@@ -282,9 +282,9 @@ class ShiftController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $request->getSession()->setFlash('success', 'Shift updated successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'Shift updated successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'Shift failed to update!');
+            $request->getSession()->getFlashBag()->add('error', 'Shift failed to update!');
         }
 
         return new RedirectResponse($referer);

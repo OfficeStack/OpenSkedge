@@ -122,11 +122,11 @@ class SchedulePeriodController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', 'Schedule period created successfully.');
+                $request->getSession()->getFlashBag()->add('success', 'Schedule period created successfully.');
 
                 return $this->redirect($this->generateUrl('schedule_period_view', array('id' => $entity->getId())));
             }
-            $request->getSession()->setFlash('error', 'Schedule period could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Schedule period could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:SchedulePeriod:new.html.twig', array(
@@ -162,11 +162,11 @@ class SchedulePeriodController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', 'Schedule period updated successfully.');
+                $request->getSession()->getFlashBag()->add('success', 'Schedule period updated successfully.');
 
                 return $this->redirect($this->generateUrl('schedule_period_view', array('id' => $id)));
             }
-            $request->getSession()->setFlash('error', 'Schedule period could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Schedule period could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:SchedulePeriod:edit.html.twig', array(
@@ -210,9 +210,9 @@ class SchedulePeriodController extends Controller
             }
 
             $em->flush();
-            $request->getSession()->setFlash('success', 'Schedule period (and all associated availability and position schedules) deleted successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'Schedule period (and all associated availability and position schedules) deleted successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'Schedule period (or an associated availability or position schedule) could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Schedule period (or an associated availability or position schedule) could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('schedule_periods'));

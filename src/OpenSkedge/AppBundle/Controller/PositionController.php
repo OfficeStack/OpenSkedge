@@ -124,11 +124,11 @@ class PositionController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', $entity->getArea()->getName().' - '.$entity->getName().' created successfully.');
+                $request->getSession()->getFlashBag()->add('success', $entity->getArea()->getName().' - '.$entity->getName().' created successfully.');
 
                 return $this->redirect($this->generateUrl('position_view', array('id' => $entity->getId())));
             }
-            $request->getSession()->setFlash('error', 'Position could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Position could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:Position:new.html.twig', array(
@@ -170,11 +170,11 @@ class PositionController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', $entity->getArea()->getName().' - '.$entity->getName().' updated successfully.');
+                $request->getSession()->getFlashBag()->add('success', $entity->getArea()->getName().' - '.$entity->getName().' updated successfully.');
 
                 return $this->redirect($this->generateUrl('area_view', array('id' => $entity->getArea()->getId())));
             }
-            $request->getSession()->setFlash('error', 'Position could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Position could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:Position:edit.html.twig', array(
@@ -211,9 +211,9 @@ class PositionController extends Controller
 
             $em->remove($entity);
             $em->flush();
-            $request->getSession()->setFlash('success', 'Position deleted successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'Position deleted successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'Position could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Position could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('areas'));

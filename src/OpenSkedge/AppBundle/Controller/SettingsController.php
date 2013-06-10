@@ -50,11 +50,11 @@ class SettingsController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', 'Application settings updated successfully.');
+                $request->getSession()->getFlashBag()->add('success', 'Application settings updated successfully.');
 
                 return $this->redirect($this->generateUrl('app_settings_edit'));
             }
-            $request->getSession()->setFlash('error', 'Application settings could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Application settings could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:Settings:edit.html.twig', array(

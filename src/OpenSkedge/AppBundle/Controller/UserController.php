@@ -134,11 +134,11 @@ class UserController extends Controller
                 $mailer = $this->container->get('notify_mailer');
                 $mailer->notifyUserCreation($entity, $plainPassword);
 
-                $request->getSession()->setFlash('success', $entity->getName().'\'s account created successfully.');
+                $request->getSession()->getFlashBag()->add('success', $entity->getName().'\'s account created successfully.');
 
                 return $this->redirect($this->generateUrl('users'));
             }
-            $request->getSession()->setFlash('error', 'User could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'User could not be created. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:User:new.html.twig', array(
@@ -202,11 +202,11 @@ class UserController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $request->getSession()->setFlash('success', $entity->getName().'\'s account updated successfully.');
+                $request->getSession()->getFlashBag()->add('success', $entity->getName().'\'s account updated successfully.');
 
                 return $this->redirect($this->generateUrl('user_view', array('id' => $id)));
             }
-            $request->getSession()->setFlash('error', 'User could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'User could not be updated. Check for form errors below. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->render('OpenSkedgeBundle:User:edit.html.twig', array(
@@ -244,9 +244,9 @@ class UserController extends Controller
 
             $em->remove($entity);
             $em->flush();
-            $request->getSession()->setFlash('success', 'User deleted successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'User deleted successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'User could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'User could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('users'));

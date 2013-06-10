@@ -173,9 +173,9 @@ class LateShiftController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-            $request->getSession()->setFlash('success', 'Late shift updated successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'Late shift updated successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'Late shift failed to update!');
+            $request->getSession()->getFlashBag()->add('error', 'Late shift failed to update!');
         }
 
         $referer = $request->headers->get('referer');
@@ -207,9 +207,9 @@ class LateShiftController extends Controller
             $em->remove($entity);
             $em->flush();
 
-            $request->getSession()->setFlash('success', 'Late shift clock-in record deleted successfully.');
+            $request->getSession()->getFlashBag()->add('success', 'Late shift clock-in record deleted successfully.');
         } else {
-            $request->getSession()->setFlash('error', 'Late shift clock-in record could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
+            $request->getSession()->getFlashBag()->add('error', 'Late shift clock-in record could not be deleted. If the issue persists, please report it to your friendly sysadmin.');
         }
 
         return $this->redirect($this->generateUrl('shifts_late'));
