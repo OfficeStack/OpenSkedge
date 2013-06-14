@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0c52c991456d5ec081fd4dbd4c390a10",
+    "hash": "8b6f8a5395add1206642ef2d1112abcc",
     "packages": [
         {
             "name": "doctrine/common",
@@ -621,7 +621,7 @@
         },
         {
             "name": "jms/di-extra-bundle",
-            "version": "dev-master",
+            "version": "1.4.0",
             "target-dir": "JMS/DiExtraBundle",
             "source": {
                 "type": "git",
@@ -775,24 +775,24 @@
         },
         {
             "name": "jms/security-extra-bundle",
-            "version": "dev-master",
+            "version": "1.5.1",
             "target-dir": "JMS/SecurityExtraBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSecurityExtraBundle.git",
-                "reference": "fb45172eeefc3bae332d5e5ae25ce63dbbadc58a"
+                "reference": "1.5.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSecurityExtraBundle/zipball/fb45172eeefc3bae332d5e5ae25ce63dbbadc58a",
-                "reference": "fb45172eeefc3bae332d5e5ae25ce63dbbadc58a",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSecurityExtraBundle/zipball/1.5.1",
+                "reference": "1.5.1",
                 "shasum": ""
             },
             "require": {
-                "jms/aop-bundle": ">=1.0.0,<1.2-dev",
-                "jms/di-extra-bundle": "1.3.*",
-                "jms/metadata": "1.*",
-                "jms/parser-lib": "1.*",
+                "jms/aop-bundle": ">=1.0,<2.0",
+                "jms/di-extra-bundle": ">=1.3,<2.0",
+                "jms/metadata": ">=1.0,<2.0",
+                "jms/parser-lib": ">=1.0,<2.0",
                 "symfony/framework-bundle": ">=2.1,<3.0",
                 "symfony/security-bundle": "*"
             },
@@ -842,7 +842,7 @@
                 "secure",
                 "security"
             ],
-            "time": "2013-06-08 13:02:16"
+            "time": "2013-06-09 10:29:54"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1128,17 +1128,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "v2.3.0"
+                "reference": "v2.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/v2.3.0",
-                "reference": "v2.3.0",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/v2.3.1",
+                "reference": "v2.3.1",
                 "shasum": ""
             },
             "require": {
@@ -1174,17 +1174,17 @@
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "target-dir": "Sensio/Bundle/FrameworkExtraBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "v2.3.0"
+                "reference": "v2.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/v2.3.0",
-                "reference": "v2.3.0",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/v2.3.1",
+                "reference": "v2.3.1",
                 "shasum": ""
             },
             "require": {
@@ -1221,17 +1221,17 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "v2.3.0"
+                "reference": "v2.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/v2.3.0",
-                "reference": "v2.3.0",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/v2.3.1",
+                "reference": "v2.3.1",
                 "shasum": ""
             },
             "require": {
@@ -1265,7 +1265,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2013-06-02 16:13:06"
+            "time": "2013-06-05 17:32:22"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1487,17 +1487,17 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "target-dir": "Symfony/Bundle/SwiftmailerBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "v2.3.0-RC1"
+                "reference": "v2.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/v2.3.0-RC1",
-                "reference": "v2.3.0-RC1",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/v2.3.1",
+                "reference": "v2.3.1",
                 "shasum": ""
             },
             "require": {
@@ -1542,16 +1542,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "v2.3.0"
+                "reference": "v2.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/v2.3.0",
-                "reference": "v2.3.0",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/v2.3.1",
+                "reference": "v2.3.1",
                 "shasum": ""
             },
             "require": {
@@ -1646,7 +1646,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-06-03 14:13:35"
+            "time": "2013-06-11 11:46:38"
         },
         {
             "name": "twig/extensions",
