@@ -77,6 +77,13 @@ class Settings
     private $endHour;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Email()
+     * @Assert\Type(type="string")
+     */
+    private $massEmail;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -253,5 +260,17 @@ class Settings
     public function getEndHour()
     {
         return date("g:i A", strtotime($this->endHour));
+    }
+
+    public function getMassEmail()
+    {
+        return $this->massEmail;
+    }
+
+    public function setMassEmail($email)
+    {
+        $this->massEmail = $email;
+
+        return $this;
     }
 }
