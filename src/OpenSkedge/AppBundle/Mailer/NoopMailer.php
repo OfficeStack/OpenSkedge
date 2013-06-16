@@ -2,16 +2,16 @@
 // Derived from FOSUserBundle
 namespace OpenSkedge\AppBundle\Mailer;
 
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
+use OpenSkedge\AppBundle\Services\AppSettingsService;
 
 class NoopMailer implements MailerInterface
 {
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, Logger $logger, array $parameters)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, LoggerInterface $logger, AppSettingsService $appSettingsService, array $parameters)
     {
-
     }
 
     public function notifyUserScheduleChange(Schedule $schedule)
@@ -35,6 +35,18 @@ class NoopMailer implements MailerInterface
     }
 
     public function notifyLateEmployee(UserInterface $user, Schedule $schedule)
+    {
+    }
+
+    public function notifyShiftPosted(Shift $shift)
+    {
+    }
+
+    public function notifyShiftPickedUp(Shift $shift)
+    {
+    }
+
+    public function notifyShiftDenied(Shift $shift)
     {
     }
 }

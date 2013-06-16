@@ -1,0 +1,17 @@
+{% block subject %}
+{% autoescape false %}
+[{{ app_brand_name() }}] {{ shift.user.name }}, your shift trade request has been denied.
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+Hey {{ shift.user.name }},
+
+Unfortunately, one of your supervisors has denied your shift trade request for your {{ shift.position.name }} - {{ shift.position.area.name }} shift from {{ shift.startTime|date('Y-m-d g:i A') }} to {{ shift.endTime|date('Y-m-d g:i A') }}. You are expected to report for this shift.
+
+{{ app_brand_name() }} Management
+----
+This is an automated email sent by OpenSkedge. Do NOT respond to this email. You will not get a reply.
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

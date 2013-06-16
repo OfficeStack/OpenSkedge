@@ -32,6 +32,10 @@ class SettingsType extends AbstractType
                     'label' => 'Schedule End Hour',
                     'attr' => array('class' => 'span12', 'data-show-inputs' => 'false')
                 ))
+            ->add('massEmail', 'email', array(
+                    'label' => 'Mass Email Address (e.g. LISTSERV mailing list)',
+                    'required' => false
+                ))
         ;
     }
 

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use OpenSkedge\AppBundle\Entity\Schedule;
 use OpenSkedge\AppBundle\Entity\Shift;
+use OpenSkedge\AppBundle\Entity\User;
 use OpenSkedge\AppBundle\Form\ShiftType;
 
 use Pagerfanta\Pagerfanta;
@@ -184,6 +185,8 @@ class ShiftController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Shift posted successfully.');
+
+            $this->get('notify_mailer')->notifyShiftPosted($entity);
         } else {
             $request->getSession()->getFlashBag()->add('error', 'Shift could not be posted! Invalid data given.');
         }
@@ -251,6 +254,15 @@ class ShiftController extends Controller
             throw $this->createNotFoundException('Unable to find Shift entity.');
         }
 
+        $originalStatus = $entity->getStatus();
+        $pickedUpBy = $entity->getPickedUpBy();
+
+        if (!$pickedUpBy instanceof User) {
+            $originalPickedUpByUID = -1;
+        } else {
+            $originalPickedUpByUID = (int)$pickedUpBy()->getId();
+        }
+
         $referer = $request->headers->get('referer');
 
         $deleteForm = $this->createDeleteForm($id);
@@ -283,6 +295,20 @@ class ShiftController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Shift updated successfully.');
+
+            $pickedUpBy = $entity->getPickedUpBy();
+
+            if (!$pickedUpBy instanceof User) {
+                $pickedUpByUID = -1;
+            } else {
+                $pickedUpByUID = (int)$pickedUpBy()->getId();
+            }
+
+            if ($originalPickedUpByUID === -1 and $pickedUpByUID !== -1) {
+                $this->get('notify_mailer')->notifyShiftPickedUp($shift);
+            } elseif ($originalStatus !== "unapproved" and $entity->getStatus() === "unapproved") {
+                $this->get('notify_mailer')->notifyShiftDenied($shift);
+            }
         } else {
             $request->getSession()->getFlashBag()->add('error', 'Shift failed to update!');
         }
