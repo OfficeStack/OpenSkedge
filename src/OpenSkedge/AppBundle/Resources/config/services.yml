@@ -17,6 +17,7 @@ services:
     notify_mailer:
         class: %notify_mailer.class%
         arguments: [@mailer, @twig, @logger, { senderEmail: %sender_email% }]
+        lazy: true
 
     request:
         class: Symfony\Component\HttpFoundation\Request
