@@ -6,6 +6,10 @@ services:
         class: OpenSkedge\AppBundle\Services\AppSettingsService
         arguments: [@doctrine.orm.default_entity_manager]
 
+    clock_utils:
+        class: OpenSkedge\AppBundle\Services\ClockService
+        arguments: [@doctrine.orm.default_entity_manager, @dt_utils]
+
     dt_utils:
         class: OpenSkedge\AppBundle\Services\DateTimeUtils
         arguments: [@app_settings]
