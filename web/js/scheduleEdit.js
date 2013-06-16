@@ -51,7 +51,6 @@ function setcell(cell, i, j) {
         }
         //-- if the old value was unavailable and the new value is above 0 then subtract from the hours list
         if (curval == 0 && newval > 0) {
-            $('#maxleft').text(parseFloat($('#maxleft').text()) - (0.25 * sectiondiv));
             $('#totalhours').text(parseFloat($('#totalhours').text()) + (0.25 * sectiondiv));
             if ($('#minleft').text() > 0) {
                 $('#minleft').text(parseFloat($('#minleft').text()) - (0.25 * sectiondiv));
@@ -59,7 +58,6 @@ function setcell(cell, i, j) {
         }
         //-- if the old value was a preference level and the new value is unavailable then add to the hours list
         else if (curval > 0 && newval == 0) {
-            $('#maxleft').text(parseFloat($('#maxleft').text()) + (0.25 * sectiondiv));
             $('#totalhours').text(parseFloat($('#totalhours').text()) - (0.25 * sectiondiv));
             if ($('#totalhours').text() < usermin) {
                 $('#minleft').text(parseFloat($('#minleft').text()) + (0.25 * sectiondiv));

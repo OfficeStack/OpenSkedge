@@ -46,7 +46,6 @@
                 <th>Minimum Hours</th>
                 <th>Maximum Hours</th>
                 <th>Hours left to reach minimum</th>
-                <th>Hours left to reach maximum</th>
                 <th><strong>Total Hours Available</strong></th>
                 <th><strong>Total Hours Desired</strong></th>
                 <th><strong>Total Hours Scheduled</strong></th>
@@ -56,20 +55,19 @@
                     <td>{{ app.user.min }}</td>
                     <td>{{ app.user.max }}</td>
                     <td><span class="badge {% if app.user.min - hrsAvail < 0 %}badge-success{% else %}badge-important{% endif %}" id="minleft">{% if app.user.min - hrsAvail < 0 %}0{% else %}{{ app.user.min - hrsAvail }}{% endif %}</span></td>
-                    <td><span class="badge badge-info" id="maxleft">{{ app.user.max - hrsAvail }}</span></td>
                     <td><span class="badge badge-info" id="totalhours">{{ hrsAvail }}</span></td>
                     <td>{{ app.user.hours }}</td>
                     <td>{{ hrsSched }}</td>
                 </tr>
             </tbody>
         </table>
-        <input type="hidden" id="day0" size="108" name="day[]" value="{{ avail.sun }}">
-        <input type="hidden" id="day1" size="108" name="day[]" value="{{ avail.mon }}">
-        <input type="hidden" id="day2" size="108" name="day[]" value="{{ avail.tue }}">
-        <input type="hidden" id="day3" size="108" name="day[]" value="{{ avail.wed }}">
-        <input type="hidden" id="day4" size="108" name="day[]" value="{{ avail.thu }}">
-        <input type="hidden" id="day5" size="108" name="day[]" value="{{ avail.fri }}">
-        <input type="hidden" id="day6" size="108" name="day[]" value="{{ avail.sat }}">
+        <input type="hidden" id="day0" name="day[]" value="{{ avail.sun }}" />
+        <input type="hidden" id="day1" name="day[]" value="{{ avail.mon }}" />
+        <input type="hidden" id="day2" name="day[]" value="{{ avail.tue }}" />
+        <input type="hidden" id="day3" name="day[]" value="{{ avail.wed }}" />
+        <input type="hidden" id="day4" name="day[]" value="{{ avail.thu }}" />
+        <input type="hidden" id="day5" name="day[]" value="{{ avail.fri }}" />
+        <input type="hidden" id="day6" name="day[]" value="{{ avail.sat }}" />
         {% include 'OpenSkedgeBundle:ModularBlocks:userschedule.html.twig' %}
         <label class="checkbox">
             <input type="checkbox" id="notify" name="notify" checked>Notify Supervisors of Availability Change
