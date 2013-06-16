@@ -46,6 +46,10 @@ class OpenSkedgeBundle extends Bundle
             $container->setParameter('doctrine.orm.metadata_cache_driver', 'apc');
             $container->setParameter('doctrine.orm.result_cache_driver', 'apc');
             $container->setParameter('doctrine.orm.query_cache_driver', 'apc');
+        } else if (extension_loaded('memcache')) {
+            $container->setParameter('doctrine.orm.metadata_cache_driver', 'memcache');
+            $container->setParameter('doctrine.orm.result_cache_driver', 'memcache');
+            $container->setParameter('doctrine.orm.query_cache_driver', 'memcache');
         }
 
 
