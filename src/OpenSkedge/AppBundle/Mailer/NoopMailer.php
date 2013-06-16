@@ -46,10 +46,6 @@ class NoopMailer implements MailerInterface
     {
     }
 
-    public function notifyShiftUpdated(Shift $shift)
-    {
-    }
-
     public function notifyShiftDenied(Shift $shift)
     {
     }

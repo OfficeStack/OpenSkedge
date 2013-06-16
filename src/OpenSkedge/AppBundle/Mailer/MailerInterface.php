@@ -17,6 +17,5 @@ interface MailerInterface
     public function notifyLateEmployee(UserInterface $user, Schedule $schedule);
     public function notifyShiftPosted(Shift $shift);
     public function notifyShiftPickedUp(Shift $shift);
-    public function notifyShiftUpdated(Shift $shift);
     public function notifyShiftDenied(Shift $shift);
 }
