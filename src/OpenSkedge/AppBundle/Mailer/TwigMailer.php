@@ -2,23 +2,26 @@
 // Derived from FOSUserBundle
 namespace OpenSkedge\AppBundle\Mailer;
 
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
+use OpenSkedge\AppBundle\Services\AppSettingsService;
 
 class TwigMailer implements MailerInterface
 {
     protected $mailer;
     protected $twig;
     protected $logger;
+    protected $appSettingsService;
     protected $parameters;
 
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, Logger $logger,  array $parameters)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, LoggerInterface $logger, AppSettingsService $appSettingsService, array $parameters)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->logger = $logger;
+        $this->appSettingsService = $appSettingsService;
         $this->parameters = $parameters;
     }
 

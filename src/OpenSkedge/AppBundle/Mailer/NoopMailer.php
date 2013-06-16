@@ -6,10 +6,11 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
+use OpenSkedge\AppBundle\Services\AppSettingsService;
 
 class NoopMailer implements MailerInterface
 {
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, LoggerInterface $logger, array $parameters)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, LoggerInterface $logger, AppSettingsService $appSettingsService, array $parameters)
     {
     }
 

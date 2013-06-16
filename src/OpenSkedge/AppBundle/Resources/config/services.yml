@@ -16,7 +16,7 @@ services:
 
     notify_mailer:
         class: %notify_mailer.class%
-        arguments: [@mailer, @twig, @logger, { senderEmail: %sender_email% }]
+        arguments: [@mailer, @twig, @logger, @app_settings, { senderEmail: %sender_email% }]
         lazy: true
 
     request:
