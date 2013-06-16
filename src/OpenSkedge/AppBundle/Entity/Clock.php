@@ -18,6 +18,12 @@ class Clock extends BaseEntity\RecordBaseEntity
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="User", inversedBy="clock")
+     * @ORM\JoinColumn(name="uid", referencedColumnName="id")
+     **/
+    private $user;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $status;
@@ -42,6 +48,29 @@ class Clock extends BaseEntity\RecordBaseEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \OpenSkedge\AppBundle\Entity\User $user
+     * @return ArchivedClock
+     */
+    public function setUser(\OpenSkedge\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \OpenSkedge\AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

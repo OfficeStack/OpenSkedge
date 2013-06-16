@@ -123,8 +123,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $group;
 
     /**
-     * @ORM\OneToOne(targetEntity="Clock", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Clock", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $clock;
 
