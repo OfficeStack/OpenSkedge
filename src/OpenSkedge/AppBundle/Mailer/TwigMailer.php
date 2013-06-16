@@ -121,6 +121,22 @@ class TwigMailer implements MailerInterface
         }
     }
 
+    public function notifyShiftPickedUp(Shift $shift)
+    {
+        $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftpickedup.txt.twig',
+            array('shift' => $shift), $this->parameters['senderEmail'], $shift->getUser()->getEmail());
+    }
+
+    public function notifyShiftDenied(Shift $shift)
+    {
+        $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftdenied.txt.twig',
+            array('shift' => $shift), $this->parameters['senderEmail'], $shift->getUser()->getEmail());
+        if (!empty($shift->getPickedUpBy())) {
+            $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftdenied_pickedup.txt.twig',
+            array('shift' => $shift), $this->parameters['senderEmail'], $shift->getPickedUpBy()->getEmail());
+        }
+    }
+
     /**
      * Render the email, use the first line as the subject, and the rest as the body
      *
