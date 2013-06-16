@@ -184,6 +184,8 @@ class ShiftController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Shift posted successfully.');
+
+            $this->get('notify_mailer')->notifyShiftPosted($entity);
         } else {
             $request->getSession()->getFlashBag()->add('error', 'Shift could not be posted! Invalid data given.');
         }
