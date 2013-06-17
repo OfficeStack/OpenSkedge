@@ -7,6 +7,10 @@ web1:
       - "php app/console doctrine:migrations:version 20130120012237 --add -v"
       - "php app/console doctrine:migrations:version 20130330222007 --add -v"
       - "php app/console doctrine:migrations:version 20130505173644 --add -v"
+      - "php app/console doctrine:migrations:version 20130508143748 --add -v"
+      - "php app/console doctrine:migrations:version 20130524152738 --add -v"
+      - "php app/console doctrine:migrations:version 20130616122810 --add -v"
+      - "php app/console doctrine:migrations:version 20130616165301 --add -v"
 
 global:
     env:
