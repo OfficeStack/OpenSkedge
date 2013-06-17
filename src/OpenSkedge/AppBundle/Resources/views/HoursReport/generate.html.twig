@@ -1,14 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ app_brand_name() }} - Clock Report - {{ user.name }} - {{ week|date('M-d-Y') }}{% endblock %}
-{% block stylesheets %}
-{{ parent() }}
-<style type="text/css">
-.s0 { background-color: #BBbbBB; }
-.s1 { background-color: #008000; }
-.s2 { background-color: #DC143C; }
-.s3 { background-color: #FFcc00; }
-</style>
-{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <ul class="breadcrumb">
@@ -45,7 +36,7 @@
             <tr>
                 <td>{{ htime|date("g:i a", false) }}</td>
     {% for j in 0..6 %}{% spaceless %}
-                <td class="{% if archivedClock.data[j][i] == '1' and scheduled.week[j][i] == '1' %}s1{% elseif archivedClock.data[j][i] == '1' and scheduled.week[j][i] == '0'%}s3{% elseif archivedClock.data[j][i] == '0' and scheduled.week[j][i] == '1' %}s2{% else %}s0{% endif %}"></td>{% endspaceless %}
+                <td class="s{{ scheduled.getDayOffset(j, i) }}"></td>{% endspaceless %}
     {% endfor %}{% set htime = htime|date_modify("+15 mins") %}
             </tr>
 {% endfor %}

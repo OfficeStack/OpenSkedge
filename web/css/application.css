@@ -103,6 +103,10 @@ h3 { display: inline; }
     background-image: -o-linear-gradient(top,#fff,#EEeeFF);
     background-image: linear-gradient(to bottom,#fff,#EEeeFF);
 }
+.s0 { background-color: #BBbbBB; }
+.s1 { background-color: #008000; }
+.s2 { background-color: #DC143C; }
+.s3 { background-color: #FFcc00; color: #222222; }
 .avail-user {
     border-radius: 2px;
     padding: 2px;

@@ -35,6 +35,7 @@
     <li{% if action == 'late' %} class="active"{% endif %}><a href="{{ path('dashboard_shifts_late') }}">My Late Shifts</a></li>
     <li{% if action == 'missed' %} class="active"{% endif %}><a href="{{ path('dashboard_shifts_missed') }}">My Missed Shifts</a></li>
     <li><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a></li>
+    <li><a href="{{ path('dashboard_stats') }}">My Stats - <small class="text-error">(beta)</small></a></li>
 </ul>
 {% if entities is empty %}
 <div class="alert">
