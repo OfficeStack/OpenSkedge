@@ -1,14 +1,5 @@
 {% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
 {% block title %}{{ app_brand_name() }} - Clock Report - {{ user.name }} - {{ week|date('M-d-Y') }}{% endblock %}
-{% block stylesheets %}
-{{ parent() }}
-<style type="text/css">
-.s0 { background-color: #BBbbBB; }
-.s1 { background-color: #008000; }
-.s2 { background-color: #DC143C; }
-.s3 { background-color: #FFcc00; }
-</style>
-{% endblock %}
 {% block modulecontent %}
 <div class="span12">
     <ul class="breadcrumb">
