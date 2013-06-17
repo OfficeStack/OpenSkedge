@@ -511,14 +511,14 @@ class UserController extends Controller
      */
     protected function cleanupCollections(Form $form)
     {
-        $children = $form->getChildren();
+        $children = $form->all();
 
         foreach ($children as $childForm) {
             $data = $childForm->getData();
             if ($data instanceof Collection) {
 
                 // Get the child form objects and compare the data of each child against the object's current collection
-                $proxies = $childForm->getChildren();
+                $proxies = $childForm->all();
                 foreach ($proxies as $proxy) {
                     $entity = $proxy->getData();
                     if (!$data->contains($entity)) {
