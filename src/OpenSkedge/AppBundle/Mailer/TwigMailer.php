@@ -2,23 +2,27 @@
 // Derived from FOSUserBundle
 namespace OpenSkedge\AppBundle\Mailer;
 
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use OpenSkedge\AppBundle\Entity\AvailabilitySchedule;
 use OpenSkedge\AppBundle\Entity\Schedule;
+use OpenSkedge\AppBundle\Entity\Shift;
+use OpenSkedge\AppBundle\Services\AppSettingsService;
 
 class TwigMailer implements MailerInterface
 {
     protected $mailer;
     protected $twig;
     protected $logger;
+    protected $appSettingsService;
     protected $parameters;
 
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, Logger $logger,  array $parameters)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, LoggerInterface $logger, AppSettingsService $appSettingsService, array $parameters)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->logger = $logger;
+        $this->appSettingsService = $appSettingsService;
         $this->parameters = $parameters;
     }
 
@@ -96,7 +100,41 @@ class TwigMailer implements MailerInterface
                 'position' => $schedule->getPosition(),
             );
         $this->dispatchMessage('OpenSkedgeBundle:Mailer:lateemployee_emp.txt.twig',
-                $context, $this->parameters['senderEmail'], $user->getEmail());
+            $context, $this->parameters['senderEmail'], $user->getEmail());
+    }
+
+    public function notifyShiftPosted(Shift $shift)
+    {
+        $user = $shift->getUser();
+        foreach ($user->getSupervisors() as $supervisor) {
+            $context = array(
+                'shift' => $shift,
+                'supervisor' => $supervisor
+            );
+            $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftposted_sup.txt.twig',
+                $context, $this->parameters['senderEmail'], $supervisor->getEmail());
+        }
+        if (!empty($appSettingsService->getAppSettings()->getMassEmail())) {
+            $context = array('shift' => $shift);
+            $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftposted_mass.txt.twig',
+                $context, $user->getEmail(), $appSettingsService->getAppSettings()->getMassEmail());
+        }
+    }
+
+    public function notifyShiftPickedUp(Shift $shift)
+    {
+        $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftpickedup.txt.twig',
+            array('shift' => $shift), $this->parameters['senderEmail'], $shift->getUser()->getEmail());
+    }
+
+    public function notifyShiftDenied(Shift $shift)
+    {
+        $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftdenied.txt.twig',
+            array('shift' => $shift), $this->parameters['senderEmail'], $shift->getUser()->getEmail());
+        if (!empty($shift->getPickedUpBy())) {
+            $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftdenied_pickedup.txt.twig',
+            array('shift' => $shift), $this->parameters['senderEmail'], $shift->getPickedUpBy()->getEmail());
+        }
     }
 
     /**
