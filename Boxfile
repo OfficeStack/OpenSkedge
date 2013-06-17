@@ -31,9 +31,9 @@ web1:
       - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
 
     before_deploy:
+      - "php app/console --env=prod --no-debug doctrine:migrations:migrate -n -v"
       - "php app/console --env=prod --no-debug cache:clear --no-warmup -v"
       - "php app/console --env=prod --no-debug cache:warmup -v"
-      - "php app/console --env=prod --no-debug doctrine:migrations:migrate -n -v"
 
 db1:
     name: openskedge
