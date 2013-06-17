@@ -22,6 +22,10 @@ services:
     request:
         class: Symfony\Component\HttpFoundation\Request
 
+    stats:
+        class: OpenSkedge\AppBundle\Services\StatsService
+        arguments: [@doctrine.orm.default_entity_manager, @dt_utils]
+
     app_settings.twig.extension:
         class: OpenSkedge\AppBundle\Twig\Extension\SettingsExtension
         arguments: [@app_settings]

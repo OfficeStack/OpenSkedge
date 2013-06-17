@@ -32,6 +32,10 @@ dashboard_shifts_missed:
     pattern:  /dashboard/shifts/missed/
     defaults: { _controller: OpenSkedgeBundle:User:missedShifts, id: ~ }
 
+dashboard_stats:
+    pattern:  /user/stats/
+    defaults: { _controller: OpenSkedgeBundle:Stats:index, id: ~ }
+
 lateshift_update:
     pattern:  /shifts/late/{id}/
     defaults: { _controller: OpenSkedgeBundle:LateShift:update }
