@@ -1,0 +1,69 @@
+{% extends 'OpenSkedgeBundle:Dashboard:index.html.twig' %}
+{% block title %}{{ app_brand_name() }} - My Stats{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/Chart.min.js') }}"></script>
+<script type="text/javascript">
+    var hoursData = {{ hoursData|raw }};
+    var hoursCtx = document.getElementById("hoursReport").getContext("2d");
+    var hoursChart = new Chart(hoursCtx).Doughnut(hoursData);
+    var lmData = {{ lmData|raw }};
+    var lmCtx = document.getElementById("missedLate").getContext("2d");
+    var lmChart = new Chart(lmCtx).Line(lmData);
+    var schData = {{ schData|raw }};
+    var schCtx = document.getElementById("scheduledHours").getContext("2d");
+    var schChart = new Chart(schCtx).Pie(schData);
+</script>
+{% endblock %}
+{% block modulecontent %}
+<ul class="nav nav-tabs">
+    <li><a href="{{ path('dashboard') }}">My Schedule</a></li>
+    <li><a href="{{ path('dashboard_shifts') }}">My Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_past') }}">My Past Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_late') }}">My Late Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_missed') }}">My Missed Shifts</a></li>
+    <li><a href="{{ path('dashboard_shifts_posted') }}">Posted Shifts</a></li>
+    <li class="active"><a href="{{ path('dashboard_stats') }}">My Stats  - <small class="text-error">(beta)</small></a></li>
+</ul>
+<form class="form-inline inline" action="{{ path('dashboard_stats') }}" method="post">
+<h4>Stats for
+    <select name="schedulePeriod" onChange="this.form.submit();">
+        {% for schedulePeriod in schedulePeriods %}
+        <option value="{{ loop.index0 }}" {% if loop.index0 == selected %}selected{% endif %}>{{ schedulePeriod }}</option>
+        {% endfor %}
+    </select>
+     Schedule Period
+</h4>
+</form>
+<div class="row-fluid">
+    <section class="span6 well">
+        <h5>Weekly Clock Data Composite</h5>
+        <canvas class="pull-left" id="hoursReport" width="200" height="200"></canvas>
+        <span class="label s0">Not Worked &amp; Not Scheduled</span>
+        <span class="label s1">Worked &amp; Scheduled</span>
+        <span class="label s2">Scheduled &amp; Not Worked</span>
+        <span class="label s3">Worked &amp; Not Scheduled</span>
+        <div class="clearfix"></div>
+    </section>
+    <section class="span6 well">
+        <h5>Late &amp; Missed Shifts</h5>
+        <canvas id="missedLate" width="300" height="200"></canvas>
+    </section>
+</div>
+<div class="row-fluid">
+    <section class="span6 well">
+        <h5>Scheduled Hours</h5>
+        <canvas class="pull-left" id="scheduledHours" width="200" height="200"></canvas>
+        <span class="label" style="background-color: #69D2E7;">Available</span>
+        <span class="label" style="background-color: #F38630">Scheduled</span>
+        <div class="clearfix"></div>
+    </section>
+    <section class="span6 well">
+        <h5>More stats coming soon...</h5>
+        <canvas width="200" height="200"></canvas>
+    </section>
+</div>
+{% endblock %}
