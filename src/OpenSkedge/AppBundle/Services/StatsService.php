@@ -35,7 +35,7 @@ class StatsService
         $archivedClock = $this->em->getRepository('OpenSkedgeBundle:ArchivedClock')->findOneBy(array('week' => $week, 'user' => $uid));
 
         if (!$archivedClock instanceof ArchivedClock) {
-            $this->createNotFoundException('User clock data not found for specified week!');
+            return new Schedule();
         }
 
         $schedulePeriods = $this->em->createQueryBuilder()
