@@ -114,7 +114,8 @@ class TwigMailer implements MailerInterface
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftposted_sup.txt.twig',
                 $context, $this->parameters['senderEmail'], $supervisor->getEmail());
         }
-        if (!empty($appSettingsService->getAppSettings()->getMassEmail())) {
+        $massEmail = $appSettingsService->getAppSettings()->getMassEmail();
+        if (!empty($massEmail)) {
             $context = array('shift' => $shift);
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftposted_mass.txt.twig',
                 $context, $user->getEmail(), $appSettingsService->getAppSettings()->getMassEmail());
@@ -131,7 +132,7 @@ class TwigMailer implements MailerInterface
     {
         $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftdenied.txt.twig',
             array('shift' => $shift), $this->parameters['senderEmail'], $shift->getUser()->getEmail());
-        if (!empty($shift->getPickedUpBy())) {
+        if ($shift->getPickedUpBy instanceof UserInterface) {
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftdenied_pickedup.txt.twig',
             array('shift' => $shift), $this->parameters['senderEmail'], $shift->getPickedUpBy()->getEmail());
         }
