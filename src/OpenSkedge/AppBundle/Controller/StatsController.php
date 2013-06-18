@@ -37,8 +37,7 @@ class StatsController extends Controller
          */
         $schedulePeriods = $em->createQuery('SELECT sp FROM OpenSkedgeBundle:SchedulePeriod sp
                                     LEFT JOIN sp.schedules s JOIN sp.availabilitySchedules a
-                                    WHERE (sp.startTime <= CURRENT_TIMESTAMP()
-                                    AND sp.endTime >= CURRENT_TIMESTAMP() AND s.schedulePeriod = sp.id
+                                    WHERE (s.schedulePeriod = sp.id
                                     AND a.schedulePeriod = sp.id AND s.user = :uid AND a.user = :uid)
                                     ORDER BY sp.endTime DESC')
             ->setParameter('uid', $id)
