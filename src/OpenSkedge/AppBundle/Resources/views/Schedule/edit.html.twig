@@ -52,22 +52,6 @@ $(document).ready(function() {
     <form id="timeresolution" class="form-inline inline header-control" action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="get">
         {% include 'OpenSkedgeBundle:ModularBlocks:timeresolution.html.twig' %}
     </form>
-    <table class="table table-condensed">
-        <thead>
-            <th>Employee</th>
-            <th>Total Hours</th>
-            <th>Maximum Hours</th>
-        </thead>
-        <tbody>
-    {% for avail in availData %}
-            <tr>
-                <td>{{ avail.gen.user.name }}</td>
-                <td><span class="badge badge-info" id="u{{ avail.gen.user.id }}_total">{{ avail.totalHours }}</span></td>
-                <td id="u{{ avail.gen.user.id }}_max">{{ avail.gen.user.max }}</td>
-            </tr>
-    {% endfor %}
-        </tbody>
-    </table>
     <form action="{{ path('position_schedule_edit', { 'pid': position.id, 'spid': schedulePeriod.id }) }}" method="post" name="scheduleform">
         <input type="hidden" name="sectiondiv" value="{{ sectiondiv }}">
         <table class="table table-condensed table-bordered schedule-table">
@@ -108,4 +92,24 @@ $(document).ready(function() {
         </div>
     </form>
 </div>
+{% endblock %}
+{% block sidebar %}
+<section id="hourcounts" class="well">
+    <table class="table table-condensed">
+        <thead>
+            <th>Employee</th>
+            <th>Total Hours</th>
+            <th>Maximum Hours</th>
+        </thead>
+        <tbody>
+    {% for avail in availData %}
+            <tr>
+                <td>{{ avail.gen.user.name }}</td>
+                <td><span class="badge badge-info" id="u{{ avail.gen.user.id }}_total">{{ avail.totalHours }}</span></td>
+                <td id="u{{ avail.gen.user.id }}_max">{{ avail.gen.user.max }}</td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+</section>
 {% endblock %}
