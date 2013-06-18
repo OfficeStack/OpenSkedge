@@ -105,8 +105,8 @@ $(document).ready(function () {
       </aside><!--/span3-->
     </div>
     <section id="modulecontent" class="span9">
-    {% set alertTypeAvaillable = [ 'info', 'success', 'warning', 'error'] %}
-    {% for alert in alertTypeAvaillable %}
+    {% set alertTypeAvailable = [ 'info', 'success', 'warning', 'error'] %}
+    {% for alert in alertTypeAvailable %}
         {% if app.session.getFlashBag().has(alert) %}
             <div class="alert alert-{{ alert }}" >
                 <button class="close" data-dismiss="alert">&times;</button>
