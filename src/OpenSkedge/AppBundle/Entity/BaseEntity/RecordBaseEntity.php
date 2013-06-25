@@ -165,14 +165,14 @@ class RecordBaseEntity
             default:
                 throw new \UnexpectedValueException('Input does not refer to a day!');
         }
-        $this->{$day}[$offset] = $val;
+        $this->{$day}[(int)$offset] = $val;
         return $this;
     }
 
     public function getDayOffset($dayint, $offset)
     {
         $recStr = $this->getDay($dayint);
-        return $recStr[$offset];
+        return $recStr[(int)$offset];
     }
 
     /**
