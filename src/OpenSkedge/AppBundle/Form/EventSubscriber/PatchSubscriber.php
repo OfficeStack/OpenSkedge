@@ -38,12 +38,12 @@ class PatchSubscriber implements EventSubscriberInterface
     {
         if ($form->count() > 0) {
             $ary = array();
-            foreach ($form->getChildren() as $name => $child) {
+            foreach ($form->all() as $name => $child) {
                 $ary[$name] = $this->unbind($child);
             }
             return $ary;
         } else {
-            return $form->getClientData();
+            return $form->getViewData();
         }
     }
 
