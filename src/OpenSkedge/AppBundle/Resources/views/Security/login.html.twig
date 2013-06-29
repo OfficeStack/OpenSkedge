@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{ app_brand_name() }} - Login</title>
-        <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-todc.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
@@ -26,7 +26,7 @@
             </div>
             <h2 class="form-signin-heading text-center">{{ app_brand_name() }}</h2>
             <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" class="input-block-level" placeholder="Username" required />
+            <input type="text" id="username" name="_username" class="input-block-level" placeholder="Username" value="{{ last_username }}" required />
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" class="input-block-level" placeholder="Password" required />
@@ -45,7 +45,7 @@
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     </body>
 </html>

@@ -24,12 +24,20 @@ class SecurityController extends Controller
      */
     public function loginAction()
     {
-        if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        // get the login error if there is one
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
-            $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render('OpenSkedgeBundle:Security:login.html.twig', array('error' => $error));
+        return $this->render('OpenSkedgeBundle:Security:login.html.twig', array(
+            'error' => $error,
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+        ));
     }
 }
