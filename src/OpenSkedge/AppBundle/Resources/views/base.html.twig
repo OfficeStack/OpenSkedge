@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% block title %}{{ app_brand_name() }} - {{ get_controller_name()|capitalize }} {% if get_action_name() != 'index' and get_action_name() != 'view' %}- {{ get_action_name()|capitalize }}{% endif %}{% endblock %}</title>
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
-        <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-todc.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" type="text/css" />
@@ -20,7 +20,7 @@
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/jquery.tablesorter.min.js') }}"></script>
         <script src="{{ asset('js/jquery.tablesorter.widgets.min.js') }}"></script>
