@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OpenSkedge\AppBundle\Entity\LateShift
  *
  * @ORM\Table(name="os_audit_late", indexes={@ORM\Index(name="lateShiftCreated", columns={"creationTime"})})
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="OpenSkedge\AppBundle\Entity\LateShiftRepository")
  */
 class LateShift extends BaseEntity\ShiftBaseEntity
 {

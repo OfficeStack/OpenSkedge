@@ -423,10 +423,7 @@ class UserController extends Controller
             }
         }
 
-        $missedShifts = $em->createQuery('SELECT ls FROM OpenSkedgeBundle:LateShift ls
-                WHERE (ls.arrivalTime IS NULL AND ls.user = :uid) ORDER BY ls.creationTime DESC')
-            ->setParameter('uid', $user->getId())
-            ->getResult();
+        $missedShifts = $em->getRepository('OpenSkedgeBundle:LateShift')->findUserMissedShifts($user->getId());
 
         $page = $this->container->get('request')->query->get('page', 1);
 
@@ -473,10 +470,7 @@ class UserController extends Controller
             }
         }
 
-        $lateShifts = $em->createQuery('SELECT ls FROM OpenSkedgeBundle:LateShift ls
-                WHERE (ls.arrivalTime IS NOT NULL AND ls.user = :uid) ORDER BY ls.creationTime DESC')
-            ->setParameter('uid', $user->getId())
-            ->getResult();
+        $lateShifts = $em->getRepository('OpenSkedgeBundle:LateShift')->findUserLateShifts($user->getId());
 
         $page = $this->container->get('request')->query->get('page', 1);
 

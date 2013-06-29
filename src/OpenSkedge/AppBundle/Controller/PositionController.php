@@ -246,12 +246,7 @@ class PositionController extends Controller
         $qb = $em->createQueryBuilder();
 
         // Grab all current schedule periods
-        $schedulePeriods = $qb->select('sp')
-            ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
-            ->where('sp.startTime < CURRENT_TIMESTAMP()')
-            ->andWhere('sp.endTime > CURRENT_TIMESTAMP()')
-            ->getQuery()
-            ->getResult();
+        $schedulePeriods = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findCurrentSchedulePeriods();
 
         // Get all the schedules for each schedule period
         $schedules = array();

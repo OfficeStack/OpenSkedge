@@ -32,16 +32,7 @@ class StatsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        /* Get schedules periods and their associated availability schedules and position schedules
-         * ordered by the end time of each scheduling period (descending)
-         */
-        $schedulePeriods = $em->createQuery('SELECT sp FROM OpenSkedgeBundle:SchedulePeriod sp
-                                    LEFT JOIN sp.schedules s JOIN sp.availabilitySchedules a
-                                    WHERE (s.schedulePeriod = sp.id
-                                    AND a.schedulePeriod = sp.id AND s.user = :uid AND a.user = :uid)
-                                    ORDER BY sp.endTime DESC')
-            ->setParameter('uid', $id)
-            ->getResult();
+        $schedulePeriods = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findUserSchedulePeriods($id);
 
         $composite = '';
         $lmLabels = array();
@@ -65,20 +56,10 @@ class StatsController extends Controller
             foreach ($monthPeriod as $period) {
                 $nextPeriod = clone $period;
                 $nextPeriod->add(new \DateInterval("P1M"));
-                $lateCount[] = $em->createQuery('SELECT COUNT(ls.id) FROM OpenSkedgeBundle:LateShift ls
-                    WHERE (ls.creationTime >= :start AND ls.creationTime < :end AND
-                    ls.arrivalTime IS NOT NULL AND ls.user = :uid)')
-                    ->setParameter('uid', $id)
-                    ->setParameter('start', $period)
-                    ->setParameter('end', $nextPeriod)
-                    ->getSingleScalarResult();
-                $missedCounts[] = $em->createQuery('SELECT COUNT(ls.id) FROM OpenSkedgeBundle:LateShift ls
-                    WHERE (ls.creationTime >= :start AND ls.creationTime < :end AND
-                    ls.arrivalTime IS NULL AND ls.user = :uid)')
-                    ->setParameter('uid', $id)
-                    ->setParameter('start', $period)
-                    ->setParameter('end', $nextPeriod)
-                    ->getSingleScalarResult();
+                $lateCount[] = $em->getRepository('OpenSkedgeBundle:LateShift')
+                                  ->getUserLateShiftCount($id, $period, $nextPeriod);
+                $missedCounts[] = $em->getRepository('OpenSkedgeBundle:LateShift')
+                                  ->getUserMissedShiftCount($id, $period, $nextPeriod);
                 $lmLabels[] = $period->format('F');
             }
 

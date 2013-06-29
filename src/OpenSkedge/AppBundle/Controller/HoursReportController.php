@@ -43,12 +43,7 @@ class HoursReportController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $archivedClockWeeks = $em->createQueryBuilder()
-            ->select('DISTINCT ac.week')
-            ->from('OpenSkedgeBundle:ArchivedClock', 'ac')
-            ->orderBy('ac.week', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $archivedClockWeeks = $em->getRepository('OpenSkedgeBundle:ArchivedClock')->getDistinctWeeks();
 
         $page = $this->container->get('request')->query->get('page', 1);
         $limit = $this->container->get('request')->query->get('limit', 15);

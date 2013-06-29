@@ -38,14 +38,8 @@ class StatsService
             return new Schedule();
         }
 
-        $schedulePeriods = $this->em->createQueryBuilder()
-            ->select('sp')
-            ->from('OpenSkedgeBundle:SchedulePeriod', 'sp')
-            ->where('sp.startTime <= :week')
-            ->andWhere('sp.endTime >= :week')
-            ->setParameter('week', $week)
-            ->getQuery()
-            ->getResult();
+        $schedulePeriods = $this->em->getRepository('OpenSkedgeBundle:SchedulePeriod')
+                                    ->findSchedulePeriodsForWeek($week);
 
         $schedules = array();
         foreach ($schedulePeriods as $sp) {

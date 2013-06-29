@@ -57,10 +57,7 @@ class ClockOutCommand extends ContainerAwareCommand
             $output->writeln("User is not clocked in. Exiting.");
             return;
         } elseif ($input->getOption('all')) {
-
-            $clocks = $em->createQuery('SELECT u,c FROM OpenSkedgeBundle:Clock c
-                                        LEFT JOIN c.user u WHERE c.status = 1')
-                ->getResult();
+            $clocks = $em->getRepository('OpenSkedgeBundle:Clock')->findByStatus(true);
 
             if (count($clocks) < 1) {
                 $output->writeln("No users to clock out. Exiting.");

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OpenSkedge\AppBundle\Entity\Shift
  *
  * @ORM\Table(name="os_shift", indexes={@ORM\Index(name="users", columns={"uid", "puid"})})
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="OpenSkedge\AppBundle\Entity\ShiftRepository")
  */
 class Shift extends BaseEntity\ShiftBaseEntity
 {

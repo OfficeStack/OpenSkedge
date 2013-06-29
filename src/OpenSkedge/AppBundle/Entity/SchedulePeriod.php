@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OpenSkedge\AppBundle\Entity\SchedulePeriod
  *
  * @ORM\Table(name="os_schedule_period")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="OpenSkedge\AppBundle\Entity\SchedulePeriodRepository")
  * @UniqueEntity(fields={"startTime", "endTime"})
  */
 class SchedulePeriod

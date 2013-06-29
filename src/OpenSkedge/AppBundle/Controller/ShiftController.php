@@ -63,9 +63,7 @@ class ShiftController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $postedShifts = $em->createQuery('SELECT shift FROM OpenSkedgeBundle:Shift shift
-                                          WHERE (shift.endTime > CURRENT_TIMESTAMP() AND shift.status != \'unapproved\')')
-            ->getResult();
+        $postedShifts = $em->getRepository('OpenSkedgeBundle:Shift')->findPostedShifts();
 
         $page = $this->container->get('request')->query->get('page', 1);
 
@@ -98,10 +96,8 @@ class ShiftController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $pastShifts = $em->createQuery('SELECT shift FROM OpenSkedgeBundle:Shift shift
-                                          WHERE (shift.endTime < CURRENT_TIMESTAMP() AND shift.pickedUpBy = :uid AND shift.status != \'unapproved\') ORDER BY shift.endTime DESC')
-            ->setParameter('uid', $this->getUser()->getId())
-            ->getResult();
+        $pastShifts = $em->getRepository('OpenSkedgeBundle:Shift')
+                         ->findUserPastShifts($this->getUser()->getId());
 
         $page = $this->container->get('request')->query->get('page', 1);
 

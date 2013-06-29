@@ -39,11 +39,8 @@ class ClockService
         $this->em->persist($clock);
 
         // Get a list of late shifts from today where the user has not arrived.
-        $lateShifts = $this->em->createQuery('SELECT DISTINCT ls FROM OpenSkedgeBundle:LateShift ls
-                                    WHERE (ls.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), ls.creationTime) = 0
-                                    AND ls.user = :uid) ORDER BY ls.creationTime DESC')
-                                ->setParameter('uid', $user->getId())
-                                ->getResult();
+        $lateShifts = $this->em->getRepository('OpenSkedgeBundle:LateShift')
+                               ->findUserLateShiftsToday($user->getId());
         // Get the time record index for the current time.
         $curIndex = $this->dtUtils->getIndexFromTime($now);
         // Get the day number from the current day.

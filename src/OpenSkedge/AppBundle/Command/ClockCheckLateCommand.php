@@ -43,11 +43,7 @@ class ClockCheckLateCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $mailer = $this->getContainer()->get('notify_mailer');
 
-        $schedulePeriods = $em->createQuery('SELECT sp FROM OpenSkedgeBundle:SchedulePeriod sp
-                                    WHERE (sp.startTime <= CURRENT_TIMESTAMP()
-                                    AND sp.endTime >= CURRENT_TIMESTAMP())
-                                    ORDER BY sp.endTime DESC')
-            ->getResult();
+        $schedulePeriods = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findCurrentSchedulePeriods();
 
         $schedules = array();
         foreach ($schedulePeriods as $schedulePeriod) {
@@ -129,12 +125,8 @@ class ClockCheckLateCommand extends ContainerAwareCommand
                      * then it is time to check their position schedules.
                      */
                     if (!$late and $postedShift instanceof Shift === false) {
-                        $schedules = $em->createQuery('SELECT s FROM OpenSkedgeBundle:Schedule s
-                                                      WHERE (s.schedulePeriod = :spid AND s.user = :uid)
-                                                      ORDER BY s.schedulePeriod ASC')
-                            ->setParameter('spid', $schedulePeriod->getId())
-                            ->setParameter('uid', $uid)
-                            ->getResult();
+                        $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')
+                                        ->findUserSchedulesBySchedulePeriod($uid, $schedulePeriod->getId());
 
                         /**
                          * Check the last 15 minutes to see if the user was clocked in,
@@ -159,11 +151,8 @@ class ClockCheckLateCommand extends ContainerAwareCommand
                         /* Get a collection of LateShift entities for today from the user
                          * where the user has not clocked in for the shift yet.
                          */
-                        $lateShifts = $em->createQuery('SELECT DISTINCT ls FROM OpenSkedgeBundle:LateShift ls
-                                WHERE (ls.arrivalTime IS NULL AND DATE_DIFF(CURRENT_DATE(), ls.creationTime) = 0
-                                AND ls.schedule = :sid) ORDER BY ls.creationTime DESC')
-                            ->setParameter('sid', $schedule->getId())
-                            ->getResult();
+                        $lateShifts = $em->getRepository('OpenSkedgeBundle:LateShift')
+                                         ->findLateShiftsTodayBySchedule($schedule->getId());
 
                         if (count($lateShifts) > 0) {
                             $lateShift = $lateShifts[0];

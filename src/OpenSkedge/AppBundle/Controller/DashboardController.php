@@ -46,14 +46,7 @@ class DashboardController extends Controller
         /* Get schedules periods and their associated availability schedules and position schedules
          * ordered by the end time of each scheduling period (descending)
          */
-        $results = $em->createQuery('SELECT sp, s, a FROM OpenSkedgeBundle:SchedulePeriod sp
-                                    LEFT JOIN sp.schedules s JOIN sp.availabilitySchedules a
-                                    WHERE (sp.startTime <= CURRENT_TIMESTAMP()
-                                    AND sp.endTime >= CURRENT_TIMESTAMP() AND s.schedulePeriod = sp.id
-                                    AND a.schedulePeriod = sp.id AND s.user = :uid AND a.user = :uid)
-                                    ORDER BY sp.endTime DESC')
-            ->setParameter('uid', $user->getId())
-            ->getResult();
+        $results = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findUserSchedulePeriodsAssoc($user->getId());
 
         // If we've got results, populate the relevant arrays.
         if (count($results) > 0) {
@@ -113,27 +106,16 @@ class DashboardController extends Controller
 
         $week = new \DatePeriod($weekStart, new \DateInterval("P1D"), $weekEnd);
 
-        $schedulePeriods = $em->createQuery('SELECT sp FROM OpenSkedgeBundle:SchedulePeriod sp
-            WHERE (sp.startTime <= CURRENT_TIMESTAMP() AND sp.endTime >= CURRENT_TIMESTAMP()) ORDER BY sp.startTime, sp.endTime ASC')
-            ->getResult();
+        $schedulePeriods = $em->getRepository('OpenSkedgeBundle:SchedulePeriod')->findCurrentSchedulePeriods();
 
         $shifts = array();
         $posintervals = array();
         foreach ($schedulePeriods as $schedulePeriod) {
-            $tempShifts = $em->createQuery('SELECT shift FROM OpenSkedgeBundle:Shift shift
-                    WHERE (shift.startTime >= :ws AND shift.startTime <= :we AND shift.pickedUpBy = :uid AND shift.schedulePeriod = :spid AND shift.status != \'unapproved\') ORDER BY shift.startTime ASC')
-                ->setParameter('ws', $weekStart)
-                ->setParameter('we', $weekEnd)
-                ->setParameter('uid', $user->getId())
-                ->setParameter('spid', $schedulePeriod->getId())
-                ->getResult();
+            $tempShifts = $em->getRepository('OpenSkedgeBundle:Shift')->findUserShiftsInInterval($user->getId(), $schedulePeriod->getId(), $weekStart, $weekEnd);
             $shifts += $tempShifts;
 
-            $schedules = $em->createQuery('SELECT s FROM OpenSkedgeBundle:Schedule s
-                    WHERE (s.schedulePeriod = :spid AND s.user = :uid)')
-                ->setParameter('uid', $user->getId())
-                ->setParameter('spid', $schedulePeriod->getId())
-                ->getResult();
+            $schedules = $em->getRepository('OpenSkedgeBundle:Schedule')
+                            ->findUserSchedulesBySchedulePeriod($user->getId(), $schedulePeriod->getId());
 
             $intervals = array();
             foreach ($schedules as $schedule) {

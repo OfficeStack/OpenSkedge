@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="os_archived_clock", indexes={@ORM\Index(name="week", columns={"week"})})
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="OpenSkedge\AppBundle\Entity\ArchivedClockRepository")
  */
 class ArchivedClock extends BaseEntity\RecordBaseEntity
 {
