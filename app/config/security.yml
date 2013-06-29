@@ -64,6 +64,8 @@ security:
             logout:
                 path: /logout
                 target: /
+            http_basic:
+                realm: "OpenSkedge Authentication Required"
             security: true
             anonymous: true
 
