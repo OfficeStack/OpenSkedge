@@ -15,7 +15,12 @@ class Version20130616165301 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql", "Migration can only be executed safely on 'mysql'.");
 
-        $this->addSql("ALTER TABLE os_settings ADD massEmail VARCHAR(255) DEFAULT NULL");
+        if ($schema->hasTable('os_settings')) {
+            $table = $schema->getTable('os_settings');
+            if (!$table->hasColumn('massEmail')) {
+                $this->addSql("ALTER TABLE os_settings ADD massEmail VARCHAR(255) DEFAULT NULL");
+            }
+        }
     }
 
     public function down(Schema $schema)
@@ -23,6 +28,11 @@ class Version20130616165301 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql", "Migration can only be executed safely on 'mysql'.");
 
-        $this->addSql("ALTER TABLE os_settings DROP massEmail");
+        if ($schema->hasTable('os_settings')) {
+            $table = $schema->getTable('os_settings');
+            if (!$table->hasColumn('massEmail')) {
+                $this->addSql("ALTER TABLE os_settings DROP massEmail");
+            }
+        }
     }
 }
