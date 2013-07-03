@@ -86,4 +86,42 @@ class PositionTest extends \PHPUnit_Framework_TestCase
         $position->removeSchedule($testSchedule);
         $this->assertTrue($position->getSchedules()->isEmpty());
     }
+
+    /**
+     * Run tests to ensure the output is correct for add/remove/getLateShift(s)
+     *
+     * @return void
+     */
+    public function testLateShift()
+    {
+        $lateShift = $this->getMock('\OpenSkedge\AppBundle\Entity\LateShift');
+
+        $position = new Position();
+        $position->addLateShift($lateShift);
+
+        $lateShifts = $position->getLateShifts();
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\LateShift', $lateShifts[0]);
+
+        $position->removeLateShift($lateShift);
+        $this->assertTrue($position->getLateShifts()->isEmpty());
+    }
+
+    /**
+     * Run tests to ensure the output is correct for add/remove/getShift(s)
+     *
+     * @return void
+     */
+    public function testShift()
+    {
+        $shift = $this->getMock('\OpenSkedge\AppBundle\Entity\Shift');
+
+        $position = new Position();
+        $position->addShift($shift);
+
+        $shifts = $position->getShifts();
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\Shift', $shifts[0]);
+
+        $position->removeShift($shift);
+        $this->assertTrue($position->getShifts()->isEmpty());
+    }
 }
