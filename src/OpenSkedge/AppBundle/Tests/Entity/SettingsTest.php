@@ -125,4 +125,17 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("12:00 PM", $settings->getStartHour());
     }
 
+    /**
+     * Run tests to ensure the output is correct for set/getMassEmail
+     *
+     * @return void
+     */
+    public function testMassEmail()
+    {
+        $settings = new Settings();
+
+        $settings->setMassEmail("mass-email@example.com");
+        $this->assertEquals("mass-email@example.com", $settings->getMassEmail());
+    }
+
 }
