@@ -64,6 +64,7 @@ class LateShift extends BaseEntity\ShiftBaseEntity
 
     public function __construct()
     {
+        parent::__construct();
         $this->status = "Unknown";
         $this->arrivalTime = null;
         $this->creationTime = new \DateTime("now");

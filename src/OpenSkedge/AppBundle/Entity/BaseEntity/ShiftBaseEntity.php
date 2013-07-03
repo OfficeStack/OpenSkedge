@@ -33,6 +33,11 @@ class ShiftBaseEntity
 
    protected $schedule;
 
+   public function __construct()
+   {
+        $this->notes = "";
+   }
+
    /**
      * Set notes
      *
