@@ -359,4 +359,60 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($user->getArchivedClocks()->isEmpty());
     }
 
+    /**
+     * Run tests to ensure the output is correct for add/remove/getLateShift(s)
+     *
+     * @return void
+     */
+    public function testLateShift()
+    {
+        $lateShift = $this->getMock('\OpenSkedge\AppBundle\Entity\LateShift');
+
+        $user = new User();
+        $user->addLateShift($lateShift);
+
+        $lateShifts = $user->getLateShifts();
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\LateShift', $lateShifts[0]);
+
+        $user->removeLateShift($lateShift);
+        $this->assertTrue($user->getLateShifts()->isEmpty());
+    }
+
+    /**
+     * Run tests to ensure the output is correct for add/remove/getShift(s)
+     *
+     * @return void
+     */
+    public function testShift()
+    {
+        $shift = $this->getMock('\OpenSkedge\AppBundle\Entity\Shift');
+
+        $user = new User();
+        $user->addShift($shift);
+
+        $shifts = $user->getShifts();
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\Shift', $shifts[0]);
+
+        $user->removeShift($shift);
+        $this->assertTrue($user->getShifts()->isEmpty());
+    }
+
+    /**
+     * Run tests to ensure the output is correct for add/remove/getPickedUpShifts(s)
+     *
+     * @return void
+     */
+    public function testPickedUpShifts()
+    {
+        $shift = $this->getMock('\OpenSkedge\AppBundle\Entity\Shift');
+
+        $user = new User();
+        $user->addPickedUpShift($shift);
+
+        $shifts = $user->getPickedUpShifts();
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\Shift', $shifts[0]);
+
+        $user->removePickedUpShift($shift);
+        $this->assertTrue($user->getPickedUpShifts()->isEmpty());
+    }
 }
