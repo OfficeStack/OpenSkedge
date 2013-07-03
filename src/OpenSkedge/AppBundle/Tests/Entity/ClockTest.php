@@ -39,6 +39,21 @@ class ClockTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Run tests to ensure the output is correct for set/getUser
+     *
+     * @return void
+     */
+    public function testUser()
+    {
+        $user = $this->getMock('\OpenSkedge\AppBundle\Entity\User');
+
+        $clock = new Clock();
+
+        $clock->setUser($user);
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\User', $clock->getUser());
+    }
+
+    /**
      * Run tests to ensure the output is correct for set/getDay, set/getMon, etc.
      *
      * @return void
