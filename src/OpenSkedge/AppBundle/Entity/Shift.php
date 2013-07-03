@@ -75,6 +75,7 @@ class Shift extends BaseEntity\ShiftBaseEntity
 
     public function __construct()
     {
+        parent::__construct();
         $this->status = "pending";
         $this->creationTime = new \DateTime("now");
     }
