@@ -95,4 +95,42 @@ class SchedulePeriodTest extends \PHPUnit_Framework_TestCase
         $schedulePeriod->removeAvailabilitySchedule($testAvailSchedule);
         $this->assertTrue($schedulePeriod->getAvailabilitySchedules()->isEmpty());
     }
+
+    /**
+     * Run tests to ensure the output is correct for add/remove/getLateShift(s)
+     *
+     * @return void
+     */
+    public function testLateShift()
+    {
+        $lateShift = $this->getMock('\OpenSkedge\AppBundle\Entity\LateShift');
+
+        $schedulePeriod = new SchedulePeriod();
+        $schedulePeriod->addLateShift($lateShift);
+
+        $lateShifts = $schedulePeriod->getLateShifts();
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\LateShift', $lateShifts[0]);
+
+        $schedulePeriod->removeLateShift($lateShift);
+        $this->assertTrue($schedulePeriod->getLateShifts()->isEmpty());
+    }
+
+    /**
+     * Run tests to ensure the output is correct for add/remove/getShift(s)
+     *
+     * @return void
+     */
+    public function testShift()
+    {
+        $shift = $this->getMock('\OpenSkedge\AppBundle\Entity\Shift');
+
+        $schedulePeriod = new SchedulePeriod();
+        $schedulePeriod->addShift($shift);
+
+        $shifts = $schedulePeriod->getShifts();
+        $this->assertInstanceOf('\OpenSkedge\AppBundle\Entity\Shift', $shifts[0]);
+
+        $schedulePeriod->removeShift($shift);
+        $this->assertTrue($schedulePeriod->getShifts()->isEmpty());
+    }
 }
