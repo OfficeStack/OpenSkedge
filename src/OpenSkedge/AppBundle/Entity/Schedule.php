@@ -69,11 +69,6 @@ class Schedule extends BaseEntity\RecordBaseEntity
         $this->shifts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getWeek()
-    {
-        return array(str_split($this->getSun()), str_split($this->getMon()), str_split($this->getTue()), str_split($this->getWed()), str_split($this->getThu()), str_split($this->getFri()), str_split($this->getSat()));
-    }
-
     /**
      * Get id
      *

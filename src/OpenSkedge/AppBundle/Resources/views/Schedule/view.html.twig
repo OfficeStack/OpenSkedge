@@ -54,7 +54,7 @@
             <td>
     {% for schedule in schedules %}
     {% if schedule.position.id == position.id %}
-        {% if schedule.week[j][i * sectiondiv] != '0' %}
+        {% if schedule.getDayOffset(j, i * sectiondiv) != '0' %}
                 <div class="avail-user" style="background-color: {{ schedule.user.color }}">
                     <a href="{{ path('user_schedule_view', { 'uid': schedule.user.id, 'spid': schedulePeriod.id })}}" target="_blank">{{ schedule.user.name }}</a>
                 </div>
