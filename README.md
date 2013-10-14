@@ -99,3 +99,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 Homepage: [www.maxfierke.com](http://www.maxfierke.com)  
 Twitter: [@m4xm4n](http://twitter.com/m4xm4n)  
 Github: [@maxfierke](https://github.com/maxfierke)  
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/maxfierke/openskedge/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
