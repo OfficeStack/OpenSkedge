@@ -116,11 +116,13 @@ class PositionController extends Controller
 
         $entity  = new Position();
         $form = $this->createForm(new PositionType(), $entity);
+        $form->remove('area');
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                $entity->setArea($area);
                 $em->persist($entity);
                 $em->flush();
 
