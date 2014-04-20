@@ -124,11 +124,11 @@ class UserController extends Controller
                 $plainPassword = $entity->getPassword();
                 $password = $encoder->encodePassword($plainPassword, $entity->getSalt());
                 $entity->setPassword($password);
-                $clock = new Clock();
-                $em->persist($clock);
-                $em->flush();
-                $entity->setClock($clock);
                 $em->persist($entity);
+                $em->flush();
+                $clock = new Clock();
+                $clock->setUser($entity);
+                $em->persist($clock);
                 $em->flush();
 
                 $mailer = $this->container->get('notify_mailer');
