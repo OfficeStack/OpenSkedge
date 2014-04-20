@@ -25,11 +25,10 @@ class LoadClockData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $adminClock = new Clock();
+        $adminClock->setUser($this->getReference('admin-user'));
 
         $manager->persist($adminClock);
         $manager->flush();
-
-        $this->addReference('admin-clock', $adminClock);
     }
 
     /**
@@ -37,6 +36,6 @@ class LoadClockData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2; // the order in which fixtures will be loaded
+        return 3; // the order in which fixtures will be loaded
     }
 }

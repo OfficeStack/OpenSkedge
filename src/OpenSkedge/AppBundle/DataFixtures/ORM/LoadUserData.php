@@ -40,16 +40,18 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
     public function load(ObjectManager $manager)
     {
         $userAdmin = new User();
-        $userAdmin->setUsername('admin');
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($userAdmin);
-        $userAdmin->setPassword($encoder->encodePassword('admin', $userAdmin->getSalt()));
-        $userAdmin->setName('Carlnater McStrangelove');
-        $userAdmin->setEmail($this->container->getParameter('sender_email'));
-        $userAdmin->setGroup($this->getReference('admin-group'));
-        $userAdmin->setClock($this->getReference('admin-clock'));
+
+        $userAdmin->setUsername('admin')
+                  ->setPassword($encoder->encodePassword('admin', $userAdmin->getSalt()))
+                  ->setName('Carlnater McStrangelove')
+                  ->setEmail($this->container->getParameter('sender_email'))
+                  ->setGroup($this->getReference('admin-group'));
 
         $manager->persist($userAdmin);
         $manager->flush();
+
+        $this->addReference('admin-user', $userAdmin);
     }
 
     /**
@@ -57,6 +59,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function getOrder()
     {
-        return 3; // the order in which fixtures will be loaded
+        return 2; // the order in which fixtures will be loaded
     }
 }
