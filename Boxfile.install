@@ -11,6 +11,7 @@ web1:
       - "php app/console doctrine:migrations:version 20130524152738 --add -v"
       - "php app/console doctrine:migrations:version 20130616122810 --add -v"
       - "php app/console doctrine:migrations:version 20130616165301 --add -v"
+      - "php app/console doctrine:migrations:version 20140327215219 --add -v"
 
 global:
     env:
