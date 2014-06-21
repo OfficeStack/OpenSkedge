@@ -104,6 +104,10 @@ class AvailabilityScheduleController extends Controller
         $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
         $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
 
+        if ($endIndex === -1) { // Midnight end hour
+            $endIndex = 95;
+        }
+
         $hoursAvailable = 0;
         for ($day = 0; $day < 7; $day++) {
             $timeRec = $entity->getDay($day);
@@ -223,6 +227,10 @@ class AvailabilityScheduleController extends Controller
         $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
         $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
 
+        if ($endIndex === -1) { // Midnight end hour
+            $endIndex = 95;
+        }
+
         return $this->render('OpenSkedgeBundle:AvailabilitySchedule:new.html.twig', array(
             'avail'      => $entity,
             'htime'      => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
@@ -297,6 +305,10 @@ class AvailabilityScheduleController extends Controller
 
         $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
         $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
+
+        if ($endIndex === -1) { // Midnight end hour
+            $endIndex = 95;
+        }
 
         $hoursAvailable = 0;
         for ($day = 0; $day < 7; $day++) {

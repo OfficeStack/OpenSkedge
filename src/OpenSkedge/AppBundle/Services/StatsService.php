@@ -70,6 +70,10 @@ class StatsService
         foreach ($shifts as $shift) {
             $startIndex = $this->dtUtils->getIndexFromTime($shift->getStartTime());
             $endIndex = $this->dtUtils->getIndexFromTime($shift->getEndTime());
+
+            if ($endIndex === -1) { // Midnight end hour
+                $endIndex = 96;
+            }
             // Update the schedule composite to mark shifts they had picked up.
             if ($shift->getStartTime()->format('w') === $shift->getEndTime()->format('w')) {
                 $day = $shift->getStartTime()->format('w');

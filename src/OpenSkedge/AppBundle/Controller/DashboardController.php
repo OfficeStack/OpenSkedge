@@ -74,6 +74,10 @@ class DashboardController extends Controller
         $startIndex = $dtUtils->getIndexFromTime($appSettings->getStartHour());
         $endIndex = $dtUtils->getIndexFromTime($appSettings->getEndHour())-1;
 
+        if ($endIndex === -1) { // Midnight end hour
+            $endIndex = 95;
+        }
+
         return $this->render('OpenSkedgeBundle:Dashboard:index.html.twig', array(
             'htime'           => $dtUtils->timeStrToDateTime($appSettings->getStartHour()),
             'resolution'      => $resolution,
