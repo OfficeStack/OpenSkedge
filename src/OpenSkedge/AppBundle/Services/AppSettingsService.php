@@ -18,7 +18,7 @@ class AppSettingsService
         // Grab the settings row from os_settings
         $appSettings = $this->em->getRepository('OpenSkedgeBundle:Settings')->find(1);
         if (!$appSettings instanceof \OpenSkedge\AppBundle\Entity\Settings) {
-            throw new Exception('OpenSkedge settings could not be found');
+            throw new \Exception('OpenSkedge settings could not be found');
         }
         return $appSettings;
     }
