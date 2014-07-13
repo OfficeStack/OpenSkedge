@@ -164,11 +164,14 @@ class ScheduleController extends Controller
                         }
                     }
                 }
-                $scheduleSum = 0;
-                for ($day = 0; $day < 7; $day++) {
-                    $scheduleSum += substr_count($schedule->getDay($day), '1');
+                if ($isSchedulePeriod) {
+                    $scheduleSum = 0;
+                    
+                    for ($day = 0; $day < 7; $day++) {
+                        $scheduleSum += substr_count($schedule->getDay($day), '1');
+                    }
+                    $hoursScheduled += $scheduleSum / 4;
                 }
-                $hoursScheduled += $scheduleSum / 4;
             }
             // Pass the user's availability schedule too, as we'll need to reference that for priorties.
             $availData[] = array('gen' => $genAS, 'schedule' => $avail, 'totalHours' => $hoursScheduled);
