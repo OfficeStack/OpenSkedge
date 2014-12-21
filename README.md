@@ -4,7 +4,10 @@
 
 Created by Max Fierke
 
-# Deployment on a Local, VPS/Cloud, Fortrabbit, or Dedicated host
+# Notice!
+Development has begun on [OpenSkedge 2](http://www.officestack.org/2014/12/05/openskedge-2.html), a rewrite intended to address many of the architecture shortfalls of OpenSkedge 1 and to address more use-cases. Patches to OpenSkedge 1 will still be accepted, and well-defined issues may be fixed, but OpenSkedge 1 is no longer being actively developed. Please feel free to contribute or suggest features over at the repository for [OpenSkedge 2](https://github.com/OfficeStack/OpenSkedge2).
+
+# Deployment on a Local, VPS/Cloud, or Dedicated host
 ## Requirements
 1.  Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
     * Nginx users, see [this wiki article](https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux) for setup.
