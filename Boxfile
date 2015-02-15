@@ -1,14 +1,14 @@
 
 web1:
-    shared_writable_dirs:
+    network_dirs:
       - app/cache
       - app/logs
 
-    document_root: web
-    default_gateway: app.php
-    index_list: [app.php]
+    httpd_document_root: web
+    httpd_index_list: [app.php]
 
-    php_version: 5.5
+    version: 5.5
+    stability: production
     php_extensions:
       - intl
       - mbstring
@@ -23,7 +23,7 @@ web1:
     php_session_autostart: "0"
     php_date_timezone: America/Chicago
 
-    after_build:
+    after_exec:
       - "rm -rf vendor/"
       - "cp app/config/parameters.yml.pagoda app/config/parameters.yml"
       - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
@@ -33,7 +33,7 @@ web1:
       - "php app/console --env=prod --no-debug cache:clear --no-warmup -v"
       - "php app/console --env=prod --no-debug cache:warmup -v"
 
-db1:
+database1:
     name: openskedge
     type: mysql
 
@@ -43,11 +43,12 @@ cache1:
 worker1:
     type: php
     exec: "php app/console --env=prod --no-debug -n openskedge:worker:run"
-    shared_writable_dirs:
+    network_dirs:
       - app/cache
       - app/logs
 
-    php_version: 5.5
+    version: 5.5
+    stability: production
     php_extensions:
       - intl
       - mbstring
@@ -62,7 +63,7 @@ worker1:
     php_session_autostart: "0"
     php_date_timezone: America/Chicago
 
-    after_build:
+    after_exec:
       - "rm -rf vendor/"
       - "cp app/config/parameters.yml.pagoda app/config/parameters.yml"
       - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
