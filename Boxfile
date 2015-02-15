@@ -23,10 +23,12 @@ web1:
     php_session_autostart: "0"
     php_date_timezone: America/Chicago
 
-    after_exec:
+    before_exec:
       - "rm -rf vendor/"
       - "cp app/config/parameters.yml.pagoda app/config/parameters.yml"
-      - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
+
+    exec:
+      - "composer install -n --prefer-source --optimize-autoloader --no-progress"
 
     before_deploy:
       - "php app/console --env=prod --no-debug doctrine:migrations:migrate -n -v"
@@ -63,10 +65,12 @@ worker1:
     php_session_autostart: "0"
     php_date_timezone: America/Chicago
 
-    after_exec:
+    before_exec:
       - "rm -rf vendor/"
       - "cp app/config/parameters.yml.pagoda app/config/parameters.yml"
-      - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n --prefer-source --optimize-autoloader --no-progress"
+
+    exec:
+      - "composer install -n --prefer-source --optimize-autoloader --no-progress"
 
 global:
     env:
