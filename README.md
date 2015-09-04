@@ -4,7 +4,7 @@
 Created by Max Fierke
 
 # Notice!
-Development has begun on [OpenSkedge 2](http://www.officestack.org/2014/12/05/openskedge-2.html), a rewrite intended to address many of the architecture shortfalls of OpenSkedge 1 and to address more use-cases. Patches to OpenSkedge 1 will still be accepted, and well-defined issues may be fixed, but OpenSkedge 1 is no longer being actively developed. Please feel free to contribute or suggest features over at the repository for [OpenSkedge 2](https://github.com/OfficeStack/OpenSkedge2).
+Development is very slowly happening on [OpenSkedge 2](http://www.officestack.org/2014/12/05/openskedge-2.html), a rewrite intended to address many of the architecture shortfalls of OpenSkedge 1 and to address more use-cases. Patches to OpenSkedge 1 will still be accepted, and well-defined issues may be fixed, but OpenSkedge 1 is no longer being actively developed. Please feel free to contribute or suggest features over at the repository for [OpenSkedge 2](https://github.com/OfficeStack/OpenSkedge2).
 
 # Deployment on a Local, VPS/Cloud, or Dedicated host
 ## Requirements
@@ -49,29 +49,15 @@ Development has begun on [OpenSkedge 2](http://www.officestack.org/2014/12/05/op
 4.  Run `php app/console --env=prod cache:clear` to clear and warmup the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
 5.  Run `php app/console --env=prod assets:install` to install Assetic assets into the web root. `prod` should be replaced with `dev` if you're running in a development environment.
 
-# Deployment on Pagoda Box
-Pagoda Box is a PaaS provider that allows the creation of scalable instances of web applications.
-See README.Pagoda.md for Pagoda Box specific installation instructions.
-I have also [created a quickstart](https://pagodabox.com/cafe/m4xm4n/openskedge) that can be used as well.
-
 ## FAQ
 ### What is OpenSkedge?
 OpenSkedge is a reinvention of [Employee Scheduler](http://empscheduler.sourceforge.net), a flexible employee scheduling application designed for companies and organizations (such as education institutions with student workers) which require fluid shift scheduling.
 
 ### What is OpenSkedge not?
-OpenSkedge is not a general purpose, or a one-stop everything-but-the-kitchen-sink scheduling application. It's for assigning positions to people at certain times during certain time periods that they have marked themselves available. It won't schedule your meetings (at least, not yet).
+OpenSkedge is not a general purpose, or a one-stop everything-but-the-kitchen-sink scheduling application. It's for assigning positions to people at certain times during certain time periods that they have marked themselves available. It won't schedule your meetings.
 
 ### Who is behind OpenSkedge?
-[Max Fierke](http://www.maxfierke.com), an open-source developer and student at the University of Minnesota. He does [a lot of other stuff](https://github.com/maxfierke/) too. He created OpenSkedge during his winter break. He also has [a site you can go to](http://www.maxfierke.com).
-
-### Why was OpenSkedge created?
-Max's boss, Garreth, was getting very annoyed at the fact that the version of Employee Scheduler they were running was severely broken. Time clock functionality was broken. Employees couldn't be scheduled past certain hours. Max mentioned that he knew PHP and MySQL. Garreth told him to look at it to see if he could figure out why everything was falling apart. Max spent two months picking the application apart and re-implemented parts of the aged PHP 4 application using PHP 5 constructs such as object-oriented classes and PHP Data Objects. The first weekend of winter break, Max got fed up with the archaic codebase and began re-implementing the application in Symfony2.
-
-### It sounds like OpenSkedge is basically an entirely different application than Employee Scheduler. What is left of it in OpenSkedge?
-Max isn't a JavaScript developer or a UI designer, so much of the JavaScript used in the interface of the application is nearly unmodified from the JavaScript included in Employee Scheduler. The database design is similar to Employee Scheduler but simpler and smarter (sorry!).
-
-### Who is Carlnater McStrangelove?
-The origin of Carlnater McStrangelove is not completely clear. He was present in some of the code for Lab Scheduler (Carlson School of Management's version of Employee Scheduler) and was the sender of all automated Lab Scheduler emails.
+[Max Fierke](https://www.maxfierke.com), a developer and student at the University of Minnesota. He does [a lot of other stuff](https://github.com/maxfierke/) too. He created OpenSkedge during his freshman year. He also has [a site you can go to](https://www.maxfierke.com).
 
 ## License and Copyright
 ### License
@@ -80,7 +66,6 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 
 ### Authors and Contributors
 * Copyright 2012-2013 Max Fierke (@maxfierke)
-* Copyright 2012-2013 University of Minnesota - Carlson School of Manangement
 * Copyright 2003 Brigham Young University (For the bits of Employee Scheduler present)
 
 ### Projects that OpenSkedge uses
