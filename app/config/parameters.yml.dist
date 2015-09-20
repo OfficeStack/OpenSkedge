@@ -5,7 +5,7 @@ parameters:
     database_port: 3306
     database_name: openskedge
     database_user: root
-    database_password: '%database_password%'
+    database_password: ~
 
     # Mailer Configuration
     sender_email: no-reply@mydomain.com
