@@ -56,6 +56,9 @@
         "post-update-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "compile": [
+            "cp app/config/parameters.yml.dist app/config/parameters.yml"
         ]
     },
     "prefer-stable": true,
@@ -65,6 +68,11 @@
         "symfony-web-dir": "web",
         "branch-alias": {
             "dev-master": "2.3-dev"
+        },
+        "paas": {
+            "compile": [
+                "cp app/config/parameters.yml.dist app/config/parameters.yml"
+            ]
         }
     }
 }
