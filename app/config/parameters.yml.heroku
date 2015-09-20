@@ -1,6 +1,11 @@
 parameters:
     # Database Configuration
     database_driver: pdo_mysql
+    database_host: ~
+    database_port: ~
+    database_name: ~
+    database_user: ~
+    database_password: ~
 
     # Mailer Configuration
     mailer_transport: mail
