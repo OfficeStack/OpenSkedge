@@ -1,15 +1,15 @@
 parameters:
     # Database Configuration
     database_driver: pdo_mysql
-    database_url: %database.url%
-    database_host: %database.host%
-    database_port: %database.port%
-    database_name: %database.name%
-    database_user: %database.user%
-    database_password: %database.password%
+    database_url: %database_url%
+    database_host: %database_host%
+    database_port: %database_port%
+    database_name: %database_name%
+    database_user: %database_user%
+    database_password: %database_password%
 
     # Mailer Configuration
-    sender_email: %sender.email%
+    sender_email: %sender_email%
     mailer_transport: mail
     mailer_encryption: ~
     mailer_auth: ~
@@ -22,14 +22,14 @@ parameters:
     locale: en
 
     # Security Configuration
-    secret: YOU_NEED_SOME_GOBBLEDIEGOOK_HERE
+    secret: %secret%
     protocol: http   # http or https (recommended)
 
     # Session Configuration
     session_handler: ~
     # If you want to use memcache for session storage
     #  session_handler: session.handler.memcache
-    session_memcache_host: %memcache.host%
-    session_memcache_port: %memcache.port%
+    session_memcache_host: %session_memcache_host%
+    session_memcache_port: %session_memcache_port%
     session_memcache_prefix: openskedge
-    session_memcache_expire: %memcache.expire%
+    session_memcache_expire: %session_memcache_expire%
