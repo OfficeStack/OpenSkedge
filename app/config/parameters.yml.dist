@@ -22,7 +22,7 @@ parameters:
     locale: en
 
     # Security Configuration
-    secret: %secret%
+    secret: YOU_NEED_SOME_GOBBLEDIEGOOK_HERE
     protocol: http   # http or https (recommended)
 
     # Session Configuration

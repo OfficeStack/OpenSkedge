@@ -58,7 +58,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "compile": [
-            "cp app/config/parameters.yml.dist app/config/parameters.yml"
+            "cp app/config/parameters.yml.heroku app/config/parameters.yml"
         ]
     },
     "prefer-stable": true,
@@ -71,7 +71,7 @@
         },
         "paas": {
             "compile": [
-                "cp app/config/parameters.yml.dist app/config/parameters.yml"
+                "cp app/config/parameters.yml.heroku app/config/parameters.yml"
             ]
         }
     }
