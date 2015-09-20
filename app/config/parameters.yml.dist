@@ -1,15 +1,14 @@
 parameters:
     # Database Configuration
     database_driver: pdo_mysql
-    database_url: %database_url%
-    database_host: %database_host%
-    database_port: %database_port%
-    database_name: %database_name%
-    database_user: %database_user%
-    database_password: %database_password%
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: openskedge
+    database_user: root
+    database_password: '%database_password%'
 
     # Mailer Configuration
-    sender_email: %sender_email%
+    sender_email: no-reply@mydomain.com
     mailer_transport: mail
     mailer_encryption: ~
     mailer_auth: ~
@@ -29,7 +28,7 @@ parameters:
     session_handler: ~
     # If you want to use memcache for session storage
     #  session_handler: session.handler.memcache
-    session_memcache_host: %session_memcache_host%
-    session_memcache_port: %session_memcache_port%
+    session_memcache_host: 127.0.0.1
+    session_memcache_port: 11211
     session_memcache_prefix: openskedge
-    session_memcache_expire: %session_memcache_expire%
+    session_memcache_expire: 3600

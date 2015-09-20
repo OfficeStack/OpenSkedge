@@ -39,7 +39,8 @@
         "white-october/pagerfanta-bundle": "dev-master",
         "symfony/proxy-manager-bridge": "2.3.*",
         "symfony/icu": "1.1.*",
-        "bravesheep/database-url-bundle": "dev-master"
+        "bravesheep/database-url-bundle": "dev-master",
+        "incenteev/composer-parameter-handler": "~2.0"
     },
     "require-dev": {
         "phpunit/php-code-coverage": "1.2.*@dev",
@@ -51,10 +52,12 @@
     },
     "scripts": {
         "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
@@ -69,6 +72,12 @@
         "symfony-web-dir": "web",
         "branch-alias": {
             "dev-master": "2.3-dev"
+        },
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "database_url": "SYMFONY_DATABASE_URL"
+            }
         },
         "paas": {
             "compile": [

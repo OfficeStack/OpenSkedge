@@ -1,6 +1,8 @@
 parameters:
     # Database Configuration
     database_driver: pdo_mysql
+    # will be replaced by incenteev param handler
+    database_url: %database_url%
     database_host: ~
     database_port: ~
     database_name: ~
