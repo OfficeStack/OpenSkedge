@@ -42,7 +42,8 @@
     },
     "require-dev": {
         "phpunit/php-code-coverage": "1.2.*@dev",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "3.7.*",
+        "heroku/heroku-buildpack-php": "*"
     },
     "suggest": {
         "ext-memcache": "Store user sessions in memcache instead of to disk."
