@@ -4,8 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "06f58ac0d86ea8971125eec1a4c4bf02",
+    "hash": "21b7055d1c66df9d831521982fa8a4a3",
+    "content-hash": "8df1448f0f791aa4c09f7842310d7e90",
     "packages": [
+        {
+            "name": "bravesheep/database-url-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bravesheep/database-url-bundle.git",
+                "reference": "c9f496397e4bcfa14a0004ea1f105ca878644a4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bravesheep/database-url-bundle/zipball/c9f496397e4bcfa14a0004ea1f105ca878644a4b",
+                "reference": "c9f496397e4bcfa14a0004ea1f105ca878644a4b",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/symfony": "~2.3"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "2.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bravesheep\\DatabaseUrlBundle\\": "src/Bravesheep/DatabaseUrlBundle/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ruben Nijveld",
+                    "email": "ruben@gewooniets.nl"
+                }
+            ],
+            "description": "Determine Symfony2 database settings from a single URL-based parameter",
+            "time": "2015-04-28 13:41:43"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
@@ -2626,6 +2666,7 @@
         "twig/extensions": 20,
         "kriswallsmith/assetic": 20,
         "white-october/pagerfanta-bundle": 20,
+        "bravesheep/database-url-bundle": 20,
         "phpunit/php-code-coverage": 20
     },
     "prefer-stable": true,

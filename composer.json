@@ -38,7 +38,8 @@
         "pagerfanta/pagerfanta": "1.0.*",
         "white-october/pagerfanta-bundle": "dev-master",
         "symfony/proxy-manager-bridge": "2.3.*",
-        "symfony/icu": "1.1.*"
+        "symfony/icu": "1.1.*",
+        "bravesheep/database-url-bundle": "dev-master"
     },
     "require-dev": {
         "phpunit/php-code-coverage": "1.2.*@dev",
