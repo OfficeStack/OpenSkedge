@@ -43,6 +43,7 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
+        url:      "%database_url"
         driver:   "%database_driver%"
         host:     "%database_host%"
         port:     "%database_port%"
