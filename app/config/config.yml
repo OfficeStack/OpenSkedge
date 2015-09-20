@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: heroku_cleardb.php }
     - { resource: security.yml }
 
 framework:
