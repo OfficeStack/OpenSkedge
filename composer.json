@@ -60,9 +60,6 @@
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
-        ],
-        "compile": [
-            "cp app/config/parameters.yml.heroku app/config/parameters.yml"
         ]
     },
     "prefer-stable": true,
@@ -78,11 +75,6 @@
             "env-map": {
                 "database_url": "SYMFONY_DATABASE_URL"
             }
-        },
-        "paas": {
-            "compile": [
-                "cp app/config/parameters.yml.heroku app/config/parameters.yml"
-            ]
         }
     }
 }
