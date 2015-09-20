@@ -1,0 +1,21 @@
+parameters:
+    # Database Configuration
+    database_driver: pdo_mysql
+
+    # Mailer Configuration
+    mailer_transport: mail
+    mailer_encryption: ~
+    mailer_auth: ~
+    mailer_port: ~
+    mailer_host: ~
+    mailer_user: ~
+    mailer_password: ~
+
+    # Locale Configuration
+    locale: en
+
+    # Security Configuration
+    protocol: https   # http or https (recommended)
+
+    # Session Configuration
+    session_handler: ~
