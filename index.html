@@ -1,54 +1,28 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="OpenSkedge : A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>OpenSkedge</title>
+    <meta charset="UTF-8">
+    <title>OpenSkedge by OfficeStack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">OpenSkedge</h1>
+      <h2 class="project-tagline">A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.</h2>
+      <a href="https://github.com/OfficeStack/OpenSkedge" class="btn">View on GitHub</a>
+      <a href="https://github.com/OfficeStack/OpenSkedge/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/OfficeStack/OpenSkedge/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/OfficeStack/OpenSkedge">View on GitHub</a>
-
-          <h1 id="project_title">OpenSkedge</h1>
-          <h2 id="project_tagline">A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/OfficeStack/OpenSkedge/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/OfficeStack/OpenSkedge/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
-<a id="openskedge-survey" class="anchor" href="#openskedge-survey" aria-hidden="true"><span class="octicon octicon-link"></span></a>OpenSkedge Survey</h1>
-
-<blockquote>
-<p>Hey there!</p>
-
-<p>OpenSkedge has just passed the 'Alpha Milestone', beginning the process of creating the first stable, versioned release of OpenSkedge: OpenSkedge 1.0. Because of this, I'd like to put out a survey to gauge interest in OpenSkedge and collect some feedback about the application and its features, usability, etc.<br>
-If you have a few minutes, please check out <a href="https://docs.google.com/forms/d/1HbwMFDJrn49k0TspoVvvpK70Bk-QrDsmPmyOLCbWAsI/viewform">this survey on Google Forms</a>.</p>
-
-<p>Thank you,<br>
-Max</p>
-</blockquote>
-
-<h1>
+    <section class="main-content">
+      <h1>
 <a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h1>
 
-<p>You may find a fully-functioning demo version of OpenSkedge running at ~<a href="http://demo.openskedge.org">http://demo.openskedge.org</a>~ (<strong>Since the move to PagodaBox V2, the demo app keeps getting flagged for suspicious activity. I'll be working to get this resolved when I find the time.</strong> In the mean time, you may use the link to the version hosted on PagodaBox V1, however this link will cease to work come April 1st: <a href="http://massive-minerva.gopagoda.com/">http://massive-minerva.gopagoda.com/</a>). The application resets itself every week.
-The username is <code>admin</code> and the password is <code>admin</code>.</p>
+<p>You may find a fully-functioning demo version of OpenSkedge running at <a href="http://demo.openskedge.org">http://demo.openskedge.org</a> The application resets itself every day at 00:00 UTC. The username is <code>admin</code> and the password is <code>admin</code>.</p>
 
 <h1>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
@@ -77,21 +51,6 @@ The username is <code>admin</code> and the password is <code>admin</code>.</p>
 <a id="who-is-behind-openskedge" class="anchor" href="#who-is-behind-openskedge" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who is behind OpenSkedge?</h3>
 
 <p><a href="http://www.maxfierke.com">Max Fierke</a>, an open-source developer and student at the University of Minnesota. He does <a href="https://github.com/maxfierke/">a lot of other stuff</a> too. He created OpenSkedge during his winter break. He also has <a href="http://www.maxfierke.com">a site you can go to</a>.</p>
-
-<h3>
-<a id="why-was-openskedge-created" class="anchor" href="#why-was-openskedge-created" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why was OpenSkedge created?</h3>
-
-<p>Max's boss, Garreth, was getting very annoyed at the fact that the version of Employee Scheduler they were running was severely broken. Time clock functionality was broken. Employees couldn't be scheduled past certain hours. Max mentioned that he knew PHP and MySQL. Garreth told him to look at it to see if he could figure out why everything was falling apart. Max spent two months picking the application apart and re-implemented parts of the aged PHP 4 application using PHP 5 constructs such as object-oriented classes and PHP Data Objects. The first weekend of winter break, Max got fed up with the archaic codebase and began re-implementing the application in Symfony2.</p>
-
-<h3>
-<a id="it-sounds-like-openskedge-is-basically-an-entirely-different-application-than-employee-scheduler-what-is-left-of-it-in-openskedge" class="anchor" href="#it-sounds-like-openskedge-is-basically-an-entirely-different-application-than-employee-scheduler-what-is-left-of-it-in-openskedge" aria-hidden="true"><span class="octicon octicon-link"></span></a>It sounds like OpenSkedge is basically an entirely different application than Employee Scheduler. What is left of it in OpenSkedge?</h3>
-
-<p>Max isn't a JavaScript developer or a UI designer, so some of the JavaScript used in the interface of the application is derived from the JavaScript included in Employee Scheduler. The database design is similar to Employee Scheduler but simpler and smarter (sorry!).</p>
-
-<h3>
-<a id="who-is-carlnater-mcstrangelove" class="anchor" href="#who-is-carlnater-mcstrangelove" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who is Carlnater McStrangelove?</h3>
-
-<p>The origin of Carlnater McStrangelove is not completely clear. He was present in some of the code for Lab Scheduler (Carlson School of Management's version of Employee Scheduler) and was the sender of all automated Lab Scheduler emails.</p>
 
 <h1>
 <a id="license-and-copyright" class="anchor" href="#license-and-copyright" aria-hidden="true"><span class="octicon octicon-link"></span></a>License and Copyright</h1>
@@ -149,18 +108,16 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.</p>
 Homepage: <a href="http://www.maxfierke.com">www.maxfierke.com</a><br>
 Twitter: <a href="http://twitter.com/m4xm4n">@m4xm4n</a><br>
 Github: <a href="https://github.com/maxfierke">@maxfierke</a>  </p>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">OpenSkedge maintained by <a href="https://github.com/OfficeStack">OfficeStack</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/OfficeStack/OpenSkedge">OpenSkedge</a> is maintained by <a href="https://github.com/OfficeStack">OfficeStack</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-              <script type="text/javascript">
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -170,7 +127,6 @@ Github: <a href="https://github.com/maxfierke">@maxfierke</a>  </p>
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
-
 
   </body>
 </html>
