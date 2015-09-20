@@ -26,7 +26,7 @@ parameters:
     protocol: http   # http or https (recommended)
 
     # Session Configuration
-    session_handler: %session.handler%
+    session_handler: ~
     # If you want to use memcache for session storage
     #  session_handler: session.handler.memcache
     session_memcache_host: %memcache.host%
