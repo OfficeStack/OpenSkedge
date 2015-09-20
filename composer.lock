@@ -8,6 +8,45 @@
     "content-hash": "7bae8894c6ca5c6c0ed0fef619b1c605",
     "packages": [
         {
+            "name": "bravesheep/database-url-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bravesheep/database-url-bundle.git",
+                "reference": "c9f496397e4bcfa14a0004ea1f105ca878644a4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bravesheep/database-url-bundle/zipball/c9f496397e4bcfa14a0004ea1f105ca878644a4b",
+                "reference": "c9f496397e4bcfa14a0004ea1f105ca878644a4b",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/symfony": "~2.3"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "2.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bravesheep\\DatabaseUrlBundle\\": "src/Bravesheep/DatabaseUrlBundle/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ruben Nijveld",
+                    "email": "ruben@gewooniets.nl"
+                }
+            ],
+            "description": "Determine Symfony2 database settings from a single URL-based parameter",
+            "time": "2015-04-28 13:41:43"
+        },
+        {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
             "source": {
@@ -411,11 +450,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/765b0d87fcc3e839c74817b7211258cbef3a4fb9",
-<<<<<<< HEAD
                 "reference": "v1.2.0",
-=======
-                "reference": "765b0d87fcc3e839c74817b7211258cbef3a4fb9",
->>>>>>> Update dependencies
                 "shasum": ""
             },
             "require": {
@@ -2633,6 +2668,7 @@
         "twig/extensions": 20,
         "kriswallsmith/assetic": 20,
         "white-october/pagerfanta-bundle": 20,
+        "bravesheep/database-url-bundle": 20,
         "phpunit/php-code-coverage": 20
     },
     "prefer-stable": true,
