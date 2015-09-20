@@ -15,6 +15,7 @@ parameters:
     locale: en
 
     # Security Configuration
+    secret: YOU_NEED_SOME_GOBBLEDIEGOOK_HERE
     protocol: https   # http or https (recommended)
 
     # Session Configuration
