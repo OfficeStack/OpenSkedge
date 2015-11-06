@@ -128,6 +128,7 @@ class ShiftController extends Controller
 
         $entity  = new Shift();
         $form = $this->createForm(new ShiftType(), $entity);
+        $form->remove('status');
         $form->remove('pickedUpBy');
         $form->bind($request);
 
