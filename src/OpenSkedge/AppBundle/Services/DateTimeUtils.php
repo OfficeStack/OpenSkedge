@@ -156,6 +156,7 @@ class DateTimeUtils
         }
 
         $prev = '0';
+        $start = null;
         // Go all the way to the element after the last match, or the end of the string (which ever is less).
         for ($i = $firstIndex; $i < min(96, $lastIndex+1); $i++) {
             if ($prev == '0' and $dayRecord[$i] == '1') {
