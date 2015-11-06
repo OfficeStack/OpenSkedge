@@ -1,20 +1,18 @@
 # OpenSkedge
 [![Build Status](https://travis-ci.org/OfficeStack/OpenSkedge.png)](https://travis-ci.org/OfficeStack/OpenSkedge)
 
-Created by Max Fierke
-
-# Notice!
-Development is very slowly happening on [OpenSkedge 2](http://www.officestack.org/2014/12/05/openskedge-2.html), a rewrite intended to address many of the architecture shortfalls of OpenSkedge 1 and to address more use-cases. Patches to OpenSkedge 1 will still be accepted, and well-defined issues may be fixed, but OpenSkedge 1 is no longer being actively developed. Please feel free to contribute or suggest features over at the repository for [OpenSkedge 2](https://github.com/OfficeStack/OpenSkedge2).
+## 1.2.x-dev
+This is a development branch which will contain lots of refactoring of 1.0.x-dev.
 
 # Deployment on a Local, VPS/Cloud, or Dedicated host
 ## Requirements
 1.  Nginx, Apache, or another web server on *nix/BSD with rewrite functionality. May work on Windows and Mac, but has not been tested and is not supported.
     * Nginx users, see [this wiki article](https://github.com/maxfierke/OpenSkedge/wiki/Setting-up-on-Nginx-with-PHP-FPM-on-Linux) for setup.
     * Apache users, point your document root to web/. The .htaccess should take care of everything.
-2.  PHP 5.3.10+ (Tested on 5.3.10, 5.3.18, and 5.4.6)
+2.  PHP 5.5.x+
 3.  PDO-supported database. MySQL/MariaDB suggested.
 4.  [Composer](http://getcomposer.org) for installing dependencies
-5.  (optional) Memcached and PHP memcache extension.
+5.  (optional) Memcached and PHP memcache(d) extension.
 
 ## Installation
 1.  Run `php app/check.php` and resolve any errors before doing ANYTHING else.
@@ -65,7 +63,7 @@ OpenSkedge, technically a derivative work of Employee Scheduler, is available un
 See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 
 ### Authors and Contributors
-* Copyright 2012-2013 Max Fierke (@maxfierke)
+* Copyright 2012-2015 Max Fierke (@maxfierke)
 * Copyright 2003 Brigham Young University (For the bits of Employee Scheduler present)
 
 ### Projects that OpenSkedge uses
@@ -74,7 +72,7 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 * [TODC Datepicker](https://github.com/todc/todc-datepicker) by @todc
 * [Colorpicker for Bootstrap](http://www.eyecon.ro/bootstrap-colorpicker/) by Stefan Petre
 * [TableSorter](http://tablesorter.com/) by [@lovepeacenukes](https://twitter.com/lovepeacenukes)
-* [Symfony 2.2](http://symfony.com/), [Doctrine](http://www.doctrine-project.org/) and dependencies specified in composer.json
+* [Symfony 2.7](http://symfony.com/), [Doctrine](http://www.doctrine-project.org/) and dependencies specified in composer.json
 
 ### Thanks to the following Employee Scheduler developers
 * John Finlay (Developer of Employee Scheduler)
@@ -85,8 +83,4 @@ See src/OpenSkedge/AppBundle/Resources/meta/LICENSE for more details.
 **Max Fierke**  
 Homepage: [www.maxfierke.com](http://www.maxfierke.com)  
 Twitter: [@m4xm4n](http://twitter.com/m4xm4n)  
-Github: [@maxfierke](https://github.com/maxfierke)  
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/maxfierke/openskedge/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
+Github: [@maxfierke](https://github.com/maxfierke)
