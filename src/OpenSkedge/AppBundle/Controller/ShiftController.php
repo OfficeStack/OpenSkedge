@@ -257,7 +257,7 @@ class ShiftController extends Controller
         if (!$pickedUpBy instanceof User) {
             $originalPickedUpByUID = -1;
         } else {
-            $originalPickedUpByUID = (int)$pickedUpBy()->getId();
+            $originalPickedUpByUID = (int)$pickedUpBy->getId();
         }
 
         $referer = $request->headers->get('referer');
@@ -298,13 +298,13 @@ class ShiftController extends Controller
             if (!$pickedUpBy instanceof User) {
                 $pickedUpByUID = -1;
             } else {
-                $pickedUpByUID = (int)$pickedUpBy()->getId();
+                $pickedUpByUID = (int)$pickedUpBy->getId();
             }
 
             if ($originalPickedUpByUID === -1 and $pickedUpByUID !== -1) {
-                $this->get('notify_mailer')->notifyShiftPickedUp($shift);
+                $this->get('notify_mailer')->notifyShiftPickedUp($entity);
             } elseif ($originalStatus !== "unapproved" and $entity->getStatus() === "unapproved") {
-                $this->get('notify_mailer')->notifyShiftDenied($shift);
+                $this->get('notify_mailer')->notifyShiftDenied($entity);
             }
         } else {
             $request->getSession()->getFlashBag()->add('error', 'Shift failed to update!');
