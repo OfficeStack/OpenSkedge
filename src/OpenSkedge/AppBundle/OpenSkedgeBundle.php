@@ -22,26 +22,6 @@ class OpenSkedgeBundle extends Bundle
             $container->setParameter('sender_email', getenv("SYMFONY__SENDER__EMAIL"));
         }
 
-        if (isset($_ENV["PAGODABOX"])) {
-            if (isset($_SERVER["DB1_PORT"])) { // Pagoda Box MySQL database detection
-                $container->setParameter('database.port', $_SERVER["DB1_PORT"]);
-                $container->setParameter('database.host', $_SERVER["DB1_HOST"]);
-                $container->setParameter('database.name', $_SERVER["DB1_NAME"]);
-                $container->setParameter('database.user', $_SERVER["DB1_USER"]);
-                $container->setParameter('database.password', $_SERVER["DB1_PASS"]);
-            }
-
-            if (isset($_SERVER["CACHE1_HOST"])) { // Pagoda Box memcache detection
-                $container->setParameter('memcache.host', $_SERVER["CACHE1_HOST"]);
-                $container->setParameter('memcache.port', $_SERVER["CACHE1_PORT"]);
-                if (getenv("SYMFONY__MEMCACHE__EXPIRE")) {
-                    $container->setParameter('memcache.expire', getenv("SYMFONY__MEMCACHE__EXPIRE"));
-                } else {
-                    $container->setParameter('memcache.expire', 3600);
-                }
-            }
-        }
-
         if (extension_loaded('apc') && ini_get('apc.enabled')) {
             $container->setParameter('doctrine.orm.metadata_cache_driver', 'apc');
             $container->setParameter('doctrine.orm.result_cache_driver', 'apc');
