@@ -26,7 +26,7 @@ class ScheduleController extends Controller
     /**
      * Lists all Schedule entities.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -46,7 +46,7 @@ class ScheduleController extends Controller
      * @param integer $pid     Position ID from request
      * @param integer $spid    Schedule period ID from request
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction(Request $request, $pid, $spid)
     {
@@ -104,7 +104,7 @@ class ScheduleController extends Controller
      * @param integer $pid     Position ID from request
      * @param integer $spid    Schedule period ID from request
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $pid, $spid)
     {
@@ -302,7 +302,7 @@ class ScheduleController extends Controller
      * @param integer $pid     Position ID from request
      * @param integer $spid    Schedule period ID from request
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $pid, $spid)
     {

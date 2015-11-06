@@ -155,7 +155,9 @@ class LateShiftController extends Controller
 
     /**
      * Edits an existing LateShift entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {
@@ -185,7 +187,9 @@ class LateShiftController extends Controller
 
     /**
      * Deletes a LateShift entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -220,7 +224,7 @@ class LateShiftController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
     {

@@ -33,7 +33,7 @@ class HoursReportController extends Controller
     /**
      * Lists all weeks with ArchivedClock entities
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -75,7 +75,7 @@ class HoursReportController extends Controller
      * @param integer $month Month in MM format
      * @param integer $day   Day in DD format
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($year, $month, $day)
     {
@@ -127,7 +127,7 @@ class HoursReportController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function generateAction(Request $request, $id)
     {

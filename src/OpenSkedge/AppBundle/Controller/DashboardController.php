@@ -24,7 +24,7 @@ class DashboardController extends Controller
      *
      * @param Request $request The user's request object
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {

@@ -19,7 +19,7 @@ class DefaultController extends Controller
     /**
      * Basic redirect of empty route to /dashboard/
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {

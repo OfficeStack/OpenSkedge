@@ -27,7 +27,7 @@ class AreaController extends Controller
     /**
      * Lists all Area entities.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -57,7 +57,7 @@ class AreaController extends Controller
      *
      * @param integer $id ID of Area entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -131,7 +131,7 @@ class AreaController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of Area entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -176,7 +176,7 @@ class AreaController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of Area entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {

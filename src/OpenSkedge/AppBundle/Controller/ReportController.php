@@ -22,7 +22,7 @@ class ReportController extends Controller
     /**
      * Lists all available report types.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {

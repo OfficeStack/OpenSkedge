@@ -24,8 +24,8 @@ class SettingsController extends Controller
      * Edit application settings
      *
      * @param Request $request The user's request object
-     *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
      */
     public function editAction(Request $request)
     {

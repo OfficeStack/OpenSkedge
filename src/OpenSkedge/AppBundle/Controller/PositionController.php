@@ -29,7 +29,7 @@ class PositionController extends Controller
     /**
      * Lists all Position entities.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -57,7 +57,7 @@ class PositionController extends Controller
      *
      * @param integer $id ID of Position entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -98,7 +98,7 @@ class PositionController extends Controller
      * @param Request $request The user's request object
      * @param integer $aid     ID of the parent Area entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request, $aid)
     {
@@ -146,7 +146,7 @@ class PositionController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of Position entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -192,7 +192,7 @@ class PositionController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of Position entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
@@ -226,7 +226,7 @@ class PositionController extends Controller
      *
      * @param integer $id ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function positionsAction($id)
     {

@@ -20,7 +20,7 @@ class SecurityController extends Controller
     /**
      * Process login requests and attempt to authenticate the user.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginAction()
     {

@@ -30,7 +30,7 @@ class AvailabilityScheduleController extends Controller
      *
      * @param integer $id ID of User entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($id)
     {
@@ -73,7 +73,7 @@ class AvailabilityScheduleController extends Controller
      * @param integer $uid     User ID from route
      * @param integer $spid    Schedule period ID from route
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction(Request $request, $uid, $spid)
     {
@@ -143,7 +143,7 @@ class AvailabilityScheduleController extends Controller
      *
      * @param Request $request The user's request object
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function precreateAction(Request $request)
     {
@@ -169,7 +169,7 @@ class AvailabilityScheduleController extends Controller
      * @param Request $request The user's request object
      * @param integer $spid    Schedule period ID from route
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request, $spid)
     {
@@ -245,9 +245,9 @@ class AvailabilityScheduleController extends Controller
      * Edits an existing AvailabilitySchedule entity.
      *
      * @param Request $request The user's request object
-     * @param integer $spid    Schedule period ID from request
-     *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @param integer $spid Schedule period ID from request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
      */
     public function editAction(Request $request, $spid)
     {
@@ -344,10 +344,10 @@ class AvailabilityScheduleController extends Controller
      * Deletes a AvailabilitySchedule entity and the associated Schedule entities.
      *
      * @param Request $request The user's request object
-     * @param integer $uid     User ID from route
-     * @param integer $spid    Schedule period ID from route
-     *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @param integer $uid User ID from route
+     * @param integer $spid Schedule period ID from route
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
      */
     public function deleteAction(Request $request, $uid, $spid)
     {

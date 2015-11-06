@@ -32,7 +32,7 @@ class UserController extends Controller
     /**
      * Lists all User entities.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -75,7 +75,7 @@ class UserController extends Controller
      *
      * @param integer $id ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -103,7 +103,7 @@ class UserController extends Controller
      *
      * @param Request $request The user's request object
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -153,7 +153,7 @@ class UserController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -222,7 +222,7 @@ class UserController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
@@ -262,7 +262,7 @@ class UserController extends Controller
      *
      * @param integer $id ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function supervisorsAction($id)
     {
@@ -307,7 +307,7 @@ class UserController extends Controller
      *
      * @param integer $id ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function employeesAction($id)
     {
@@ -352,7 +352,7 @@ class UserController extends Controller
      *
      * @param integer $id ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function colleaguesAction($id)
     {

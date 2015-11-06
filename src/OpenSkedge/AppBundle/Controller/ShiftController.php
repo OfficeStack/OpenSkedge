@@ -116,7 +116,8 @@ class ShiftController extends Controller
 
     /**
      * Creates a new Shift entity.
-     *
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -192,7 +193,8 @@ class ShiftController extends Controller
 
     /**
      * Finds and displays a Shift entity.
-     *
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -214,7 +216,8 @@ class ShiftController extends Controller
 
     /**
      * Displays a form to edit an existing Shift entity.
-     *
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction($id)
     {
@@ -238,7 +241,9 @@ class ShiftController extends Controller
 
     /**
      * Edits an existing Shift entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {
@@ -314,7 +319,9 @@ class ShiftController extends Controller
 
     /**
      * Deletes a Shift entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -341,7 +348,7 @@ class ShiftController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
     {

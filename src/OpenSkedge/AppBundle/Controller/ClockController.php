@@ -28,7 +28,7 @@ class ClockController extends Controller
      *
      * @param Request $request The user's request object
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function clockInAction(Request $request)
     {
@@ -58,7 +58,7 @@ class ClockController extends Controller
      *
      * @param Request $request The user's request object
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function clockOutAction(Request $request)
     {

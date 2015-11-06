@@ -24,7 +24,7 @@ class DateTimeUtils
      *
      * @param AppSettingsService $appSettingsService AppSettingsService object
      *
-     * @return void
+     * @throws \Exception
      */
     public function __construct(AppSettingsService $appSettingsService)
     {
@@ -36,6 +36,7 @@ class DateTimeUtils
      *
      * @param string $timeString A string containing a time such as "4:00 am" or "23:00"
      *
+     * @param bool $utc Indicates whether to use UTC as the timezone.
      * @return \DateTime
      */
     public function timeStrToDateTime($timeString, $utc = false)
@@ -57,7 +58,8 @@ class DateTimeUtils
      *
      * @param \DateTime|string $time A given time
      *
-     * @return integer
+     * @param bool $utc
+     * @return int
      */
     public function getIndexFromTime($time, $utc = false)
     {
@@ -139,9 +141,10 @@ class DateTimeUtils
     /**
      * Get the intervals as \DateTime instance when a user is scheduled, clocked, etc. for a specific day
      *
-     * @param string  $dayRecord    Time record string
-     * @param integer $day          Day number (0 = Sunday, ..., 6 = Saturday)
+     * @param string $dayRecord Time record string
+     * @param integer $day Day number (0 = Sunday, ..., 6 = Saturday)
      *
+     * @param bool $utc
      * @return array
      */
     public function getDateTimeIntervals($dayRecord, $day, $utc = false)

@@ -23,8 +23,8 @@ class IPController extends Controller
 {
     /**
      * Lists all IP entities.
-     *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
      */
     public function indexAction()
     {
@@ -62,8 +62,8 @@ class IPController extends Controller
      * Creates a new IP entity.
      *
      * @param Request $request The user's request object
-     *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
      */
     public function newAction(Request $request)
     {
@@ -106,9 +106,9 @@ class IPController extends Controller
      * Edits an existing IP entity.
      *
      * @param Request $request The user's request object
-     * @param integer $id      ID of IP entity
-     *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @param integer $id ID of IP entity
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
      */
     public function editAction(Request $request, $id)
     {
@@ -152,9 +152,9 @@ class IPController extends Controller
      * Deletes a IP entity.
      *
      * @param Request $request The user's request object
-     * @param integer $id      ID of IP entity
-     *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @param integer $id ID of IP entity
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws AccessDeniedException
      */
     public function deleteAction(Request $request, $id)
     {

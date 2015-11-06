@@ -26,7 +26,7 @@ class SchedulePeriodController extends Controller
     /**
      * Lists all SchedulePeriod entities.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -56,7 +56,7 @@ class SchedulePeriodController extends Controller
      *
      * @param integer $id ID of user
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -107,7 +107,7 @@ class SchedulePeriodController extends Controller
      *
      * @param Request $request The user's request object
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -141,7 +141,7 @@ class SchedulePeriodController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of SchedulePeriod
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -182,7 +182,7 @@ class SchedulePeriodController extends Controller
      * @param Request $request The user's request object
      * @param integer $id      ID of SchedulePeriod entity
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Request $request, $id)
     {
