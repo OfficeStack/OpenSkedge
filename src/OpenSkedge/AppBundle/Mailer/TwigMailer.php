@@ -114,11 +114,11 @@ class TwigMailer implements MailerInterface
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftposted_sup.txt.twig',
                 $context, $this->parameters['senderEmail'], $supervisor->getEmail());
         }
-        $massEmail = $appSettingsService->getAppSettings()->getMassEmail();
+        $massEmail = $this->appSettingsService->getAppSettings()->getMassEmail();
         if (!empty($massEmail)) {
             $context = array('shift' => $shift);
             $this->dispatchMessage('OpenSkedgeBundle:Mailer:shiftposted_mass.txt.twig',
-                $context, $user->getEmail(), $appSettingsService->getAppSettings()->getMassEmail());
+                $context, $user->getEmail(), $this->appSettingsService->getAppSettings()->getMassEmail());
         }
     }
 
