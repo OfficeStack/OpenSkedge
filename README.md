@@ -53,6 +53,7 @@ OpenSkedge depends on the use of a background worker or cron jobs to handle thin
 
 ### Running the background worker
 This is a naive background worker process using a long-running PHP-CLI process. Historically, PHP has had issues with memory leaks when running for long periods of time, so you may want to either recycle this periodically (using something like supervisord) or opt for using cron.
+
 `php app/console openskedge:worker:run` - Checks for late employees, prunes old time clock records, and dispatches spooled emails every 10 minutes
 
 ### Commands for cron
