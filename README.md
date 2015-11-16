@@ -47,6 +47,23 @@ This is a development branch which will contain lots of refactoring of 1.0.x-dev
 4.  Run `php app/console --env=prod cache:clear` to clear and warmup the application's cache. `prod` should be replaced with `dev` if you're running in a development environment.
 5.  Run `php app/console --env=prod assets:install` to install Assetic assets into the web root. `prod` should be replaced with `dev` if you're running in a development environment.
 
+## Background Worker / cron jobs
+
+OpenSkedge depends on the use of a background worker or cron jobs to handle things like checking for late employees, archiving time clock records, and dispatching spooled emails.
+
+### Running the background worker
+This is a naive background worker process using a long-running PHP-CLI process. Historically, PHP has had issues with memory leaks when running for long periods of time, so you may want to either recycle this periodically (using something like supervisord) or opt for using cron.
+`php app/console openskedge:worker:run` - Checks for late employees, prunes old time clock records, and dispatches spooled emails every 10 minutes
+
+### Commands for cron
+If you're concerned about memory usage with the background worker or need more flexibility in scheduling background tasks, you can also run a few commands on their own & schedule them as cron jobs.
+
+`php app/console openskedge:clock:check-late` - Checks for late employees
+
+`php app/console openskedge:clock:prune --no-interaction` - Prunes old time clock records (configured in OpenSkedge settings)
+
+`php app/console --no-interaction swiftmailer:spool:send` -  Dispatches spooled emails. Only needed if Swiftmailer is setup to spool emails (default).
+
 ## FAQ
 ### What is OpenSkedge?
 OpenSkedge is a reinvention of [Employee Scheduler](http://empscheduler.sourceforge.net), a flexible employee scheduling application designed for companies and organizations (such as education institutions with student workers) which require fluid shift scheduling.
