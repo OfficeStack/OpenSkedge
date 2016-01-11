@@ -79,13 +79,14 @@ class ClockCheckLateCommand extends ContainerAwareCommand
         foreach ($schedulePeriods as $schedulePeriod) {
             foreach ($uids as $uid) {
                 $user = $em->getRepository('OpenSkedgeBundle:User')->find($uid);
-                $clockStatus = $user->getClock()->getDayOffset($dayNum, $curIndex-1);
+                $clock = $user->getClock();
+                $clockStatus = $clock->getDayOffset($dayNum, $curIndex-1);
                 if (!$user instanceof User) {
-                    throw new Exception('User was not found! There appears to be an orphaned schedule.');
+                    throw new \Exception('User was not found! There appears to be an orphaned schedule.');
                 }
 
                 // Only check if the user hasn't clocked in yet.
-                if ($clockStatus == '0') {
+                if (!$clock->getStatus() && $clockStatus == '0') {
                     $late = false;
 
                     // Check if they've picked up a shift during the current time.
