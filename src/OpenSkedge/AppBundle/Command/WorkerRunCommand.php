@@ -26,7 +26,7 @@ class WorkerRunCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName("openskedge:worker:run")
-             ->setDescription('Prunes timeclock data from before the specified number of weeks back.')
+             ->setDescription('Launches worker process that checks for late employees, prunes old timeclock data, and dispatches emails.')
         ;
     }
 
