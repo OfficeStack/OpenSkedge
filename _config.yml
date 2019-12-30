@@ -1,0 +1,8 @@
+title: OpenSkedge
+description: A flexible employee scheduling application built upon Symfony2. Designed for companies and organizations with fluid shifts.
+google_analytics: UA-37627208-2
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
